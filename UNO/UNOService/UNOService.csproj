@@ -45,6 +45,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Card.cs" />
+    <Compile Include="IGame.cs" />
+    <Compile Include="IGameCallback.cs" />
     <Compile Include="ILobby.cs" />
     <Compile Include="ILogin.cs" />
     <Compile Include="ILobbyCallback.cs" />
