@@ -9,7 +9,8 @@ namespace UNOService
     public class Party
     {
         private Player host;
-        List<Player> players;
+
+        public List<Player> players { get; set; }
 
         public Party(Player host)
         {

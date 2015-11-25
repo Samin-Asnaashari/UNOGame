@@ -36,5 +36,17 @@ namespace UNOService
         [OperationContract]
         void SentInvite(String hostName);
         //[OperationContract]
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [OperationContract]
+        void NotifyGameStarted(List<Player> players);
+
+        /// <summary>
+        /// Message sended from service to all players in game
+        /// </summary>
+        [OperationContract]
+        void SendChatMessageLobby(String message);
     }
 }

@@ -41,5 +41,18 @@ namespace UNOService
         /// <param name="answer"></param>
         [OperationContract]
         void AnswerInvite(bool answer);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [OperationContract]
+        void StartGame();
+
+        /// <summary>
+        /// message sended in chat
+        /// </summary>
+        /// <param name="message"></param>
+        [OperationContract]
+        void SendMessageLobby(string message);
     }
 }
