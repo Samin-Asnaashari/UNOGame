@@ -21,6 +21,9 @@ namespace UNOService.Game
 
         }
 
+        public void CreateDeck()
+        {
 
+        }
     }
 }

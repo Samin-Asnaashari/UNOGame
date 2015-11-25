@@ -37,6 +37,14 @@ namespace UNOService
         void SentInvite(String hostName);
 
         /// <summary>
+        /// Party is full so user receives notification
+        /// </summary>
+        /// <param name="players"></param>
+        [OperationContract]
+        void PartyIsFull();
+
+
+        /// <summary>
         /// 
         /// </summary>
         [OperationContract]

@@ -23,7 +23,7 @@ namespace UNOService
 		/// <permission>Only the player whose turn it is can take a card.</permission>
 		/// <returns>Card</returns>
 		[OperationContract]
-		Card takeCard();
+		Card takeCard(int GameID);
 
 		/// <summary>
 		/// Player who calls this metod will play card c.
@@ -31,19 +31,19 @@ namespace UNOService
 		/// <permission>Only the player whose turn it is can play a card.</permission>
 		/// <param name="c"></param>
 		[OperationContract]
-		void playCard(Card c);
+		void playCard(int GameID);
 
         /// <summary>
         /// Player leaves the game when playing
         /// </summary>
         [OperationContract]
-        void LeaveGame();
+        void LeaveGame(int GameID);
 
         /// <summary>
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>
         [OperationContract]
-        void SendMessageGame(string message);
+        void SendMessageGame(string message, int GameID);
     }
 }

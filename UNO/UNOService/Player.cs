@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using UNOService.Game;
+using System.ServiceModel;
 
 namespace UNOService
 {
@@ -14,6 +15,9 @@ namespace UNOService
         public string UserName { get; private set; } //unique
         public List<Card> Hand { get; set; }
         public PlayerState State { get; set; }
+        public ILobby ILobby { get; set; }
+        public IGame IGame { get; set; }
+
 
         public Player()
         {

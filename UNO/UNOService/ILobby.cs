@@ -21,13 +21,13 @@ namespace UNOService
         /// Party signal sent to be created
         /// </summary>
         [OperationContract]
-        void CreateParty();
+        void CreateParty(int partyID);
 
         /// <summary>
         /// Leave the current party
         /// </summary>
         [OperationContract]
-        void LeaveParty();
+        void LeaveParty(int partyID);
 
         /// <summary>
         /// Selected players from online list get sent to the server
@@ -47,13 +47,13 @@ namespace UNOService
         /// 
         /// </summary>
         [OperationContract]
-        void StartGame();
+        void StartGame(int GameID);
 
         /// <summary>
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>
         [OperationContract]
-        void SendMessageLobby(string message);
+        void SendMessageLobby(string message, int partyID);
     }
 }
