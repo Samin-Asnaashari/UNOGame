@@ -95,5 +95,10 @@ namespace UNOService
         {
             throw new NotImplementedException();
         }
+
+        public List<Player> GetPartyMembers()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
