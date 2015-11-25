@@ -13,10 +13,14 @@ namespace UNOService.Game
         [DataMember]
         public int GameID { get; set; }
         public List<Player> Players { get; set; }
+        public List<Card> Deck { get; set; }
+        public List<Card> PlayedCards { get; set; }
 
         public Game(int gameID, List<Player> players)
         {
 
         }
+
+
     }
 }

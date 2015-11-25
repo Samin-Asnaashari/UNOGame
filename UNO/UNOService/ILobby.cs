@@ -7,7 +7,7 @@ using System.ServiceModel;
 
 namespace UNOService
 {
-    [ServiceContract]
+    [ServiceContract(CallbackContract = typeof(ILobbyCallback))]
     public interface ILobby
     {
         /// <summary>

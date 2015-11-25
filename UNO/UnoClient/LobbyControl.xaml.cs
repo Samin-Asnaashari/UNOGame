@@ -22,6 +22,7 @@ namespace UnoClient
     {
         public LobbyControl()
         {
+            
             InitializeComponent();
         }
     }

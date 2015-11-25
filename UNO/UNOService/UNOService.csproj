@@ -45,15 +45,16 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\AttackingCard.cs" />
     <Compile Include="Game\Card.cs" />
+    <Compile Include="Game\CardColor.cs" />
+    <Compile Include="Game\CardType.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\IGame.cs" />
     <Compile Include="Game\IGameCallback.cs" />
+    <Compile Include="Game\PlayerState.cs" />
     <Compile Include="ILobby.cs" />
     <Compile Include="ILogin.cs" />
     <Compile Include="ILobbyCallback.cs" />
-    <Compile Include="NumberCard.cs" />
     <Compile Include="Party.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
