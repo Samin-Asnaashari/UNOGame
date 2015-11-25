@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UNOService
 {
-	class Card
+	public class Card
 	{
 		public Card(string color)
 		{
