@@ -7,22 +7,18 @@ using System.Threading.Tasks;
 
 namespace UNOService
 {
-	[DataContract]
 	class Card
 	{
-		private string color;
-		private int number;
-
-		Card(string color, int number)
+		public Card(string color)
 		{
-			this.color = color;
-			this.number = number;
+			this.Color = color;
 		}
 
 		[DataMember]
-		public string Color { get; }
-
-		[DataMember]
-		public int Number { get; }
+		public string Color
+		{
+			get;
+			private set;
+		}
 	}
 }

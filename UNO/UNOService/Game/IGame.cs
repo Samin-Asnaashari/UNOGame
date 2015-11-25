@@ -10,7 +10,7 @@ namespace UNOService
 	[ServiceContract(CallbackContract = typeof(IGameCallback))]
 	interface IGame
 	{
-		List<Player> players;
+		//List<Player> players;
 
 		/// <summary>
 		/// Assigns the taken card to the players deck and returns that card.

@@ -10,11 +10,11 @@ namespace UNOService
 	interface IGameCallback
 	{
 		/// <summary>
-		/// Tells the client only what his card deck is.
+		/// The client gets an unspecified amount of cards.
 		/// </summary>
-		/// <param name="deck"></param>
+		/// <param name="cards"></param>
 		[OperationContract]
-		void DeckAssigned(List<Card> deck);
+		void CardsAssigned(List<Card> cards);
 
 		/// <summary>
 		/// Will notify the client that someone's turn has ended and someone else turn starts.
@@ -22,5 +22,11 @@ namespace UNOService
 		/// <param name="player"></param>
 		[OperationContract]
 		void TurnChanged(Player player);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="c"></param>
+		void CardPlayed(Card c);
 	}
 }
