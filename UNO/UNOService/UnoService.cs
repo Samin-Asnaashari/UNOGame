@@ -30,7 +30,7 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public string CheckUserName(string userName)
+        public bool CheckUserName(string userName)
         {
             throw new NotImplementedException();
         }
