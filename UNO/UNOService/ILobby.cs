@@ -55,5 +55,12 @@ namespace UNOService
         /// <param name="message"></param>
         [OperationContract]
         void SendMessageLobby(string message);
+
+        /// <summary>
+        /// Returns a list of players already in the party
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        List<Player> GetPartyMembers();
     }
 }
