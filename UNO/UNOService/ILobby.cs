@@ -41,7 +41,7 @@ namespace UNOService
         /// </summary>
         /// <param name="answer"></param>
         [OperationContract]
-        void AnswerInvite(bool answer);
+        bool AnswerInvite(bool answer);
 
         /// <summary>
         /// 

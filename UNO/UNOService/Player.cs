@@ -13,7 +13,7 @@ namespace UNOService
     {
         public string UserName { get; private set; } //unique
         public List<Card> Hand { get; set; }
-        public int MyProperty { get; set; }
+        public PlayerState State { get; set; }
 
         public Player()
         {
@@ -28,6 +28,11 @@ namespace UNOService
         public void Remove(Card card)
         {
 
+        }
+
+        public void ChangeState(PlayerState state)
+        {
+            
         }
     }
 }
