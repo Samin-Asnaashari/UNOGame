@@ -34,7 +34,7 @@ namespace UNOService
         /// </summary>
         /// <param name="message"></param>
         [OperationContract]
-        void SendMessageGame(string message);
+        void SendMessageGameCallback(string message);
 
         /// <summary>
         /// Notify other players about player left

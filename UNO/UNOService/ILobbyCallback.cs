@@ -47,6 +47,6 @@ namespace UNOService
         /// Message sended from service to all players in game
         /// </summary>
         [OperationContract]
-        void SendChatMessageLobby(String message);
+        void SendChatMessageLobbyCallback(String message);
     }
 }

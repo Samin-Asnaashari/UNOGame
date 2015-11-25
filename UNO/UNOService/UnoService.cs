@@ -8,7 +8,7 @@ using System.Text;
 namespace UNOService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
-    public class UnoService : ILoginAndSignUp, ILobby, IGame
+    public class UnoService : ILoginAndSignUp, IGame, ILobby
     {
         public void AnswerInvite(bool answer)
         {
