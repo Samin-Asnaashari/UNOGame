@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace UNOService
 {
 	[ServiceContract(CallbackContract = typeof(IGameCallback))]
-	interface IGame
+	public interface IGame
 	{
         /// <summary>
         /// Saves the the game played with all moves
