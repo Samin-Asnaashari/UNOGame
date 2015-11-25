@@ -16,6 +16,10 @@ namespace UNOService
         [OperationContract(IsOneWay = true)]
         void PlayerConnected(Player player);
 
+        /// <summary>
+        /// Sending all other players that this player is removed from online list
+        /// </summary>
+        /// <param name="player"></param>
         [OperationContract(IsOneWay = true)]
         void PlayerDisConnected(Player player);
 
@@ -25,6 +29,10 @@ namespace UNOService
         [OperationContract(IsOneWay = true)]
         void PlayerAddedToParty(string playerName);
 
+        /// <summary>
+        /// Lobby service sent invite to player
+        /// </summary>
+        /// <param name="hostName"></param>
         [OperationContract]
         void SentInvite(String hostName);
         //[OperationContract]
