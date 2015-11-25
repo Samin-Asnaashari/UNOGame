@@ -18,11 +18,11 @@ namespace UnoClient
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
-    public partial class LoginWindow : UserControl
+    public partial class LoginAndRegisterWindow : UserControl
     {
         public SwitchWindowHandler OnSwitchWindow;
 
-        public LoginWindow()
+        public LoginAndRegisterWindow()
         {
             InitializeComponent();            
         }

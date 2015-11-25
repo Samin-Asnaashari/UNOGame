@@ -13,11 +13,11 @@
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="UnoClient.LoginWindow" BaseTypeListCollapsed="true">
+  <Class Name="UnoClient.LoginAndRegisterWindow" BaseTypeListCollapsed="true">
     <Position X="4.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>LoginWindow.xaml.cs</FileName>
+      <FileName>LoginAndRegisterWindow.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
