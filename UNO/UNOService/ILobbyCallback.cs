@@ -35,7 +35,6 @@ namespace UNOService
         /// <param name="hostName"></param>
         [OperationContract]
         void SentInvite(String hostName);
-        //[OperationContract]
 
         /// <summary>
         /// 
