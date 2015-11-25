@@ -25,7 +25,7 @@ namespace UnoClient
     {
         GameWindow game;
         LobbyWindow lobby;
-        LoginWindow login;
+        LoginAndRegisterWindow login;
 
         public MainWindow()
         {
