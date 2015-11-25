@@ -9,6 +9,8 @@ namespace UNOService
 {
     interface ILobby
     {
+        [OperationContract]
+
         /// <summary>
         /// Player get the current online list when entering lobby
         /// </summary>

@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Game\AttackingCard.cs" />
     <Compile Include="Game\Card.cs" />
+    <Compile Include="Game\Game.cs" />
     <Compile Include="Game\IGame.cs" />
     <Compile Include="Game\IGameCallback.cs" />
     <Compile Include="ILobby.cs" />
