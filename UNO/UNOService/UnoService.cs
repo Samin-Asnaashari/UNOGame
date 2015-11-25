@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+
+namespace UNOService
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
+    public class UnoService
+    {
+    //    public void Login(string userName, string password)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    bool ILogin.Login(string userName, string password)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    }
+}
