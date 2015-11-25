@@ -17,32 +17,43 @@ using UnoClient.proxy;
 namespace UnoClient
 {
     /// <summary>
-    /// Interaction logic for GameWindow.xaml
+    /// Interaction logic for LobbyControl.xaml
     /// </summary>
-    public partial class GameWindow : UserControl, proxy.IGameCallback
+    public partial class LobbyWindow : UserControl, proxy.ILobbyCallback
     {
         public SwitchWindowHandler OnSwitchWindow;
-        public GameWindow()
+
+        public LobbyWindow()
         {
             InitializeComponent();
         }
 
-        public void CardsAssigned(Card[] cards)
+        public void NotifyGameStarted(Player[] players)
         {
             throw new NotImplementedException();
         }
 
-        public void NotifyPlayerLeft(string userName)
+        public void PlayerAddedToParty(string playerName)
         {
             throw new NotImplementedException();
         }
 
-        public void SendMessageGameCallback(string message)
+        public void PlayerConnected(Player player)
         {
             throw new NotImplementedException();
         }
 
-        public void TurnChanged(Player player)
+        public void PlayerDisConnected(Player player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendChatMessageLobbyCallback(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SentInvite(string hostName)
         {
             throw new NotImplementedException();
         }

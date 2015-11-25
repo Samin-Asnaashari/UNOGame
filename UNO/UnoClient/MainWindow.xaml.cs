@@ -18,11 +18,23 @@ namespace UnoClient
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+    public delegate void SwitchWindowHandler(WindowType type);
+
     public partial class MainWindow : Window
     {
+        GameWindow game;
+        LobbyWindow lobby;
+        LoginWindow login;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void switchWindow(WindowType type)
+        {
+            throw new NotImplementedException();
         }
     }
 }
