@@ -10,6 +10,11 @@ namespace UNOService
 	[ServiceContract(CallbackContract = typeof(IGameCallback))]
 	interface IGame
 	{
+        /// <summary>
+        /// Saves the the game played with all moves
+        /// </summary>
+        [OperationContract]
+        void SaveReplay(int gameID);
 		//List<Player> players;
 
 		/// <summary>
@@ -27,5 +32,18 @@ namespace UNOService
 		/// <param name="c"></param>
 		[OperationContract]
 		void playCard(Card c);
-	}
+
+        /// <summary>
+        /// Player leaves the game when playing
+        /// </summary>
+        [OperationContract]
+        void LeaveGame();
+
+        /// <summary>
+        /// message sended in chat
+        /// </summary>
+        /// <param name="message"></param>
+        [OperationContract]
+        void SendMessageGame(string message);
+    }
 }
