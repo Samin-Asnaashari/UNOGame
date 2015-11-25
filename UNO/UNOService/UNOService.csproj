@@ -54,7 +54,7 @@
     <Compile Include="Game\IGameCallback.cs" />
     <Compile Include="Game\PlayerState.cs" />
     <Compile Include="ILobby.cs" />
-    <Compile Include="ILogin.cs" />
+    <Compile Include="ILoginAndSignUp.cs" />
     <Compile Include="ILobbyCallback.cs" />
     <Compile Include="Party.cs" />
     <Compile Include="Player.cs" />
@@ -62,7 +62,7 @@
     <Compile Include="UnoService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Game\App.config">
+    <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="ClassDiagram2.cd" />
