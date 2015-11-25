@@ -53,7 +53,6 @@
     <Compile Include="ILobby.cs" />
     <Compile Include="ILogin.cs" />
     <Compile Include="ILobbyCallback.cs" />
-    <Compile Include="ISignUp.cs" />
     <Compile Include="NumberCard.cs" />
     <Compile Include="Party.cs" />
     <Compile Include="Player.cs" />

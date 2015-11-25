@@ -7,11 +7,9 @@ using System.ServiceModel;
 
 namespace UNOService
 {
-    [ServiceContract(CallbackContract = typeof(ILobbyCallback))]
-    interface ILobby
+    [ServiceContract]
+    public interface ILobby
     {
-        [OperationContract]
-
         /// <summary>
         /// Player get the current online list when entering lobby
         /// </summary>

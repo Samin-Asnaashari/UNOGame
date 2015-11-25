@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace UNOService
 {
+    [DataContract]
 	class NumberCard : Card
 	{
 		NumberCard(string color, int number)

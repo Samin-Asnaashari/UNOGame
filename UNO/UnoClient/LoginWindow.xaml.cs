@@ -20,9 +20,12 @@ namespace UnoClient
     /// </summary>
     public partial class LoginWindow : UserControl
     {
+        UnoClient.proxy.LoginAndSignUpClient proxy;
         public LoginWindow()
         {
             InitializeComponent();
+            proxy = new UnoClient.proxy.LoginAndSignUpClient();
+            
         }
     }
 }
