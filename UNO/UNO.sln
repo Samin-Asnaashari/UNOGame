@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnoService", "UNOService\UnoService.csproj", "{3F662FB1-2F39-4890-933A-C727AB067502}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnoService", "UnoService\UnoService.csproj", "{3F662FB1-2F39-4890-933A-C727AB067502}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnoClient", "UnoClient\UnoClient.csproj", "{B65384E4-EFA1-4C7A-AF1C-53013EE713D8}"
 EndProject
