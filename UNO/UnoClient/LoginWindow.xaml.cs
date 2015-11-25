@@ -20,12 +20,16 @@ namespace UnoClient
     /// </summary>
     public partial class LoginWindow : UserControl
     {
-        UnoClient.proxy.LoginAndSignUpClient proxy;
+        public SwitchWindowHandler OnSwitchWindow;
+
         public LoginWindow()
         {
-            InitializeComponent();
-            proxy = new UnoClient.proxy.LoginAndSignUpClient();
-            
+            InitializeComponent();            
+        }
+
+        private void switchWindow(WindowType type)
+        {
+            throw new NotImplementedException();
         }
     }
 }
