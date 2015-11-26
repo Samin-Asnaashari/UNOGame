@@ -10,11 +10,40 @@ namespace UNOService
     public class DatabaseHandler
     {
         private MySqlConnection connection;
+
         public DatabaseHandler()
         {
             string connectionInfo = "server = 127.0.0.1;" + "database = uno;" + "user id = root;" + "password = ;" + "connect timeout = 30;";
             connection = new MySqlConnection(connectionInfo);
         }
+
+        public String GetPlayerInfo(String column, String username)
+        {
+            try
+            {
+                String info;
+                connection.Open();
+                MySqlCommand cmd;
+                String sql = "SELECT " + column + " FROM `players` WHERE Username = '" + username + "'";
+                cmd = new MySqlCommand(sql, connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                info = Convert.ToString(reader[0].ToString());
+
+                if (info != null || info != "")
+                    return info;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return "Invalid";
+        }
+
         public void InsertPlayerWon(string username)
         {
 
@@ -53,7 +82,34 @@ namespace UNOService
 
         public bool CheckLogin(string username, string password)
         {
-            return true;
+            try
+            {
+                String passwordDB;
+                connection.Open();
+                MySqlCommand cmd;
+                String sql = "SELECT Password FROM `players` WHERE Username = '" + username + "'";
+                cmd = new MySqlCommand(sql, connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                reader.Read();
+
+                passwordDB = Convert.ToString(reader[0]);
+
+                if (passwordDB != null || passwordDB != "")
+                {
+                    if (passwordDB == password)
+                        return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public bool CheckUserName(string username)

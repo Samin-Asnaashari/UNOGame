@@ -63,7 +63,7 @@ namespace UnoClient
 
         public void PlayerConnected(Player player)
         {
-            throw new NotImplementedException();
+            //add player to listBox with username and state
         }
 
         public void PlayerDisConnected(Player player)

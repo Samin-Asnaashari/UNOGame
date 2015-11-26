@@ -8,33 +8,78 @@ using UNOService.Game;
 
 namespace UNOService
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class UnoService : ILoginAndSignUp, IGame, ILobby
     {
-        private List<Game.Game> games;
-        private List<Party> parties;
         private static int gameID = 0;
         private static int partyID = 0;
+        private DatabaseHandler databaseHandler;
+
         private List<Player> playersInLobby;
-        DatabaseHandler databaseHandler;
+        private List<Game.Game> games;
+        private List<Party> parties;
+
 
         public UnoService()
         {
-
+            databaseHandler = new DatabaseHandler();
+            playersInLobby = new List<Player>();
         }
 
         public bool Login(string userName, string password)
         {
-            throw new NotImplementedException();
+            bool loginSuccessFull = false;
+            try
+            {
+
+                if (playersInLobby.Find(x => x.UserName.ToLower() == userName.ToLower()) == null)//user already logged in
+                {
+                    loginSuccessFull = databaseHandler.CheckLogin(userName, password);
+                    if (loginSuccessFull)
+                        CreatePlayerForLobby(userName);
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return loginSuccessFull;
+        }
+
+        private void CreatePlayerForLobby(string username)//method maybe not needed
+        {
+            Player toBeAdded = new Player(username);
+            toBeAdded.State = PlayerState.InLobby;
+            playersInLobby.Add(toBeAdded);
         }
 
         public bool SignUp(string userName, string password)
         {
-            throw new NotImplementedException();
+            try
+            {
+                databaseHandler.InsertPlayer(userName, password);
+                CreatePlayerForLobby(userName);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool CheckUserName(string userName)
         {
-            throw new NotImplementedException();
+            bool exist;
+            try
+            {
+                exist = databaseHandler.CheckUserName(userName);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return exist;
         }
 
         public void SaveReplay(int gameID)
@@ -62,7 +107,7 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public List<Player> GetOnlineList(String username)
+        public List<Player> GetOnlineList()
         {
             return playersInLobby;
         }
@@ -102,19 +147,15 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public List<Player> GetOnlineList()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SubScribeToLobbyEvents(String username)
+        public void SubScribeToLobbyEvents(string username)
         {
             ILobbyCallback clientCallbackLobby = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
             Player player = playersInLobby.Find(x => x.UserName == username);
-            player.ILobbyCallback = clientCallbackLobby;//Every player at entering lobby will get linked to all events in lobby
+            player.ILobbyCallback = clientCallbackLobby;
+
             foreach (var item in playersInLobby)
             {
-                if(item!=player)
+                if (item != player)
                     item.ILobbyCallback.PlayerConnected(player);
             }
         }
