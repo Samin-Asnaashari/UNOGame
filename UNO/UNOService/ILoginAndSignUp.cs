@@ -7,6 +7,7 @@ using System.ServiceModel;
 
 namespace UNOService
 {
+    [ServiceContract]
     public interface ILoginAndSignUp
     {
         /// <summary>

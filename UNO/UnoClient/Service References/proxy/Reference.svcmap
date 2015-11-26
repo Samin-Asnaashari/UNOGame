@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5e028f81-a204-4719-ab4c-2b8145e057e2" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e12b62b7-7570-45b2-9f44-e663010a6c39" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/UNOService/Service1/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="a12c2a9e-a9c0-4f4c-b700-ee72d98380a5" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/UNOService/Service1/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="750d0dfa-18bb-4df3-8470-793e6456e24e" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/UNOService/Service1/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="251ba569-0ea7-4d44-9413-243e0409df49" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/UNOService/Service1/mex" />
-    <MetadataFile FileName="UNOService.xsd" MetadataType="Schema" ID="c988f134-cf6d-4b7d-a1b2-7a9bbd52bf73" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/UNOService/Service1/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="ead759d3-49cf-4f67-96a5-7137711db1d8" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="80757a1a-77a8-42eb-a043-3b530380997b" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="0ab84392-6a5c-4d27-af95-df7c7ec9560c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="UNOService.xsd" MetadataType="Schema" ID="36230ef7-4be2-4759-b42c-e5f6645f8381" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
