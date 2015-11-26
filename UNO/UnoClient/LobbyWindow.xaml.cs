@@ -39,6 +39,11 @@ namespace UnoClient
             throw new NotImplementedException();
         }
 
+        public void PartyIsFull()
+        {
+            throw new NotImplementedException();
+        }
+
         public void PlayerAddedToParty(string playerName)
         {
             throw new NotImplementedException();

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
 using System.Text;
+using System.Threading.Tasks;
+using System.ServiceModel;
 
 namespace UNOService
 {
@@ -11,31 +11,30 @@ namespace UNOService
     public interface ILoginAndSignUp
     {
         /// <summary>
-        /// Login to game
+        /// Login the guest
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
         [OperationContract]
-        bool Login(String userName, String password);
+        bool Login(string userName, string password);
 
         /// <summary>
-        /// player sign up
+        /// SignUp the guest
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
         [OperationContract]
         bool SignUp(string userName, string password);
-
+        
         /// <summary>
-        /// Username is send to service to be check for uniqueness
+        /// CheckUserName for uniqueness
         /// </summary>
         /// <param name="userName"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
         [OperationContract]
-        String CheckUserName(String userName);
+        bool CheckUserName(string userName);
     }
-
-
 }

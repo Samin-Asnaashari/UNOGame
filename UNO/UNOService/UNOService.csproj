@@ -54,18 +54,16 @@
     <Compile Include="Game\IGameCallback.cs" />
     <Compile Include="Game\PlayerState.cs" />
     <Compile Include="ILobby.cs" />
-    <Compile Include="ILogin.cs" />
     <Compile Include="ILobbyCallback.cs" />
+    <Compile Include="ILoginAndSignUp.cs" />
     <Compile Include="Party.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnoService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Game\App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="ClassDiagram2.cd" />
+    <None Include="App.config" />
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

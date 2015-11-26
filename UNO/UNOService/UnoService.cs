@@ -8,7 +8,6 @@ using UNOService.Game;
 
 namespace UNOService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
     public class UnoService : ILoginAndSignUp, IGame, ILobby
     {
         private List<Game.Game> games;
@@ -31,7 +30,7 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public string CheckUserName(string userName)
+        public bool CheckUserName(string userName)
         {
             throw new NotImplementedException();
         }
@@ -92,6 +91,11 @@ namespace UNOService
         }
 
         public void LeaveParty(int partyID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Player> GetPartyMembers()
         {
             throw new NotImplementedException();
         }
