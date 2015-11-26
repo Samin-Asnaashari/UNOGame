@@ -62,5 +62,12 @@ namespace UNOService
         /// <returns></returns>
         [OperationContract]
         List<Player> GetPartyMembers();
+
+        /// <summary>
+        /// Subscribe to lobby events
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        void SubScribeToLobbyEvents(String username);
     }
 }

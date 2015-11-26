@@ -22,6 +22,12 @@ namespace UnoClient.proxy {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.PlayerState StateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -29,6 +35,32 @@ namespace UnoClient.proxy {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.PlayerState State {
+            get {
+                return this.StateField;
+            }
+            set {
+                if ((this.StateField.Equals(value) != true)) {
+                    this.StateField = value;
+                    this.RaisePropertyChanged("State");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
             }
         }
         
@@ -40,6 +72,17 @@ namespace UnoClient.proxy {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerState", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
+    public enum PlayerState : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InLobby = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InGame = 1,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -197,6 +240,12 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/GetPartyMembers", ReplyAction="http://tempuri.org/ILobby/GetPartyMembersResponse")]
         System.Threading.Tasks.Task<UnoClient.proxy.Player[]> GetPartyMembersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SubScribeToLobbyEvents", ReplyAction="http://tempuri.org/ILobby/SubScribeToLobbyEventsResponse")]
+        void SubScribeToLobbyEvents(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SubScribeToLobbyEvents", ReplyAction="http://tempuri.org/ILobby/SubScribeToLobbyEventsResponse")]
+        System.Threading.Tasks.Task SubScribeToLobbyEventsAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -314,6 +363,14 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task<UnoClient.proxy.Player[]> GetPartyMembersAsync() {
             return base.Channel.GetPartyMembersAsync();
+        }
+        
+        public void SubScribeToLobbyEvents(string username) {
+            base.Channel.SubScribeToLobbyEvents(username);
+        }
+        
+        public System.Threading.Tasks.Task SubScribeToLobbyEventsAsync(string username) {
+            return base.Channel.SubScribeToLobbyEventsAsync(username);
         }
     }
     

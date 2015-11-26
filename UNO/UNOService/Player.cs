@@ -12,15 +12,19 @@ namespace UNOService
     [DataContract]
     public class Player
     {
+        [DataMember]
         public string UserName { get; private set; } //unique
         public List<Card> Hand { get; set; }
+        [DataMember]
         public PlayerState State { get; set; }
-        public ILobby ILobby { get; set; }
-        public IGame IGame { get; set; }
+        public ILobbyCallback ILobbyCallback { get; set; }
+        public IGameCallback IGameCallback { get; set; }
 
 
-        public Player()
+        public Player(String username)
         {
+            this.UserName = username;
+            this.State = PlayerState.InLobby;//cause at login or register it always goes to lobby
             Hand = new List<Card>();
         }
 
@@ -36,7 +40,7 @@ namespace UNOService
 
         public void ChangeState(PlayerState state)
         {
-            
+
         }
     }
 }

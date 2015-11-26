@@ -7,7 +7,7 @@ using System.ServiceModel;
 
 namespace UNOService
 {
-    interface ILobbyCallback
+    public interface ILobbyCallback
     {
         /// <summary>
         /// Update the list of the online clients

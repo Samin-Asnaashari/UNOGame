@@ -14,6 +14,8 @@ namespace UNOService
         private List<Party> parties;
         private static int gameID = 0;
         private static int partyID = 0;
+        private List<Player> playersInLobby;
+        DatabaseHandler databaseHandler;
 
         public UnoService()
         {
@@ -60,9 +62,9 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public List<Player> GetOnlineList()
+        public List<Player> GetOnlineList(String username)
         {
-            throw new NotImplementedException();
+            return playersInLobby;
         }
 
         public void SendInvites(List<Player> players)
@@ -98,6 +100,23 @@ namespace UNOService
         public List<Player> GetPartyMembers()
         {
             throw new NotImplementedException();
+        }
+
+        public List<Player> GetOnlineList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SubScribeToLobbyEvents(String username)
+        {
+            ILobbyCallback clientCallbackLobby = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
+            Player player = playersInLobby.Find(x => x.UserName == username);
+            player.ILobbyCallback = clientCallbackLobby;//Every player at entering lobby will get linked to all events in lobby
+            foreach (var item in playersInLobby)
+            {
+                if(item!=player)
+                    item.ILobbyCallback.PlayerConnected(player);
+            }
         }
     }
 }

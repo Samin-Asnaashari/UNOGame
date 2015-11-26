@@ -134,6 +134,9 @@
     <None Include="Service References\proxy\UnoClient.proxy.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\proxy\UNOService.Game.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\proxy\UNOService.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UNOService
 {
-	interface IGameCallback
+	public interface IGameCallback
 	{
 		/// <summary>
 		/// The client gets an unspecified amount of cards.

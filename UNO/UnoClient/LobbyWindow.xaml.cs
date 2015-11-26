@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnoClient.proxy;
+using System.ServiceModel;
 
 namespace UnoClient
 {
@@ -22,14 +23,25 @@ namespace UnoClient
     public partial class LobbyWindow : UserControl, proxy.ILobbyCallback
     {
         public SwitchWindowHandler OnSwitchWindow;
+        private LobbyClient Lobby;
+        private InstanceContext context;
 
         public LobbyWindow(SwitchWindowHandler switchWindowCallback)
         {
             OnSwitchWindow += switchWindowCallback;
             InitializeComponent();
+
+            // subscribeEventsTolobby must be done somehow
+            context = new InstanceContext(this);
+            Lobby = new LobbyClient(context);
+            foreach (var item in Lobby.GetOnlineList())
+            {
+                //listBoxOnlinePlayers.Items.Add(item.UserName + "--- " + item.State);add to wpf listbox
+            }
+            
         }
 
-        private void switchWindow(WindowType type)
+        private void switchWindow(WindowType type)// each time window is switch to lobby getonlinelist, subscribeToLobbyEvents, etc must be done
         {
             OnSwitchWindow(type);
         }

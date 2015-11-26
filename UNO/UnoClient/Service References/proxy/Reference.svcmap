@@ -26,6 +26,7 @@
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="80757a1a-77a8-42eb-a043-3b530380997b" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="0ab84392-6a5c-4d27-af95-df7c7ec9560c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
     <MetadataFile FileName="UNOService.xsd" MetadataType="Schema" ID="36230ef7-4be2-4759-b42c-e5f6645f8381" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="UNOService.Game.xsd" MetadataType="Schema" ID="fabe0b8f-7e71-490e-b86b-50628dcde4bc" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
