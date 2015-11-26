@@ -23,9 +23,15 @@ namespace UnoClient
     {
         public SwitchWindowHandler OnSwitchWindow;
 
-        public LobbyWindow()
+        public LobbyWindow(SwitchWindowHandler switchWindowCallback)
         {
+            OnSwitchWindow += switchWindowCallback;
             InitializeComponent();
+        }
+
+        private void switchWindow(WindowType type)
+        {
+            OnSwitchWindow(type);
         }
 
         public void NotifyGameStarted(Player[] players)
@@ -58,9 +64,5 @@ namespace UnoClient
             throw new NotImplementedException();
         }
 
-        private void switchWindow(WindowType type)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

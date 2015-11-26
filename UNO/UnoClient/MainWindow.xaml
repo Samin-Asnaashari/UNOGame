@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:UnoClient"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        <ContentControl x:Name="contentControl" Content="ContentControl" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+
 </Window>

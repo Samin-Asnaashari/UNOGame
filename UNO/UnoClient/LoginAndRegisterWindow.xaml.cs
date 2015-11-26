@@ -22,14 +22,20 @@ namespace UnoClient
     {
         public SwitchWindowHandler OnSwitchWindow;
 
-        public LoginAndRegisterWindow()
+        public LoginAndRegisterWindow(SwitchWindowHandler switchWindowCallback)
         {
+            OnSwitchWindow += switchWindowCallback;
             InitializeComponent();            
         }
 
         private void switchWindow(WindowType type)
         {
-            throw new NotImplementedException();
+            OnSwitchWindow(type);
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            switchWindow(WindowType.Lobby);
         }
     }
 }

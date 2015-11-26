@@ -30,11 +30,28 @@ namespace UnoClient
         public MainWindow()
         {
             InitializeComponent();
+            login = new LoginAndRegisterWindow(switchWindow);
+            lobby = new LobbyWindow(switchWindow);
+            game = new GameWindow(switchWindow);
+            contentControl.Content = login;
         }
 
         private void switchWindow(WindowType type)
         {
-            throw new NotImplementedException();
+            UserControl controlToShow = null;
+            switch (type)
+            {
+                case WindowType.Game: controlToShow = login;
+                    break;
+                case WindowType.Lobby: controlToShow = lobby;
+                    break;
+                case WindowType.Login: controlToShow = game;
+                    break;
+                default: MessageBox.Show("This window is not implemented yet");
+                    break;
+            }
+
+            contentControl.Content = controlToShow;
         }
     }
 }

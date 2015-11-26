@@ -22,9 +22,16 @@ namespace UnoClient
     public partial class GameWindow : UserControl, proxy.IGameCallback
     {
         public SwitchWindowHandler OnSwitchWindow;
-        public GameWindow()
+
+        public GameWindow(SwitchWindowHandler switchWindowCallback)
         {
+            OnSwitchWindow += switchWindowCallback;
             InitializeComponent();
+        }
+
+        private void switchWindow(WindowType type)
+        {
+            OnSwitchWindow(type);
         }
 
         public void CardsAssigned(Card[] cards)
@@ -43,11 +50,6 @@ namespace UnoClient
         }
 
         public void TurnChanged(Player player)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void switchWindow(WindowType type)
         {
             throw new NotImplementedException();
         }
