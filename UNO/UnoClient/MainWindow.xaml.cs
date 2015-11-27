@@ -41,17 +41,32 @@ namespace UnoClient
             UserControl controlToShow = null;
             switch (type)
             {
-                case WindowType.Game: controlToShow = login;
+                case WindowType.Game: controlToShow = game;
                     break;
                 case WindowType.Lobby: controlToShow = lobby;
                     break;
-                case WindowType.Login: controlToShow = game;
+                case WindowType.Login: controlToShow = login;
                     break;
                 default: MessageBox.Show("This window is not implemented yet");
                     break;
             }
 
             contentControl.Content = controlToShow;
+        }
+
+        private void GameButton_Click(object sender, RoutedEventArgs e)
+        {
+            switchWindow(WindowType.Game);
+        }
+
+        private void LobbyButton_Click(object sender, RoutedEventArgs e)
+        {
+            switchWindow(WindowType.Lobby);
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            switchWindow(WindowType.Login);
         }
     }
 }

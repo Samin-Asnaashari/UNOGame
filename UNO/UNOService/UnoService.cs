@@ -134,7 +134,7 @@ namespace UNOService
                         {
                             if (item.Hand.Count == 1)
                             {
-                                foreach (var item2 in game.Players)//also make sure this whole process only happens ones
+                                foreach (var item2 in game.Players)
                                 {
                                     if (item.UnoSaid > item2.UnoSaid)
                                     {

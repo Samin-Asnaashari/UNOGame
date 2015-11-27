@@ -6,6 +6,29 @@
         xmlns:local="clr-namespace:UnoClient"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-        <ContentControl x:Name="contentControl" Content="ContentControl" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="0,0,0,10">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
+                <Button Content="LoginButton" Click="LoginButton_Click" Width="75" Margin="0,0,0,5"/>
+                <Button Content="LobbyButton" Click="LobbyButton_Click" Width="75" Margin="0,0,0,5"/>
+                <Button Content="GameButton" Click="GameButton_Click" Width="75" Margin="0,0,0,5"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <ContentControl x:Name="contentControl" Content="ContentControl" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        </Grid>
+
+
+
+
+
+
+    </Grid>
 
 </Window>
