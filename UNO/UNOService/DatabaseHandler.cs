@@ -13,7 +13,7 @@ namespace UNOService
 
         public DatabaseHandler()
         {
-            string connectionInfo = "server = 127.0.0.1;" + "database = uno;" + "user id = root;" + "password = ;" + "connect timeout = 30;";
+            string connectionInfo = "server = 145.93.250.136;" + "database = uno;" + "user id = root;" + "password = ;" + "connect timeout = 30;";
             connection = new MySqlConnection(connectionInfo);
         }
 

@@ -20,30 +20,34 @@ namespace UnoClient
     /// <summary>
     /// Interaction logic for LobbyControl.xaml
     /// </summary>
-    public partial class LobbyWindow : UserControl, proxy.ILobbyCallback
+    public partial class LobbyWindow : UserControl, ILobbyCallback
     {
         public SwitchWindowHandler OnSwitchWindow;
         private LobbyClient Lobby;
         private InstanceContext context;
 
-        public LobbyWindow(SwitchWindowHandler switchWindowCallback)
+        public LobbyWindow(SwitchWindowHandler switchWindowCallback, String username)// each time window is switch to lobby getonlinelist, subscribeToLobbyEvents, etc must be done
         {
             OnSwitchWindow += switchWindowCallback;
             InitializeComponent();
 
-            // subscribeEventsTolobby must be done somehow
-            context = new InstanceContext(this);
-            Lobby = new LobbyClient(context);
-            foreach (var item in Lobby.GetOnlineList())
+            if (username != "")
             {
-                //listBoxOnlinePlayers.Items.Add(item.UserName + "--- " + item.State);add to wpf listbox
+
+                context = new InstanceContext(this);
+                Lobby = new LobbyClient(context);
+                Lobby.SubScribeToLobbyEvents(username); // subscribeEventsTolobby
+                
+                foreach (var item in Lobby.GetOnlineList())
+                {
+                    listBoxOnlinePlayers.Items.Add(item.UserName + "--- " + item.State);//add to listbox
+                }
             }
-            
         }
 
-        private void switchWindow(WindowType type)// each time window is switch to lobby getonlinelist, subscribeToLobbyEvents, etc must be done
+        private void switchWindow(WindowType type, String username)
         {
-            OnSwitchWindow(type);
+            OnSwitchWindow(type, username);
         }
 
         public void NotifyGameStarted(Player[] players)
@@ -63,7 +67,7 @@ namespace UnoClient
 
         public void PlayerConnected(Player player)
         {
-            //add player to listBox with username and state
+            listBoxOnlinePlayers.Items.Add(player.UserName + "--- " + player.State);
         }
 
         public void PlayerDisConnected(Player player)

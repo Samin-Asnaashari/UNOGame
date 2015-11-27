@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnoClient"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Label x:Name="label" Content="Hello World! - Lobby" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+             d:DesignHeight="414" Width="458">
+    <Grid Margin="0,0,10,-9" RenderTransformOrigin="0.505,0.5" HorizontalAlignment="Right" Width="268">
+        <ListBox x:Name="listBoxOnlinePlayers" Height="462" Margin="10,10,10,0" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnoClient.proxy;
 
 namespace UnoClient
 {
@@ -21,21 +22,32 @@ namespace UnoClient
     public partial class LoginAndRegisterWindow : UserControl
     {
         public SwitchWindowHandler OnSwitchWindow;
+        private LoginAndSignUpClient login;
 
         public LoginAndRegisterWindow(SwitchWindowHandler switchWindowCallback)
         {
             OnSwitchWindow += switchWindowCallback;
-            InitializeComponent();            
+            InitializeComponent();
+            login = new LoginAndSignUpClient();       
         }
 
-        private void switchWindow(WindowType type)
+        private void switchWindow(WindowType type, String username)
         {
-            OnSwitchWindow(type);
+            OnSwitchWindow(type, username);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            switchWindow(WindowType.Lobby);
+            if (login.Login(textBoxUsername.Text, textBoxPassword.Text))
+            {
+                string username = textBoxUsername.Text;
+                {
+                    switchWindow(WindowType.Lobby, username);
+                    //go to lobby form//pass the username in the lobby form constructor
+                }
+            }
+            else
+                MessageBox.Show("Wrong combination of pass and username");
         }
     }
 }

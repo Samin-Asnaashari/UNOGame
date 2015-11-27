@@ -29,9 +29,9 @@ namespace UnoClient
             InitializeComponent();
         }
 
-        private void switchWindow(WindowType type)
+        private void switchWindow(WindowType type, String username)
         {
-            OnSwitchWindow(type);
+            OnSwitchWindow(type, username);
         }
 
         public void CardsAssigned(Card[] cards)
