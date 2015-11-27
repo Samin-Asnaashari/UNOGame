@@ -20,7 +20,7 @@ namespace UNOService.Game
 
         public Game(int gameID, List<Player> players)
         {
-
+            this.Direction = Direction.clockwise;
         }
 
         public void CreateDeck()

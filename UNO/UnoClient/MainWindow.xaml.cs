@@ -69,7 +69,7 @@ namespace UnoClient
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            switchWindow(WindowType.Lobby, "");
+            switchWindow(WindowType.Login, "");
         }
     }
 }
