@@ -15,7 +15,7 @@ namespace UNOService
         private static int partyID = 0;
         private DatabaseHandler databaseHandler;
 
-        private List<Player> playersInLobby;
+        private List<Player> playersOnline;
         private List<Game.Game> games;
         private List<Party> parties;
 
@@ -23,7 +23,7 @@ namespace UNOService
         public UnoService()
         {
             databaseHandler = new DatabaseHandler();
-            playersInLobby = new List<Player>();
+            playersOnline = new List<Player>();
         }
 
         public bool Login(string userName, string password)
@@ -32,7 +32,7 @@ namespace UNOService
             try
             {
 
-                if (playersInLobby.Find(x => x.UserName.ToLower() == userName.ToLower()) == null)//user already logged in
+                if (playersOnline.Find(x => x.UserName.ToLower() == userName.ToLower()) == null)//user already logged in
                 {
                     loginSuccessFull = databaseHandler.CheckLogin(userName, password);
                     if (loginSuccessFull)
@@ -50,7 +50,7 @@ namespace UNOService
         {
             Player toBeAdded = new Player(username);
             toBeAdded.State = PlayerState.InLobby;
-            playersInLobby.Add(toBeAdded);
+            playersOnline.Add(toBeAdded);
         }
 
         public bool SignUp(string userName, string password)
@@ -102,14 +102,61 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public void SendMessageGame(string message, int GameID)
+        public void SendMessageGame(string message, int GameID)//game id not needed the calling player we will get him from game.players list with his operationContext //here we also know that his gameID is legit and also he is a real player of the game
         {
-            throw new NotImplementedException();
+            int currentGameID = -1;
+            IGameCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
+
+            foreach (var item in playersOnline)//for checking player legit and get gameID he is playing in right now
+            {
+                if (currentPlayerCallback == item.IGameCallback)
+                {
+                    currentGameID = item.GameID;
+                }
+            }
+
+            //maybe for the whole thing above make a new method checkLegitimacy
+
+            Game.Game game = games.Find(x => x.GameID == currentGameID);
+
+            if (game != null)
+            {
+                //check if UNO said 
+
+                if (!game.UNOsaidAlready)
+                {
+                    game.UNOsaidAlready = true;
+
+                    //check if next player turn is not up next player dependency depends on direction of the game
+                    foreach (var item in game.Players)
+                    {
+                        if (item.IGameCallback == currentPlayerCallback)
+                        {
+                            if (item.Hand.Count == 1)
+                            {
+                                foreach (var item2 in game.Players)//also make sure this whole process only happens ones
+                                {
+                                    if (item.UnoSaid > item2.UnoSaid)
+                                    {
+                                        item.IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck //also a method needed to notify all other players for this change
+                                        foreach (var item3 in game.Players)
+                                        {
+                                            item3.IGameCallback.SendMessageGameCallback(message);
+                                        }
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //at the end put uno saidAlready to false again
+            }
         }
 
         public List<Player> GetOnlineList()
         {
-            return playersInLobby;
+            return playersOnline;
         }
 
         public void SendInvites(List<Player> players)
@@ -150,10 +197,10 @@ namespace UNOService
         public void SubScribeToLobbyEvents(string username)
         {
             ILobbyCallback clientCallbackLobby = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
-            Player player = playersInLobby.Find(x => x.UserName == username);
+            Player player = playersOnline.Find(x => x.UserName == username);
             player.ILobbyCallback = clientCallbackLobby;
 
-            foreach (var item in playersInLobby)
+            foreach (var item in playersOnline)
             {
                 if (item != player)
                     item.ILobbyCallback.PlayerConnected(player);

@@ -19,6 +19,8 @@ namespace UNOService
         public PlayerState State { get; set; }
         public ILobbyCallback ILobbyCallback { get; set; }
         public IGameCallback IGameCallback { get; set; }
+        public DateTime UnoSaid { get; set; }
+        public int GameID { get; set; }
 
 
         public Player(String username)

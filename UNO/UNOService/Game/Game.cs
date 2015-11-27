@@ -15,6 +15,8 @@ namespace UNOService.Game
         public List<Player> Players { get; set; }
         public List<Card> Deck { get; set; }
         public List<Card> PlayedCards { get; set; }
+        public Direction Direction { get; set; }
+        public bool UNOsaidAlready { get; set; }
 
         public Game(int gameID, List<Player> players)
         {

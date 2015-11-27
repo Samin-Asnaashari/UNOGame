@@ -53,6 +53,7 @@
     <Compile Include="Game\Card.cs" />
     <Compile Include="Game\CardColor.cs" />
     <Compile Include="Game\CardType.cs" />
+    <Compile Include="Game\Direction.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\IGame.cs" />
     <Compile Include="Game\IGameCallback.cs" />
