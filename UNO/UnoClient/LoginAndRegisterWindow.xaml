@@ -7,12 +7,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600" Background="White">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel HorizontalAlignment="Left" Height="auto" Margin="100,64,0,0" VerticalAlignment="Top" Width="258">
+        <Grid Grid.Column="0">
+            
+            <StackPanel HorizontalAlignment="Left" Height="auto" Margin="20,64,0,0" VerticalAlignment="Top" Width="258">
                 <TextBox x:Name="textBoxUsername" Height="23" TextWrapping="Wrap" Text="Username" Margin="0,0,0,10"/>
                 <TextBox x:Name="textBoxPassword" Height="23" TextWrapping="Wrap" Text="Password" Margin="0,0,0,10"/>
                 <Button x:Name="BtnLogin" Content="Log in" Width="75" Click="button_Click"/>
             </StackPanel>
+            <Label x:Name="label" Content="Log in" HorizontalAlignment="Left" Margin="126,21,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.526,0.615"/>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <StackPanel HorizontalAlignment="Left" Height="auto" Margin="20,64,0,0" VerticalAlignment="Top" Width="258">
+                <TextBox x:Name="textBoxUsernameSignUp" Height="23" TextWrapping="Wrap" Text="Username" Margin="0"/>
+                <Label x:Name="lblErrorUsername" Content="Username taken" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0,5,5" Visibility="Hidden"/>
+                <TextBox x:Name="textBoxPasswordSignUp" Height="23" TextWrapping="Wrap" Text="Password" Margin="0,0,0,20"/>
+                <TextBox x:Name="textBoxConfirmPasswordSignUp" Height="23" TextWrapping="Wrap" Text="Password" Margin="0"/>
+                <Label x:Name="lblErrorPassword" HorizontalContentAlignment="Center" Content="Passwords don't match" Height="20" Margin="0" Padding="5,0,5,5" Visibility="Hidden"/>
+                <Button x:Name="BtnSignUp" Content="Sign up" Width="75"/>
+            </StackPanel>
+            <Label x:Name="label_Copy" Content="Sign up" HorizontalAlignment="Left" Margin="126,21,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.526,0.615"/>
+        </Grid>
+        
 
         </Grid>
 </UserControl>

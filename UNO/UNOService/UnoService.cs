@@ -102,35 +102,38 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public void SendMessageGame(string message, int GameID)//game id not needed the calling player we will get him from game.players list with his operationContext //here we also know that his gameID is legit and also he is a real player of the game
+        private Player CheckPlayerLegitimacy()
         {
-            int currentGameID = -1;
             IGameCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
 
             foreach (var item in playersOnline)//for checking player legit and get gameID he is playing in right now
             {
                 if (currentPlayerCallback == item.IGameCallback)
                 {
-                    currentGameID = item.GameID;
+                    return item;
                 }
             }
+            return null;
+        }
 
-            //maybe for the whole thing above make a new method checkLegitimacy
-
-            Game.Game game = games.Find(x => x.GameID == currentGameID);
-
-            if (game != null)
+        public void SendMessageGame(string message, int GameID)//game id not needed the calling player we will get him from game.players list with his operationContext //here we also know that his gameID is legit and also he is a real player of the game
+        {
+            Player player = CheckPlayerLegitimacy();
+            if (player != null)
             {
+                Game.Game game = games.Find(x => x.GameID == player.GameID);
+
                 //check if UNO said 
 
                 if (!game.UNOsaidAlready)
                 {
                     game.UNOsaidAlready = true;
 
-                    //check if next player turn is not up next player dependency depends on direction of the game
+                    //check if next player turn is not up, next player dependency depends on direction of the game
+
                     foreach (var item in game.Players)
                     {
-                        if (item.IGameCallback == currentPlayerCallback)
+                        if (item.IGameCallback == player.IGameCallback)
                         {
                             if (item.Hand.Count == 1)
                             {
