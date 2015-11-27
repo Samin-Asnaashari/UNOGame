@@ -5,8 +5,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnoClient"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Label x:Name="label" Content="Hello World! - Game" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+             d:DesignHeight="370" d:DesignWidth="700">
+    <Grid Background="#FFE0BEB2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="160"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="83" />
+                <RowDefinition Height="130"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="2" Height="156" Background="Bisque">
+                  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  Background="Aqua" HorizontalAlignment="Center" Height="68" VerticalAlignment="Bottom" Width="292" Margin="44,0,44,10">
+                    <StackPanel Orientation="Horizontal" Background="AliceBlue">
+                        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="68" Margin="0,0,10,0"/>
+
+                    </StackPanel>
+                  </ScrollViewer>
+
+
+            </Grid>
+        </Grid>
+
+
+
+
+
     </Grid>
 </UserControl>
