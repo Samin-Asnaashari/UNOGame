@@ -5,8 +5,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnoClient"
              mc:Ignorable="d" 
-             d:DesignHeight="414" Width="458">
-    <Grid Margin="0,0,10,-9" RenderTransformOrigin="0.505,0.5" HorizontalAlignment="Right" Width="268">
-        <ListBox x:Name="listBoxOnlinePlayers" Height="462" Margin="10,10,10,0" VerticalAlignment="Top"/>
+             d:DesignHeight="400" d:DesignWidth="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="180"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
+        </Grid>
+
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+                    <StackPanel Orientation="Vertical" x:Name="listOnlinePlayers"/>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Button x:Name="inviteButton" Content="Invite" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>
