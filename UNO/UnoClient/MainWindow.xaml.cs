@@ -19,7 +19,7 @@ namespace UnoClient
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-    public delegate void SwitchWindowHandler(WindowType type);
+    public delegate void SwitchWindowHandler(WindowType type, String username);
 
     public partial class MainWindow : Window
     {
@@ -31,19 +31,22 @@ namespace UnoClient
         {
             InitializeComponent();
             login = new LoginAndRegisterWindow(switchWindow);
-            lobby = new LobbyWindow(switchWindow);
+            lobby = new LobbyWindow(switchWindow, "");
             game = new GameWindow(switchWindow);
             contentControl.Content = login;
         }
 
-        private void switchWindow(WindowType type)
+        private void switchWindow(WindowType type, String username)
         {
             UserControl controlToShow = null;
             switch (type)
             {
                 case WindowType.Game: controlToShow = game;
                     break;
-                case WindowType.Lobby: controlToShow = lobby;
+                case WindowType.Lobby:
+                    {
+                        controlToShow = new LobbyWindow(switchWindow, username);
+                    }
                     break;
                 case WindowType.Login: controlToShow = login;
                     break;
@@ -56,17 +59,17 @@ namespace UnoClient
 
         private void GameButton_Click(object sender, RoutedEventArgs e)
         {
-            switchWindow(WindowType.Game);
+            switchWindow(WindowType.Game, "");
         }
 
         private void LobbyButton_Click(object sender, RoutedEventArgs e)
         {
-            switchWindow(WindowType.Lobby);
+            switchWindow(WindowType.Lobby, "");
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            switchWindow(WindowType.Login);
+            switchWindow(WindowType.Lobby, "");
         }
     }
 }
