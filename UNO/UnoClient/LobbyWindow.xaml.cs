@@ -20,15 +20,13 @@ namespace UnoClient
     /// <summary>
     /// Interaction logic for LobbyControl.xaml
     /// </summary>
-    public partial class LobbyWindow : UserControl, ILobbyCallback
+    public partial class LobbyWindow : ILobbyCallback
     {
-        public SwitchWindowHandler OnSwitchWindow;
         private LobbyClient Lobby;
         private InstanceContext context;
 
-        public LobbyWindow(SwitchWindowHandler switchWindowCallback, String username)// each time window is switch to lobby getonlinelist, subscribeToLobbyEvents, etc must be done
+        public LobbyWindow(String username)
         {
-            OnSwitchWindow += switchWindowCallback;
             InitializeComponent();
 
             for (int i = 0; i < 50; i++)
@@ -47,11 +45,6 @@ namespace UnoClient
                     listOnlinePlayers.Children.Add(new PlayerListElementControl(item));
                 }
             }
-        }
-
-        private void switchWindow(WindowType type, String username)
-        {
-            OnSwitchWindow(type, username);
         }
 
         public void NotifyGameStarted(Player[] players)

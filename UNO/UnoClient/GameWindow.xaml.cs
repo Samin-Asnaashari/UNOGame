@@ -21,17 +21,9 @@ namespace UnoClient
     /// </summary>
     public partial class GameWindow : UserControl, proxy.IGameCallback
     {
-        public SwitchWindowHandler OnSwitchWindow;
-
-        public GameWindow(SwitchWindowHandler switchWindowCallback)
+        public GameWindow()
         {
-            OnSwitchWindow += switchWindowCallback;
             InitializeComponent();
-        }
-
-        private void switchWindow(WindowType type, String username)
-        {
-            OnSwitchWindow(type, username);
         }
 
         public void CardsAssigned(Card[] cards)

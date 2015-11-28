@@ -1,11 +1,9 @@
-﻿<UserControl x:Class="UnoClient.LobbyWindow"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:UnoClient"
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600">
+﻿<Window x:Class="UnoClient.LobbyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:UnoClient"
+        Width="600"
+		Height="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -37,4 +35,4 @@
             </Grid>
         </Grid>
     </Grid>
-</UserControl>
+</Window>

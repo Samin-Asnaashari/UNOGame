@@ -10,44 +10,60 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 using UnoClient.proxy;
 
 namespace UnoClient
 {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
-    public partial class LoginAndRegisterWindow : UserControl
-    {
-        public SwitchWindowHandler OnSwitchWindow;
-        private LoginAndSignUpClient login;
+	/// <summary>
+	/// Interaction logic for LoginAndRegisterWindow.xaml
+	/// </summary>
+	public partial class LoginAndRegisterWindow : Window
+	{
+        private LoginAndSignUpClient client;
 
-        public LoginAndRegisterWindow(SwitchWindowHandler switchWindowCallback)
+		public LoginAndRegisterWindow()
+		{
+            client = new LoginAndSignUpClient();
+			InitializeComponent();
+		}
+
+        private void lblNoAccount_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            OnSwitchWindow += switchWindowCallback;
-            InitializeComponent();
-            login = new LoginAndSignUpClient();       
+            //wpLoginControls.Visibility = Visibility.Collapsed;
+            //wpRegisterControls.Visibility = Visibility.Visible;
         }
 
-        private void switchWindow(WindowType type, String username)
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            OnSwitchWindow(type, username);
-        }
+            string username = txtUsername.Text;
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            if (login.Login(textBoxUsername.Text, textBoxPassword.Text))
+            if(client.Login(username, txtPassword.Password))
             {
-                string username = textBoxUsername.Text;
-                {
-                    switchWindow(WindowType.Lobby, username);
-                    //go to lobby form//pass the username in the lobby form constructor
-                }
+                //Login succesful
+                new LobbyWindow(username);
             }
             else
-                MessageBox.Show("Wrong combination of pass and username");
+            {
+                //Login unsuccesful
+                MessageBox.Show("Username or password incorrect.");
+            }
+        }
+
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            string username = txtUsername.Text;
+
+            if (client.SignUp(username, txtPassword.Password))
+            {
+                //Register succesful
+                new LobbyWindow(username);
+            }
+            else
+            {
+                //Register unsuccesful
+            }
         }
     }
 }
