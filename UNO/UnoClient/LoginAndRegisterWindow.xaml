@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Uno - Login"
 		MinWidth="300"  Width="300" MaxWidth="300"
-		Height="275">
+		MinHeight="275" Height="275" MaxHeight="275">
     <Grid>
-        <Image HorizontalAlignment="Left" Height="89" Margin="10,10,0,0" VerticalAlignment="Top" Width="272"/> <!-- Logo -->
+        <Image HorizontalAlignment="Left" Height="90" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" Source="Images/logo.png"/> <!-- Logo -->
         <GroupBox Header="Login" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="272">
             <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical">
                 <WrapPanel>
@@ -25,11 +25,11 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="wpLoginControls"
                                             Storyboard.TargetProperty="(Grid.Height)"
-                                            From="20" To="0" Duration="0:0:.5" AutoReverse="False"/>
+                                            From="20" To="0" Duration="0:0:.2" AutoReverse="False"/>
                                         <DoubleAnimation
                                             Storyboard.TargetName="wpRegisterControls"
                                             Storyboard.TargetProperty="(Grid.Height)"
-                                            From="0" To="46" Duration="0:0:.7" AutoReverse="False"/>
+                                            From="0" To="46" Duration="0:0:.5" AutoReverse="False"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>

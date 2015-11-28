@@ -19,21 +19,14 @@ namespace UnoClient
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class GameWindow : UserControl, proxy.IGameCallback
+    public partial class GameWindow : proxy.IGameCallback
     {
-        public SwitchWindowHandler OnSwitchWindow;
         private string username;
 
-        public GameWindow(SwitchWindowHandler switchWindowCallback, string username)
+        public GameWindow(string username)
         {
-            OnSwitchWindow += switchWindowCallback;
             this.username = username;
             InitializeComponent();
-        }
-
-        private void switchWindow(WindowType type, String username)
-        {
-            OnSwitchWindow(type, username);
         }
 
         public void CardsAssigned(Card[] cards)

@@ -24,11 +24,7 @@ namespace UnoClient
     {
         private LobbyClient Lobby;
 
-<<<<<<< HEAD
         public LobbyWindow(String username)
-=======
-        public LobbyWindow(SwitchWindowHandler switchWindowCallback, string username)// each time window is switch to lobby getonlinelist, subscribeToLobbyEvents, etc must be done
->>>>>>> 778d0e9686dc41404219c942435fda789d4b85e0
         {
             InitializeComponent();
 
