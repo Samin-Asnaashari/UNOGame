@@ -21,7 +21,7 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <ContentControl x:Name="contentControl" Content="ContentControl" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <ContentControl x:Name="contentControl" Content="ContentControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
 
 

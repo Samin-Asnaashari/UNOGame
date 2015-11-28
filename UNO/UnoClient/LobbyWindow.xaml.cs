@@ -31,6 +31,11 @@ namespace UnoClient
             OnSwitchWindow += switchWindowCallback;
             InitializeComponent();
 
+            for (int i = 0; i < 50; i++)
+            {
+                listOnlinePlayers.Children.Add(new PlayerListElementControl(i.ToString()));
+            }
+
             if (username != "")
             {
                 context = new InstanceContext(this);
@@ -39,7 +44,7 @@ namespace UnoClient
                 
                 foreach (var item in Lobby.GetOnlineList())
                 {
-                    listBoxOnlinePlayers.Items.Add(item.UserName + "--- " + item.State);//add to listbox
+                    listOnlinePlayers.Children.Add(new PlayerListElementControl(item));
                 }
             }
         }
@@ -66,7 +71,7 @@ namespace UnoClient
 
         public void PlayerConnected(Player player)
         {
-            listBoxOnlinePlayers.Items.Add(player.UserName + "--- " + player.State);
+            listOnlinePlayers.Children.Add(new PlayerListElementControl(player));
         }
 
         public void PlayerDisConnected(Player player)
