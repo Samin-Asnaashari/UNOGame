@@ -1,9 +1,9 @@
 ﻿<Window x:Class="UnoClient.LoginAndRegisterWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Uno - Login"
+        Title="Uno: Login"
 		MinWidth="300"  Width="300" MaxWidth="300"
-		MinHeight="275" Height="275" MaxHeight="275">
+		MinHeight="275" Height="275" MaxHeight="275" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Image HorizontalAlignment="Left" Height="90" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" Source="Images/logo.png"/> <!-- Logo -->
         <GroupBox Header="Login" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="272">
@@ -17,7 +17,7 @@
                     <PasswordBox x:Name="txtPassword" Width="165" Height="18" Margin="10,0,0,0"/>
                 </WrapPanel>
                 <WrapPanel x:Name="wpLoginControls" Orientation="Horizontal">
-                    <TextBlock x:Name="lblNoAccount" Margin="5,0,0,0" Width="100" Text="No account yet?" Foreground="Blue" TextDecorations="Underline" PreviewMouseDown="lblNoAccount_PreviewMouseDown" Cursor="Hand">
+                    <TextBlock x:Name="lblNoAccount" Margin="5,0,0,0" Width="100" Text="No account yet?" Foreground="Blue" TextDecorations="Underline" Cursor="Hand">
                         <TextBlock.Triggers>
                             <EventTrigger RoutedEvent="TextBlock.PreviewMouseDown">
                                 <BeginStoryboard>
@@ -37,12 +37,31 @@
                     </TextBlock>
                     <Button x:Name="btnLogin" Margin="90,0,0,0"  Content="Login" Width="60" Click="btnLogin_Click"/>
                 </WrapPanel>
-                <WrapPanel x:Name="wpRegisterControls" Orientation="Horizontal" Height="0">
+                <WrapPanel x:Name="wpRegisterControls" Orientation="Horizontal">
+                    <!--Height="0">-->
                     <WrapPanel>
                         <Label Width="80" Content="Password #2:"/>
                         <PasswordBox x:Name="txtVerifyPassword" Width="165" Height="18" Margin="10,0,0,0"/>
                     </WrapPanel>
-                    <Button x:Name="btnRegister" Margin="195,0,0,0"  Content="Register" Width="60" Click="btnRegister_Click"/>
+                    <TextBlock Margin="5,0,0,0" Width="100" Text="Have an account?" Foreground="Blue" TextDecorations="Underline" Cursor="Hand">
+                        <TextBlock.Triggers>
+                            <EventTrigger RoutedEvent="TextBlock.PreviewMouseDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="wpLoginControls"
+                                            Storyboard.TargetProperty="(Grid.Height)"
+                                            From="0" To="20" Duration="0:0:.2" AutoReverse="False"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="wpRegisterControls"
+                                            Storyboard.TargetProperty="(Grid.Height)"
+                                            From="46" To="0" Duration="0:0:.5" AutoReverse="False"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
+                    <Button x:Name="btnRegister" Margin="90,0,0,0" Content="Register" Width="60" Click="btnRegister_Click"/>
                 </WrapPanel>
             </WrapPanel>
         </GroupBox>
