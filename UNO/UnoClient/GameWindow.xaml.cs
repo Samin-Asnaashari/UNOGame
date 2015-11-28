@@ -22,10 +22,12 @@ namespace UnoClient
     public partial class GameWindow : UserControl, proxy.IGameCallback
     {
         public SwitchWindowHandler OnSwitchWindow;
+        private string username;
 
-        public GameWindow(SwitchWindowHandler switchWindowCallback)
+        public GameWindow(SwitchWindowHandler switchWindowCallback, string username)
         {
             OnSwitchWindow += switchWindowCallback;
+            this.username = username;
             InitializeComponent();
         }
 

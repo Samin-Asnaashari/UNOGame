@@ -24,9 +24,8 @@ namespace UnoClient
     {
         public SwitchWindowHandler OnSwitchWindow;
         private LobbyClient Lobby;
-        private InstanceContext context;
 
-        public LobbyWindow(SwitchWindowHandler switchWindowCallback, String username)// each time window is switch to lobby getonlinelist, subscribeToLobbyEvents, etc must be done
+        public LobbyWindow(SwitchWindowHandler switchWindowCallback, string username)// each time window is switch to lobby getonlinelist, subscribeToLobbyEvents, etc must be done
         {
             OnSwitchWindow += switchWindowCallback;
             InitializeComponent();
@@ -38,8 +37,7 @@ namespace UnoClient
 
             if (username != "")
             {
-                context = new InstanceContext(this);
-                Lobby = new LobbyClient(context);
+                Lobby = new LobbyClient(new InstanceContext(this));
                 Lobby.SubScribeToLobbyEvents(username); // subscribeEventsTolobby
                 
                 foreach (var item in Lobby.GetOnlineList())
