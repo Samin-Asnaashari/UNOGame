@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnoClient.proxy;
 
 namespace UnoClient
 {
@@ -20,15 +21,17 @@ namespace UnoClient
     /// </summary>
     public partial class PlayerListElementControl : UserControl
     {
-
         public bool IsChecked
         {
             get { return (bool)checkBox.IsChecked; }
         }
 
-        public PlayerListElementControl(proxy.Player player)
+        public Player Player { get; private set; }
+
+        public PlayerListElementControl(Player player)
         {
             InitializeComponent();
+            Player = player;
             checkBox.Content = player.UserName;
             SetState(player.State);
         }
@@ -39,14 +42,14 @@ namespace UnoClient
             checkBox.Content = player;
         }
 
-        public void SetState(proxy.PlayerState state)
+        public void SetState(PlayerState state)
         {
             switch (state)
             {
-                case proxy.PlayerState.InGame:
+                case PlayerState.InGame:
                     setCheckbox(false);
                     break;
-                case proxy.PlayerState.InLobby:
+                case PlayerState.InLobby:
                     setCheckbox(true);
                     break;
             }

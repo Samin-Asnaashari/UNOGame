@@ -76,7 +76,15 @@ namespace UnoClient
 
         public void PlayerDisConnected(Player player)
         {
-            throw new NotImplementedException();
+            foreach(UIElement playerControl in listOnlinePlayers.Children)
+            {
+                var selectedPlayer = ((PlayerListElementControl)playerControl).Player;
+
+                if (selectedPlayer.UserName == player.UserName)
+                {
+                    listOnlinePlayers.Children.Remove(playerControl);
+                }
+            }
         }
 
         public void SendChatMessageLobbyCallback(string message)
