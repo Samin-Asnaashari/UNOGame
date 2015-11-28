@@ -21,6 +21,7 @@ namespace UNOService
         public IGameCallback IGameCallback { get; set; }
         public int GameID { get; set; }
         public int PartyID { get; set; }
+        public bool UnoSaid { get; set; }
 
 
         public Player(String username)
@@ -32,17 +33,16 @@ namespace UNOService
 
         public void AddCard(List<Card> cards)
         {
-
+            foreach (var item in cards)
+            {
+                this.Hand.Add(item);
+            }
+            
         }
 
         public void Remove(Card card)
         {
-
-        }
-
-        public void ChangeState(PlayerState state)
-        {
-
+            Hand.Remove(card);
         }
     }
 }

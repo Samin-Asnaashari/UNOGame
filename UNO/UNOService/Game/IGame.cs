@@ -34,16 +34,16 @@ namespace UNOService
 		void playCard(int GameID);
 
         /// <summary>
-        /// Player leaves the game when playing
-        /// </summary>
-        [OperationContract]
-        void LeaveGame(int GameID);
-
-        /// <summary>
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>
         [OperationContract(IsOneWay = true)]
         void SendMessageGame(string message);
+
+        /// <summary>
+        /// Subscribe to All Game Events
+        /// </summary>
+        [OperationContract]
+        void SubscribeToGameEvents(String username);
     }
 }

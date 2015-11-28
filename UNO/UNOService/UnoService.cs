@@ -31,12 +31,11 @@ namespace UNOService
             bool loginSuccessFull = false;
             try
             {
-
-                if (playersOnline.Find(x => x.UserName.ToLower() == userName.ToLower()) == null)//user already logged in
+                if (playersOnline.Find(x => x.UserName.ToLower() == userName.ToLower()) == null)//user not logged in yet
                 {
                     loginSuccessFull = databaseHandler.CheckLogin(userName, password);
                     if (loginSuccessFull)
-                        CreatePlayerForLobby(userName);
+                        CreatePlayer(userName);
                 }
             }
             catch (Exception)
@@ -46,7 +45,7 @@ namespace UNOService
             return loginSuccessFull;
         }
 
-        private void CreatePlayerForLobby(string username)//method maybe not needed
+        private void CreatePlayer(string username)//method maybe not needed
         {
             Player toBeAdded = new Player(username);
             toBeAdded.State = PlayerState.InLobby;
@@ -58,7 +57,7 @@ namespace UNOService
             try
             {
                 databaseHandler.InsertPlayer(userName, password);
-                CreatePlayerForLobby(userName);
+                CreatePlayer(userName);
                 return true;
             }
             catch (Exception)
@@ -93,11 +92,6 @@ namespace UNOService
         }
 
         public void playCard(int GameID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LeaveGame(int GameID)
         {
             throw new NotImplementedException();
         }
@@ -150,49 +144,68 @@ namespace UNOService
             {
                 Game.Game game = games.Find(x => x.GameID == player.GameID);
 
-                //check if UNO said//
+                bool messageAlreadySent = false;
 
-                if (!game.UNOsaidAlready)
+                if (message.ToLower().IndexOf("uno", 0, 3) == 0 && message.Length == 3)//checking for uno
                 {
-                    game.UNOsaidAlready = true;
+                    if (!game.UNOsaidAlready)
+                    {
+                        game.UNOsaidAlready = true;//make sure that only one 'saying uno' at a time
 
-                    List<Player> OrderedPlayers = CalculateGamePlayerPositions(player, game);
+                        List<Player> OrderedPlayers = CalculateGamePlayerPositions(player, game);
 
-                    if (OrderedPlayers[0].Hand.Count == 1 && game.TurnToPlay.UserName == OrderedPlayers[1].UserName)
-                    {
-                        foreach (var item3 in game.Players)//send everybody the text message and maybe also saying that he is save from punishment cause he was the first
+                        if (OrderedPlayers[0].Hand.Count == 1 && game.TurnToPlay.UserName == OrderedPlayers[1].UserName && !OrderedPlayers[0].UnoSaid)
                         {
-                            item3.IGameCallback.SendMessageGameCallback(message);
+                            OrderedPlayers[0].UnoSaid = true; //put this variable also true if after next player turn nobody said uno in turn to play and make it untrue if player has one card but has to draw a card
+                            foreach (var item3 in game.Players)//send everybody the text message and maybe also saying that he is save from punishment cause he was the first
+                            {
+                                item3.IGameCallback.SendMessageGameCallback(message);
+                            }
+                            messageAlreadySent = true;
                         }
-                    }
-                    else if(OrderedPlayers[0].UserName == game.TurnToPlay.UserName && OrderedPlayers[2].Hand.Count == 1)
-                    {
-                        OrderedPlayers[2].IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck and punish the player //also a method needed to notify all other players for this change
-                        foreach (var item3 in game.Players)
+                        else if (OrderedPlayers[0].UserName == game.TurnToPlay.UserName && OrderedPlayers[2].Hand.Count == 1 && !OrderedPlayers[2].UnoSaid)
                         {
-                            item3.IGameCallback.SendMessageGameCallback(message);
-                            item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[2].UserName);
+                            OrderedPlayers[2].IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck and punish the player //also a method needed to notify all other players for this change
+                            OrderedPlayers[2].AddCard(new List<Card>());//same cards that have been sent
+                            foreach (var item3 in game.Players)
+                            {
+                                item3.IGameCallback.SendMessageGameCallback(message);
+                                item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[2].UserName);
+                            }
+                            messageAlreadySent = true;
                         }
-                    }
-                    else if(OrderedPlayers[2].UserName == game.TurnToPlay.UserName && OrderedPlayers[3].Hand.Count==1)
-                    {
-                        OrderedPlayers[3].IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck and punish the player //also a method needed to notify all other players for this change
-                        foreach (var item3 in game.Players)
+                        else if (OrderedPlayers[2].UserName == game.TurnToPlay.UserName && OrderedPlayers[3].Hand.Count == 1 && !OrderedPlayers[3].UnoSaid)
                         {
-                            item3.IGameCallback.SendMessageGameCallback(message);
-                            item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[3].UserName);
+                            OrderedPlayers[3].IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck and punish the player //also a method needed to notify all other players for this change
+                            OrderedPlayers[3].AddCard(new List<Card>());//same cards that have been sent
+                            foreach (var item3 in game.Players)
+                            {
+                                item3.IGameCallback.SendMessageGameCallback(message);
+                                item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[3].UserName);
+                            }
+                            messageAlreadySent = true;
                         }
-                    }
-                    else if(OrderedPlayers[3].UserName == game.TurnToPlay.UserName && OrderedPlayers[2].Hand.Count == 1)
-                    {
-                        OrderedPlayers[2].IGameCallback.CardsAssigned(new List<Card>());
-                        foreach (var item3 in game.Players)
+                        else if (OrderedPlayers[3].UserName == game.TurnToPlay.UserName && OrderedPlayers[2].Hand.Count == 1 && !OrderedPlayers[2].UnoSaid)
                         {
-                            item3.IGameCallback.SendMessageGameCallback(message);
-                            item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[2].UserName);
+                            OrderedPlayers[2].IGameCallback.CardsAssigned(new List<Card>());
+                            OrderedPlayers[3].AddCard(new List<Card>());//same cards that have been sent
+                            foreach (var item3 in game.Players)
+                            {
+                                item3.IGameCallback.SendMessageGameCallback(message);
+                                item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[2].UserName);
+                            }
+                            messageAlreadySent = true;
                         }
+                        game.UNOsaidAlready = false;
                     }
-                    game.UNOsaidAlready = false;
+                }
+
+                if (!messageAlreadySent)
+                {
+                    foreach (var item3 in game.Players)//send everybody the text message and maybe also saying that he is save from punishment cause he was the first
+                    {
+                        item3.IGameCallback.SendMessageGameCallback(message);
+                    }
                 }
             }
         }
@@ -248,6 +261,11 @@ namespace UNOService
                 if (item != player)
                     item.ILobbyCallback.PlayerConnected(player);
             }
+        }
+
+        public void SubscribeToGameEvents(string username)
+        {
+            throw new NotImplementedException();
         }
     }
 }
