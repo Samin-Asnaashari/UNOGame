@@ -43,7 +43,7 @@ namespace UNOService
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>
-        [OperationContract]
-        void SendMessageGame(string message, int GameID);
+        [OperationContract(IsOneWay = true)]
+        void SendMessageGame(string message);
     }
 }

@@ -53,5 +53,10 @@ namespace UnoClient
         {
             throw new NotImplementedException();
         }
+
+        public void NotifyOpponentsOfPlayerPunished(string userName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

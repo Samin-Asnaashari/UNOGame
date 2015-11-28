@@ -19,14 +19,14 @@ namespace UNOService
         public PlayerState State { get; set; }
         public ILobbyCallback ILobbyCallback { get; set; }
         public IGameCallback IGameCallback { get; set; }
-        public DateTime UnoSaid { get; set; }
         public int GameID { get; set; }
+        public int PartyID { get; set; }
 
 
         public Player(String username)
         {
             this.UserName = username;
-            this.State = PlayerState.InLobby;//cause at login or register it always goes to lobby
+            this.State = PlayerState.InLobby;//cause after login or sign up it always goes to lobby
             Hand = new List<Card>();
         }
 

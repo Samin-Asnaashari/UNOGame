@@ -33,7 +33,6 @@ namespace UnoClient
 
             if (username != "")
             {
-
                 context = new InstanceContext(this);
                 Lobby = new LobbyClient(context);
                 Lobby.SubScribeToLobbyEvents(username); // subscribeEventsTolobby

@@ -17,10 +17,13 @@ namespace UNOService.Game
         public List<Card> PlayedCards { get; set; }
         public Direction Direction { get; set; }
         public bool UNOsaidAlready { get; set; }
+        public Player TurnToPlay { get; set; }
 
         public Game(int gameID, List<Player> players)
         {
+            this.GameID = gameID;
             this.Direction = Direction.clockwise;
+            this.Players = players;
         }
 
         public void CreateDeck()

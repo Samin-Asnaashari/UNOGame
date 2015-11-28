@@ -106,7 +106,7 @@ namespace UNOService
         {
             IGameCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
 
-            foreach (var item in playersOnline)//for checking player legit and get gameID he is playing in right now
+            foreach (var item in playersOnline)//for checking player legit and get gameID or party he is playing in right now
             {
                 if (currentPlayerCallback == item.IGameCallback)
                 {
@@ -116,44 +116,84 @@ namespace UNOService
             return null;
         }
 
-        public void SendMessageGame(string message, int GameID)//game id not needed the calling player we will get him from game.players list with his operationContext //here we also know that his gameID is legit and also he is a real player of the game
+        private List<Player> CalculateGamePlayerPositions(Player callingPlayer, Game.Game game)//Calculating player positions of a game based on the calling player parameter and depending on direction of the game
+        {
+            List<Player> OrderedPlayerPositions = new List<Player>();
+            OrderedPlayerPositions[0] = callingPlayer;
+
+            for (int i = 0; i < game.Players.Count; i++)
+            {
+                if (OrderedPlayerPositions[0] == game.Players[i])
+                {
+                    if (game.Direction == Direction.clockwise)
+                    {
+                        OrderedPlayerPositions[1] = game.Players[(i + 1) % 4];//nextToMePlayer
+                        OrderedPlayerPositions[2] = game.Players[(i - 1) % 4];//previousToMePlayer
+                        OrderedPlayerPositions[3] = game.Players[(i + 2) % 4];//Last PLayer
+                    }
+                    else
+                    {
+                        OrderedPlayerPositions[1] = game.Players[(i - 1) % 4];
+                        OrderedPlayerPositions[2] = game.Players[(i + 1) % 4];
+                        OrderedPlayerPositions[3] = game.Players[(i + 2) % 4];
+                    }
+                }
+            }
+            return OrderedPlayerPositions;
+
+        }
+
+        public void SendMessageGame(string message)
         {
             Player player = CheckPlayerLegitimacy();
             if (player != null)
             {
                 Game.Game game = games.Find(x => x.GameID == player.GameID);
 
-                //check if UNO said 
+                //check if UNO said//
 
                 if (!game.UNOsaidAlready)
                 {
                     game.UNOsaidAlready = true;
 
-                    //check if next player turn is not up, next player dependency depends on direction of the game
+                    List<Player> OrderedPlayers = CalculateGamePlayerPositions(player, game);
 
-                    foreach (var item in game.Players)
+                    if (OrderedPlayers[0].Hand.Count == 1 && game.TurnToPlay.UserName == OrderedPlayers[1].UserName)
                     {
-                        if (item.IGameCallback == player.IGameCallback)
+                        foreach (var item3 in game.Players)//send everybody the text message and maybe also saying that he is save from punishment cause he was the first
                         {
-                            if (item.Hand.Count == 1)
-                            {
-                                foreach (var item2 in game.Players)
-                                {
-                                    if (item.UnoSaid > item2.UnoSaid)
-                                    {
-                                        item.IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck //also a method needed to notify all other players for this change
-                                        foreach (var item3 in game.Players)
-                                        {
-                                            item3.IGameCallback.SendMessageGameCallback(message);
-                                        }
-                                        return;
-                                    }
-                                }
-                            }
+                            item3.IGameCallback.SendMessageGameCallback(message);
                         }
                     }
+                    else if(OrderedPlayers[0].UserName == game.TurnToPlay.UserName && OrderedPlayers[2].Hand.Count == 1)
+                    {
+                        OrderedPlayers[2].IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck and punish the player //also a method needed to notify all other players for this change
+                        foreach (var item3 in game.Players)
+                        {
+                            item3.IGameCallback.SendMessageGameCallback(message);
+                            item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[2].UserName);
+                        }
+                    }
+                    else if(OrderedPlayers[2].UserName == game.TurnToPlay.UserName && OrderedPlayers[3].Hand.Count==1)
+                    {
+                        OrderedPlayers[3].IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck and punish the player //also a method needed to notify all other players for this change
+                        foreach (var item3 in game.Players)
+                        {
+                            item3.IGameCallback.SendMessageGameCallback(message);
+                            item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[3].UserName);
+                        }
+                    }
+                    else if(OrderedPlayers[3].UserName == game.TurnToPlay.UserName && OrderedPlayers[2].Hand.Count == 1)
+                    {
+                        OrderedPlayers[2].IGameCallback.CardsAssigned(new List<Card>());
+                        foreach (var item3 in game.Players)
+                        {
+                            item3.IGameCallback.SendMessageGameCallback(message);
+                            item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[2].UserName);
+                        }
+                    }
+                    game.UNOsaidAlready = false;
                 }
-                //at the end put uno saidAlready to false again
             }
         }
 

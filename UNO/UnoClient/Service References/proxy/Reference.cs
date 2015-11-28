@@ -402,11 +402,11 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/LeaveGame", ReplyAction="http://tempuri.org/IGame/LeaveGameResponse")]
         System.Threading.Tasks.Task LeaveGameAsync(int GameID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SendMessageGame", ReplyAction="http://tempuri.org/IGame/SendMessageGameResponse")]
-        void SendMessageGame(string message, int GameID);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
+        void SendMessageGame(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SendMessageGame", ReplyAction="http://tempuri.org/IGame/SendMessageGameResponse")]
-        System.Threading.Tasks.Task SendMessageGameAsync(string message, int GameID);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
+        System.Threading.Tasks.Task SendMessageGameAsync(string message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -418,11 +418,11 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/TurnChanged", ReplyAction="http://tempuri.org/IGame/TurnChangedResponse")]
         void TurnChanged(UnoClient.proxy.Player player);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SendMessageGameCallback", ReplyAction="http://tempuri.org/IGame/SendMessageGameCallbackResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGameCallback")]
         void SendMessageGameCallback(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/NotifyPlayerLeft", ReplyAction="http://tempuri.org/IGame/NotifyPlayerLeftResponse")]
-        void NotifyPlayerLeft(string userName);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/NotifyOpponentsOfPlayerPunished", ReplyAction="http://tempuri.org/IGame/NotifyOpponentsOfPlayerPunishedResponse")]
+        void NotifyOpponentsOfPlayerPunished(string userName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -485,12 +485,12 @@ namespace UnoClient.proxy {
             return base.Channel.LeaveGameAsync(GameID);
         }
         
-        public void SendMessageGame(string message, int GameID) {
-            base.Channel.SendMessageGame(message, GameID);
+        public void SendMessageGame(string message) {
+            base.Channel.SendMessageGame(message);
         }
         
-        public System.Threading.Tasks.Task SendMessageGameAsync(string message, int GameID) {
-            return base.Channel.SendMessageGameAsync(message, GameID);
+        public System.Threading.Tasks.Task SendMessageGameAsync(string message) {
+            return base.Channel.SendMessageGameAsync(message);
         }
     }
 }

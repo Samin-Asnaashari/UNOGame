@@ -37,9 +37,9 @@ namespace UNOService
         void SendMessageGameCallback(string message);
 
         /// <summary>
-        /// Notify other players about player left
+        /// when a player gets punished notify all other players in game
         /// </summary>
         [OperationContract]
-        void NotifyPlayerLeft(string userName);
+        void NotifyOpponentsOfPlayerPunished(string userName);
     }
 }
