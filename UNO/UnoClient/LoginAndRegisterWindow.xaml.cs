@@ -65,5 +65,10 @@ namespace UnoClient
                 //Register unsuccesful
             }
         }
+
+        private void txtUsername_KeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

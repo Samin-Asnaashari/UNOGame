@@ -202,7 +202,7 @@ namespace UNOService
 
                 if (!messageAlreadySent)
                 {
-                    foreach (var item3 in game.Players)//send everybody the text message and maybe also saying that he is save from punishment cause he was the first
+                    foreach (var item3 in game.Players)
                     {
                         item3.IGameCallback.SendMessageGameCallback(message);
                     }
