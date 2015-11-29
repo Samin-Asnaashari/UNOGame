@@ -139,7 +139,7 @@ namespace UNOService
 
         public void SendMessageGame(string message)
         {
-            Player player = CheckPlayerLegitimacy();
+            Player player = CheckPlayerLegitimacyInGame();
             if (player != null)
             {
                 Game.Game game = games.Find(x => x.GameID == player.GameID);
