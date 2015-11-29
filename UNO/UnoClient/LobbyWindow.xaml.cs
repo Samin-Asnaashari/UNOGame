@@ -32,7 +32,9 @@ namespace UnoClient
             InitializeComponent();
 
             Lobby = new LobbyClient(new InstanceContext(this));
-            Lobby.SubScribeToLobbyEvents(username); // subscribeEventsTolobby
+            Lobby.SubScribeToLobbyEvents(username);
+
+            // Get online players and show them in the list
             foreach (var item in Lobby.GetOnlineList())
             {
                 listOnlinePlayers.Children.Add(new PlayerListElementControl(item));
@@ -44,21 +46,26 @@ namespace UnoClient
             throw new NotImplementedException();
         }
 
+        // Occurs after a player accepts an invite to an already full party
+        // May be reworked into the UI instead of a messagebox
         public void PartyIsFull()
         {
-            throw new NotImplementedException();
+            MessageBox.Show("Party is full");
         }
 
+        // Add a player to the party
         public void PlayerAddedToParty(string playerName)
         {
-            throw new NotImplementedException();
+            party?.AddPlayer(playerName);
         }
 
+        // Add a player to the online list
         public void PlayerConnected(Player player)
         {
             listOnlinePlayers.Children.Add(new PlayerListElementControl(player));
         }
 
+        // Remove player from the online player list
         public void PlayerDisconnected(Player player)
         {
             foreach (UIElement playerControl in listOnlinePlayers.Children)
@@ -70,8 +77,11 @@ namespace UnoClient
                     listOnlinePlayers.Children.Remove(playerControl);
                 }
             }
+
+            // PlayerLeftParty(player); // Should this be done here, or does it also get called from the server when a player disconnects?
         }
 
+        // Remove player from the party list
         public void PlayerLeftParty(Player player)
         {
             party?.RemovePlayer(player.UserName);
@@ -83,6 +93,7 @@ namespace UnoClient
         }
 
         // Actually means we are recieving an invite..
+        // May be reworked into the UI instead of a messagebox
         public void SentInvite(string hostName)
         {
             if (MessageBox.Show($"{hostName} has invited you to a game", "Game Invite", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
@@ -96,9 +107,10 @@ namespace UnoClient
             }
         }
 
+        // Show a new party window
         private void createParty(string host)
         {
-
+            //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
             party = new PartyControl(username, host, leaveParty, sendPartyMessage);
             partyGrid.Children.Add(party);
 

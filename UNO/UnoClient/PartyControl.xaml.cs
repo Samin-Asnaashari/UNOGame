@@ -37,12 +37,15 @@ namespace UnoClient
             this.player = player;
             InitializeComponent();
             AddPlayer(player);
+
+            // Only host can see the start game button
             if (player == host)
             {
                 buttonStartGame.Visibility = Visibility.Visible;
             }
         }
 
+        // Only host can use the start game button, when at least 2 people are in the lobby
         private void updateStartGameButton()
         {
             if (player == host)
@@ -51,6 +54,7 @@ namespace UnoClient
             }
         }
 
+        // When a player joins the party, add their name
         public void AddPlayer(string player)
         {
             listBoxPlayersInParty.Items.Add(player);
@@ -58,6 +62,7 @@ namespace UnoClient
             updateStartGameButton();
         }
 
+        // When a player leaves the party, remove their name
         public void RemovePlayer(string player)
         {
             listBoxPlayersInParty.Items.Remove(player);
@@ -69,16 +74,19 @@ namespace UnoClient
             Leave();
         }
 
+        // Leave the party and notify the server
         public void Leave()
         {
             OnLeaveParty?.Invoke(host);
         }
 
+        // Send a message
         private void buttonSendPartyMessage_Click(object sender, RoutedEventArgs e)
         {
             OnSendMessage?.Invoke(textBoxPartyChat.Text, host);
         }
 
+        // Show a recieved message
         public void DisplayMessage(string message)
         {
             listBoxPartyChat.Items.Add(message);

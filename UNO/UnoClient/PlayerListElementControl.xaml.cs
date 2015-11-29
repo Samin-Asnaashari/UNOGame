@@ -49,6 +49,7 @@ namespace UnoClient
             }
         }
 
+        // Disable/Enable the checkbox so the player can(not) be invited
         private void setCheckbox(bool enabled)
         {
             if (enabled)
