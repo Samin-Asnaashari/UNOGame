@@ -20,12 +20,19 @@ namespace UnoClient
     /// </summary>
     public partial class PartyControl : UserControl
     {
+        public delegate void LeavePartyHandler(string host);
+        public LeavePartyHandler OnLeaveParty;
+
+        public delegate void SendMessageHandler(string message, string host);
+        public SendMessageHandler OnSendMessage;
+
         string host;
         string player;
-        proxy.LobbyClient lobby;
-        public PartyControl(string player, string host, proxy.LobbyClient lobby)
+        public PartyControl(string player, string host, LeavePartyHandler leavePartyDelegate, SendMessageHandler sendMessageDelegate)
         {
-            this.lobby = lobby;
+            OnLeaveParty += leavePartyDelegate;
+            OnSendMessage += sendMessageDelegate;
+
             this.host = host;
             this.player = player;
             InitializeComponent();
@@ -59,12 +66,17 @@ namespace UnoClient
 
         private void buttonPartyClose_Click(object sender, RoutedEventArgs e)
         {
+            Leave();
+        }
+
+        public void Leave()
+        {
+            OnLeaveParty?.Invoke(host);
         }
 
         private void buttonSendPartyMessage_Click(object sender, RoutedEventArgs e)
         {
-            string message = textBoxPartyChat.Text;
-            //lobby.SendMessageLobby(message, host);
+            OnSendMessage?.Invoke(textBoxPartyChat.Text, host);
         }
     }
 

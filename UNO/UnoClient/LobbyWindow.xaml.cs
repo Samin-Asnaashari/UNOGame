@@ -24,9 +24,11 @@ namespace UnoClient
     {
         private LobbyClient Lobby;
         PartyControl party;
+        string username;
 
-        public LobbyWindow(String username)
+        public LobbyWindow(string username)
         {
+            username = this.username;
             InitializeComponent();
 
             Lobby = new LobbyClient(new InstanceContext(this));
@@ -77,21 +79,53 @@ namespace UnoClient
             throw new NotImplementedException();
         }
 
+        // Actually means we are recieving an invite..
         public void SentInvite(string hostName)
         {
             if (MessageBox.Show($"{hostName} has invited you to a game", "Game Invite", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
             {
-                // If the players accepts an invitation to another players party, 
-                // they do not have invite rights. (Inviting causes a new party to be created)
-                //party = new PartyControl(hostName);
-                partyGrid.Children.Add(party);
-                inviteButton.IsEnabled = false;
+                Lobby.AnswerInvite(true, hostName);
+                createParty(hostName);
             }
+            else
+            {
+                Lobby.AnswerInvite(false, hostName);
+            }
+        }
+
+        private void createParty(string host)
+        {
+
+            party = new PartyControl(username, host, leaveParty, sendPartyMessage);
+            partyGrid.Children.Add(party);
+
+            inviteButton.IsEnabled = (username == host);
         }
 
         private void inviteButton_Click(object sender, RoutedEventArgs e)
         {
+            List<Player> playersToInvite = new List<Player>();
+            foreach (PlayerListElementControl playerControl in listOnlinePlayers.Children)
+            {
+               if (playerControl.IsChecked)
+                {
+                    playersToInvite.Add(playerControl.Player);
+                }
+            }
 
+            Lobby.SendInvites(playersToInvite.ToArray());
+        }
+
+        private void leaveParty(string host)
+        {
+            partyGrid.Children.Clear();
+            Lobby.LeaveParty(host);
+            inviteButton.IsEnabled = true;
+        }
+
+        private void sendPartyMessage(string message, string host)
+        {
+            Lobby.SendMessageParty(message, host);
         }
     }
 }

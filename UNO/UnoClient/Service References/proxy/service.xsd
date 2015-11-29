@@ -60,7 +60,7 @@
   <xs:element name="CreateParty">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="partyID" type="xs:int" />
+        <xs:element minOccurs="0" name="partyID" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -72,7 +72,7 @@
   <xs:element name="LeaveParty">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="partyID" type="xs:int" />
+        <xs:element minOccurs="0" name="partyID" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -97,6 +97,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="answer" type="xs:boolean" />
+        <xs:element minOccurs="0" name="partyID" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -119,15 +120,15 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendMessageLobby">
+  <xs:element name="SendMessageParty">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="partyID" type="xs:int" />
+        <xs:element minOccurs="0" name="partyID" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendMessageLobbyResponse">
+  <xs:element name="SendMessagePartyResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

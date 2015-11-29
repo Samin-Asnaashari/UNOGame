@@ -620,7 +620,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SendMessageLobby_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SendMessageParty_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -643,7 +643,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SendMessageLobby_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SendMessageParty_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1544,11 +1544,11 @@
   <wsdl:message name="ILobby_StartGame_OutputMessage">
     <wsdl:part name="parameters" element="tns:StartGameResponse" />
   </wsdl:message>
-  <wsdl:message name="ILobby_SendMessageLobby_InputMessage">
-    <wsdl:part name="parameters" element="tns:SendMessageLobby" />
+  <wsdl:message name="ILobby_SendMessageParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageParty" />
   </wsdl:message>
-  <wsdl:message name="ILobby_SendMessageLobby_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SendMessageLobbyResponse" />
+  <wsdl:message name="ILobby_SendMessageParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMessagePartyResponse" />
   </wsdl:message>
   <wsdl:message name="ILobby_GetPartyMembers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPartyMembers" />
@@ -1682,9 +1682,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ILobby/StartGame" message="tns:ILobby_StartGame_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/StartGameResponse" message="tns:ILobby_StartGame_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SendMessageLobby">
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/SendMessageLobby" message="tns:ILobby_SendMessageLobby_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/SendMessageLobbyResponse" message="tns:ILobby_SendMessageLobby_OutputMessage" />
+    <wsdl:operation name="SendMessageParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/SendMessageParty" message="tns:ILobby_SendMessageParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/SendMessagePartyResponse" message="tns:ILobby_SendMessageParty_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPartyMembers">
       <wsdl:input wsaw:Action="http://tempuri.org/ILobby/GetPartyMembers" message="tns:ILobby_GetPartyMembers_InputMessage" />
@@ -1862,14 +1862,14 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SendMessageLobby">
-      <soap12:operation soapAction="http://tempuri.org/ILobby/SendMessageLobby" style="document" />
+    <wsdl:operation name="SendMessageParty">
+      <soap12:operation soapAction="http://tempuri.org/ILobby/SendMessageParty" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SendMessageLobby_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SendMessageParty_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SendMessageLobby_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SendMessageParty_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
