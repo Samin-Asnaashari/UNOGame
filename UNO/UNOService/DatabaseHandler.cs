@@ -10,10 +10,14 @@ namespace UNOService
     public class DatabaseHandler
     {
         private MySqlConnection connection;
-
+        private string serverIP = "localhost";
+        private string databaseName = "uno";
+        private string userName = "root";
+        private string password = "";
+        private int timeOutSeconds = 30;
         public DatabaseHandler()
         {
-            string connectionInfo = "server = 80.113.177.148;" + "database = uno;" + "user id = root;" + "password = ;" + "connect timeout = 30;";
+            string connectionInfo = $"server = {serverIP}; database = {databaseName}; user id = {userName}; password = {password}; connect timeout = {timeOutSeconds};";
             connection = new MySqlConnection(connectionInfo);
         }
 
