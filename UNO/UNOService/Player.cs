@@ -40,6 +40,11 @@ namespace UNOService
             
         }
 
+        public override string ToString()
+        {
+            return this.UserName + "--- " + this.State;
+        }
+
         public void Remove(Card card)
         {
             Hand.Remove(card);
