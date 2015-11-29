@@ -28,11 +28,6 @@ namespace UnoClient
         {
             InitializeComponent();
 
-            for (int i = 0; i < 50; i++)
-            {
-                listOnlinePlayers.Children.Add(new PlayerListElementControl(i.ToString()));
-            }
-
             if (username != "")
             {
                 Lobby = new LobbyClient(new InstanceContext(this));
