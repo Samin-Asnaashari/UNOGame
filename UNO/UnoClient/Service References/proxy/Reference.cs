@@ -396,17 +396,17 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/playCard", ReplyAction="http://tempuri.org/IGame/playCardResponse")]
         System.Threading.Tasks.Task playCardAsync(int GameID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/LeaveGame", ReplyAction="http://tempuri.org/IGame/LeaveGameResponse")]
-        void LeaveGame(int GameID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/LeaveGame", ReplyAction="http://tempuri.org/IGame/LeaveGameResponse")]
-        System.Threading.Tasks.Task LeaveGameAsync(int GameID);
-        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
         void SendMessageGame(string message);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
         System.Threading.Tasks.Task SendMessageGameAsync(string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SubscribeToGameEvents", ReplyAction="http://tempuri.org/IGame/SubscribeToGameEventsResponse")]
+        void SubscribeToGameEvents(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SubscribeToGameEvents", ReplyAction="http://tempuri.org/IGame/SubscribeToGameEventsResponse")]
+        System.Threading.Tasks.Task SubscribeToGameEventsAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -477,20 +477,20 @@ namespace UnoClient.proxy {
             return base.Channel.playCardAsync(GameID);
         }
         
-        public void LeaveGame(int GameID) {
-            base.Channel.LeaveGame(GameID);
-        }
-        
-        public System.Threading.Tasks.Task LeaveGameAsync(int GameID) {
-            return base.Channel.LeaveGameAsync(GameID);
-        }
-        
         public void SendMessageGame(string message) {
             base.Channel.SendMessageGame(message);
         }
         
         public System.Threading.Tasks.Task SendMessageGameAsync(string message) {
             return base.Channel.SendMessageGameAsync(message);
+        }
+        
+        public void SubscribeToGameEvents(string username) {
+            base.Channel.SubscribeToGameEvents(username);
+        }
+        
+        public System.Threading.Tasks.Task SubscribeToGameEventsAsync(string username) {
+            return base.Channel.SubscribeToGameEventsAsync(username);
         }
     }
 }
