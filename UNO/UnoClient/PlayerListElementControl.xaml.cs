@@ -36,12 +36,6 @@ namespace UnoClient
             SetState(player.State);
         }
 
-        public PlayerListElementControl(string player)
-        {
-            InitializeComponent();
-            checkBox.Content = player;
-        }
-
         public void SetState(PlayerState state)
         {
             switch (state)

@@ -73,6 +73,9 @@
     <Compile Include="LoginAndRegisterWindow.xaml.cs">
       <DependentUpon>LoginAndRegisterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PartyControl.xaml.cs">
+      <DependentUpon>PartyControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlayerListElementControl.xaml.cs">
       <DependentUpon>PlayerListElementControl.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
       <DependentUpon>LobbyWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="LoginAndRegisterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PartyControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -23,6 +23,7 @@ namespace UnoClient
     public partial class LobbyWindow : ILobbyCallback
     {
         private LobbyClient Lobby;
+        PartyControl party;
 
         public LobbyWindow(String username)
         {
@@ -30,7 +31,6 @@ namespace UnoClient
 
             Lobby = new LobbyClient(new InstanceContext(this));
             Lobby.SubScribeToLobbyEvents(username); // subscribeEventsTolobby
-
             foreach (var item in Lobby.GetOnlineList())
             {
                 listOnlinePlayers.Children.Add(new PlayerListElementControl(item));
@@ -68,6 +68,8 @@ namespace UnoClient
                     listOnlinePlayers.Children.Remove(playerControl);
                 }
             }
+
+            party?.RemovePlayer(player.UserName);
         }
 
         public void SendChatMessageLobbyCallback(string message)
@@ -77,8 +79,19 @@ namespace UnoClient
 
         public void SentInvite(string hostName)
         {
-            throw new NotImplementedException();
+            if (MessageBox.Show($"{hostName} has invited you to a game", "Game Invite", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
+            {
+                // If the players accepts an invitation to another players party, 
+                // they do not have invite rights. (Inviting causes a new party to be created)
+                //party = new PartyControl(hostName);
+                partyGrid.Children.Add(party);
+                inviteButton.IsEnabled = false;
+            }
         }
 
+        private void inviteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

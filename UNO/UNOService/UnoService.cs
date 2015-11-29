@@ -12,7 +12,6 @@ namespace UNOService
     public class UnoService : ILoginAndSignUp, IGame, ILobby
     {
         private static int gameID = 0;
-        private static int partyID = 0;
         private DatabaseHandler databaseHandler;
 
         private List<Player> playersOnline;
@@ -222,30 +221,11 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public bool AnswerInvite(bool answer)
-        {
-            throw new NotImplementedException();
-        }
-
         public void StartGame(int GameID)
         {
             throw new NotImplementedException();
         }
 
-        public void SendMessageLobby(string message, int partyID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateParty(int partyID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LeaveParty(int partyID)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<Player> GetPartyMembers()
         {
@@ -266,6 +246,26 @@ namespace UNOService
         }
 
         public void SubscribeToGameEvents(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateParty(string partyID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LeaveParty(string partyID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AnswerInvite(bool answer, string partyID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendMessageParty(string message, string partyID)
         {
             throw new NotImplementedException();
         }
