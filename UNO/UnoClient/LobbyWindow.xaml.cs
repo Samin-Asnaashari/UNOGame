@@ -28,15 +28,12 @@ namespace UnoClient
         {
             InitializeComponent();
 
-            if (username != "")
+            Lobby = new LobbyClient(new InstanceContext(this));
+            Lobby.SubScribeToLobbyEvents(username); // subscribeEventsTolobby
+
+            foreach (var item in Lobby.GetOnlineList())
             {
-                Lobby = new LobbyClient(new InstanceContext(this));
-                Lobby.SubScribeToLobbyEvents(username); // subscribeEventsTolobby
-                
-                foreach (var item in Lobby.GetOnlineList())
-                {
-                    listOnlinePlayers.Children.Add(new PlayerListElementControl(item));
-                }
+                listOnlinePlayers.Children.Add(new PlayerListElementControl(item));
             }
         }
 
@@ -62,7 +59,7 @@ namespace UnoClient
 
         public void PlayerDisConnected(Player player)
         {
-            foreach(UIElement playerControl in listOnlinePlayers.Children)
+            foreach (UIElement playerControl in listOnlinePlayers.Children)
             {
                 var selectedPlayer = ((PlayerListElementControl)playerControl).Player;
 

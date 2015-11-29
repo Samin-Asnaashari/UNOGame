@@ -212,7 +212,9 @@ namespace UNOService
 
         public List<Player> GetOnlineList()
         {
-            return playersOnline;
+            var operationContext = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
+
+            return playersOnline.Where(x => x.ILobbyCallback != operationContext).ToList();
         }
 
         public void SendInvites(List<Player> players)
