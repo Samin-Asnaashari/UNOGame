@@ -21,13 +21,13 @@ namespace UNOService
         /// Party signal sent to be created
         /// </summary>
         [OperationContract]
-        void CreateParty(int partyID);
+        void CreateParty(string partyID);
 
         /// <summary>
         /// Leave the current party
         /// </summary>
         [OperationContract]
-        void LeaveParty(int partyID);
+        void LeaveParty(string partyID);
 
         /// <summary>
         /// Selected players from online list get sent to the server
@@ -41,7 +41,7 @@ namespace UNOService
         /// </summary>
         /// <param name="answer"></param>
         [OperationContract]
-        bool AnswerInvite(bool answer);
+        bool AnswerInvite(bool answer, string partyID);
 
         /// <summary>
         /// 
@@ -54,7 +54,7 @@ namespace UNOService
         /// </summary>
         /// <param name="message"></param>
         [OperationContract]
-        void SendMessageLobby(string message, int partyID);
+        void SendMessageParty(string message, string partyID);
 
         /// <summary>
         /// Returns a list of players already in the party
@@ -68,6 +68,6 @@ namespace UNOService
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        void SubScribeToLobbyEvents(String username);
+        void SubScribeToLobbyEvents(string username);
     }
 }

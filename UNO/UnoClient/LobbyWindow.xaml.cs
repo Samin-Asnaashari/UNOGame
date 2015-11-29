@@ -83,7 +83,7 @@ namespace UnoClient
             {
                 // If the players accepts an invitation to another players party, 
                 // they do not have invite rights. (Inviting causes a new party to be created)
-                party = new PartyControl(hostName);
+                //party = new PartyControl(hostName);
                 partyGrid.Children.Add(party);
                 inviteButton.IsEnabled = false;
             }
