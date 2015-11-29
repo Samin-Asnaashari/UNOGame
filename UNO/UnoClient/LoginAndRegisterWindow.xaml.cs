@@ -70,20 +70,21 @@ namespace UnoClient
 
         private void txtUsername_KeyUp(object sender, KeyEventArgs e)
         {
-            bool exist = client.CheckUserName(txtUsername.Text);
+            bool exist = client.CheckUserName(txtUsername.Text);//only done if user is in register window wpf configuration.
             if (exist)
             {
-                Border myBorder1 = new Border();
-                myBorder1.BorderBrush = Brushes.SlateBlue;
-                myBorder1.BorderThickness = new Thickness(5, 10, 15, 20);
-                myBorder1.Background = Brushes.AliceBlue;
-                myBorder1.Padding = new Thickness(5);
-                myBorder1.CornerRadius = new CornerRadius(15);
-                txtUsername.BorderBrush = myBorder1.BorderBrush;
-                txtUsername.BorderThickness = myBorder1.BorderThickness;
+                //Border myBorder1 = new Border();
+                //myBorder1.BorderThickness = new Thickness(2.01);
+                //myBorder1.BorderBrush = Brushes.Red;
+
+                txtUsername.BorderThickness = new Thickness(2);
+                txtUsername.BorderBrush = Brushes.Red;
             }
-            //else
-            //    lblUsernameError.Visible = false;
+            else
+            {
+                txtUsername.BorderThickness = new Thickness(1);
+                txtUsername.BorderBrush = Brushes.Red;
+            }
         }
     }
 }

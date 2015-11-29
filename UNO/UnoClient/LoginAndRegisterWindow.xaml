@@ -10,9 +10,7 @@
             <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical">
                 <WrapPanel>
                     <Label Width="80" Content="Username:"/>
-                    <TextBox x:Name="txtUsername" Width="165" Height="18" Margin="10,0,0,0" KeyUp="txtUsername_KeyUp">
-                        
-                    </TextBox>
+                    <TextBox x:Name="txtUsername" Width="165" Height="18" Margin="10,0,0,0" KeyUp="txtUsername_KeyUp"/>
                 </WrapPanel>
                 <WrapPanel>
                     <Label Width="80" Content="Password:"/>
