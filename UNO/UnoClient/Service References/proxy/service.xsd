@@ -164,10 +164,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="PlayerDisConnected">
+  <xs:element name="PlayerDisconnected">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q5:Player" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PlayerLeftParty">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q6:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -203,7 +210,7 @@
   <xs:element name="NotifyGameStarted">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="players" nillable="true" type="q6:ArrayOfPlayer" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="players" nillable="true" type="q7:ArrayOfPlayer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -246,7 +253,7 @@
   <xs:element name="takeCardResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="takeCardResult" nillable="true" type="q7:Card" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="takeCardResult" nillable="true" type="q8:Card" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -284,7 +291,7 @@
   <xs:element name="CardsAssigned">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q8:ArrayOfCard" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q9:ArrayOfCard" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -296,7 +303,7 @@
   <xs:element name="TurnChanged">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q9:Player" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q10:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

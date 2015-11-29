@@ -254,8 +254,11 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/PlayerConnected")]
         void PlayerConnected(UnoClient.proxy.Player player);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/PlayerDisConnected")]
-        void PlayerDisConnected(UnoClient.proxy.Player player);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/PlayerDisconnected")]
+        void PlayerDisconnected(UnoClient.proxy.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/PlayerLeftParty")]
+        void PlayerLeftParty(UnoClient.proxy.Player player);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/PlayerAddedToParty")]
         void PlayerAddedToParty(string playerName);

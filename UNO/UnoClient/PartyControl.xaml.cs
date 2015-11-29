@@ -78,6 +78,11 @@ namespace UnoClient
         {
             OnSendMessage?.Invoke(textBoxPartyChat.Text, host);
         }
+
+        public void DisplayMessage(string message)
+        {
+            listBoxPartyChat.Items.Add(message);
+        }
     }
 
 }

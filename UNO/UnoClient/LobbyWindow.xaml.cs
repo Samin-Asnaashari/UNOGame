@@ -28,7 +28,7 @@ namespace UnoClient
 
         public LobbyWindow(string username)
         {
-            username = this.username;
+            this.username = username;
             InitializeComponent();
 
             Lobby = new LobbyClient(new InstanceContext(this));
@@ -59,7 +59,7 @@ namespace UnoClient
             listOnlinePlayers.Children.Add(new PlayerListElementControl(player));
         }
 
-        public void PlayerDisConnected(Player player)
+        public void PlayerDisconnected(Player player)
         {
             foreach (UIElement playerControl in listOnlinePlayers.Children)
             {
@@ -70,13 +70,16 @@ namespace UnoClient
                     listOnlinePlayers.Children.Remove(playerControl);
                 }
             }
+        }
 
+        public void PlayerLeftParty(Player player)
+        {
             party?.RemovePlayer(player.UserName);
         }
 
         public void SendChatMessageLobbyCallback(string message)
         {
-            throw new NotImplementedException();
+            party?.DisplayMessage(message);
         }
 
         // Actually means we are recieving an invite..
@@ -102,12 +105,13 @@ namespace UnoClient
             inviteButton.IsEnabled = (username == host);
         }
 
+        // Invite all selected players in the list
         private void inviteButton_Click(object sender, RoutedEventArgs e)
         {
             List<Player> playersToInvite = new List<Player>();
             foreach (PlayerListElementControl playerControl in listOnlinePlayers.Children)
             {
-               if (playerControl.IsChecked)
+                if (playerControl.IsChecked)
                 {
                     playersToInvite.Add(playerControl.Player);
                 }
@@ -116,13 +120,19 @@ namespace UnoClient
             Lobby.SendInvites(playersToInvite.ToArray());
         }
 
+        // Is called from within the PartyControl
         private void leaveParty(string host)
         {
+            // Remove lobby window visually
             partyGrid.Children.Clear();
+            // Tell server we left the party
             Lobby.LeaveParty(host);
+            party = null;
+            // Enable the player to invite other players (would create a new party)
             inviteButton.IsEnabled = true;
         }
 
+        // Is called from within the PartyControl
         private void sendPartyMessage(string message, string host)
         {
             Lobby.SendMessageParty(message, host);

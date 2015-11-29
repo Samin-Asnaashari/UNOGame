@@ -21,7 +21,14 @@ namespace UNOService
         /// </summary>
         /// <param name="player"></param>
         [OperationContract(IsOneWay = true)]
-        void PlayerDisConnected(Player player);
+        void PlayerDisconnected(Player player);
+
+        /// <summary>
+        /// Send to all party members that this user has left the party
+        /// </summary>
+        /// <param name="player"></param>
+        [OperationContract(IsOneWay = true)]
+        void PlayerLeftParty(Player player);
 
         /// <summary>
         /// Update party when answer is accept
