@@ -48,7 +48,7 @@ namespace UNOService
             return "Invalid";
         }
 
-        public void InsertPlayerWon(string username)
+        public void AddPlayerWon(string username)
         {
             try
             {
@@ -70,11 +70,32 @@ namespace UNOService
             }
         }
 
-        
-        public void InsertGamesPlayed(int gameID,string username)
+        public void AddGamesPlayed(string username)
         {
             try
             {
+                connection.Open();
+                string sql = "UPDATE `players` SET Gamesplayed =`Gamesplayed`+" + 1 + " WHERE `Username`='" + userName + "';";
+
+                MySqlCommand cmd = new MySqlCommand(sql, connection);
+
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void InsertGamePlayed(int gameID,string username)
+        {
+            try
+            {  
                 connection.Open();
                 string sql = "INSERT INTO `savedgames` (`Game ID`, `Username`) VALUES (" + gameID + ", '" + userName + "');";
                 MySqlCommand cmd = new MySqlCommand(sql, connection);

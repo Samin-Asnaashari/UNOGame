@@ -85,14 +85,42 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public Card takeCard(int GameID)
+        public Game.Game FindGame(int GameID)
         {
-            throw new NotImplementedException();
+            foreach (var item in games)
+            {
+                if (item.GameID==GameID)
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
-        public void playCard(int GameID)
+        public Card takeCard(int GameID)
         {
-            throw new NotImplementedException();
+            return FindGame(GameID).Deck[0];
+        }
+
+        public void playCard(int GameID,Card card)
+        {
+            //get player 
+            //is it valid card ?  // maybe with method better 
+            //put cart in the table (public Card ACardOnTheTable { get; set; }  [playedcards.count-1])
+            //add it to the game playedcard
+            //delete from hand 
+            // if is it is  last card player won 
+            //if after this play only one left another methode will take care of said uno condition
+            Player PlayerWhoWantsToPlaACard = getPlayerFromGameContext();
+            for (int i = 0; i < PlayerWhoWantsToPlaACard.Hand.Count; i++)
+            {
+                if(PlayerWhoWantsToPlaACard.Hand[i] ==card)
+                {
+                    FindGame(GameID).PlayedCards.Add(PlayerWhoWantsToPlaACard.Hand[i]);
+                    PlayerWhoWantsToPlaACard.Hand.Remove(PlayerWhoWantsToPlaACard.Hand[i]);
+                    break;
+                }
+            }
         }
 
         private Player getPlayerFromGameContext()

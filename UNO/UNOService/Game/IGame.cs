@@ -31,7 +31,7 @@ namespace UNOService
 		/// <permission>Only the player whose turn it is can play a card.</permission>
 		/// <param name="c"></param>
 		[OperationContract]
-		void playCard(int GameID);
+		void playCard(int GameID, Card card);
 
         /// <summary>
         /// message sended in chat
