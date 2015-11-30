@@ -50,9 +50,27 @@ namespace UNOService
 
         public void InsertPlayerWon(string username)
         {
+            try
+            {
+                connection.Open();
+                string sql = "UPDATE `players` SET GamesWon =`GamesWon`+" + 1 + " WHERE `Username`='" + userName + "';";
 
+                MySqlCommand cmd = new MySqlCommand(sql, connection);
+
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
+        
         public void InsertGamesPlayed(string username)
         {
 
