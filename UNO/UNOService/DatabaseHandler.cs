@@ -71,9 +71,23 @@ namespace UNOService
         }
 
         
-        public void InsertGamesPlayed(string username)
+        public void InsertGamesPlayed(int gameID,string username)
         {
-
+            try
+            {
+                connection.Open();
+                string sql = "INSERT INTO `savedgames` (`Game ID`, `Username`) VALUES (" + gameID + ", '" + userName + "');";
+                MySqlCommand cmd = new MySqlCommand(sql, connection);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public void InsertPlayer(String username, String password)
@@ -97,9 +111,31 @@ namespace UNOService
             }
         }
 
-        public void InsertMove()
+        public void InsertMove(int gameID,string username)
         {
+            try
+            {
+                connection.Open();
+                string sqlid = "SELECT COUNT(*) FROM `moves` ;";
+                MySqlCommand cmdid = new MySqlCommand(sqlid, connection);
+                int idNr = Convert.ToInt32(cmdid.ExecuteScalar());
+                idNr++;
+                connection.Close();
 
+                connection.Open();
+                MySqlCommand cmd;
+                String sql = "INSERT INTO `moves` (`ID`, `Username`, `Time`, `Game ID`) VALUES (" + idNr + ", '" + userName + "' ,"+System.DateTime.Now + ", "+ gameID +");";//time
+                cmd = new MySqlCommand(sql, connection);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public bool CheckLogin(string username, string password)
