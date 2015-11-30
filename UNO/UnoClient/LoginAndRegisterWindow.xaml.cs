@@ -29,12 +29,6 @@ namespace UnoClient
 			InitializeComponent();
 		}
 
-        private void lblNoAccount_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            //wpLoginControls.Visibility = Visibility.Collapsed;
-            //wpRegisterControls.Visibility = Visibility.Visible;
-        }
-
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text;
@@ -68,22 +62,19 @@ namespace UnoClient
             }
         }
 
-        private void txtUsername_KeyUp(object sender, KeyEventArgs e)
+        private async void txtUsername_KeyUp(object sender, KeyEventArgs e)
         {
-            bool exist = client.CheckUserName(txtUsername.Text);//only done if user is in register window wpf configuration.
-            if (exist)
+            if (wpRegisterControls.Height > 0) //Register WrapPanel is visible
             {
-                //Border myBorder1 = new Border();
-                //myBorder1.BorderThickness = new Thickness(2.01);
-                //myBorder1.BorderBrush = Brushes.Red;
-
-                txtUsername.BorderThickness = new Thickness(2);
-                txtUsername.BorderBrush = Brushes.Red;
-            }
-            else
-            {
-                txtUsername.BorderThickness = new Thickness(1);
-                txtUsername.BorderBrush = Brushes.Red;
+                bool exist = await client.CheckUserNameAsync(txtUsername.Text); //Async such that the user interface won't freeze
+                if (exist)
+                {
+                    txtUsername.Background = new SolidColorBrush(Color.FromRgb(255, 85, 85));
+                }
+                else
+                {
+                    txtUsername.Background = Brushes.White;
+                }
             }
         }
     }

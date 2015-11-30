@@ -10,7 +10,7 @@
             <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical">
                 <WrapPanel>
                     <Label Width="80" Content="Username:"/>
-                    <TextBox x:Name="txtUsername" Width="165" Height="18" Margin="10,0,0,0" KeyUp="txtUsername_KeyUp"/>
+                    <TextBox x:Name="txtUsername" Width="165" Height="18" Margin="10,0,0,0" KeyUp="txtUsername_KeyUp" TabIndex="0"/>
                 </WrapPanel>
                 <WrapPanel>
                     <Label Width="80" Content="Password:"/>
@@ -37,8 +37,7 @@
                     </TextBlock>
                     <Button x:Name="btnLogin" Margin="90,0,0,0"  Content="Login" Width="60" Click="btnLogin_Click"/>
                 </WrapPanel>
-                <WrapPanel x:Name="wpRegisterControls" Orientation="Horizontal">
-                    <!--Height="0">-->
+                <WrapPanel x:Name="wpRegisterControls" Orientation="Horizontal" Height="0">
                     <WrapPanel>
                         <Label Width="80" Content="Password #2:"/>
                         <PasswordBox x:Name="txtVerifyPassword" Width="165" Height="18" Margin="10,0,0,0"/>
