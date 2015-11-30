@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseHandler.cs" />
-    <Compile Include="DatabaseHelper.cs" />
     <Compile Include="Game\Card.cs" />
     <Compile Include="Game\CardColor.cs" />
     <Compile Include="Game\CardType.cs" />
