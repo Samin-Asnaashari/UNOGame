@@ -21,7 +21,7 @@ namespace UNOService
         static Action<Player> whoseTurnIs = delegate { };
         static Action<Card> TableCard = delegate { };
         static Action<String> NewMessage = delegate { };
-        static Action<string,int> PlayerPunnished = delegate { }; //who is punhed how many cards 
+        static Action<string> PlayerPunnished = delegate { }; //who is punhed how many cards 
 
 
         public UnoService()
