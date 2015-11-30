@@ -26,13 +26,13 @@ namespace UnoClient
         PartyControl party;
         string username;
 
-        public LobbyWindow(string username)
+        public LobbyWindow(string username, string password)
         {
             this.username = username;
             InitializeComponent();
 
             Lobby = new LobbyClient(new InstanceContext(this));
-            Lobby.SubScribeToLobbyEvents(username);
+            Lobby.SubscribeToLobbyEvents(username, password);
 
             // Get online players and show them in the list
             foreach (var item in Lobby.GetOnlineList())
@@ -41,13 +41,20 @@ namespace UnoClient
             }
         }
 
-        public void NotifyGameStarted(Player[] players)
+        public void ChangePlayerState(Player player)
         {
-            throw new NotImplementedException();
+            foreach (UIElement playerControl in listOnlinePlayers.Children)
+            {
+                var selectedPlayer = ((PlayerListElementControl)playerControl).Player;
+                if (player.UserName == selectedPlayer.UserName)
+                {
+                    selectedPlayer.State = player.State;
+                }
+            }
         }
 
         // Occurs after a player accepts an invite to an already full party
-        // May be reworked into the UI instead of a messagebox
+        //TODO Rework into the UI instead of a messagebox
         public void PartyIsFull()
         {
             MessageBox.Show("Party is full");
@@ -62,6 +69,18 @@ namespace UnoClient
         // Add a player to the online list
         public void PlayerConnected(Player player)
         {
+            // If player is returning to lobby from a game, he will already be in the list, and just needs a status change
+            // May not be needed
+            foreach (UIElement playerControl in listOnlinePlayers.Children)
+            {
+                var selectedPlayer = ((PlayerListElementControl)playerControl).Player;
+                if (player.UserName == selectedPlayer.UserName)
+                {
+                    ChangePlayerState(player);
+                    return;
+                }
+            }
+
             listOnlinePlayers.Children.Add(new PlayerListElementControl(player));
         }
 
@@ -87,14 +106,14 @@ namespace UnoClient
             party?.RemovePlayer(player.UserName);
         }
 
+
         public void SendChatMessageLobbyCallback(string message)
         {
             party?.DisplayMessage(message);
         }
 
-        // Actually means we are recieving an invite..
-        // May be reworked into the UI instead of a messagebox
-        public void SentInvite(string hostName)
+        //TODO Rework into the UI instead of a messagebox
+        public void ReceiveInvite(string hostName)
         {
             if (MessageBox.Show($"{hostName} has invited you to a game", "Game Invite", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
             {
@@ -110,6 +129,10 @@ namespace UnoClient
         // Show a new party window
         private void createParty(string host)
         {
+            if (host == username)
+            {
+                Lobby.CreateParty(host);
+            }
             //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
             party = new PartyControl(username, host, leaveParty, sendPartyMessage);
             partyGrid.Children.Add(party);

@@ -256,8 +256,9 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        public void SubScribeToLobbyEvents(string username)
+        public void SubscribeToLobbyEvents(string username, string password)
         {
+            //TODO Validate subscription using password
             ILobbyCallback clientCallbackLobby = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
             Player player = playersOnline.Find(x => x.UserName == username);
             player.ILobbyCallback = clientCallbackLobby;

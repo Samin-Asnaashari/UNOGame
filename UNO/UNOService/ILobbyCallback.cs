@@ -40,22 +40,22 @@ namespace UNOService
         /// Lobby service sent invite to player
         /// </summary>
         /// <param name="hostName"></param>
-        [OperationContract]
-        void SentInvite(String hostName);
+        [OperationContract(IsOneWay = true)]
+        void ReceiveInvite(string hostName);
 
         /// <summary>
         /// Party is full so user receives notification
         /// </summary>
         /// <param name="players"></param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void PartyIsFull();
 
-
         /// <summary>
-        /// 
+        /// A player online status has changed (e.g. online/in game), and needs to be updated in the client list
         /// </summary>
+        /// <param name="player"></param>
         [OperationContract]
-        void NotifyGameStarted(List<Player> players);
+        void ChangePlayerState(Player player);
 
         /// <summary>
         /// Message sended from service to all players in game

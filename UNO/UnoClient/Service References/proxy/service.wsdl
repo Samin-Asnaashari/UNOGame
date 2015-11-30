@@ -712,7 +712,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SubScribeToLobbyEvents_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SubscribeToLobbyEvents_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -735,7 +735,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SubScribeToLobbyEvents_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SubscribeToLobbyEvents_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -850,30 +850,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SentInvite_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SentInvite_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_ReceiveInvite_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -919,7 +896,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_PartyIsFull_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_ChangePlayerState_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -942,30 +919,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_NotifyGameStarted_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_NotifyGameStarted_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_ChangePlayerState_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1579,11 +1533,11 @@
   <wsdl:message name="ILobby_GetPartyMembers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPartyMembersResponse" />
   </wsdl:message>
-  <wsdl:message name="ILobby_SubScribeToLobbyEvents_InputMessage">
-    <wsdl:part name="parameters" element="tns:SubScribeToLobbyEvents" />
+  <wsdl:message name="ILobby_SubscribeToLobbyEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeToLobbyEvents" />
   </wsdl:message>
-  <wsdl:message name="ILobby_SubScribeToLobbyEvents_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SubScribeToLobbyEventsResponse" />
+  <wsdl:message name="ILobby_SubscribeToLobbyEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeToLobbyEventsResponse" />
   </wsdl:message>
   <wsdl:message name="ILobby_PlayerConnected_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:PlayerConnected" />
@@ -1597,23 +1551,17 @@
   <wsdl:message name="ILobby_PlayerAddedToParty_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:PlayerAddedToParty" />
   </wsdl:message>
-  <wsdl:message name="ILobby_SentInvite_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:SentInvite" />
-  </wsdl:message>
-  <wsdl:message name="ILobby_SentInvite_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:SentInviteResponse" />
+  <wsdl:message name="ILobby_ReceiveInvite_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveInvite" />
   </wsdl:message>
   <wsdl:message name="ILobby_PartyIsFull_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:PartyIsFull" />
   </wsdl:message>
-  <wsdl:message name="ILobby_PartyIsFull_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:PartyIsFullResponse" />
+  <wsdl:message name="ILobby_ChangePlayerState_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ChangePlayerState" />
   </wsdl:message>
-  <wsdl:message name="ILobby_NotifyGameStarted_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:NotifyGameStarted" />
-  </wsdl:message>
-  <wsdl:message name="ILobby_NotifyGameStarted_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:NotifyGameStartedResponse" />
+  <wsdl:message name="ILobby_ChangePlayerState_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ChangePlayerStateResponse" />
   </wsdl:message>
   <wsdl:message name="ILobby_SendChatMessageLobbyCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendChatMessageLobbyCallback" />
@@ -1716,9 +1664,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ILobby/GetPartyMembers" message="tns:ILobby_GetPartyMembers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/GetPartyMembersResponse" message="tns:ILobby_GetPartyMembers_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SubScribeToLobbyEvents">
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/SubScribeToLobbyEvents" message="tns:ILobby_SubScribeToLobbyEvents_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/SubScribeToLobbyEventsResponse" message="tns:ILobby_SubScribeToLobbyEvents_OutputMessage" />
+    <wsdl:operation name="SubscribeToLobbyEvents">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/SubscribeToLobbyEvents" message="tns:ILobby_SubscribeToLobbyEvents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/SubscribeToLobbyEventsResponse" message="tns:ILobby_SubscribeToLobbyEvents_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="PlayerConnected">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/PlayerConnected" message="tns:ILobby_PlayerConnected_OutputCallbackMessage" />
@@ -1732,17 +1680,15 @@
     <wsdl:operation name="PlayerAddedToParty">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/PlayerAddedToParty" message="tns:ILobby_PlayerAddedToParty_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SentInvite">
-      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/SentInvite" message="tns:ILobby_SentInvite_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/SentInviteResponse" message="tns:ILobby_SentInvite_InputCallbackMessage" />
+    <wsdl:operation name="ReceiveInvite">
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/ReceiveInvite" message="tns:ILobby_ReceiveInvite_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="PartyIsFull">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/PartyIsFull" message="tns:ILobby_PartyIsFull_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/PartyIsFullResponse" message="tns:ILobby_PartyIsFull_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="NotifyGameStarted">
-      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/NotifyGameStarted" message="tns:ILobby_NotifyGameStarted_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/NotifyGameStartedResponse" message="tns:ILobby_NotifyGameStarted_InputCallbackMessage" />
+    <wsdl:operation name="ChangePlayerState">
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/ChangePlayerState" message="tns:ILobby_ChangePlayerState_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/ChangePlayerStateResponse" message="tns:ILobby_ChangePlayerState_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendChatMessageLobbyCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/SendChatMessageLobbyCallback" message="tns:ILobby_SendChatMessageLobbyCallback_OutputCallbackMessage" />
@@ -1913,14 +1859,14 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SubScribeToLobbyEvents">
-      <soap12:operation soapAction="http://tempuri.org/ILobby/SubScribeToLobbyEvents" style="document" />
+    <wsdl:operation name="SubscribeToLobbyEvents">
+      <soap12:operation soapAction="http://tempuri.org/ILobby/SubscribeToLobbyEvents" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SubScribeToLobbyEvents_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SubscribeToLobbyEvents_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SubScribeToLobbyEvents_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SubscribeToLobbyEvents_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -1952,36 +1898,28 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SentInvite">
-      <soap12:operation soapAction="http://tempuri.org/ILobby/SentInvite" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SentInvite_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
+    <wsdl:operation name="ReceiveInvite">
+      <soap12:operation soapAction="http://tempuri.org/ILobby/ReceiveInvite" style="document" />
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SentInvite_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_ReceiveInvite_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="PartyIsFull">
       <soap12:operation soapAction="http://tempuri.org/ILobby/PartyIsFull" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_PartyIsFull_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_PartyIsFull_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="NotifyGameStarted">
-      <soap12:operation soapAction="http://tempuri.org/ILobby/NotifyGameStarted" style="document" />
+    <wsdl:operation name="ChangePlayerState">
+      <soap12:operation soapAction="http://tempuri.org/ILobby/ChangePlayerState" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_NotifyGameStarted_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_ChangePlayerState_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_NotifyGameStarted_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_ChangePlayerState_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

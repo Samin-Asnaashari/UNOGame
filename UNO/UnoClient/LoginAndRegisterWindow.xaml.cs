@@ -36,7 +36,7 @@ namespace UnoClient
             if(client.Login(username, txtPassword.Password))
             {
                 //Login succesful
-                new LobbyWindow(username).Show();
+                new LobbyWindow(username, txtPassword.Password).Show();
                 this.Close();
             }
             else
@@ -53,7 +53,7 @@ namespace UnoClient
             if (client.SignUp(username, txtPassword.Password))
             {
                 //Register succesful
-                new LobbyWindow(username).Show();
+                new LobbyWindow(username, txtPassword.Password).Show();
                 this.Close();
             }
             else

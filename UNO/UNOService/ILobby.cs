@@ -68,6 +68,6 @@ namespace UNOService
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        void SubScribeToLobbyEvents(string username);
+        void SubscribeToLobbyEvents(string username, string password);
     }
 }
