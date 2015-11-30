@@ -95,14 +95,14 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        private Player CheckPlayerLegitimacyInGame()
+        private Player getPlayerFromGameContext()
         {
             IGameCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
 
             return playersOnline.Find(x => x.IGameCallback == currentPlayerCallback);
         }
 
-        private Player CheckPlayerLegitimacyInLobby()
+        private Player getPlayerFromLobbyContext()
         {
             ILobbyCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
 
@@ -138,7 +138,7 @@ namespace UNOService
 
         public void SendMessageGame(string message)
         {
-            Player player = CheckPlayerLegitimacyInGame();
+            Player player = getPlayerFromGameContext();
             if (player != null)
             {
                 Game.Game game = games.Find(x => x.GameID == player.GameID);
@@ -211,9 +211,9 @@ namespace UNOService
 
         public List<Player> GetOnlineList()
         {
-            Player callingPlayer = CheckPlayerLegitimacyInLobby();//used everytime client side connects to server to check for illegal behaviour//still have to handle illegal behaviour though
+            ILobbyCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
 
-            return playersOnline.Where(x => x.ILobbyCallback != callingPlayer.ILobbyCallback).ToList();
+            return playersOnline.Where(x => x.ILobbyCallback != currentPlayerCallback).ToList();
         }
 
         public void SendInvites(List<Player> players)
