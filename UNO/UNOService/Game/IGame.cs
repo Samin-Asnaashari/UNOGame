@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using UNOService.Game;
 
 namespace UNOService
 {
@@ -44,6 +45,6 @@ namespace UNOService
         /// Subscribe to All Game Events
         /// </summary>
         [OperationContract]
-        void SubscribeToGameEvents(String username);
+        void SubscribeToGameEvents(GameEventType GameEventMask); /*String username*/
     }
 }

@@ -18,6 +18,11 @@ namespace UNOService
         private List<Game.Game> games;
         private List<Party> parties;
 
+        static Action<Player> whoseTurnIs = delegate { };
+        static Action<Card> TableCard = delegate { };
+        static Action<String> NewMessage = delegate { };
+        static Action<string,int> PlayerPunnished = delegate { }; //who is punhed how many cards 
+
 
         public UnoService()
         {
@@ -298,9 +303,26 @@ namespace UNOService
             }
         }
 
-        public void SubscribeToGameEvents(string username)
+        //Do we need fire the event ????????????????
+        public void SubscribeToGameEvents(GameEventType GameEventMask/*string username*/)
         {
-            throw new NotImplementedException();
+            Player CurrentPlayer = getPlayerFromGameContext();
+            if (GameEventMask == GameEventType.Turn)
+            {
+                whoseTurnIs += CurrentPlayer.IGameCallback.TurnChanged;
+            }
+            else if (GameEventMask == GameEventType.CardOnTHeTable)
+            {
+                TableCard += CurrentPlayer.IGameCallback.CardPlayed;
+            }
+            else if (GameEventMask == GameEventType.Message)
+            {
+                NewMessage += CurrentPlayer.IGameCallback.SendMessageGameCallback;
+            }
+            else if (GameEventMask == GameEventType.OnePlayerPunished)
+            {
+                PlayerPunnished += CurrentPlayer.IGameCallback.NotifyOpponentsOfPlayerPunished;
+            }
         }
 
         public void CreateParty(string partyID)
