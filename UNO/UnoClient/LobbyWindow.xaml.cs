@@ -82,6 +82,8 @@ namespace UnoClient
             }
 
             listOnlinePlayers.Children.Add(new PlayerListElementControl(player));
+
+            inviteButton.IsEnabled = true;
         }
 
         // Remove player from the online player list
@@ -97,7 +99,12 @@ namespace UnoClient
                 }
             }
 
-            // PlayerLeftParty(player); // Should this be done here, or does it also get called from the server when a player disconnects?
+            //TODO PlayerLeftParty(player); Should this be done here, or does it also get called from the server when a player disconnects?
+
+            if (listOnlinePlayers.Children.Count == 0)
+            {
+                inviteButton.IsEnabled = false;
+            }
         }
 
         // Remove player from the party list
@@ -106,7 +113,7 @@ namespace UnoClient
             party?.RemovePlayer(player.UserName);
         }
 
-
+        // Recieve a message to show in the party
         public void SendChatMessageLobbyCallback(string message)
         {
             party?.DisplayMessage(message);
@@ -115,15 +122,7 @@ namespace UnoClient
         //TODO Rework into the UI instead of a messagebox
         public void ReceiveInvite(string hostName)
         {
-            if (MessageBox.Show($"{hostName} has invited you to a game", "Game Invite", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
-            {
-                Lobby.AnswerInvite(true, hostName);
-                createParty(hostName);
-            }
-            else
-            {
-                Lobby.AnswerInvite(false, hostName);
-            }
+            listInvitations.Children.Add(new InviteControl(hostName, inviteResponse));
         }
 
         // Show a new party window
@@ -152,7 +151,10 @@ namespace UnoClient
                 }
             }
 
-            Lobby.SendInvites(playersToInvite.ToArray());
+            if (playersToInvite.Count > 0)
+            {
+                Lobby.SendInvites(playersToInvite.ToArray());
+            }
         }
 
         // Is called from within the PartyControl
@@ -171,6 +173,22 @@ namespace UnoClient
         private void sendPartyMessage(string message, string host)
         {
             Lobby.SendMessageParty(message, host);
+        }
+
+        // Accept or decline an invitation
+        private void inviteResponse(bool accept, InviteControl sender)
+        {
+            listInvitations.Children.Remove(sender);
+
+            if (accept)
+            {
+                Lobby.AnswerInvite(true, sender.InviteSenderName);
+                createParty(sender.InviteSenderName);
+            }
+            else
+            {
+                Lobby.AnswerInvite(false, sender.InviteSenderName);
+            }
         }
     }
 }
