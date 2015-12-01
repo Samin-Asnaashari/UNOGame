@@ -16,8 +16,10 @@ namespace UNOService.Game
         public List<Card> Deck { get; set; }
         public List<Card> PlayedCards { get; set; }
         public Direction Direction { get; set; }
-        public bool UNOsaidAlready { get; set; }
-        public Player TurnToPlay { get; set; }
+        private int PreviousTurn { get; set; }
+        private int CurrentTurn { get; set; }
+        public Player CurrentPlayer { get { return Players[CurrentTurn]; } }
+        public Player PreviousPlayer { get { return Players[PreviousTurn]; } }
 
         public Game(int gameID, List<Player> players)
         {
@@ -87,6 +89,38 @@ namespace UNOService.Game
                 cardColors.RemoveAt(cardColors.Count - 1);
             }
             Shuffle(Deck);
+        }
+
+        public void EndTurn()
+        {
+            CurrentPlayer.UnoSafe = true; // Make player immune to uno after next turn has started
+
+            PreviousTurn = CurrentTurn;
+            if (Direction == Direction.clockwise)
+            {
+                CurrentTurn = (CurrentTurn + 1) % Players.Count();
+            }
+            else
+            {
+                CurrentTurn--;
+
+                if (CurrentTurn < 0)
+                {
+                    CurrentTurn += Players.Count();
+                }
+            }
+        }
+
+        public void SwitchDirection()
+        {
+            if (Direction == Direction.clockwise)
+            {
+                Direction = Direction.counterClockwise;
+            }
+            else
+            {
+                Direction = Direction.clockwise;
+            }
         }
     }
 }
