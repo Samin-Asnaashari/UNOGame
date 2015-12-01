@@ -70,13 +70,16 @@
     <Compile Include="CardControl.xaml.cs">
       <DependentUpon>CardControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Lobby\InviteControl.xaml.cs">
+      <DependentUpon>InviteControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginAndRegisterWindow.xaml.cs">
       <DependentUpon>LoginAndRegisterWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PartyControl.xaml.cs">
+    <Compile Include="Lobby\PartyControl.xaml.cs">
       <DependentUpon>PartyControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlayerListElementControl.xaml.cs">
+    <Compile Include="Lobby\PlayerListElementControl.xaml.cs">
       <DependentUpon>PlayerListElementControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service References\proxy\Reference.cs">
@@ -92,7 +95,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LobbyWindow.xaml">
+    <Page Include="Lobby\InviteControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Lobby\LobbyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -103,18 +110,18 @@
     <Compile Include="GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LobbyWindow.xaml.cs">
+    <Compile Include="Lobby\LobbyWindow.xaml.cs">
       <DependentUpon>LobbyWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="LoginAndRegisterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PartyControl.xaml">
+    <Page Include="Lobby\PartyControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlayerListElementControl.xaml">
+    <Page Include="Lobby\PlayerListElementControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +150,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Service References\proxy\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\proxy\service.wsdl" />
     <None Include="Service References\proxy\service.xsd">
       <SubType>Designer</SubType>

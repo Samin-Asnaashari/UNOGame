@@ -16,6 +16,21 @@
                 <RowDefinition Height="150"/>
             </Grid.RowDefinitions>
 
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="labelUsername" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                <Grid Grid.Column="1">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+                        <StackPanel Orientation="Vertical" x:Name="listInvitations"/>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+
             <Grid x:Name="partyGrid" Grid.Row="1">
                 
             </Grid>
@@ -35,7 +50,7 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                <Button x:Name="inviteButton" Click="inviteButton_Click" Content="Invite" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
+                <Button x:Name="inviteButton" IsEnabled="False" Click="inviteButton_Click" Content="Invite" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
             </Grid>
         </Grid>
     </Grid>

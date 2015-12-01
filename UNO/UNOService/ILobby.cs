@@ -34,7 +34,7 @@ namespace UNOService
         /// </summary>
         /// <param name="players"></param>
         [OperationContract]
-        void SendInvites(List<Player> players);
+        void SendInvites(List<string> playerNames);
 
         /// <summary>
         /// Player answering the invite from the service(host)
@@ -61,7 +61,7 @@ namespace UNOService
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        List<Player> GetPartyMembers();
+        List<Player> GetPartyMembers(string partyID);
 
         /// <summary>
         /// Subscribe to lobby events

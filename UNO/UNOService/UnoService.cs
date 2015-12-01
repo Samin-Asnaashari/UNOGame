@@ -14,9 +14,9 @@ namespace UNOService
         private static int gameID = 0;
         private DatabaseHandler databaseHandler;
 
-        private List<Player> playersOnline;
-        private List<Game.Game> games;
-        private List<Party> parties;
+        private List<Player> playersOnline = new List<Player>();
+        private List<Game.Game> games = new List<Game.Game>();
+        private List<Party> parties = new List<Party>();
 
         static Action<Player> whoseTurnIs = delegate { };
         static Action<Card> TableCard = delegate { };
@@ -27,7 +27,6 @@ namespace UNOService
         public UnoService()
         {
             databaseHandler = new DatabaseHandler();
-            playersOnline = new List<Player>();
         }
 
         public bool Login(string userName, string password)
@@ -94,7 +93,7 @@ namespace UNOService
         {
             foreach (var item in games)
             {
-                if (item.GameID==GameID)
+                if (item.GameID == GameID)
                 {
                     return item;
                 }
@@ -107,7 +106,7 @@ namespace UNOService
             return FindGame(GameID).Deck[0];
         }
 
-        public void playCard(int GameID,Card card)
+        public void playCard(int GameID, Card card)
         {
             //get player 
             //is it valid card ?  // maybe with method better 
@@ -119,7 +118,7 @@ namespace UNOService
             Player PlayerWhoWantsToPlaACard = getPlayerFromGameContext();
             for (int i = 0; i < PlayerWhoWantsToPlaACard.Hand.Count; i++)
             {
-                if(PlayerWhoWantsToPlaACard.Hand[i] ==card)
+                if (PlayerWhoWantsToPlaACard.Hand[i] == card)
                 {
                     FindGame(GameID).PlayedCards.Add(PlayerWhoWantsToPlaACard.Hand[i]);
                     PlayerWhoWantsToPlaACard.Hand.Remove(PlayerWhoWantsToPlaACard.Hand[i]);
@@ -128,6 +127,36 @@ namespace UNOService
             }
         }
 
+        /// <summary>
+        /// Party may not exist anymore, so use this method for safety
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="party"></param>
+        /// <returns></returns>
+        private bool tryGetPartyFromUsername(string username, out Party party)
+        {
+            party = parties.FirstOrDefault(x => x.Host.UserName == username);
+
+            return party != null;
+        }
+
+        /// <summary>
+        /// Username could be null if he logged out, so use this try method for safety.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        private bool tryGetPlayerFromUsername(string username, out Player player)
+        {
+            player = playersOnline.FirstOrDefault(x => x.UserName == username);
+
+            return player != null;
+        }
+
+        /// <summary>
+        /// Get the player from the game context. Safe to assume this is never null.
+        /// </summary>
+        /// <returns></returns>
         private Player getPlayerFromGameContext()
         {
             IGameCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
@@ -135,6 +164,11 @@ namespace UNOService
             return playersOnline.Find(x => x.IGameCallback == currentPlayerCallback);
         }
 
+
+        /// <summary>
+        /// Get the player from the lobby context. Safe to assume this is never null.
+        /// </summary>
+        /// <returns></returns>
         private Player getPlayerFromLobbyContext()
         {
             ILobbyCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
@@ -242,29 +276,6 @@ namespace UNOService
             }
         }
 
-        private void Uno()
-        {
-            Player playerWhoCalledUno = getPlayerFromGameContext();
-            Game.Game game = games.Find(x => x.GameID == playerWhoCalledUno.GameID);
-
-            if (playerWhoCalledUno == game.TurnToPlay) // Player called Uno on himself
-            {
-                playerWhoCalledUno.UnoSaid = true;
-            }
-            else // Call Uno on other players
-            {
-                foreach (Player player in game.Players)
-                {
-                    if (player != playerWhoCalledUno)
-                    {
-                        if (player.Hand.Count == 1 && player.UnoSaid == false)
-                        { 
-                            //player.IGameCallback.CardsAssigned(// 2 cards from pile)
-                        }
-                    }
-                }
-            }
-        }
 
         public List<Player> GetOnlineList()
         {
@@ -273,9 +284,19 @@ namespace UNOService
             return playersOnline.Where(x => x.ILobbyCallback != currentPlayerCallback).ToList();
         }
 
-        public void SendInvites(List<Player> players)
+        public void SendInvites(List<string> playerNames)
         {
-            throw new NotImplementedException();
+            Player host = getPlayerFromLobbyContext();
+
+            foreach (string username in playerNames)
+            {
+                Player player;
+
+                if (tryGetPlayerFromUsername(username, out player))
+                {
+                    player.ILobbyCallback.ReceiveInvite(host.UserName);
+                }
+            }
         }
 
         public void StartGame(int GameID)
@@ -284,9 +305,16 @@ namespace UNOService
         }
 
 
-        public List<Player> GetPartyMembers()
+        public List<Player> GetPartyMembers(string partyID)
         {
-            throw new NotImplementedException();
+            Party party; 
+
+            if (tryGetPartyFromUsername(partyID, out party))
+            {
+                return party.Players;
+            }
+
+            return new List<Player>();
         }
 
         public void SubscribeToLobbyEvents(string username, string password)
@@ -327,7 +355,13 @@ namespace UNOService
 
         public void CreateParty(string partyID)
         {
-            throw new NotImplementedException();
+            Player player = getPlayerFromLobbyContext();
+            Player host;
+
+            if (tryGetPlayerFromUsername(partyID, out host))
+            {
+                parties.Add(new Party(host));
+            }
         }
 
         public void LeaveParty(string partyID)
@@ -337,12 +371,43 @@ namespace UNOService
 
         public bool AnswerInvite(bool answer, string partyID)
         {
-            throw new NotImplementedException();
+            Player player = getPlayerFromLobbyContext();
+            if (answer)
+            {
+                Party party;
+
+                if (tryGetPartyFromUsername(partyID, out party))
+                {
+                    foreach (Player partyPlayer in party.Players)
+                    {
+                        partyPlayer.ILobbyCallback.PlayerAddedToParty(player.UserName);
+                    }
+                    party.Players.Add(player);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void SendMessageParty(string message, string partyID)
         {
-            throw new NotImplementedException();
+            Player messageSender = getPlayerFromLobbyContext();
+
+            Party party;
+
+            message = $"{messageSender.UserName}: {message}";
+
+            if (tryGetPartyFromUsername(partyID, out party))
+            {
+                foreach (Player player in party.Players)
+                {
+                    if (player != messageSender)
+                    {
+                        player.ILobbyCallback.SendChatMessageLobbyCallback(message);
+                    }
+                }
+            }
         }
     }
 }
