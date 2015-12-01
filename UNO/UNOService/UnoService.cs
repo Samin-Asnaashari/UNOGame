@@ -93,7 +93,7 @@ namespace UNOService
         {
             foreach (var item in games)
             {
-                if (item.GameID==GameID)
+                if (item.GameID == GameID)
                 {
                     return item;
                 }
@@ -106,7 +106,7 @@ namespace UNOService
             return FindGame(GameID).Deck[0];
         }
 
-        public void playCard(int GameID,Card card)
+        public void playCard(int GameID, Card card)
         {
             //get player 
             //is it valid card ?  // maybe with method better 
@@ -118,7 +118,7 @@ namespace UNOService
             Player PlayerWhoWantsToPlaACard = getPlayerFromGameContext();
             for (int i = 0; i < PlayerWhoWantsToPlaACard.Hand.Count; i++)
             {
-                if(PlayerWhoWantsToPlaACard.Hand[i] ==card)
+                if (PlayerWhoWantsToPlaACard.Hand[i] == card)
                 {
                     FindGame(GameID).PlayedCards.Add(PlayerWhoWantsToPlaACard.Hand[i]);
                     PlayerWhoWantsToPlaACard.Hand.Remove(PlayerWhoWantsToPlaACard.Hand[i]);
@@ -127,6 +127,25 @@ namespace UNOService
             }
         }
 
+        /// <summary>
+        /// Party may not exist anymore, so use this method for safety
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="party"></param>
+        /// <returns></returns>
+        private bool tryGetPartyFromUsername(string username, out Party party)
+        {
+            party = parties.FirstOrDefault(x => x.Host.UserName == username);
+
+            return party != null;
+        }
+
+        /// <summary>
+        /// Username could be null if he logged out, so use this try method for safety.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="player"></param>
+        /// <returns></returns>
         private bool tryGetPlayerFromUsername(string username, out Player player)
         {
             player = playersOnline.FirstOrDefault(x => x.UserName == username);
@@ -134,6 +153,10 @@ namespace UNOService
             return player != null;
         }
 
+        /// <summary>
+        /// Get the player from the game context. Safe to assume this is never null.
+        /// </summary>
+        /// <returns></returns>
         private Player getPlayerFromGameContext()
         {
             IGameCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
@@ -141,6 +164,11 @@ namespace UNOService
             return playersOnline.Find(x => x.IGameCallback == currentPlayerCallback);
         }
 
+
+        /// <summary>
+        /// Get the player from the lobby context. Safe to assume this is never null.
+        /// </summary>
+        /// <returns></returns>
         private Player getPlayerFromLobbyContext()
         {
             ILobbyCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
@@ -248,7 +276,7 @@ namespace UNOService
             }
         }
 
-       
+
         public List<Player> GetOnlineList()
         {
             ILobbyCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
@@ -256,17 +284,17 @@ namespace UNOService
             return playersOnline.Where(x => x.ILobbyCallback != currentPlayerCallback).ToList();
         }
 
-        public void SendInvites(List<Player> players)
+        public void SendInvites(List<string> playerNames)
         {
             Player host = getPlayerFromLobbyContext();
 
-            foreach (Player sentPlayer in players)
+            foreach (string username in playerNames)
             {
-                Player actualPlayer;
+                Player player;
 
-                if (tryGetPlayerFromUsername(sentPlayer.UserName, out actualPlayer))
+                if (tryGetPlayerFromUsername(username, out player))
                 {
-                    actualPlayer.ILobbyCallback.ReceiveInvite(host.UserName);
+                    player.ILobbyCallback.ReceiveInvite(host.UserName);
                 }
             }
         }
@@ -336,12 +364,43 @@ namespace UNOService
 
         public bool AnswerInvite(bool answer, string partyID)
         {
-            throw new NotImplementedException();
+            Player player = getPlayerFromLobbyContext();
+            if (answer)
+            {
+                Party party;
+
+                if (tryGetPartyFromUsername(partyID, out party))
+                {
+                    foreach (Player partyPlayer in party.GetPlayers())
+                    {
+                        partyPlayer.ILobbyCallback.PlayerAddedToParty(player.UserName);
+                    }
+                    party.AddPlayer(player);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void SendMessageParty(string message, string partyID)
         {
-            throw new NotImplementedException();
+            Player messageSender = getPlayerFromLobbyContext();
+
+            Party party;
+
+            message = $"{messageSender.UserName}: {message}";
+
+            if (tryGetPartyFromUsername(partyID, out party))
+            {
+                foreach (Player player in party.GetPlayers())
+                {
+                    if (player != messageSender)
+                    {
+                        player.ILobbyCallback.SendChatMessageLobbyCallback(message);
+                    }
+                }
+            }
         }
     }
 }
