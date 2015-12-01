@@ -242,30 +242,7 @@ namespace UNOService
             }
         }
 
-        private void Uno()
-        {
-            Player playerWhoCalledUno = getPlayerFromGameContext();
-            Game.Game game = games.Find(x => x.GameID == playerWhoCalledUno.GameID);
-
-            if (playerWhoCalledUno == game.TurnToPlay) // Player called Uno on himself
-            {
-                playerWhoCalledUno.UnoSaid = true;
-            }
-            else // Call Uno on other players
-            {
-                foreach (Player player in game.Players)
-                {
-                    if (player != playerWhoCalledUno)
-                    {
-                        if (player.Hand.Count == 1 && player.UnoSaid == false)
-                        { 
-                            //player.IGameCallback.CardsAssigned(// 2 cards from pile)
-                        }
-                    }
-                }
-            }
-        }
-
+       
         public List<Player> GetOnlineList()
         {
             ILobbyCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
