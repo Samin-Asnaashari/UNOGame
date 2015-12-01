@@ -119,7 +119,6 @@ namespace UnoClient
             party?.DisplayMessage(message);
         }
 
-        //TODO Rework into the UI instead of a messagebox
         public void ReceiveInvite(string hostName)
         {
             listInvitations.Children.Add(new InviteControl(hostName, inviteResponse));
