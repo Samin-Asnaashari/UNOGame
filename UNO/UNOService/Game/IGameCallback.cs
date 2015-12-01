@@ -41,5 +41,6 @@ namespace UNOService
         /// </summary>
         [OperationContract]
         void NotifyOpponentsOfPlayerPunished(string userName/*,int amount*/); //and how many card has been punished 
+
     }
 }

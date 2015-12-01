@@ -21,7 +21,7 @@ namespace UNOService
         /// Party signal sent to be created
         /// </summary>
         [OperationContract]
-        void CreateParty(string partyID);
+        void CreateParty();
 
         /// <summary>
         /// Leave the current party
@@ -47,7 +47,7 @@ namespace UNOService
         /// 
         /// </summary>
         [OperationContract]
-        void StartGame(int GameID);
+        void StartGame(string PartyID);
 
         /// <summary>
         /// message sended in chat

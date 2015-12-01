@@ -45,6 +45,6 @@ namespace UNOService
         /// Subscribe to All Game Events
         /// </summary>
         [OperationContract]
-        void SubscribeToGameEvents(GameEventType GameEventMask); /*String username*/
+        void SubscribeToGameEvents(string UserName, int GameID);
     }
 }

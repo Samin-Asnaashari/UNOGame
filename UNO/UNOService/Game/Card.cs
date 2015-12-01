@@ -12,13 +12,15 @@ namespace UNOService
 	public class Card
 	{
         public CardType Type { get; set; }
+        public CardColor Color { get; set; }
         public int Number { get; set; }
 
-        public CardColor Color { get; set; }
 
         public Card(CardType Type, CardColor Color, int Number)
         {
-
+            this.Type = Type;
+            this.Color = Color;
+            this.Number = Number;
         }
 
 

@@ -18,12 +18,6 @@ namespace UNOService
         private List<Game.Game> games = new List<Game.Game>();
         private List<Party> parties = new List<Party>();
 
-        static Action<Player> whoseTurnIs = delegate { };
-        static Action<Card> TableCard = delegate { };
-        static Action<String> NewMessage = delegate { };
-        static Action<string> PlayerPunnished = delegate { }; //who is punhed how many cards 
-
-
         public UnoService()
         {
             databaseHandler = new DatabaseHandler();
@@ -113,18 +107,13 @@ namespace UNOService
             //put cart in the table (public Card ACardOnTheTable { get; set; }  [playedcards.count-1])
             //add it to the game playedcard
             //delete from hand 
+            //add to the last card of the deck of card (when a card assign to the player will be deleted from game deck of card)
             // if is it is  last card player won 
             //if after this play only one left another methode will take care of said uno condition
             Player PlayerWhoWantsToPlaACard = getPlayerFromGameContext();
-            for (int i = 0; i < PlayerWhoWantsToPlaACard.Hand.Count; i++)
-            {
-                if (PlayerWhoWantsToPlaACard.Hand[i] == card)
-                {
-                    FindGame(GameID).PlayedCards.Add(PlayerWhoWantsToPlaACard.Hand[i]);
-                    PlayerWhoWantsToPlaACard.Hand.Remove(PlayerWhoWantsToPlaACard.Hand[i]);
-                    break;
-                }
-            }
+                    FindGame(GameID).PlayedCards.Add(card);
+                    PlayerWhoWantsToPlaACard.Remove(card);
+                    FindGame(GameID).Deck.Add(card);
         }
 
         /// <summary>
@@ -299,9 +288,26 @@ namespace UNOService
             }
         }
 
-        public void StartGame(int GameID)
+        public void StartGame(string partyID)
         {
-            throw new NotImplementedException();
+            //maybe need to check authorized Host and players  
+            if (GetPartyMembers(partyID).Count == 4)
+            {
+                Game.Game Game = new Game.Game(gameID, GetPartyMembers(partyID));
+                gameID++;
+                games.Add(Game);
+                for (int i = 1; i < GetPartyMembers(partyID).Count; i++)
+                {
+                    //everyone will be notified except host
+                    GetPartyMembers(partyID)[i].ILobbyCallback.NotifyGameStarted(partyID);
+                }
+                parties.Remove(parties.Find(x => x.PartyID.CompareTo(partyID) == 0));
+            }
+            else
+            {
+                throw new Exception("Party needs to be full....");
+            }
+          
         }
 
 
@@ -331,42 +337,55 @@ namespace UNOService
             }
         }
 
-        //Do we need fire the event ????????????????
-        public void SubscribeToGameEvents(GameEventType GameEventMask/*string username*/)
+
+        public void SubscribeToGameEvents(string userName,int gameID)
         {
-            Player CurrentPlayer = getPlayerFromGameContext();
-            if (GameEventMask == GameEventType.Turn)
+            IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
+            Player player = games.Find(x => x.GameID == gameID).Players.Find(y => y.UserName.CompareTo(userName) == 0);
+            player.IGameCallback = clientCallbackGame;
+
+            foreach (var item in games.Find(x => x.GameID == gameID).Players)
             {
-                whoseTurnIs += CurrentPlayer.IGameCallback.TurnChanged;
-            }
-            else if (GameEventMask == GameEventType.CardOnTHeTable)
-            {
-                TableCard += CurrentPlayer.IGameCallback.CardPlayed;
-            }
-            else if (GameEventMask == GameEventType.Message)
-            {
-                NewMessage += CurrentPlayer.IGameCallback.SendMessageGameCallback;
-            }
-            else if (GameEventMask == GameEventType.OnePlayerPunished)
-            {
-                PlayerPunnished += CurrentPlayer.IGameCallback.NotifyOpponentsOfPlayerPunished;
+                if (item != player)
+                {
+                    //item.IGameCallback.CardsAssigned();
+                    //item.IGameCallback.SendMessageGameCallback();  
+                    //item.IGameCallback.TurnChanged(player);
+                    //item.IGameCallback.NotifyOpponentsOfPlayerPunished(item.UserName);
+                    //item.IGameCallback.CardPlayed();
+                }
+                    
             }
         }
 
-        public void CreateParty(string partyID)
+        public void CreateParty()
         {
-            Player player = getPlayerFromLobbyContext();
-            Player host;
-
-            if (tryGetPlayerFromUsername(partyID, out host))
-            {
-                parties.Add(new Party(host));
-            }
+            Player host = getPlayerFromLobbyContext();
+            parties.Add(new Party(host));
         }
 
         public void LeaveParty(string partyID)
         {
-            throw new NotImplementedException();
+            Player WhoWantsToLeaveTheParty = getPlayerFromLobbyContext() ;
+            Party currentParty = parties.Find(x => x.PartyID.CompareTo(partyID) == 0);
+
+            currentParty.Players.Remove(WhoWantsToLeaveTheParty);
+
+            if (WhoWantsToLeaveTheParty.UserName.CompareTo(partyID) == 0 )
+            {
+                for (int i = 0; i < currentParty.Players.Count; i++)
+                {
+                    currentParty.Players[i].ILobbyCallback.PlayerLeftParty(WhoWantsToLeaveTheParty);
+                }
+                parties.Remove(currentParty);
+            }
+            else
+            {
+                for (int i = 0; i < currentParty.Players.Count; i++)
+                {
+                    currentParty.Players[i].ILobbyCallback.PlayerLeftParty(WhoWantsToLeaveTheParty);
+                }
+            }
         }
 
         public bool AnswerInvite(bool answer, string partyID)

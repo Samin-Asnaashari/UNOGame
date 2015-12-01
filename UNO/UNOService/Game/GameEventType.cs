@@ -8,6 +8,6 @@ namespace UNOService.Game
 {
     public enum GameEventType
     {
-        Turn,CardOnTHeTable,Message,OnePlayerPunished   //Other Events???
+        GameStarted,Turn,CardOnTHeTable,Message,OnePlayerPunished   //Other Events???
     }
 }

@@ -10,6 +10,7 @@ namespace UNOService
     [DataContract]
     public class Party
     {
+        public int PartyID { get; set; }
         public Player Host { get { return Players[0]; } }
         public List<Player> Players { get; private set; }
 
