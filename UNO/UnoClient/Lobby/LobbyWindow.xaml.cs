@@ -30,12 +30,19 @@ namespace UnoClient
         {
             this.username = username;
             InitializeComponent();
-
             Lobby = new LobbyClient(new InstanceContext(this));
             Lobby.SubscribeToLobbyEvents(username, password);
 
+            labelUsername.Content = "Welcome " + username;
+
             // Get online players and show them in the list
-            foreach (var item in Lobby.GetOnlineList())
+            var onlinePlayers = Lobby.GetOnlineList();
+            if (onlinePlayers.Count() > 0)
+            {
+                inviteButton.IsEnabled = true;
+            }
+
+            foreach (var item in onlinePlayers)
             {
                 listOnlinePlayers.Children.Add(new PlayerListElementControl(item));
             }
@@ -124,8 +131,8 @@ namespace UnoClient
             listInvitations.Children.Add(new InviteControl(hostName, inviteResponse));
         }
 
-        // Show a new party window
-        private void createParty(string host)
+        // Show a new party window, host name is used to enable/disable the invite button
+        private void showPartyWindow(string host)
         {
             if (host == username)
             {
@@ -152,6 +159,7 @@ namespace UnoClient
 
             if (playersToInvite.Count > 0)
             {
+                showPartyWindow(username);
                 Lobby.SendInvites(playersToInvite.ToArray());
             }
         }
@@ -182,7 +190,7 @@ namespace UnoClient
             if (accept)
             {
                 Lobby.AnswerInvite(true, sender.InviteSenderName);
-                createParty(sender.InviteSenderName);
+                showPartyWindow(sender.InviteSenderName);
             }
             else
             {

@@ -7,4 +7,13 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="PlayerState" nillable="true" type="tns:PlayerState" />
+  <xs:simpleType name="GameEventType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Turn" />
+      <xs:enumeration value="CardOnTHeTable" />
+      <xs:enumeration value="Message" />
+      <xs:enumeration value="OnePlayerPunished" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GameEventType" nillable="true" type="tns:GameEventType" />
 </xs:schema>

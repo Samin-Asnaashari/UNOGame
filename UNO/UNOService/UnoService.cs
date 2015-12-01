@@ -14,9 +14,9 @@ namespace UNOService
         private static int gameID = 0;
         private DatabaseHandler databaseHandler;
 
-        private List<Player> playersOnline;
-        private List<Game.Game> games;
-        private List<Party> parties;
+        private List<Player> playersOnline = new List<Player>();
+        private List<Game.Game> games = new List<Game.Game>();
+        private List<Party> parties = new List<Party>();
 
         static Action<Player> whoseTurnIs = delegate { };
         static Action<Card> TableCard = delegate { };
@@ -27,7 +27,6 @@ namespace UNOService
         public UnoService()
         {
             databaseHandler = new DatabaseHandler();
-            playersOnline = new List<Player>();
         }
 
         public bool Login(string userName, string password)
@@ -126,6 +125,13 @@ namespace UNOService
                     break;
                 }
             }
+        }
+
+        private bool tryGetPlayerFromUsername(string username, out Player player)
+        {
+            player = playersOnline.FirstOrDefault(x => x.UserName == username);
+
+            return player != null;
         }
 
         private Player getPlayerFromGameContext()
@@ -252,7 +258,17 @@ namespace UNOService
 
         public void SendInvites(List<Player> players)
         {
-            throw new NotImplementedException();
+            Player host = getPlayerFromLobbyContext();
+
+            foreach (Player sentPlayer in players)
+            {
+                Player actualPlayer;
+
+                if (tryGetPlayerFromUsername(sentPlayer.UserName, out actualPlayer))
+                {
+                    actualPlayer.ILobbyCallback.ReceiveInvite(host.UserName);
+                }
+            }
         }
 
         public void StartGame(int GameID)
@@ -304,7 +320,13 @@ namespace UNOService
 
         public void CreateParty(string partyID)
         {
-            throw new NotImplementedException();
+            Player player = getPlayerFromLobbyContext();
+            Player host;
+
+            if (tryGetPlayerFromUsername(partyID, out host))
+            {
+                parties.Add(new Party(host));
+            }
         }
 
         public void LeaveParty(string partyID)
