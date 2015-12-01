@@ -2,7 +2,6 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/UNOService" />
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/UNOService.Game" />
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence>
@@ -61,9 +60,7 @@
   </xs:element>
   <xs:element name="CreateParty">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="partyID" nillable="true" type="xs:string" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="CreatePartyResponse">
@@ -113,7 +110,7 @@
   <xs:element name="StartGame">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="GameID" type="xs:int" />
+        <xs:element minOccurs="0" name="PartyID" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -226,6 +223,18 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="NotifyGameStarted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PartyID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyGameStartedResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SaveReplay">
     <xs:complexType>
       <xs:sequence>
@@ -275,7 +284,8 @@
   <xs:element name="SubscribeToGameEvents">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="GameEventMask" type="q10:GameEventType" />
+        <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="GameID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -287,7 +297,7 @@
   <xs:element name="CardsAssigned">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q11:ArrayOfCard" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q10:ArrayOfCard" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -299,7 +309,7 @@
   <xs:element name="TurnChanged">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q12:Player" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q11:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

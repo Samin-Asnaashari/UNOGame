@@ -136,7 +136,8 @@ namespace UnoClient
         {
             if (host == username)
             {
-                Lobby.CreateParty(host);
+                //Lobby.CreateParty(host);
+                Lobby.CreateParty();
             }
             //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
             party = new PartyControl(username, host, leaveParty, sendPartyMessage);
@@ -210,6 +211,15 @@ namespace UnoClient
             {
                 Lobby.AnswerInvite(false, sender.InviteSenderName);
             }
+        }
+
+        public void NotifyGameStarted(string PartyID)
+        {
+            //throw new NotImplementedException();
+            GameWindow Game = new GameWindow(username);
+            this.Hide();
+            Game.Show();
+            
         }
     }
 }

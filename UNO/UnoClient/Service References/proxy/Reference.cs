@@ -114,23 +114,6 @@ namespace UnoClient.proxy {
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GameEventType", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
-    public enum GameEventType : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Turn = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        CardOnTHeTable = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Message = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        OnePlayerPunished = 3,
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="proxy.ILoginAndSignUp")]
     public interface ILoginAndSignUp {
@@ -217,10 +200,10 @@ namespace UnoClient.proxy {
         System.Threading.Tasks.Task<UnoClient.proxy.Player[]> GetOnlineListAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/CreateParty", ReplyAction="http://tempuri.org/ILobby/CreatePartyResponse")]
-        void CreateParty(string partyID);
+        void CreateParty();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/CreateParty", ReplyAction="http://tempuri.org/ILobby/CreatePartyResponse")]
-        System.Threading.Tasks.Task CreatePartyAsync(string partyID);
+        System.Threading.Tasks.Task CreatePartyAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/LeaveParty", ReplyAction="http://tempuri.org/ILobby/LeavePartyResponse")]
         void LeaveParty(string partyID);
@@ -241,10 +224,10 @@ namespace UnoClient.proxy {
         System.Threading.Tasks.Task<bool> AnswerInviteAsync(bool answer, string partyID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/StartGame", ReplyAction="http://tempuri.org/ILobby/StartGameResponse")]
-        void StartGame(int GameID);
+        void StartGame(string PartyID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/StartGame", ReplyAction="http://tempuri.org/ILobby/StartGameResponse")]
-        System.Threading.Tasks.Task StartGameAsync(int GameID);
+        System.Threading.Tasks.Task StartGameAsync(string PartyID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SendMessageParty", ReplyAction="http://tempuri.org/ILobby/SendMessagePartyResponse")]
         void SendMessageParty(string message, string partyID);
@@ -291,6 +274,9 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SendChatMessageLobbyCallback", ReplyAction="http://tempuri.org/ILobby/SendChatMessageLobbyCallbackResponse")]
         void SendChatMessageLobbyCallback(string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/NotifyGameStarted", ReplyAction="http://tempuri.org/ILobby/NotifyGameStartedResponse")]
+        void NotifyGameStarted(string PartyID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -329,12 +315,12 @@ namespace UnoClient.proxy {
             return base.Channel.GetOnlineListAsync();
         }
         
-        public void CreateParty(string partyID) {
-            base.Channel.CreateParty(partyID);
+        public void CreateParty() {
+            base.Channel.CreateParty();
         }
         
-        public System.Threading.Tasks.Task CreatePartyAsync(string partyID) {
-            return base.Channel.CreatePartyAsync(partyID);
+        public System.Threading.Tasks.Task CreatePartyAsync() {
+            return base.Channel.CreatePartyAsync();
         }
         
         public void LeaveParty(string partyID) {
@@ -361,12 +347,12 @@ namespace UnoClient.proxy {
             return base.Channel.AnswerInviteAsync(answer, partyID);
         }
         
-        public void StartGame(int GameID) {
-            base.Channel.StartGame(GameID);
+        public void StartGame(string PartyID) {
+            base.Channel.StartGame(PartyID);
         }
         
-        public System.Threading.Tasks.Task StartGameAsync(int GameID) {
-            return base.Channel.StartGameAsync(GameID);
+        public System.Threading.Tasks.Task StartGameAsync(string PartyID) {
+            return base.Channel.StartGameAsync(PartyID);
         }
         
         public void SendMessageParty(string message, string partyID) {
@@ -423,10 +409,10 @@ namespace UnoClient.proxy {
         System.Threading.Tasks.Task SendMessageGameAsync(string message);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SubscribeToGameEvents", ReplyAction="http://tempuri.org/IGame/SubscribeToGameEventsResponse")]
-        void SubscribeToGameEvents(UnoClient.proxy.GameEventType GameEventMask);
+        void SubscribeToGameEvents(string UserName, int GameID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SubscribeToGameEvents", ReplyAction="http://tempuri.org/IGame/SubscribeToGameEventsResponse")]
-        System.Threading.Tasks.Task SubscribeToGameEventsAsync(UnoClient.proxy.GameEventType GameEventMask);
+        System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName, int GameID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -505,12 +491,12 @@ namespace UnoClient.proxy {
             return base.Channel.SendMessageGameAsync(message);
         }
         
-        public void SubscribeToGameEvents(UnoClient.proxy.GameEventType GameEventMask) {
-            base.Channel.SubscribeToGameEvents(GameEventMask);
+        public void SubscribeToGameEvents(string UserName, int GameID) {
+            base.Channel.SubscribeToGameEvents(UserName, GameID);
         }
         
-        public System.Threading.Tasks.Task SubscribeToGameEventsAsync(UnoClient.proxy.GameEventType GameEventMask) {
-            return base.Channel.SubscribeToGameEventsAsync(GameEventMask);
+        public System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName, int GameID) {
+            return base.Channel.SubscribeToGameEventsAsync(UserName, GameID);
         }
     }
 }
