@@ -1465,6 +1465,7 @@
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/UNOService" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/UNOService.Game" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ILoginAndSignUp_Login_InputMessage">

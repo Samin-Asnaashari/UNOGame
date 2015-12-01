@@ -36,12 +36,16 @@ namespace UnoClient
             this.host = host;
             this.player = player;
             InitializeComponent();
-            AddPlayer(player);
+            AddPlayer(host);
 
             // Only host can see the start game button
             if (player == host)
             {
                 buttonStartGame.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                AddPlayer(player);
             }
         }
 
@@ -83,6 +87,7 @@ namespace UnoClient
         // Send a message
         private void buttonSendPartyMessage_Click(object sender, RoutedEventArgs e)
         {
+            listBoxPartyChat.Items.Add($"{player}: {textBoxPartyChat.Text}");
             OnSendMessage?.Invoke(textBoxPartyChat.Text, host);
         }
 

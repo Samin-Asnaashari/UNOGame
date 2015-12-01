@@ -140,20 +140,34 @@ namespace UnoClient
             }
             //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
             party = new PartyControl(username, host, leaveParty, sendPartyMessage);
+            foreach (var player in Lobby.GetPartyMembers(host))
+            {
+                // Host and player are already in the lobby, due to being required in constructor
+                if (player.UserName != username && player.UserName != host)
+                {
+                    party.AddPlayer(player.UserName);
+                }
+            }
+
             partyGrid.Children.Add(party);
 
             inviteButton.IsEnabled = (username == host);
         }
 
-        // Invite all selected players in the list
         private void inviteButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Player> playersToInvite = new List<Player>();
+            sendInvites();
+        }
+
+        // Invite all selected players in the list
+        private void sendInvites()
+        {
+            List<string> playersToInvite = new List<string>();
             foreach (PlayerListElementControl playerControl in listOnlinePlayers.Children)
             {
                 if (playerControl.IsChecked)
                 {
-                    playersToInvite.Add(playerControl.Player);
+                    playersToInvite.Add(playerControl.Player.UserName);
                 }
             }
 

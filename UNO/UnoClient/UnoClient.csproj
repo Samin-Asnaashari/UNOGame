@@ -150,6 +150,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Service References\proxy\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\proxy\service.wsdl" />
     <None Include="Service References\proxy\service.xsd">
       <SubType>Designer</SubType>

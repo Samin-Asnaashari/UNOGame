@@ -305,9 +305,16 @@ namespace UNOService
         }
 
 
-        public List<Player> GetPartyMembers()
+        public List<Player> GetPartyMembers(string partyID)
         {
-            throw new NotImplementedException();
+            Party party; 
+
+            if (tryGetPartyFromUsername(partyID, out party))
+            {
+                return party.Players;
+            }
+
+            return new List<Player>();
         }
 
         public void SubscribeToLobbyEvents(string username, string password)
@@ -371,11 +378,11 @@ namespace UNOService
 
                 if (tryGetPartyFromUsername(partyID, out party))
                 {
-                    foreach (Player partyPlayer in party.GetPlayers())
+                    foreach (Player partyPlayer in party.Players)
                     {
                         partyPlayer.ILobbyCallback.PlayerAddedToParty(player.UserName);
                     }
-                    party.AddPlayer(player);
+                    party.Players.Add(player);
                     return true;
                 }
             }
@@ -393,7 +400,7 @@ namespace UNOService
 
             if (tryGetPartyFromUsername(partyID, out party))
             {
-                foreach (Player player in party.GetPlayers())
+                foreach (Player player in party.Players)
                 {
                     if (player != messageSender)
                     {
