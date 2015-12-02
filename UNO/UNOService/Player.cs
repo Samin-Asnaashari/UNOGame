@@ -20,7 +20,7 @@ namespace UNOService
         public ILobbyCallback ILobbyCallback { get; set; }
         public IGameCallback IGameCallback { get; set; }
         public int GameID { get; set; }
-        public int PartyID { get; set; }   
+        public Party Party { get; set; }   
         public bool UnoSaid { get; set; }
 
 

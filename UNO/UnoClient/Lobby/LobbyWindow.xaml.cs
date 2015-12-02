@@ -136,7 +136,6 @@ namespace UnoClient
         {
             if (host == username)
             {
-                //Lobby.CreateParty(host);
                 Lobby.CreateParty();
             }
             //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
@@ -174,7 +173,10 @@ namespace UnoClient
 
             if (playersToInvite.Count > 0)
             {
-                showPartyWindow(username);
+                if (party == null)
+                {
+                    showPartyWindow(username);
+                }
                 Lobby.SendInvites(playersToInvite.ToArray());
             }
         }
@@ -211,11 +213,9 @@ namespace UnoClient
 
         public void NotifyGameStarted(string PartyID)
         {
-            //throw new NotImplementedException();
             GameWindow Game = new GameWindow(username);
             this.Hide();
-            Game.Show();
-            
+            Game.Show();            
         }
     }
 }

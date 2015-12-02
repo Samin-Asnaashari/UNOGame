@@ -33,7 +33,9 @@ namespace UNOService
         public void CreateParty()
         {
             Player host = getPlayerFromLobbyContext();
-            parties.Add(host.UserName, new Party(host));
+            Party party = new Party(host);
+            parties.Add(host.UserName, party);
+            host.Party = party;
         }
 
         public void LeaveParty(string host)
@@ -44,40 +46,46 @@ namespace UNOService
             if (parties.TryGetValue(host, out currentParty))
             {
                 currentParty.Players.Remove(player);
+                player.Party = null;
 
-                if (player.UserName.CompareTo(host) == 0) // If host leaves, disband the whole party.
+                foreach (Player currentPlayer in currentParty.Players)
                 {
-                    for (int i = 0; i < currentParty.Players.Count; i++)
+                    currentPlayer.ILobbyCallback.PlayerLeftParty(player);
+                }
+
+                if (player.UserName == host) // If host leaves, disband the whole party.
+                {
+                    foreach (Player currentPlayer in currentParty.Players)
                     {
-                        currentParty.Players[i].ILobbyCallback.PlayerLeftParty(player);
+                        currentPlayer.Party = null;
                     }
                     parties.Remove(host);
                 }
-                else
-                {
-                    for (int i = 0; i < currentParty.Players.Count; i++)
-                    {
-                        currentParty.Players[i].ILobbyCallback.PlayerLeftParty(player);
-                    }
-                }
+
             }
         }
 
         public void SendInvites(List<string> playerNames)
         {
             Player host = getPlayerFromLobbyContext();
+            Party party;
 
-            foreach (string username in playerNames)
+            if (parties.TryGetValue(host.UserName, out party))
             {
-                Player player;
-
-                if (tryGetPlayerFromUsername(username, out player))
+                foreach (string username in playerNames)
                 {
-                    player.ILobbyCallback.ReceiveInvite(host.UserName);
+                    Player player;
+
+                    if (tryGetPlayerFromUsername(username, out player))
+                    {
+                        if (!party.Players.Contains(player)) // Prevent sending invites to players in the party already
+                        {
+                            player.ILobbyCallback.ReceiveInvite(host.UserName);
+                        }
+                    }
                 }
             }
         }
-
 
         /// <summary>
         /// Returns false if party does not exist or is full.
@@ -87,17 +95,18 @@ namespace UNOService
         public bool AnswerInvite(string host)
         {
             Player player = getPlayerFromLobbyContext();
-            Party party;
+            Party partyPlayerWasInvitedTo;
 
-            if (parties.TryGetValue(host, out party))
+            if (player.Party == null && parties.TryGetValue(host, out partyPlayerWasInvitedTo)) // They can only join a party if they are not in one yet.
             {
-                if (party.Players.Count < 4)
+                if (partyPlayerWasInvitedTo.Players.Count < 4)
                 {
-                    foreach (Player partyPlayer in party.Players)
+                    foreach (Player partyPlayer in partyPlayerWasInvitedTo.Players)
                     {
                         partyPlayer.ILobbyCallback.PlayerAddedToParty(player.UserName);
                     }
-                    party.Players.Add(player);
+                    partyPlayerWasInvitedTo.Players.Add(player);
+                    player.Party = partyPlayerWasInvitedTo;
                     return true;
                 }
             }
