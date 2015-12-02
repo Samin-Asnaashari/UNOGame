@@ -10,7 +10,7 @@ namespace UNOService
 {
     public partial class UnoService : ILobby
     {
-        private List<Party> parties = new List<Party>();
+        private Dictionary<string, Party> parties = new Dictionary<string, Party>();
 
         public List<Player> GetOnlineList()
         {
@@ -30,45 +30,35 @@ namespace UNOService
             return playersOnline.Find(x => x.ILobbyCallback == currentPlayerCallback);
         }
 
-        /// <summary>
-        /// Party may not exist anymore, so use this method for safety
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="party"></param>
-        /// <returns></returns>
-        private bool tryGetPartyFromUsername(string username, out Party party)
-        {
-            party = parties.FirstOrDefault(x => x.Host.UserName == username);
-
-            return party != null;
-        }
-
         public void CreateParty()
         {
             Player host = getPlayerFromLobbyContext();
-            parties.Add(new Party(host));
+            parties.Add(host.UserName, new Party(host));
         }
 
-        public void LeaveParty(string partyID)
+        public void LeaveParty(string host)
         {
-            Player WhoWantsToLeaveTheParty = getPlayerFromLobbyContext();
-            Party currentParty = parties.Find(x => x.PartyID.CompareTo(partyID) == 0);
+            Player player = getPlayerFromLobbyContext();
+            Party currentParty;
 
-            currentParty.Players.Remove(WhoWantsToLeaveTheParty);
-
-            if (WhoWantsToLeaveTheParty.UserName.CompareTo(partyID) == 0)
+            if (parties.TryGetValue(host, out currentParty))
             {
-                for (int i = 0; i < currentParty.Players.Count; i++)
+                currentParty.Players.Remove(player);
+
+                if (player.UserName.CompareTo(host) == 0) // If host leaves, disband the whole party.
                 {
-                    currentParty.Players[i].ILobbyCallback.PlayerLeftParty(WhoWantsToLeaveTheParty);
+                    for (int i = 0; i < currentParty.Players.Count; i++)
+                    {
+                        currentParty.Players[i].ILobbyCallback.PlayerLeftParty(player);
+                    }
+                    parties.Remove(host);
                 }
-                parties.Remove(currentParty);
-            }
-            else
-            {
-                for (int i = 0; i < currentParty.Players.Count; i++)
+                else
                 {
-                    currentParty.Players[i].ILobbyCallback.PlayerLeftParty(WhoWantsToLeaveTheParty);
+                    for (int i = 0; i < currentParty.Players.Count; i++)
+                    {
+                        currentParty.Players[i].ILobbyCallback.PlayerLeftParty(player);
+                    }
                 }
             }
         }
@@ -88,14 +78,14 @@ namespace UNOService
             }
         }
 
-        public bool AnswerInvite(bool answer, string partyID)
+        public bool AnswerInvite(bool answer, string host)
         {
             Player player = getPlayerFromLobbyContext();
             if (answer)
             {
                 Party party;
 
-                if (tryGetPartyFromUsername(partyID, out party))
+                if (parties.TryGetValue(host, out party))
                 {
                     foreach (Player partyPlayer in party.Players)
                     {
@@ -109,20 +99,20 @@ namespace UNOService
             return false;
         }
 
-        public void StartGame(string partyID)
+        public void StartGame(string host)
         {
             //maybe need to check authorized Host and players  
-            if (GetPartyMembers(partyID).Count == 4)
+            if (GetPartyMembers(host).Count >= 2 && GetPartyMembers(host).Count <= 4)
             {
-                Game.Game Game = new Game.Game(gameID, GetPartyMembers(partyID));
+                Game.Game Game = new Game.Game(gameID, GetPartyMembers(host));
                 gameID++;
                 games.Add(Game);
-                for (int i = 1; i < GetPartyMembers(partyID).Count; i++)
+                for (int i = 1; i < GetPartyMembers(host).Count; i++)
                 {
                     //everyone will be notified except host
-                    GetPartyMembers(partyID)[i].ILobbyCallback.NotifyGameStarted(partyID);
+                    GetPartyMembers(host)[i].ILobbyCallback.NotifyGameStarted(host);
                 }
-                parties.Remove(parties.Find(x => x.PartyID.CompareTo(partyID) == 0));
+                parties.Remove(host);
             }
             else
             {
@@ -131,7 +121,7 @@ namespace UNOService
 
         }
 
-        public void SendMessageParty(string message, string partyID)
+        public void SendMessageParty(string message, string host)
         {
             Player messageSender = getPlayerFromLobbyContext();
 
@@ -139,7 +129,7 @@ namespace UNOService
 
             message = $"{messageSender.UserName}: {message}";
 
-            if (tryGetPartyFromUsername(partyID, out party))
+            if (parties.TryGetValue(host, out party))
             {
                 foreach (Player player in party.Players)
                 {
@@ -151,11 +141,11 @@ namespace UNOService
             }
         }
 
-        public List<Player> GetPartyMembers(string partyID)
+        public List<Player> GetPartyMembers(string host)
         {
             Party party;
 
-            if (tryGetPartyFromUsername(partyID, out party))
+            if (parties.TryGetValue(host, out party))
             {
                 return party.Players;
             }
