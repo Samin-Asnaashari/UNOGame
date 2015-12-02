@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,12 +22,17 @@ namespace UnoClient
     /// </summary>
     public partial class GameWindow : proxy.IGameCallback
     {
+        private GameClient GameProxy;
         private string username;
 
-        public GameWindow(string username)
+        public GameWindow(string username,int GameID)
         {
             this.username = username;
             InitializeComponent();
+            GameProxy = new GameClient(new InstanceContext(this));
+            GameProxy.SubscribeToGameEvents(username,GameID);
+            
+            //TODO: position the players
         }
 
         public void CardsAssigned(Card[] cards)

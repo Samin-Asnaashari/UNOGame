@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,11 +24,56 @@ namespace UnoClient
 	{
         private LoginAndSignUpClient client;
 
-		public LoginAndRegisterWindow()
+        public LoginAndRegisterWindow()
 		{
             client = new LoginAndSignUpClient();
 			InitializeComponent();
-		}
+        }
+
+        public void ChangePlayerState(Player player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NotifyGameStarted(string PartyID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PartyIsFull()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayerAddedToParty(string playerName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayerConnected(Player player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayerDisconnected(Player player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayerLeftParty(Player player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReceiveInvite(string hostName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendChatMessageLobbyCallback(string message)
+        {
+            throw new NotImplementedException();
+        }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {

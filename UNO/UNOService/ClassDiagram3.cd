@@ -7,39 +7,43 @@
       <FileName>Game\Card.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Color" />
       <Property Name="Type" />
+      <Property Name="Color" />
     </ShowAsAssociation>
   </Class>
   <Class Name="UNOService.DatabaseHandler">
     <Position X="5.25" Y="1" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAEAACAAAAAAAACAAAAAAAAAAAAAgAAAAEAAAAAAQA=</HashCode>
+      <HashCode>AAAAIACAAAAAAAACCAABAAAAAQAAAgAACAEAAgEABSA=</HashCode>
       <FileName>DatabaseHandler.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UNOService.Party">
     <Position X="0.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAABAAAAAAAAAACAAAIAgAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgDAAAAAAAAAAAAAA=</HashCode>
       <FileName>Party.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Host" />
     </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="players" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="UNOService.Player">
     <Position X="8" Y="6" Width="1.5" />
+    <AssociationLine Name="Hand" Type="UNOService.Card" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.344" Y="6" />
+        <Point X="8.344" Y="0.915" />
+        <Point X="4.093" Y="0.915" />
+        <Point X="4.093" Y="1" />
+        <Point X="2" Y="1" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAIAAAACAgBAAAAAAABAAAAAAAAAAAAQAABAAAABA=</HashCode>
+      <HashCode>AAAAIAAAACAAAEAEgAEABAAAAgAAAAAIAQAABAAAAAA=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="IGame" />
-      <Property Name="ILobby" />
       <Property Name="State" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
@@ -49,52 +53,69 @@
   <Class Name="UNOService.UnoService" BaseTypeListCollapsed="true">
     <Position X="9.5" Y="0.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>QAIAAAEAAAQACAACAAAAAAAlIAAABIAAEAAQAEAqABA=</HashCode>
+      <HashCode>AEIBEAEAACQACAACAAAAAEApIICADIAAEAAQAUAqABA=</HashCode>
       <FileName>UnoService.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Field Name="parties" />
       <Field Name="games" />
+      <Field Name="parties" />
     </ShowAsCollectionAssociation>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="UNOService.Game.Game">
     <Position X="10.75" Y="6.5" Width="1.5" />
+    <AssociationLine Name="Deck" Type="UNOService.Card" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.781" Y="6.5" />
+        <Point X="11.781" Y="0.625" />
+        <Point X="11.599" Y="0.625" Type="JumpStart" />
+        <Point X="11.432" Y="0.625" Type="JumpEnd" />
+        <Point X="2" Y="0.625" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="PlayedCards" Type="UNOService.Card" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.516" Y="6.5" />
+        <Point X="11.516" Y="0.26" />
+        <Point X="1.188" Y="0.26" />
+        <Point X="1.188" Y="0.5" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAgAAAAQABAgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAQACEAAAAAAEAgAAAAQABAgAAAEAA=</HashCode>
       <FileName>Game\Game.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="Deck" />
       <Property Name="Players" />
+      <Property Name="Deck" />
       <Property Name="PlayedCards" />
     </ShowAsCollectionAssociation>
   </Class>
   <Interface Name="UNOService.IGame" Collapsed="true">
     <Position X="0.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEAAAAAAIABA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIACAAAAAEAAAAAAIABA=</HashCode>
       <FileName>Game\IGame.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UNOService.IGameCallback" Collapsed="true">
     <Position X="4.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAhAAAQAAAAAAAAgAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAABAAAQAAAAAIAAgAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Game\IGameCallback.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UNOService.ILobby" Collapsed="true">
     <Position X="5.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAEAAAQAAAAAAAAAAAAgAAAABIAAAAAAAAACAAA=</HashCode>
+      <HashCode>AAIAAAEAAAQAAAAAAAAAAAAoAAAADIAAAAAAAAACAAA=</HashCode>
       <FileName>ILobby.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UNOService.ILobbyCallback" Collapsed="true">
     <Position X="5.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAgCAAgAAAABAAEAgAAAA=</HashCode>
+      <HashCode>AQAAAAAAAAAAAAAAAAACAAAAgCAAAAACCJAAEAAAAAA=</HashCode>
       <FileName>ILobbyCallback.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -102,7 +123,7 @@
     <Position X="4.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAACAACAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
-      <FileName>ILogin.cs</FileName>
+      <FileName>ILoginAndSignUp.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="UNOService.Game.CardColor" Collapsed="true">
