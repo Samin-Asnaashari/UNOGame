@@ -61,7 +61,6 @@ namespace UNOService
                     }
                     parties.Remove(host);
                 }
-
             }
         }
 

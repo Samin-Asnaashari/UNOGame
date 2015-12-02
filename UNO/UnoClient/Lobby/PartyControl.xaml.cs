@@ -26,14 +26,17 @@ namespace UnoClient
         public delegate void SendMessageHandler(string message, string host);
         public SendMessageHandler OnSendMessage;
 
-        string host;
+        public string Host
+        {
+            get; private set;
+        }
         string player;
         public PartyControl(string player, string host, LeavePartyHandler leavePartyDelegate, SendMessageHandler sendMessageDelegate)
         {
             OnLeaveParty += leavePartyDelegate;
             OnSendMessage += sendMessageDelegate;
 
-            this.host = host;
+            this.Host = host;
             this.player = player;
             InitializeComponent();
             AddPlayer(host);
@@ -52,7 +55,7 @@ namespace UnoClient
         // Only host can use the start game button, when at least 2 people are in the lobby
         private void updateStartGameButton()
         {
-            if (player == host)
+            if (player == Host)
             {
                 buttonStartGame.IsEnabled = (listBoxPlayersInParty.Items.Count > 1);
             }
@@ -81,14 +84,14 @@ namespace UnoClient
         // Leave the party and notify the server
         public void Leave()
         {
-            OnLeaveParty?.Invoke(host);
+            OnLeaveParty?.Invoke(Host);
         }
 
         // Send a message
         private void buttonSendPartyMessage_Click(object sender, RoutedEventArgs e)
         {
             listBoxPartyChat.Items.Add($"{player}: {textBoxPartyChat.Text}");
-            OnSendMessage?.Invoke(textBoxPartyChat.Text, host);
+            OnSendMessage?.Invoke(textBoxPartyChat.Text, Host);
         }
 
         // Show a recieved message

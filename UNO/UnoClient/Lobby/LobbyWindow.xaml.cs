@@ -117,7 +117,14 @@ namespace UnoClient
         // Remove player from the party list
         public void PlayerLeftParty(Player player)
         {
-            party?.RemovePlayer(player.UserName);
+            if (player.UserName == party.Host)
+            {
+                hidePartyWindow();
+            }
+            else
+            {
+                party.RemovePlayer(player.UserName);
+            }
         }
 
         // Recieve a message to show in the party
@@ -129,6 +136,15 @@ namespace UnoClient
         public void ReceiveInvite(string hostName)
         {
             listInvitations.Children.Add(new InviteControl(hostName, inviteResponse));
+        }
+
+        // Show a new party window, host name is used to enable/disable the invite button
+        private void hidePartyWindow()
+        {
+            party = null;
+            partyGrid.Children.Clear();
+            // Enable the player to invite other players (would create a new party)
+            inviteButton.IsEnabled = true;
         }
 
         // Show a new party window, host name is used to enable/disable the invite button
@@ -206,8 +222,15 @@ namespace UnoClient
 
             if (accept)
             {
-                Lobby.AnswerInvite(sender.InviteSenderName);
-                showPartyWindow(sender.InviteSenderName);
+                if (Lobby.AnswerInvite(sender.InviteSenderName))
+                {
+                    showPartyWindow(sender.InviteSenderName);
+                }
+                else
+                {
+                    //TODO Rework into the UI
+                    MessageBox.Show("Could not join party");
+                }
             }
         }
 
@@ -215,7 +238,7 @@ namespace UnoClient
         {
             GameWindow Game = new GameWindow(username);
             this.Hide();
-            Game.Show();            
+            Game.Show();
         }
     }
 }
