@@ -35,7 +35,7 @@ namespace UNOService
             Player host = getPlayerFromLobbyContext();
             Party party = new Party(host);
             parties.Add(host.UserName, party);
-            host.Party = party;
+            host.IsInParty = true;
         }
 
         public void LeaveParty(string host)
@@ -46,7 +46,7 @@ namespace UNOService
             if (parties.TryGetValue(host, out currentParty))
             {
                 currentParty.Players.Remove(player);
-                player.Party = null;
+                player.IsInParty = false;
 
                 foreach (Player currentPlayer in currentParty.Players)
                 {
@@ -57,7 +57,7 @@ namespace UNOService
                 {
                     foreach (Player currentPlayer in currentParty.Players)
                     {
-                        currentPlayer.Party = null;
+                        currentPlayer.IsInParty = false;
                     }
                     parties.Remove(host);
                 }
@@ -96,7 +96,7 @@ namespace UNOService
             Player player = getPlayerFromLobbyContext();
             Party partyPlayerWasInvitedTo;
 
-            if (player.Party == null && parties.TryGetValue(host, out partyPlayerWasInvitedTo)) // They can only join a party if they are not in one yet.
+            if (player.IsInParty == false && parties.TryGetValue(host, out partyPlayerWasInvitedTo)) // They can only join a party if they are not in one yet.
             {
                 if (partyPlayerWasInvitedTo.Players.Count < 4)
                 {
@@ -105,7 +105,7 @@ namespace UNOService
                         partyPlayer.ILobbyCallback.PlayerAddedToParty(player.UserName);
                     }
                     partyPlayerWasInvitedTo.Players.Add(player);
-                    player.Party = partyPlayerWasInvitedTo;
+                    player.IsInParty = true;
                     return true;
                 }
             }
