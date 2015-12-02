@@ -27,7 +27,7 @@ namespace UNOService
         /// Leave the current party
         /// </summary>
         [OperationContract]
-        void LeaveParty(string partyID);
+        void LeaveParty(string host);
 
         /// <summary>
         /// Selected players from online list get sent to the server
@@ -41,27 +41,27 @@ namespace UNOService
         /// </summary>
         /// <param name="answer"></param>
         [OperationContract]
-        bool AnswerInvite(bool answer, string partyID);
+        bool AnswerInvite(string host);
 
         /// <summary>
         /// 
         /// </summary>
         [OperationContract]
-        void StartGame(string PartyID);
+        void StartGame(string host);
 
         /// <summary>
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>
         [OperationContract]
-        void SendMessageParty(string message, string partyID);
+        void SendMessageParty(string message, string host);
 
         /// <summary>
         /// Returns a list of players already in the party
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        List<Player> GetPartyMembers(string partyID);
+        List<Player> GetPartyMembers(string host);
 
         /// <summary>
         /// Subscribe to lobby events

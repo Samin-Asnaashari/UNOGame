@@ -204,12 +204,8 @@ namespace UnoClient
 
             if (accept)
             {
-                Lobby.AnswerInvite(true, sender.InviteSenderName);
+                Lobby.AnswerInvite(sender.InviteSenderName);
                 showPartyWindow(sender.InviteSenderName);
-            }
-            else
-            {
-                Lobby.AnswerInvite(false, sender.InviteSenderName);
             }
         }
 

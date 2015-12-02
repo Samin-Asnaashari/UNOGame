@@ -78,14 +78,20 @@ namespace UNOService
             }
         }
 
-        public bool AnswerInvite(bool answer, string host)
+
+        /// <summary>
+        /// Returns false if party does not exist or is full.
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
+        public bool AnswerInvite(string host)
         {
             Player player = getPlayerFromLobbyContext();
-            if (answer)
-            {
-                Party party;
+            Party party;
 
-                if (parties.TryGetValue(host, out party))
+            if (parties.TryGetValue(host, out party))
+            {
+                if (party.Players.Count < 4)
                 {
                     foreach (Player partyPlayer in party.Players)
                     {
