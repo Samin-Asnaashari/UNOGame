@@ -236,9 +236,10 @@ namespace UnoClient
 
         public void NotifyGameStarted(string PartyID)
         {
-            GameWindow Game = new GameWindow(username);
-            this.Hide();
-            Game.Show();
+            throw new NotImplementedException();
+            //GameWindow Game = new GameWindow(username);
+            //this.Hide();
+            //Game.Show();
         }
     }
 }

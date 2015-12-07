@@ -31,7 +31,7 @@ namespace UnoClient
             InitializeComponent();
             GameProxy = new GameClient(new InstanceContext(this));
             GameProxy.SubscribeToGameEvents(username,GameID);
-            
+
             //TODO: position the players
         }
 
