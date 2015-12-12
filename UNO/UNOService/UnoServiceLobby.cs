@@ -174,10 +174,10 @@ namespace UNOService
             Player player = playersOnline.Find(x => x.UserName == username);
             player.ILobbyCallback = clientCallbackLobby;
 
-            foreach (var item in playersOnline)
+            foreach (var onlinePlayer in playersOnline)
             {
-                if (item != player)
-                    item.ILobbyCallback.PlayerConnected(player);
+                if (onlinePlayer != player)
+                    onlinePlayer.ILobbyCallback?.PlayerConnected(player); // Added null check because it could fail if 2 people logged in at the same time
             }
         }
 

@@ -25,6 +25,7 @@ namespace UnoClient
         private GameClient GameProxy;
         private string username;
 
+        // TODO Authenticate using password
         public GameWindow(string username,int GameID)
         {
             this.username = username;

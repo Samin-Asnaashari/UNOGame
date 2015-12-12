@@ -28,7 +28,7 @@ namespace UnoClient
             InviteSenderName = inviteSenderName;
             OnButtonPress = buttonPressDelegate;
             InitializeComponent();
-            label.Content = $"Join {inviteSenderName}'s party?";
+            inviteMessage.Text = $"{inviteSenderName} has invited you to their party";
         }
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)

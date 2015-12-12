@@ -3,54 +3,55 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:UnoClient"
         Width="600"
-		Height="400">
+		Height="400" Background="#2E4372">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Label x:Name="labelUsername" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="labelUsername" FontSize="24" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                <Grid Grid.Column="1">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+                <!--Contains the Invitation List -->
+                <Grid Grid.Column="1" Background="#A7B4CC">
+                    <ScrollViewer Width="auto" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name="listInvitations"/>
                     </ScrollViewer>
                 </Grid>
             </Grid>
 
             <Grid x:Name="partyGrid" Grid.Row="1">
-
+                <!--Party control is added programatically here-->
             </Grid>
 
         </Grid>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Background="AliceBlue">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+                <ScrollViewer Width="auto" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical" x:Name="listOnlinePlayers"/>
                 </ScrollViewer>
             </Grid>
 
             <Grid Grid.Row="1">
-                <Button x:Name="inviteButton" IsEnabled="False" Click="inviteButton_Click" Content="Invite" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
+                <Button Width="130" x:Name="inviteButton" IsEnabled="False" Click="inviteButton_Click" Content="Invite" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
             </Grid>
         </Grid>
     </Grid>
