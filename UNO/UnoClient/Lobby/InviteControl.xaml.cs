@@ -25,9 +25,10 @@ namespace UnoClient
         public string InviteSenderName { get; private set; }
         public InviteControl(string inviteSenderName, ResponseButtonHandler buttonPressDelegate)
         {
+            InitializeComponent();
+
             InviteSenderName = inviteSenderName;
             OnButtonPress = buttonPressDelegate;
-            InitializeComponent();
             inviteMessage.Text = $"{inviteSenderName} has invited you to their party";
         }
 

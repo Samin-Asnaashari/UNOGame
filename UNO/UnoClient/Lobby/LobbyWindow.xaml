@@ -21,10 +21,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-
+                <!--Lots of empty space here to add stuff-->
                 <Label x:Name="labelUsername" FontSize="24" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                <!--Contains the Invitation List -->
+                <!--Contains the Invitation List-->
                 <Grid Grid.Column="1" Background="#A7B4CC">
                     <ScrollViewer Width="auto" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name="listInvitations"/>
@@ -35,9 +35,9 @@
             <Grid x:Name="partyGrid" Grid.Row="1">
                 <!--Party control is added programatically here-->
             </Grid>
-
         </Grid>
 
+        <!--Contains the Player List-->
         <Grid Grid.Column="1" Background="AliceBlue">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

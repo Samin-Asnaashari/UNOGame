@@ -135,6 +135,14 @@ namespace UnoClient
 
         public void ReceiveInvite(string hostName)
         {
+            // Prevent multiple invites from the same person
+            foreach (var inviteChild in listInvitations.Children)
+            {
+                var inviteControl = (InviteControl)inviteChild;
+                if (inviteControl.InviteSenderName == hostName)
+                    return;
+            }
+
             listInvitations.Children.Add(new InviteControl(hostName, inviteResponse));
         }
 
@@ -155,7 +163,7 @@ namespace UnoClient
                 LobbyProxy.CreateParty();
             }
             //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
-            party = new PartyControl(username, host, leaveParty, sendPartyMessage);
+            party = new PartyControl(username, host, leaveParty, LobbyProxy.SendMessageParty);
             foreach (var player in LobbyProxy.GetPartyMembers(host))
             {
                 // Host and player are already in the lobby, due to being required in constructor
@@ -207,12 +215,6 @@ namespace UnoClient
             party = null;
             // Enable the player to invite other players (would create a new party)
             inviteButton.IsEnabled = true;
-        }
-
-        // Is called from within the PartyControl
-        private void sendPartyMessage(string message, string host)
-        {
-            LobbyProxy.SendMessageParty(message, host);
         }
 
         // Accept or decline an invitation
