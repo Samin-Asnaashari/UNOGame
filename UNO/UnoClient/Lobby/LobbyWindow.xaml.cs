@@ -23,15 +23,18 @@ namespace UnoClient
     public partial class LobbyWindow : ILobbyCallback
     {
         private LobbyClient LobbyProxy;
-        PartyControl party;
-        string username;
+        private PartyControl partyControl;
+        private Party party;
+        private Player self;
 
         public LobbyWindow(string username, string password)
         {
-            this.username = username;
-            InitializeComponent();
             LobbyProxy = new LobbyClient(new InstanceContext(this));
             LobbyProxy.SubscribeToLobbyEvents(username, password);
+            party = null;
+            this.self = LobbyProxy.getPlayerFromLobbyContext();
+
+            InitializeComponent();
 
             labelUsername.Content = "Welcome " + username;
 
@@ -70,7 +73,7 @@ namespace UnoClient
         // Add a player to the party
         public void PlayerAddedToParty(string playerName)
         {
-            party?.AddPlayer(playerName);
+            partyControl?.AddPlayer(playerName);
         }
 
         // Add a player to the online list
@@ -117,57 +120,44 @@ namespace UnoClient
         // Remove player from the party list
         public void PlayerLeftParty(Player player)
         {
-            if (player.UserName == party.Host)
+            if (player.UserName == partyControl.getParty().Host.UserName)
             {
                 hidePartyWindow();
             }
             else
             {
-                party.RemovePlayer(player.UserName);
+                partyControl.RemovePlayer(player.UserName);
             }
         }
 
         // Recieve a message to show in the party
         public void SendChatMessageLobbyCallback(string message)
         {
-            party?.DisplayMessage(message);
+            partyControl?.DisplayMessage(message);
         }
 
-        public void ReceiveInvite(string hostName)
+        public void ReceiveInvite(Party p)
         {
-            listInvitations.Children.Add(new InviteControl(hostName, inviteResponse));
+            listInvitations.Children.Add(new InviteControl(p, inviteResponse));
         }
 
         // Show a new party window, host name is used to enable/disable the invite button
         private void hidePartyWindow()
         {
-            party = null;
+            partyControl = null;
             partyGrid.Children.Clear();
             // Enable the player to invite other players (would create a new party)
             inviteButton.IsEnabled = true;
         }
 
         // Show a new party window, host name is used to enable/disable the invite button
-        private void showPartyWindow(string host)
+        private void showPartyWindow(Party p)
         {
-            if (host == username)
-            {
-                LobbyProxy.CreateParty();
-            }
-            //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
-            party = new PartyControl(username, host, leaveParty, sendPartyMessage);
-            foreach (var player in LobbyProxy.GetPartyMembers(host))
-            {
-                // Host and player are already in the lobby, due to being required in constructor
-                if (player.UserName != username && player.UserName != host)
-                {
-                    party.AddPlayer(player.UserName);
-                }
-            }
+            partyControl = new PartyControl(self, party, ref LobbyProxy);
 
-            partyGrid.Children.Add(party);
+            partyGrid.Children.Add(partyControl);
 
-            inviteButton.IsEnabled = (username == host);
+            inviteButton.IsEnabled = (self.UserName == p.Host.UserName);
         }
 
         private void inviteButton_Click(object sender, RoutedEventArgs e)
@@ -189,30 +179,26 @@ namespace UnoClient
 
             if (playersToInvite.Count > 0)
             {
-                if (party == null)
+                if (partyControl == null)
                 {
-                    showPartyWindow(username);
+                    party = LobbyProxy.CreateParty();
+                    showPartyWindow(party);
+
+                    LobbyProxy.SendInvites(party, playersToInvite.ToArray());
                 }
-                LobbyProxy.SendInvites(playersToInvite.ToArray());
             }
         }
 
         // Is called from within the PartyControl
-        private void leaveParty(string host)
+        private void leaveParty(Party p)
         {
             // Remove lobby window visually
             partyGrid.Children.Clear();
             // Tell server we left the party
-            LobbyProxy.LeaveParty(host);
-            party = null;
+            LobbyProxy.LeaveParty(p);
+            partyControl = null;
             // Enable the player to invite other players (would create a new party)
             inviteButton.IsEnabled = true;
-        }
-
-        // Is called from within the PartyControl
-        private void sendPartyMessage(string message, string host)
-        {
-            LobbyProxy.SendMessageParty(message, host);
         }
 
         // Accept or decline an invitation
@@ -222,9 +208,9 @@ namespace UnoClient
 
             if (accept)
             {
-                if (LobbyProxy.AnswerInvite(sender.InviteSenderName))
+                if (LobbyProxy.AnswerInvite(sender.partyInQuestion))
                 {
-                    showPartyWindow(sender.InviteSenderName);
+                    showPartyWindow(party);
                 }
                 else
                 {

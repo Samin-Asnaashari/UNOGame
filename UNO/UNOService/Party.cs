@@ -10,15 +10,23 @@ namespace UNOService
     [DataContract]
     public class Party
     {
-        public int PartyID { get; set; }
-        public Player Host { get { return Players[0]; } }
-        public List<Player> Players { get; private set; }
-
         public Party(Player host)
         {
             Players = new List<Player>();
             Players.Add(host);
         }
 
+        [DataMember]
+        public int PartyID { get; private set; }
+
+        [DataMember]
+        public Player Host
+        {
+            get { return Players[0]; }
+            private set { }
+        }
+
+        [DataMember]
+        public List<Player> Players { get; private set; }
     }
 }

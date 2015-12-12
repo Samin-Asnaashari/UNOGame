@@ -19,68 +19,58 @@ namespace UNOService
             return playersOnline.Where(x => x.ILobbyCallback != currentPlayerCallback).ToList();
         }
 
-        /// <summary>
-        /// Get the player from the lobby context. Safe to assume this is never null.
-        /// </summary>
-        /// <returns></returns>
-        private Player getPlayerFromLobbyContext()
+        public Player getPlayerFromLobbyContext()
         {
             ILobbyCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
 
             return playersOnline.Find(x => x.ILobbyCallback == currentPlayerCallback);
         }
 
-        public void CreateParty()
+        public Party CreateParty()
         {
             Player host = getPlayerFromLobbyContext();
             Party party = new Party(host);
             parties.Add(host.UserName, party);
             host.IsInParty = true;
+
+            return party;
         }
 
-        public void LeaveParty(string host)
+        public void LeaveParty(Party p)
         {
             Player player = getPlayerFromLobbyContext();
-            Party currentParty;
 
-            if (parties.TryGetValue(host, out currentParty))
+            p.Players.Remove(player);
+            player.IsInParty = false;
+
+            foreach (Player currentPlayer in p.Players)
             {
-                currentParty.Players.Remove(player);
-                player.IsInParty = false;
-
-                foreach (Player currentPlayer in currentParty.Players)
-                {
+                if (player.UserName != currentPlayer.UserName) //To prevent deadlock
                     currentPlayer.ILobbyCallback.PlayerLeftParty(player);
+            }
+
+            if (player.UserName == p.Host.UserName) // If host leaves, disband the whole party.
+            {
+                foreach (Player currentPlayer in p.Players)
+                {
+                    currentPlayer.IsInParty = false;
                 }
 
-                if (player.UserName == host) // If host leaves, disband the whole party.
-                {
-                    foreach (Player currentPlayer in currentParty.Players)
-                    {
-                        currentPlayer.IsInParty = false;
-                    }
-                    parties.Remove(host);
-                }
+                parties.Remove(p.Host.UserName);
             }
         }
 
-        public void SendInvites(List<string> playerNames)
+        public void SendInvites(Party p, List<string> playerNames)
         {
-            Player host = getPlayerFromLobbyContext();
-            Party party;
-
-            if (parties.TryGetValue(host.UserName, out party))
+            foreach (string username in playerNames)
             {
-                foreach (string username in playerNames)
-                {
-                    Player player;
+                Player player;
 
-                    if (tryGetPlayerFromUsername(username, out player))
+                if (tryGetPlayerFromUsername(username, out player))
+                {
+                    if (!p.Players.Contains(player)) // Prevent sending invites to players in the party already
                     {
-                        if (!party.Players.Contains(player)) // Prevent sending invites to players in the party already
-                        {
-                            player.ILobbyCallback.ReceiveInvite(host.UserName);
-                        }
+                        player.ILobbyCallback.ReceiveInvite(p);
                     }
                 }
             }
@@ -91,12 +81,12 @@ namespace UNOService
         /// </summary>
         /// <param name="host"></param>
         /// <returns></returns>
-        public bool AnswerInvite(string host)
+        public bool AnswerInvite(Party p)
         {
             Player player = getPlayerFromLobbyContext();
-            Party partyPlayerWasInvitedTo;
+            Party partyPlayerWasInvitedTo = p; //TODO: Fixme
 
-            if (player.IsInParty == false && parties.TryGetValue(host, out partyPlayerWasInvitedTo)) // They can only join a party if they are not in one yet.
+            if (player.IsInParty == false && parties.TryGetValue(partyPlayerWasInvitedTo.Host.UserName, out partyPlayerWasInvitedTo)) // They can only join a party if they are not in one yet.
             {
                 if (partyPlayerWasInvitedTo.Players.Count < 4)
                 {
@@ -135,22 +125,17 @@ namespace UNOService
 
         }
 
-        public void SendMessageParty(string message, string host)
+        public void SendMessageParty(string message, Party p)
         {
             Player messageSender = getPlayerFromLobbyContext();
 
-            Party party;
-
             message = $"{messageSender.UserName}: {message}";
 
-            if (parties.TryGetValue(host, out party))
+            foreach (Player player in p.Players)
             {
-                foreach (Player player in party.Players)
+                if (player.UserName != messageSender.UserName) //To prevent deadlock
                 {
-                    if (player != messageSender)
-                    {
-                        player.ILobbyCallback.SendChatMessageLobbyCallback(message);
-                    }
+                    player.ILobbyCallback.SendChatMessageLobbyCallback(message);
                 }
             }
         }

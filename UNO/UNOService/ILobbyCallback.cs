@@ -41,7 +41,7 @@ namespace UNOService
         /// </summary>
         /// <param name="hostName"></param>
         [OperationContract(IsOneWay = true)]
-        void ReceiveInvite(string hostName);
+        void ReceiveInvite(Party p);
 
         /// <summary>
         /// Party is full so user receives notification

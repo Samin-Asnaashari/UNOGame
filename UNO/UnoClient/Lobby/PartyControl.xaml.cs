@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnoClient.proxy;
 
 namespace UnoClient
 {
@@ -20,59 +21,46 @@ namespace UnoClient
     /// </summary>
     public partial class PartyControl : UserControl
     {
-        public delegate void LeavePartyHandler(string host);
-        public LeavePartyHandler OnLeaveParty;
+        private Player player;
+        private Party party;
 
-        public delegate void SendMessageHandler(string message, string host);
-        public SendMessageHandler OnSendMessage;
-
-        public string Host
+        private LobbyClient lobbyProxy;
+        
+        public PartyControl(Player player, Party party, ref LobbyClient lobbyProxy)
         {
-            get; private set;
-        }
-        string player;
-        public PartyControl(string player, string host, LeavePartyHandler leavePartyDelegate, SendMessageHandler sendMessageDelegate)
-        {
-            OnLeaveParty += leavePartyDelegate;
-            OnSendMessage += sendMessageDelegate;
-
-            this.Host = host;
             this.player = player;
-            InitializeComponent();
-            AddPlayer(host);
+            this.party = party;
+            this.lobbyProxy = lobbyProxy;
 
-            // Only host can see the start game button
-            if (player == host)
-            {
+            InitializeComponent();
+
+            if (party.Host.Equals(player))
                 buttonStartGame.Visibility = Visibility.Visible;
-            }
             else
-            {
-                AddPlayer(player);
-            }
+                AddPlayer(player.UserName);
         }
 
         // Only host can use the start game button, when at least 2 people are in the lobby
         private void updateStartGameButton()
         {
-            if (player == Host)
+            if (party.Host.Equals(player))
             {
-                buttonStartGame.IsEnabled = (listBoxPlayersInParty.Items.Count > 1);
+                buttonStartGame.IsEnabled = (listBoxPlayersInParty.Items.Count >= 2);
             }
         }
 
         // When a player joins the party, add their name
-        public void AddPlayer(string player)
+        public void AddPlayer(string name)
         {
-            listBoxPlayersInParty.Items.Add(player);
+            listBoxPlayersInParty.Items.Add(name);
 
             updateStartGameButton();
         }
 
         // When a player leaves the party, remove their name
-        public void RemovePlayer(string player)
+        public void RemovePlayer(string name)
         {
-            listBoxPlayersInParty.Items.Remove(player);
+            listBoxPlayersInParty.Items.Remove(name);
             updateStartGameButton();
         }
 
@@ -84,20 +72,27 @@ namespace UnoClient
         // Leave the party and notify the server
         public void Leave()
         {
-            OnLeaveParty?.Invoke(Host);
+            lobbyProxy.LeaveParty(party);
         }
 
         // Send a message
         private void buttonSendPartyMessage_Click(object sender, RoutedEventArgs e)
         {
             listBoxPartyChat.Items.Add($"{player}: {textBoxPartyChat.Text}");
-            OnSendMessage?.Invoke(textBoxPartyChat.Text, Host);
+            lobbyProxy.SendMessageParty(textBoxPartyChat.Text, party);
+
+            textBoxPartyChat.Text = "";
         }
 
         // Show a recieved message
         public void DisplayMessage(string message)
         {
             listBoxPartyChat.Items.Add(message);
+        }
+
+        public Party getParty()
+        {
+            return party;
         }
     }
 

@@ -18,30 +18,38 @@ namespace UNOService
         List<Player> GetOnlineList();
 
         /// <summary>
+        /// Get the player from the lobby context. Safe to assume this is never null.
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        Player getPlayerFromLobbyContext();
+
+        /// <summary>
         /// Party signal sent to be created
         /// </summary>
+        /// <returns>Returns the created party</returns>
         [OperationContract]
-        void CreateParty();
+        Party CreateParty();
 
         /// <summary>
         /// Leave the current party
         /// </summary>
         [OperationContract]
-        void LeaveParty(string host);
+        void LeaveParty(Party p);
 
         /// <summary>
         /// Selected players from online list get sent to the server
         /// </summary>
         /// <param name="players"></param>
         [OperationContract]
-        void SendInvites(List<string> playerNames);
+        void SendInvites(Party p, List<string> playerNames);
 
         /// <summary>
         /// Player answering the invite from the service(host)
         /// </summary>
         /// <param name="answer"></param>
         [OperationContract]
-        bool AnswerInvite(string host);
+        bool AnswerInvite(Party p);
 
         /// <summary>
         /// 
@@ -54,15 +62,8 @@ namespace UNOService
         /// </summary>
         /// <param name="message"></param>
         [OperationContract]
-        void SendMessageParty(string message, string host);
-
-        /// <summary>
-        /// Returns a list of players already in the party
-        /// </summary>
-        /// <returns></returns>
-        [OperationContract]
-        List<Player> GetPartyMembers(string host);
-
+        void SendMessageParty(string message, Party p);
+        
         /// <summary>
         /// Subscribe to lobby events
         /// </summary>
