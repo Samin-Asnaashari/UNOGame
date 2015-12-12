@@ -33,7 +33,9 @@ namespace UnoClient
         {
             string username = txtUsername.Text;
 
-            if(client.Login(username, txtPassword.Password))
+            StatusCode sc = client.Login(username, txtPassword.Password);
+
+            if (sc.Code > 0)
             {
                 //Login succesful
                 new LobbyWindow(username, txtPassword.Password).Show();
@@ -41,8 +43,7 @@ namespace UnoClient
             }
             else
             {
-                //Login unsuccesful
-                MessageBox.Show("Username or password incorrect.");
+                MessageBox.Show("Error " + sc.Code + ": " + sc.Status, "Error");
             }
         }
 
@@ -50,7 +51,8 @@ namespace UnoClient
         {
             string username = txtUsername.Text;
 
-            if (client.SignUp(username, txtPassword.Password))
+            StatusCode sc = client.SignUp(username, txtPassword.Password);
+            if (sc.Code > 0)
             {
                 //Register succesful
                 new LobbyWindow(username, txtPassword.Password).Show();
@@ -58,7 +60,7 @@ namespace UnoClient
             }
             else
             {
-                //Register unsuccesful
+                MessageBox.Show("Error " + sc.Code + ": " + sc.Status, "Error");
             }
         }
 

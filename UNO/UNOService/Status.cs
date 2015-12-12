@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace UNOService
 {
+    [DataContract]
     public struct StatusCode
     {
         private int code;
@@ -25,6 +27,7 @@ namespace UNOService
             this.status = status;
         }
 
+        [DataMember]
         public string Status
         {
             get
@@ -33,6 +36,7 @@ namespace UNOService
             }
         }
 
+        [DataMember]
         public int Code
         {
             get

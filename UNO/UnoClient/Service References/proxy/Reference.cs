@@ -15,6 +15,66 @@ namespace UnoClient.proxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/UNOService")]
+    [System.SerializableAttribute()]
+    public partial struct StatusCode : System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Code {
+            get {
+                return this.CodeField;
+            }
+            set {
+                if ((this.CodeField.Equals(value) != true)) {
+                    this.CodeField = value;
+                    this.RaisePropertyChanged("Code");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/UNOService")]
     [System.SerializableAttribute()]
     public partial class Player : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -119,16 +179,16 @@ namespace UnoClient.proxy {
     public interface ILoginAndSignUp {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILoginAndSignUp/Login", ReplyAction="http://tempuri.org/ILoginAndSignUp/LoginResponse")]
-        bool Login(string userName, string password);
+        UnoClient.proxy.StatusCode Login(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILoginAndSignUp/Login", ReplyAction="http://tempuri.org/ILoginAndSignUp/LoginResponse")]
-        System.Threading.Tasks.Task<bool> LoginAsync(string userName, string password);
+        System.Threading.Tasks.Task<UnoClient.proxy.StatusCode> LoginAsync(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILoginAndSignUp/SignUp", ReplyAction="http://tempuri.org/ILoginAndSignUp/SignUpResponse")]
-        bool SignUp(string userName, string password);
+        UnoClient.proxy.StatusCode SignUp(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILoginAndSignUp/SignUp", ReplyAction="http://tempuri.org/ILoginAndSignUp/SignUpResponse")]
-        System.Threading.Tasks.Task<bool> SignUpAsync(string userName, string password);
+        System.Threading.Tasks.Task<UnoClient.proxy.StatusCode> SignUpAsync(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILoginAndSignUp/CheckUserName", ReplyAction="http://tempuri.org/ILoginAndSignUp/CheckUserNameResponse")]
         bool CheckUserName(string userName);
@@ -164,19 +224,19 @@ namespace UnoClient.proxy {
                 base(binding, remoteAddress) {
         }
         
-        public bool Login(string userName, string password) {
+        public UnoClient.proxy.StatusCode Login(string userName, string password) {
             return base.Channel.Login(userName, password);
         }
         
-        public System.Threading.Tasks.Task<bool> LoginAsync(string userName, string password) {
+        public System.Threading.Tasks.Task<UnoClient.proxy.StatusCode> LoginAsync(string userName, string password) {
             return base.Channel.LoginAsync(userName, password);
         }
         
-        public bool SignUp(string userName, string password) {
+        public UnoClient.proxy.StatusCode SignUp(string userName, string password) {
             return base.Channel.SignUp(userName, password);
         }
         
-        public System.Threading.Tasks.Task<bool> SignUpAsync(string userName, string password) {
+        public System.Threading.Tasks.Task<UnoClient.proxy.StatusCode> SignUpAsync(string userName, string password) {
             return base.Channel.SignUpAsync(userName, password);
         }
         
