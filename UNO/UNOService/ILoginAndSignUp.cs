@@ -17,7 +17,7 @@ namespace UNOService
         /// <param name="password"></param>
         /// <returns></returns>
         [OperationContract]
-        bool Login(string userName, string password);
+        StatusCode Login(string userName, string password);
 
         /// <summary>
         /// SignUp the guest
@@ -26,7 +26,7 @@ namespace UNOService
         /// <param name="password"></param>
         /// <returns></returns>
         [OperationContract]
-        bool SignUp(string userName, string password);
+        StatusCode SignUp(string userName, string password);
         
         /// <summary>
         /// CheckUserName for uniqueness

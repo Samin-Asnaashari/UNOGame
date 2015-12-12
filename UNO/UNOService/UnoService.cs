@@ -22,56 +22,68 @@ namespace UNOService
             databaseHandler = new DatabaseHandler();
         }
 
-        public bool Login(string userName, string password)
+        public StatusCode Login(string userName, string password)
         {
-            bool loginSuccessFull = false;
+            bool loginSuccessful = false;
             try
             {
-                if (playersOnline.Find(x => x.UserName.ToLower() == userName.ToLower()) == null)//user not logged in yet
+                if (playersOnline.Find(x => x.UserName.ToLower() == userName.ToLower()) == null) //user not logged in yet
                 {
-                    loginSuccessFull = databaseHandler.CheckLogin(userName, password);
-                    if (loginSuccessFull)
+                    loginSuccessful = databaseHandler.CheckLogin(userName, password);
+                    if (loginSuccessful)
                         CreatePlayer(userName);
                 }
+                else
+                {
+                    return new StatusCode(-20); //User already logged in
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return false;
+                return new StatusCode(e.Message);
             }
-            return loginSuccessFull;
+
+            return new StatusCode(20); //Login successful
         }
 
-        private void CreatePlayer(string username)//method maybe not needed
+        private void CreatePlayer(string username) //method maybe not needed
         {
             Player toBeAdded = new Player(username);
             toBeAdded.State = PlayerState.InLobby;
             playersOnline.Add(toBeAdded);
         }
 
-        public bool SignUp(string userName, string password)
+        public StatusCode SignUp(string userName, string password)
         {
+            if (CheckUserName(userName))
+                return new StatusCode(-10); //Username is taken
+
+            if (password.Length < 6)
+                return new StatusCode(-11); //Password is too short
+
             try
             {
                 databaseHandler.InsertPlayer(userName, password);
                 CreatePlayer(userName);
-                return true;
+                return new StatusCode(10); //Registration successful
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return false;
+                return new StatusCode(e.Message); //Error status depending on exception
             }
         }
 
         public bool CheckUserName(string userName)
         {
             bool exist;
+
             try
             {
                 exist = databaseHandler.CheckUserName(userName);
             }
             catch (Exception)
             {
-                return false;
+                exist = false;
             }
 
             return exist;
