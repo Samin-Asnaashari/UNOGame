@@ -26,13 +26,18 @@ namespace UNOService
             this.code = -99;
             this.status = status;
         }
-
+        
         [DataMember]
         public string Status
         {
             get
             {
                 return status;
+            }
+
+            private set //Otherwise WCF chokes during serialization
+            {
+                status = value;
             }
         }
 

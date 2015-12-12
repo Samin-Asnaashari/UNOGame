@@ -43,7 +43,7 @@ namespace UnoClient
             }
             else
             {
-                MessageBox.Show("Error " + sc.Code + ": " + sc.Status, "Error");
+                MessageBox.Show(sc.Status, "Error");
             }
         }
 
@@ -60,7 +60,7 @@ namespace UnoClient
             }
             else
             {
-                MessageBox.Show("Error " + sc.Code + ": " + sc.Status, "Error");
+                MessageBox.Show(sc.Status, "Error");
             }
         }
 
