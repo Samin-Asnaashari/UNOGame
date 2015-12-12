@@ -57,14 +57,14 @@ namespace UNOService
                     /* Errors: */
                     //Signup:
                     case -10:
-                        status = "Username is taken";
+                        status = "Username is taken.";
                         break;
                     case -11:
-                        status = "Password is too short";
+                        status = "Password is too short! It should be at least 6 characters long.";
                         break;
                     //Login:
                     case -20:
-                        status = "User already logged in";
+                        status = "User already logged in.";
                         break;
 
                     /* Succeeds: */
@@ -79,7 +79,7 @@ namespace UNOService
 
 
                     default:
-                        status = "Unkown status code";
+                        status = "Unkown status code.";
                         break;
                 }
             }

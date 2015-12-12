@@ -31,6 +31,8 @@ namespace UnoClient
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            btnLogin.IsEnabled = false;
+
             string username = txtUsername.Text;
 
             StatusCode sc = client.Login(username, txtPassword.Password);
@@ -45,6 +47,8 @@ namespace UnoClient
             {
                 MessageBox.Show(sc.Status, "Error");
             }
+
+            btnLogin.IsEnabled = true;
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
@@ -78,6 +82,60 @@ namespace UnoClient
                     txtUsername.Background = Brushes.White;
                 }
             }
+        }
+
+        private void VerifyPassWord_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txtPassword.Password.Length == txtVerifyPassword.Password.Length)
+            {
+                if (txtPassword.Password != txtVerifyPassword.Password)
+                {
+                    txtVerifyPassword.Background = new SolidColorBrush(Color.FromRgb(255, 85, 85));
+                }
+                else
+                {
+                    txtVerifyPassword.Background = Brushes.White;
+                }
+            }
+        }
+
+        private void txtPassword_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (wpRegisterControls.Height > 0) //Register WrapPanel is visible
+            {
+                if (txtPassword.Password.Length > 0 && txtPassword.Password.Length < 6)
+                    txtPassword.Background = new SolidColorBrush(Color.FromRgb(255, 85, 85));
+                else
+                    txtPassword.Background = Brushes.White;
+            }
+            else
+                txtPassword.Background = Brushes.White;
+        }
+
+        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (wpRegisterControls.Height > 0) //Register WrapPanel is visible
+            {
+                if(((SolidColorBrush)txtPassword.Background).Color.Equals(Color.FromRgb(255, 85, 85)))
+                {
+                    if (txtPassword.Password.Length >= 6)
+                        txtPassword.Background = Brushes.White;
+                }
+            }
+        }
+
+        private void lblNoAccount_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            btnLogin.IsDefault = false;
+            btnRegister.IsDefault = true;
+            btnLogin.IsTabStop = false;
+        }
+
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            btnRegister.IsDefault = false;
+            btnLogin.IsDefault = true;
+            btnLogin.IsTabStop = true;
         }
     }
 }

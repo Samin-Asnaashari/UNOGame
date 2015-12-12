@@ -10,11 +10,11 @@
             <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical">
                 <WrapPanel>
                     <Label Width="80" Content="Username:"/>
-                    <TextBox x:Name="txtUsername" Width="165" Height="18" Margin="10,0,0,0" KeyUp="txtUsername_KeyUp" TabIndex="0"/>
+                    <TextBox x:Name="txtUsername" Width="165" Height="18" Margin="10,0,0,0" KeyUp="txtUsername_KeyUp" TabIndex="0" ToolTip="A username has to be unique and at least three characters long."/>
                 </WrapPanel>
                 <WrapPanel>
                     <Label Width="80" Content="Password:"/>
-                    <PasswordBox x:Name="txtPassword" Width="165" Height="18" Margin="10,0,0,0"/>
+                    <PasswordBox x:Name="txtPassword" Width="165" Height="18" Margin="10,0,0,0" LostFocus="txtPassword_LostFocus" ToolTip="A password has to be at least six characters long." KeyUp="txtPassword_KeyUp"/>
                 </WrapPanel>
                 <WrapPanel x:Name="wpLoginControls" Orientation="Horizontal">
                     <TextBlock x:Name="lblNoAccount" Margin="5,0,0,0" Width="100" Text="No account yet?" Foreground="Blue" TextDecorations="Underline" Cursor="Hand">
@@ -40,7 +40,7 @@
                 <WrapPanel x:Name="wpRegisterControls" Orientation="Horizontal" Height="0">
                     <WrapPanel>
                         <Label Width="80" Content="Password #2:"/>
-                        <PasswordBox x:Name="txtVerifyPassword" Width="165" Height="18" Margin="10,0,0,0"/>
+                        <PasswordBox x:Name="txtVerifyPassword" Width="165" Height="18" Margin="10,0,0,0" ToolTip="This password should match the previously entered password." KeyUp="VerifyPassWord_KeyUp"/>
                     </WrapPanel>
                     <TextBlock Margin="5,0,0,0" Width="100" Text="Have an account?" Foreground="Blue" TextDecorations="Underline" Cursor="Hand">
                         <TextBlock.Triggers>
