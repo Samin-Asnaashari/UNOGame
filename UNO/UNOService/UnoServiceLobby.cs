@@ -157,13 +157,16 @@ namespace UNOService
         {
             //TODO Validate subscription using password
             ILobbyCallback clientCallbackLobby = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
-            Player player = playersOnline.Find(x => x.UserName == username);
+            Player player = getPlayerFromName(username);
             player.ILobbyCallback = clientCallbackLobby;
 
-            foreach (var item in playersOnline)
+            foreach (Player onlinePlayer in playersOnline)
             {
-                if (item != player)
-                    item.ILobbyCallback.PlayerConnected(player);
+                if (onlinePlayer.UserName != player.UserName) //Prevent deadlock
+                {
+                    if(onlinePlayer.IGameCallback != null) //When the user did not subscribe itself yet (So when two people try to sign in at the same time)
+                        onlinePlayer.ILobbyCallback.PlayerConnected(player);
+                }
             }
         }
 
