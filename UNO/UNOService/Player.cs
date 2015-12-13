@@ -27,7 +27,7 @@ namespace UNOService
         public Player(String username)
         {
             this.UserName = username;
-            this.State = PlayerState.InLobby;//cause after login or sign up it always goes to lobby
+            this.State = PlayerState.InLobby; //cause after login or sign up it always goes to lobby
             Hand = new List<Card>();
         }
 
