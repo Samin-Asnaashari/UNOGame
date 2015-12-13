@@ -79,8 +79,8 @@ namespace UnoClient
         // Send a message
         private void buttonSendPartyMessage_Click(object sender, RoutedEventArgs e)
         {
-            listBoxPartyChat.Items.Add($"{player}: {textBoxPartyChat.Text}");
-            lobbyProxy.SendMessageParty(textBoxPartyChat.Text, party);
+            listBoxPartyChat.Items.Add($"{player.UserName}: {textBoxPartyChat.Text}");
+            lobbyProxy.SendMessageParty(textBoxPartyChat.Text, party.Host.UserName);
 
             textBoxPartyChat.Text = "";
         }
