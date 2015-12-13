@@ -41,27 +41,13 @@ namespace UnoClient
             switch (state)
             {
                 case PlayerState.InGame:
-                    setCheckbox(false);
+                    checkBox.IsEnabled = false;
                     break;
                 case PlayerState.InLobby:
-                    setCheckbox(true);
+                    checkBox.IsEnabled = true;
                     break;
             }
         }
 
-        // Disable/Enable the checkbox so the player can(not) be invited
-        private void setCheckbox(bool enabled)
-        {
-            if (enabled)
-            {
-                checkBox.IsEnabled = enabled;
-                checkBox.Background = Brushes.Green;
-            }
-            else
-            {
-                checkBox.IsEnabled = enabled;
-                checkBox.Background = Brushes.Yellow;
-            }
-        }
     }
 }

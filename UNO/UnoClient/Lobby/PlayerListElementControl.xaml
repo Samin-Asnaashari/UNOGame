@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnoClient"
              mc:Ignorable="d" 
-             Height="30" Width="130" Background="Gray"
-             Margin="0,0,0,5">
+             Height="30" Width="130" Background="#4E648E"
+             Margin="10,10,10,0">
 
     <Grid>
-        <CheckBox x:Name="checkBox" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,7,0,10" />
+        <CheckBox x:Name="checkBox" FontSize="15" Foreground="WhiteSmoke" Content="Example Name" Background="#7788AA" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,0,10,0" />
     </Grid>
 </UserControl>
