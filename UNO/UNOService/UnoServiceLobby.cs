@@ -36,8 +36,9 @@ namespace UNOService
             return party;
         }
 
-        public void LeaveParty(Party p)
+        public void LeaveParty(string host)
         {
+            Party p = getPartyFromName(host);
             Player player = getPlayerFromLobbyContext();
 
             p.Players.Remove(player);

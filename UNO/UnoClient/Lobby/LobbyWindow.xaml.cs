@@ -189,18 +189,6 @@ namespace UnoClient
             }
         }
 
-        // Is called from within the PartyControl
-        private void leaveParty(Party p)
-        {
-            // Remove lobby window visually
-            partyGrid.Children.Clear();
-            // Tell server we left the party
-            LobbyProxy.LeaveParty(p);
-            partyControl = null;
-            // Enable the player to invite other players (would create a new party)
-            inviteButton.IsEnabled = true;
-        }
-
         // Accept or decline an invitation
         private void inviteResponse(bool accept, InviteControl sender)
         {

@@ -72,7 +72,8 @@ namespace UnoClient
         // Leave the party and notify the server
         public void Leave()
         {
-            lobbyProxy.LeaveParty(party);
+            lobbyProxy.LeaveParty(party.Host.UserName);
+            ((Panel)this.Parent).Children.Remove(this); //Remove the usercontrol from window
         }
 
         // Send a message
