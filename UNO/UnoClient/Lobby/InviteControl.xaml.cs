@@ -33,7 +33,7 @@ namespace UnoClient
             InviteSenderName = p.Host.UserName;
             OnButtonPress = buttonPressDelegate;
             InitializeComponent();
-            label.Content = $"Join {InviteSenderName}'s party?";
+            inviteMessage.Text = $"Join {InviteSenderName}'s party?";
         }
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)
