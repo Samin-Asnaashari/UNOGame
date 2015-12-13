@@ -153,6 +153,19 @@ namespace UNOService
             return new List<Player>();
         }
 
+        public Player getPlayerFromName(string username)
+        {
+            return playersOnline.Find(x => x.UserName == username);
+        }
+
+        public Party getPartyFromName(string host)
+        {
+            if (parties.ContainsKey(host))
+                return parties[host];
+            else
+                return null;
+        }
+
         public void SubscribeToLobbyEvents(string username, string password)
         {
             //TODO Validate subscription using password
