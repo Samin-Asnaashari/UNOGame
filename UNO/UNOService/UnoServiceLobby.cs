@@ -126,13 +126,15 @@ namespace UNOService
 
         }
 
-        public void SendMessageParty(string message, Party p)
+        public void SendMessageParty(string message, string host)
         {
             Player messageSender = getPlayerFromLobbyContext();
 
             message = $"{messageSender.UserName}: {message}";
 
-            foreach (Player player in p.Players)
+            Party party = getPartyFromName(host);
+
+            foreach (Player player in party.Players)
             {
                 if (player.UserName != messageSender.UserName) //To prevent deadlock
                 {
