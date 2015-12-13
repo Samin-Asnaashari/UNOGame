@@ -30,9 +30,10 @@ namespace UnoClient
         public LobbyWindow(string username, string password)
         {
             LobbyProxy = new LobbyClient(new InstanceContext(this));
-            LobbyProxy.SubscribeToLobbyEvents(username, password);
             party = null;
-            this.self = LobbyProxy.getPlayerFromLobbyContext();
+
+            this.self = LobbyProxy.getPlayerFromName(username);
+            LobbyProxy.SubscribeToLobbyEvents(username, password);
 
             InitializeComponent();
 
