@@ -35,7 +35,7 @@ namespace UNOService
         /// Leave the current party
         /// </summary>
         [OperationContract]
-        void LeaveParty(Party p);
+        void LeaveParty(string host);
 
         /// <summary>
         /// Selected players from online list get sent to the server
@@ -62,8 +62,15 @@ namespace UNOService
         /// </summary>
         /// <param name="message"></param>
         [OperationContract]
-        void SendMessageParty(string message, Party p);
-        
+        void SendMessageParty(string message, string host);
+
+        /// <summary>
+        /// Returns a Player object of the username
+        /// </summary>
+        /// <param name="username"></param>
+        [OperationContract]
+        Player getPlayerFromName(string username);
+
         /// <summary>
         /// Subscribe to lobby events
         /// </summary>
