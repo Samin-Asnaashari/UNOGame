@@ -95,6 +95,11 @@ namespace UnoClient
         {
             return party;
         }
+
+        public void setParty(Party p)
+        {
+            party = p;
+        }
     }
 
 }
