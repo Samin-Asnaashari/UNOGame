@@ -152,8 +152,9 @@ namespace UnoClient
         }
 
         // Show a new party window, host name is used to enable/disable the invite button
-        private void showPartyWindow(Party p)
+        private void showPartyControl(Party p)
         {
+            party = p;
             partyControl = new PartyControl(self, party, ref LobbyProxy);
 
             partyGrid.Children.Add(partyControl);
@@ -183,7 +184,7 @@ namespace UnoClient
                 if (partyControl == null)
                 {
                     party = LobbyProxy.CreateParty();
-                    showPartyWindow(party);
+                    showPartyControl(party);
 
                     LobbyProxy.SendInvites(party, playersToInvite.ToArray());
                 }
@@ -199,7 +200,7 @@ namespace UnoClient
             {
                 if (LobbyProxy.AnswerInvite(sender.partyInQuestion))
                 {
-                    showPartyWindow(party);
+                    showPartyControl(sender.partyInQuestion);
                 }
                 else
                 {
