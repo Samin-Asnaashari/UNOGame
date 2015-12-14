@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,25 +11,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using UnoClient.service;
+
+using UnoClient.proxy;
 
 namespace UnoClient
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class LoginAndRegisterWindow : Window
-    {
+	/// <summary>
+	/// Interaction logic for LoginAndRegisterWindow.xaml
+	/// </summary>
+	public partial class LoginAndRegisterWindow : Window
+	{
         private LoginAndSignUpClient client; //the proxy 
 
         public LoginAndRegisterWindow()
-        {
+		{
             client = new LoginAndSignUpClient();
-            InitializeComponent();
+			InitializeComponent();
         }
-
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             btnLogin.IsEnabled = false;
@@ -116,7 +116,7 @@ namespace UnoClient
         {
             if (wpRegisterControls.Height > 0) //Register WrapPanel is visible
             {
-                if (((SolidColorBrush)txtPassword.Background).Color.Equals(Color.FromRgb(255, 85, 85)))
+                if(((SolidColorBrush)txtPassword.Background).Color.Equals(Color.FromRgb(255, 85, 85)))
                 {
                     if (txtPassword.Password.Length >= 6)
                         txtPassword.Background = Brushes.White;
