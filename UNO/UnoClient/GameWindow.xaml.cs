@@ -26,14 +26,20 @@ namespace UnoClient
         private string username;
 
         // TODO Authenticate using password
-        public GameWindow(string username,int GameID)
+        public GameWindow(string username)
         {
             this.username = username;
             InitializeComponent();
             GameProxy = new GameClient(new InstanceContext(this));
-            GameProxy.SubscribeToGameEvents(username,GameID);
+            GameProxy.SubscribeToGameEvents(username);
 
-            //TODO: position the players
+            //position the players and cards 
+
+            //foreach (var item in ?username)
+            //{
+            //    var cardControl=(CardControl)item;
+            //    PlayerCards.Children.Add(cardControl);
+            //}
         }
 
         public void CardsAssigned(Card[] cards)
@@ -48,7 +54,7 @@ namespace UnoClient
 
         public void SendMessageGameCallback(string message)
         {
-            throw new NotImplementedException();
+            ChatrichTextBox.AppendText(message);
         }
 
         public void TurnChanged(Player player)

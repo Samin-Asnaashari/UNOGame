@@ -251,7 +251,7 @@ namespace UNOService
             }
         }
 
-        public void SubscribeToGameEvents(string userName,int gameID)
+        public void SubscribeToGameEvents(string userName)
         {
             IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
             Player player = games.Find(x => x.GameID == gameID).Players.Find(y => y.UserName.CompareTo(userName) == 0);

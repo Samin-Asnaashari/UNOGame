@@ -8,6 +8,6 @@ namespace UNOService.Game
 {
     public enum CardType
     {
-        normal, reverse, skip, draw2, wild, draw4Wild
+        Normal, Reverse, Skip, Draw2, Wild, Draw4Wild
     }
 }

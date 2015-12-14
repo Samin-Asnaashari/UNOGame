@@ -210,75 +210,76 @@
     <Resource Include="Images\Send.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Draw2\Blue_Draw2.png" />
-    <Resource Include="Images\Draw2\Green_Draw2.png" />
-    <Resource Include="Images\Draw2\Red_Draw2.png" />
-    <Resource Include="Images\Draw2\Yellow_Draw2.png" />
+    <Resource Include="Images\Draw2Card\Blue_Draw2.png" />
+    <Resource Include="Images\Draw2Card\Green_Draw2.png" />
+    <Resource Include="Images\Draw2Card\Red_Draw2.png" />
+    <Resource Include="Images\Draw2Card\Yellow_Draw2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Numbered_Blue\Blue_0.png" />
-    <Resource Include="Images\Numbered_Blue\Blue_1.png" />
-    <Resource Include="Images\Numbered_Blue\Blue_2.png" />
-    <Resource Include="Images\Numbered_Blue\Blue_3.png" />
-    <Resource Include="Images\Numbered_Blue\Blue_4.png" />
-    <Resource Include="Images\Numbered_Blue\Blue_5.png" />
-    <Resource Include="Images\Numbered_Blue\Blue_6.png" />
-    <Resource Include="Images\Numbered_Blue\Blue_7.png" />
-    <Resource Include="Images\Numbered_Blue\Blue_8.png" />
-    <Resource Include="Images\Numbered_Blue\Blue_9.png" />
+    <Resource Include="Images\NumberedCard\Blue_0.png" />
+    <Resource Include="Images\NumberedCard\Blue_1.png" />
+    <Resource Include="Images\NumberedCard\Blue_2.png" />
+    <Resource Include="Images\NumberedCard\Blue_3.png" />
+    <Resource Include="Images\NumberedCard\Blue_4.png" />
+    <Resource Include="Images\NumberedCard\Blue_5.png" />
+    <Resource Include="Images\NumberedCard\Blue_6.png" />
+    <Resource Include="Images\NumberedCard\Blue_7.png" />
+    <Resource Include="Images\NumberedCard\Blue_8.png" />
+    <Resource Include="Images\NumberedCard\Blue_9.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Numbered_Green\Green_0.png" />
-    <Resource Include="Images\Numbered_Green\Green_1.png" />
-    <Resource Include="Images\Numbered_Green\Green_2.png" />
-    <Resource Include="Images\Numbered_Green\Green_3.png" />
-    <Resource Include="Images\Numbered_Green\Green_4.png" />
-    <Resource Include="Images\Numbered_Green\Green_5.png" />
-    <Resource Include="Images\Numbered_Green\Green_6.png" />
-    <Resource Include="Images\Numbered_Green\Green_7.png" />
-    <Resource Include="Images\Numbered_Green\Green_8.png" />
-    <Resource Include="Images\Numbered_Green\Green_9.png" />
+    <Resource Include="Images\NumberedCard\Green_0.png" />
+    <Resource Include="Images\NumberedCard\Green_1.png" />
+    <Resource Include="Images\NumberedCard\Green_2.png" />
+    <Resource Include="Images\NumberedCard\Green_3.png" />
+    <Resource Include="Images\NumberedCard\Green_4.png" />
+    <Resource Include="Images\NumberedCard\Green_5.png" />
+    <Resource Include="Images\NumberedCard\Green_6.png" />
+    <Resource Include="Images\NumberedCard\Green_7.png" />
+    <Resource Include="Images\NumberedCard\Green_8.png" />
+    <Resource Include="Images\NumberedCard\Green_9.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Numbered_Red\Red_0.png" />
-    <Resource Include="Images\Numbered_Red\Red_1.png" />
-    <Resource Include="Images\Numbered_Red\Red_2.png" />
-    <Resource Include="Images\Numbered_Red\Red_3.png" />
-    <Resource Include="Images\Numbered_Red\Red_4.png" />
-    <Resource Include="Images\Numbered_Red\Red_5.png" />
-    <Resource Include="Images\Numbered_Red\Red_6.png" />
-    <Resource Include="Images\Numbered_Red\Red_7.png" />
-    <Resource Include="Images\Numbered_Red\Red_8.png" />
-    <Resource Include="Images\Numbered_Red\Red_9.png" />
+    <Resource Include="Images\NumberedCard\Red_0.png" />
+    <Resource Include="Images\NumberedCard\Red_1.png" />
+    <Resource Include="Images\NumberedCard\Red_2.png" />
+    <Resource Include="Images\NumberedCard\Red_3.png" />
+    <Resource Include="Images\NumberedCard\Red_4.png" />
+    <Resource Include="Images\NumberedCard\Red_5.png" />
+    <Resource Include="Images\NumberedCard\Red_6.png" />
+    <Resource Include="Images\NumberedCard\Red_7.png" />
+    <Resource Include="Images\NumberedCard\Red_8.png" />
+    <Resource Include="Images\NumberedCard\Red_9.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Numbered_Yellow\Yellow_0.png" />
-    <Resource Include="Images\Numbered_Yellow\Yellow_1.png" />
-    <Resource Include="Images\Numbered_Yellow\Yellow_2.png" />
-    <Resource Include="Images\Numbered_Yellow\Yellow_3.png" />
-    <Resource Include="Images\Numbered_Yellow\Yellow_4.png" />
-    <Resource Include="Images\Numbered_Yellow\Yellow_5.png" />
-    <Resource Include="Images\Numbered_Yellow\Yellow_6.png" />
-    <Resource Include="Images\Numbered_Yellow\Yellow_7.png" />
-    <Resource Include="Images\Numbered_Yellow\Yellow_8.png" />
-    <Resource Include="Images\Numbered_Yellow\Yellow_9.png" />
+    <Resource Include="Images\NumberedCard\Yellow_0.png" />
+    <Resource Include="Images\NumberedCard\Yellow_1.png" />
+    <Resource Include="Images\NumberedCard\Yellow_2.png" />
+    <Resource Include="Images\NumberedCard\Yellow_3.png" />
+    <Resource Include="Images\NumberedCard\Yellow_4.png" />
+    <Resource Include="Images\NumberedCard\Yellow_5.png" />
+    <Resource Include="Images\NumberedCard\Yellow_6.png" />
+    <Resource Include="Images\NumberedCard\Yellow_7.png" />
+    <Resource Include="Images\NumberedCard\Yellow_8.png" />
+    <Resource Include="Images\NumberedCard\Yellow_9.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Reverse\Blue_Reverse.png" />
-    <Resource Include="Images\Reverse\Green_Reverse.png" />
-    <Resource Include="Images\Reverse\Red_Reverse.png" />
-    <Resource Include="Images\Reverse\Yellow_Reverse.png" />
+    <Resource Include="Images\ReverseCard\Blue_Reverse.png" />
+    <Resource Include="Images\ReverseCard\Green_Reverse.png" />
+    <Resource Include="Images\ReverseCard\Red_Reverse.png" />
+    <Resource Include="Images\ReverseCard\Yellow_Reverse.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Skip\Blue_Skip.png" />
-    <Resource Include="Images\Skip\Green_Skip.png" />
-    <Resource Include="Images\Skip\Red_Skip.png" />
-    <Resource Include="Images\Skip\Yellow_Skip.png" />
+    <Resource Include="Images\SkipCard\Blue_Skip.png" />
+    <Resource Include="Images\SkipCard\Green_Skip.png" />
+    <Resource Include="Images\SkipCard\Red_Skip.png" />
+    <Resource Include="Images\SkipCard\Yellow_Skip.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Wild\Draw4Wild.png" />
-    <Resource Include="Images\Wild\Wild.png" />
+    <Resource Include="Images\WildCard\Draw4Wild.png" />
+    <Resource Include="Images\WildCard\Wild.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

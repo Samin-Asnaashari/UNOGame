@@ -154,6 +154,15 @@ namespace UnoClient.proxy {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.CardColor ColorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.CardType TypeField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -161,6 +170,45 @@ namespace UnoClient.proxy {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.CardColor Color {
+            get {
+                return this.ColorField;
+            }
+            set {
+                if ((this.ColorField.Equals(value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Number {
+            get {
+                return this.NumberField;
+            }
+            set {
+                if ((this.NumberField.Equals(value) != true)) {
+                    this.NumberField = value;
+                    this.RaisePropertyChanged("Number");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.CardType Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
             }
         }
         
@@ -172,6 +220,49 @@ namespace UnoClient.proxy {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardColor", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
+    public enum CardColor : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Red = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Green = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Blue = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Yellow = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        none = 4,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardType", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
+    public enum CardType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Normal = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Reverse = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Skip = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Draw2 = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Wild = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Draw4Wild = 5,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -469,10 +560,10 @@ namespace UnoClient.proxy {
         System.Threading.Tasks.Task SendMessageGameAsync(string message);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SubscribeToGameEvents", ReplyAction="http://tempuri.org/IGame/SubscribeToGameEventsResponse")]
-        void SubscribeToGameEvents(string UserName, int GameID);
+        void SubscribeToGameEvents(string UserName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SubscribeToGameEvents", ReplyAction="http://tempuri.org/IGame/SubscribeToGameEventsResponse")]
-        System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName, int GameID);
+        System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -551,12 +642,12 @@ namespace UnoClient.proxy {
             return base.Channel.SendMessageGameAsync(message);
         }
         
-        public void SubscribeToGameEvents(string UserName, int GameID) {
-            base.Channel.SubscribeToGameEvents(UserName, GameID);
+        public void SubscribeToGameEvents(string UserName) {
+            base.Channel.SubscribeToGameEvents(UserName);
         }
         
-        public System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName, int GameID) {
-            return base.Channel.SubscribeToGameEventsAsync(UserName, GameID);
+        public System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName) {
+            return base.Channel.SubscribeToGameEventsAsync(UserName);
         }
     }
 }

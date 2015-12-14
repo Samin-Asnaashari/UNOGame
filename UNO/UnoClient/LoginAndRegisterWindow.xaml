@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Uno: Login"
 		MinWidth="300"  Width="300" MaxWidth="300"
-		MinHeight="275" Height="275" MaxHeight="275" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+		MinHeight="275" Height="275" MaxHeight="275" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+         Icon="Images/logo.png">
     <Grid>
         <Image HorizontalAlignment="Left" Height="90" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" Source="Images/logo.png"/> <!-- Logo -->
         <GroupBox Header="Login" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="272">

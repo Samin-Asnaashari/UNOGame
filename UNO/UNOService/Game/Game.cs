@@ -12,6 +12,7 @@ namespace UNOService.Game
     {
         [DataMember]
         public int GameID { get; set; }
+        [DataMember]
         public List<Player> Players { get; set; }
         public List<Card> Deck { get; set; }
         public List<Card> PlayedCards { get; set; }
@@ -49,14 +50,14 @@ namespace UNOService.Game
             cardColors.Add(CardColor.Yellow);
 
             List<CardType> cardTypes = new List<CardType>();
-            cardTypes.Add(CardType.draw2);
-            cardTypes.Add(CardType.reverse);
-            cardTypes.Add(CardType.skip);
+            cardTypes.Add(CardType.Draw2);
+            cardTypes.Add(CardType.Reverse);
+            cardTypes.Add(CardType.Skip);
 
             for (int i = 0; i < 4; i++)//adding cards with only 4 ocurrences
             {
-                Deck.Add(new Card(CardType.draw4Wild, CardColor.none, -1));
-                Deck.Add(new Card(CardType.wild, CardColor.none, -1));
+                Deck.Add(new Card(CardType.Draw4Wild, CardColor.none, -1));
+                Deck.Add(new Card(CardType.Wild, CardColor.none, -1));
             }
 
             while (cardTypes.Count != 0)// adding the remaining 3 types
@@ -73,15 +74,15 @@ namespace UNOService.Game
 
             for (int i = 0; i < 4; i++)//adding normal cards 0
             {
-                Deck.Add(new Card(CardType.normal, cardColors[i], 0));
+                Deck.Add(new Card(CardType.Normal, cardColors[i], 0));
             }
 
             while (cardColors.Count != 0)//adding normal cards 1 to 9
             {
                 for (int i = 1; i < 10; i++)
                 {
-                    Deck.Add(new Card(CardType.normal, cardColors[cardColors.Count - 1], i));
-                    Deck.Add(new Card(CardType.normal, cardColors[cardColors.Count - 1], i));
+                    Deck.Add(new Card(CardType.Normal, cardColors[cardColors.Count - 1], i));
+                    Deck.Add(new Card(CardType.Normal, cardColors[cardColors.Count - 1], i));
                 }
 
                 cardColors.RemoveAt(cardColors.Count - 1);

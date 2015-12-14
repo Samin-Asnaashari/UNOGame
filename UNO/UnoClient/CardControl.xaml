@@ -5,10 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnoClient"
              mc:Ignorable="d" 
-             Width="45" Height="60">
-            
-    <Grid Background="AliceBlue">
-        <Image x:Name="image" />
+             Width="45" 
+             Height="60" >
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
+        <Button x:Name="PlayerCard" Content="" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="45" Height="60" Click="PlayerCard_Click"  >
+            <Button.Background>
+                <ImageBrush Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
     </Grid>
-    
+
 </UserControl>

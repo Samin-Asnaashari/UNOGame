@@ -11,8 +11,11 @@ namespace UNOService
     [DataContract]
 	public class Card
 	{
+        [DataMember]
         public CardType Type { get; set; }
+        [DataMember]
         public CardColor Color { get; set; }
+        [DataMember]
         public int Number { get; set; }
 
 
