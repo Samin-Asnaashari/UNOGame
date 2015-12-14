@@ -23,7 +23,7 @@ namespace UnoClient
         public delegate void LeavePartyHandler(string host);
         public LeavePartyHandler OnLeaveParty;
 
-        public delegate void SendMessageHandler(string message, string host);
+        public delegate void SendMessageHandler(string message);
         public SendMessageHandler OnSendMessage;
 
         public string Host
@@ -91,7 +91,7 @@ namespace UnoClient
         private void buttonSendPartyMessage_Click(object sender, RoutedEventArgs e)
         {
             listBoxPartyChat.Items.Add($"{player}: {textBoxPartyChat.Text}");
-            OnSendMessage?.Invoke(textBoxPartyChat.Text, Host);
+            OnSendMessage?.Invoke(textBoxPartyChat.Text);
         }
 
         // Show a recieved message

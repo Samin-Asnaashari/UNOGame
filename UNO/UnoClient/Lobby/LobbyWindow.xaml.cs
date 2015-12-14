@@ -164,7 +164,7 @@ namespace UnoClient
             }
             //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
             party = new PartyControl(username, host, leaveParty, LobbyProxy.SendMessageParty);
-            foreach (var player in LobbyProxy.GetPartyMembers(host))
+            foreach (var player in LobbyProxy.GetPartyMembers())
             {
                 // Host and player are already in the lobby, due to being required in constructor
                 if (player.UserName != username && player.UserName != host)
@@ -211,7 +211,7 @@ namespace UnoClient
             // Remove lobby window visually
             partyGrid.Children.Clear();
             // Tell server we left the party
-            LobbyProxy.LeaveParty(host);
+            LobbyProxy.LeaveParty();
             party = null;
             // Enable the player to invite other players (would create a new party)
             inviteButton.IsEnabled = true;
@@ -236,7 +236,7 @@ namespace UnoClient
             }
         }
 
-        public void NotifyGameStarted(string PartyID)
+        public void NotifyGameStarted()
         {
             throw new NotImplementedException();
             //GameWindow Game = new GameWindow(username);

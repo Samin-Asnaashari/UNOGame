@@ -11,7 +11,15 @@ namespace UNOService
     public class Party
     {
         public int PartyID { get; set; }
-        public Player Host { get { return Players[0]; } }
+        public Player Host
+        {
+            get
+            {
+                if (Players.Count > 0)
+                    return Players[0];
+                else return null;
+            }
+        }
         public List<Player> Players { get; private set; }
 
         public Party(Player host)

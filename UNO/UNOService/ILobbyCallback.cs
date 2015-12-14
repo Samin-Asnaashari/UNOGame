@@ -64,6 +64,6 @@ namespace UNOService
         void SendChatMessageLobbyCallback(String message);
 
         [OperationContract]
-        void NotifyGameStarted(string PartyID);
+        void NotifyGameStarted();
     }
 }
