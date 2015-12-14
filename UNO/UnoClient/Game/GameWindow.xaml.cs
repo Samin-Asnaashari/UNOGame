@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnoClient.proxy;
 
-namespace UnoClient
+namespace UnoClient.Game
 {
     /// <summary>
     /// Interaction logic for GameWindow.xaml
@@ -24,6 +24,12 @@ namespace UnoClient
     {
         private GameClient GameProxy;
         private string username;
+
+        public GameWindow()
+        {
+            Card c = new Card();
+            player1Hand.addCard(new CardControl(
+        }
 
         // TODO Authenticate using password
         public GameWindow(string username,int GameID)

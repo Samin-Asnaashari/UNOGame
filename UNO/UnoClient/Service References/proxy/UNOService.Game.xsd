@@ -7,4 +7,25 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="PlayerState" nillable="true" type="tns:PlayerState" />
+  <xs:simpleType name="CardColor">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Red" />
+      <xs:enumeration value="Green" />
+      <xs:enumeration value="Blue" />
+      <xs:enumeration value="Yellow" />
+      <xs:enumeration value="none" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CardColor" nillable="true" type="tns:CardColor" />
+  <xs:simpleType name="CardType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="normal" />
+      <xs:enumeration value="reverse" />
+      <xs:enumeration value="skip" />
+      <xs:enumeration value="draw2" />
+      <xs:enumeration value="wild" />
+      <xs:enumeration value="draw4Wild" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CardType" nillable="true" type="tns:CardType" />
 </xs:schema>

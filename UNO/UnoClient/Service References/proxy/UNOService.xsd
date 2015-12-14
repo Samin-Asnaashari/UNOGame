@@ -36,7 +36,11 @@
   </xs:complexType>
   <xs:element name="Party" nillable="true" type="tns:Party" />
   <xs:complexType name="Card">
-    <xs:sequence />
+    <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Color" type="q2:CardColor" />
+      <xs:element minOccurs="0" name="Number" type="xs:int" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Type" type="q3:CardType" />
+    </xs:sequence>
   </xs:complexType>
   <xs:element name="Card" nillable="true" type="tns:Card" />
   <xs:complexType name="ArrayOfCard">

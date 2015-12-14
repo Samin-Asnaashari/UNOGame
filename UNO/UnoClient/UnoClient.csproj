@@ -67,8 +67,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CardControl.xaml.cs">
+    <Compile Include="Game\CardControl.xaml.cs">
       <DependentUpon>CardControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Game\CardHand.xaml.cs">
+      <DependentUpon>CardHand.xaml</DependentUpon>
     </Compile>
     <Compile Include="Lobby\InviteControl.xaml.cs">
       <DependentUpon>InviteControl.xaml</DependentUpon>
@@ -87,11 +90,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Page Include="CardControl.xaml">
+    <Page Include="Game\CardControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameWindow.xaml">
+    <Page Include="Game\CardHand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Game\GameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -107,7 +114,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GameWindow.xaml.cs">
+    <Compile Include="Game\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Lobby\LobbyWindow.xaml.cs">

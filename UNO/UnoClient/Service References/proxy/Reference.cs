@@ -231,6 +231,15 @@ namespace UnoClient.proxy {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.CardColor ColorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.CardType TypeField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -238,6 +247,45 @@ namespace UnoClient.proxy {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.CardColor Color {
+            get {
+                return this.ColorField;
+            }
+            set {
+                if ((this.ColorField.Equals(value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Number {
+            get {
+                return this.NumberField;
+            }
+            set {
+                if ((this.NumberField.Equals(value) != true)) {
+                    this.NumberField = value;
+                    this.RaisePropertyChanged("Number");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.CardType Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
             }
         }
         
@@ -249,6 +297,49 @@ namespace UnoClient.proxy {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardColor", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
+    public enum CardColor : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Red = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Green = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Blue = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Yellow = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        none = 4,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardType", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
+    public enum CardType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        normal = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        reverse = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        skip = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        draw2 = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        wild = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        draw4Wild = 5,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

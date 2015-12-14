@@ -13,19 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UnoClient
+namespace UnoClient.Game
 {
     /// <summary>
-    /// Interaction logic for CardControl.xaml
+    /// Interaction logic for CardHand.xaml
     /// </summary>
-    public partial class CardControl : UserControl
+    public partial class CardHand : UserControl
     {
-        proxy.Card Card;
-        public CardControl()
+        public CardHand()
         {
             InitializeComponent();
-            Card = new proxy.Card();
         }
 
+        public void addCard(CardControl c)
+        {
+            Hand.Items.Add(c);
+        }
     }
 }
