@@ -46,6 +46,7 @@ namespace UNOService
             if (player.Party == null)
             {
                 Debug.WriteLine($"{player.UserName} tried to leave a party but was not in a party");
+                return;
             }
 
             player.Party.Players.Remove(player);
@@ -147,6 +148,7 @@ namespace UNOService
             if (player.Party == null)
             {
                 Debug.WriteLine($"{player.UserName} tried to start a game but was not in a party");
+                return;
             }
 
             if (player != player.Party.Host)
@@ -184,6 +186,7 @@ namespace UNOService
             if (messageSender.Party == null)
             {
                 Debug.WriteLine($"{messageSender.UserName} tried to send a message but was not in a party");
+                return;
             }
 
             message = $"{messageSender.UserName}: {message}";
