@@ -20,16 +20,37 @@ namespace UnoClient.Game
     /// </summary>
     public partial class CardHand : UserControl
     {
-        public bool Horizontal { get; set; }
+        public bool IsHorizontal { get; set; }
 
         public CardHand()
         {
             InitializeComponent();
+            this.DataContext = this;
         }
 
         public void addCard(CardControl c)
         {
             Hand.Children.Add(c);
+        }
+
+        private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (IsHorizontal)
+            {
+                if (e.Delta > 0)
+                    sv.LineLeft();
+                else
+                    sv.LineRight();
+            }
+            else
+            {
+                if (e.Delta > 0)
+                    sv.LineUp();
+                else
+                    sv.LineDown();
+            }
+
+            e.Handled = true;
         }
     }
 }

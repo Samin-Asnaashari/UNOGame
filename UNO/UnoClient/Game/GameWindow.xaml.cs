@@ -47,6 +47,7 @@ namespace UnoClient.Game
             foreach(Card c in cards)
             {
                 player1Hand.addCard(new CardControl(c));
+                player3Hand.addCard(new CardControl(c));
             }
         }
 

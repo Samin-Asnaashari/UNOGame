@@ -21,9 +21,9 @@
             <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
-        <g:CardHand x:Name="player1Hand" Horizontal="False" Grid.Row="2" Grid.Column="1"/>
-        <g:CardHand x:Name="player2Hand" Horizontal="True" Grid.Column="1"/>
-        <g:CardHand x:Name="player3Hand" Horizontal="False" Grid.Row="1"/>
-        <g:CardHand x:Name="player4Hand" Horizontal="False" Grid.Row="1" Grid.Column="2"/>
+        <g:CardHand x:Name="player1Hand" IsHorizontal="True" Grid.Row="2" Grid.Column="1"/>
+        <g:CardHand x:Name="player2Hand" IsHorizontal="True" Grid.Column="1"/>
+        <g:CardHand x:Name="player3Hand" IsHorizontal="False" Grid.Row="1"/>
+        <g:CardHand x:Name="player4Hand" IsHorizontal="False" Grid.Row="1" Grid.Column="2"/>
     </Grid>
 </Window>

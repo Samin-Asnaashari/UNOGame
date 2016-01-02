@@ -7,11 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="600">
     <Grid>
-        <ScrollViewer x:Name="sv" Background="#FF9B6C29" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        <ScrollViewer x:Name="sv" Background="#FF9B6C29" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewMouseWheel="sv_PreviewMouseWheel">
             <ScrollViewer.Style>
                 <Style TargetType="{x:Type ScrollViewer}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=Horizontal}" Value="True">
+                        <DataTrigger Binding="{Binding Path=IsHorizontal}" Value="True">
                             <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
                             <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
                         </DataTrigger>
