@@ -308,16 +308,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="Demo">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CardsAssigned">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q17:ArrayOfCard" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="CardsAssignedResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="TurnChanged">

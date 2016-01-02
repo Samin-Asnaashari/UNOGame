@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/UNOService" />
+  <xs:complexType name="TupleOfStatusCodeint_P9n7FJIR">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="StatusCode" Namespace="http://schemas.datacontract.org/2004/07/UNOService" />
+          <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/UNOService" name="m_Item1" type="q1:StatusCode" />
+      <xs:element name="m_Item2" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TupleOfStatusCodeint_P9n7FJIR" nillable="true" type="tns:TupleOfStatusCodeint_P9n7FJIR" />
+</xs:schema>

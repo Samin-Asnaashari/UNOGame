@@ -655,12 +655,18 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SubscribeToGameEvents", ReplyAction="http://tempuri.org/IGame/SubscribeToGameEventsResponse")]
         System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName, int GameID);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/Demo")]
+        void Demo();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/Demo")]
+        System.Threading.Tasks.Task DemoAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IGameCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/CardsAssigned", ReplyAction="http://tempuri.org/IGame/CardsAssignedResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/CardsAssigned")]
         void CardsAssigned(UnoClient.proxy.Card[] cards);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/TurnChanged", ReplyAction="http://tempuri.org/IGame/TurnChangedResponse")]
@@ -739,6 +745,14 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName, int GameID) {
             return base.Channel.SubscribeToGameEventsAsync(UserName, GameID);
+        }
+        
+        public void Demo() {
+            base.Channel.Demo();
+        }
+        
+        public System.Threading.Tasks.Task DemoAsync() {
+            return base.Channel.DemoAsync();
         }
     }
 }

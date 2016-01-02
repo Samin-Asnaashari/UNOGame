@@ -13,7 +13,7 @@ namespace UNOService
 		/// The client gets an unspecified amount of cards.
 		/// </summary>
 		/// <param name="cards"></param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void CardsAssigned(List<Card> cards);
 
 		/// <summary>

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:g="clr-namespace:UnoClient.Game"
         Title="Uno Game"
-        Height="710" Width="710">
+        Height="710" Width="710" MinWidth="710" MinHeight="710">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.Background>
             <RadialGradientBrush>
@@ -21,9 +21,9 @@
             <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
-        <g:CardHand x:Name="player1Hand" Grid.Row="2" Grid.Column="1"/>
-        <g:CardHand x:Name="player2Hand" Grid.Column="1"/>
-        <g:CardHand x:Name="player3Hand" Grid.Row="1"/>
-            <g:CardHand x:Name="player4Hand" Grid.Row="1" Grid.Column="2"/>
+        <g:CardHand x:Name="player1Hand" Horizontal="False" Grid.Row="2" Grid.Column="1"/>
+        <g:CardHand x:Name="player2Hand" Horizontal="True" Grid.Column="1"/>
+        <g:CardHand x:Name="player3Hand" Horizontal="False" Grid.Row="1"/>
+        <g:CardHand x:Name="player4Hand" Horizontal="False" Grid.Row="1" Grid.Column="2"/>
     </Grid>
 </Window>

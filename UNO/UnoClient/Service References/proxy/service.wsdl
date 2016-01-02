@@ -1390,7 +1390,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_CardsAssigned_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_Demo_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1413,7 +1413,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_CardsAssigned_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_CardsAssigned_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1701,11 +1701,11 @@
   <wsdl:message name="IGame_SubscribeToGameEvents_OutputMessage">
     <wsdl:part name="parameters" element="tns:SubscribeToGameEventsResponse" />
   </wsdl:message>
+  <wsdl:message name="IGame_Demo_InputMessage">
+    <wsdl:part name="parameters" element="tns:Demo" />
+  </wsdl:message>
   <wsdl:message name="IGame_CardsAssigned_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CardsAssigned" />
-  </wsdl:message>
-  <wsdl:message name="IGame_CardsAssigned_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:CardsAssignedResponse" />
   </wsdl:message>
   <wsdl:message name="IGame_TurnChanged_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:TurnChanged" />
@@ -1828,9 +1828,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IGame/SubscribeToGameEvents" message="tns:IGame_SubscribeToGameEvents_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/SubscribeToGameEventsResponse" message="tns:IGame_SubscribeToGameEvents_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="Demo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGame/Demo" message="tns:IGame_Demo_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="CardsAssigned">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/CardsAssigned" message="tns:IGame_CardsAssigned_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IGame/CardsAssignedResponse" message="tns:IGame_CardsAssigned_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="TurnChanged">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/TurnChanged" message="tns:IGame_TurnChanged_OutputCallbackMessage" />
@@ -2124,12 +2126,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="CardsAssigned">
-      <soap12:operation soapAction="http://tempuri.org/IGame/CardsAssigned" style="document" />
+    <wsdl:operation name="Demo">
+      <soap12:operation soapAction="http://tempuri.org/IGame/Demo" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_CardsAssigned_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_Demo_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CardsAssigned">
+      <soap12:operation soapAction="http://tempuri.org/IGame/CardsAssigned" style="document" />
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_CardsAssigned_output_policy" />
         <soap12:body use="literal" />

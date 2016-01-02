@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnoClient.proxy;
 
-namespace UnoClient.Game
+namespace UnoClient
 {
     /// <summary>
     /// Interaction logic for GameWindow.xaml
@@ -25,29 +25,20 @@ namespace UnoClient.Game
         private GameClient GameProxy;
         private string username;
 
-        public GameWindow()
-        {
-            GameProxy = new GameClient(new InstanceContext(this));
-            GameProxy.Demo();
-        }
-
         // TODO Authenticate using password
-        public GameWindow(string username,int GameID)
+        public GameWindow(string username, int GameID)
         {
             this.username = username;
             InitializeComponent();
             GameProxy = new GameClient(new InstanceContext(this));
-            GameProxy.SubscribeToGameEvents(username,GameID);
+            GameProxy.SubscribeToGameEvents(username, GameID);
 
             //TODO: position the players
         }
 
         public void CardsAssigned(Card[] cards)
         {
-            foreach(Card c in cards)
-            {
-                player1Hand.addCard(new CardControl(c));
-            }
+            throw new NotImplementedException();
         }
 
         public void NotifyPlayerLeft(string userName)

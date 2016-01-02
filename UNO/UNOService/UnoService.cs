@@ -271,5 +271,15 @@ namespace UNOService
             }
         }
 
+        public void Demo()
+        {
+            IGameCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
+
+            games.Add(new Game.Game(0, new List<Player>()));
+            games[0].CreateDeck();
+
+            currentPlayerCallback.CardsAssigned(games[0].Deck);
+
+        }
     }
 }
