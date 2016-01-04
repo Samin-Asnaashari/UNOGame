@@ -24,6 +24,11 @@ namespace UnoClient
         private Card card;
         private string picturePath;
 
+        public CardControl()  //Unkown type of card, so 'closed' card
+        {
+            InitializeComponent();
+        }
+
         public CardControl(Card c)
         {
             card = c;
@@ -55,8 +60,5 @@ namespace UnoClient
             InitializeComponent();
             image.Source = new BitmapImage(uriSource);
         }
-
-        public CardControl() { } //Closed card
-
     }
 }
