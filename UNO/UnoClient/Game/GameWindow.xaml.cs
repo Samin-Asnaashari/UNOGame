@@ -25,11 +25,6 @@ namespace UnoClient.Game
         private GameClient GameProxy;
         private string username;
 
-        public GameWindow()
-        {
-            GameProxy = new GameClient(new InstanceContext(this));
-            GameProxy.Demo();
-        }
 
         // TODO Authenticate using password
         public GameWindow(string username,int GameID)

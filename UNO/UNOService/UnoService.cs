@@ -251,7 +251,7 @@ namespace UNOService
             }
         }
 
-        public void SubscribeToGameEvents(string userName,int gameID)
+        public void SubscribeToGameEvents(string userName, int gameID)
         {
             IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
             Player player = games.Find(x => x.GameID == gameID).Players.Find(y => y.UserName.CompareTo(userName) == 0);
@@ -271,15 +271,20 @@ namespace UNOService
             }
         }
 
-        public void Demo()
+        /*public void Demo()
         {
-            IGameCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
+            List<Player> players = new List<Player>();
+            players.Add(new Player("Rutger"));
+            players.Add(new Player("Test"));
 
-            games.Add(new Game.Game(0, new List<Player>()));
+            games.Add(new Game.Game(0, players));
             games[0].CreateDeck();
 
-            currentPlayerCallback.CardsAssigned(games[0].Deck);
-
-        }
+            foreach (Player p in games[0].Players)
+            {
+                p.IGameCallback.CardsAssigned(games[0].Deck.GetRange(0, 7));
+                games[0].Deck.RemoveRange(0, 7);
+            }
+        }*/
     }
 }
