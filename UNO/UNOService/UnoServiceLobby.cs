@@ -179,7 +179,7 @@ namespace UNOService
             {
                 if (onlinePlayer.UserName != player.UserName) //Prevent deadlock
                 {
-                    if(onlinePlayer.IGameCallback != null) //When the user did not subscribe itself yet (So when two people try to sign in at the same time)
+                    if(onlinePlayer.ILobbyCallback != null) //When the user did not subscribe itself yet (So when two people try to sign in at the same time)
                         onlinePlayer.ILobbyCallback.PlayerConnected(player);
                 }
             }
