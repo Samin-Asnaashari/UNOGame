@@ -130,7 +130,9 @@
   </xs:element>
   <xs:element name="StartGameResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StartGameResult" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SendMessageParty">
@@ -240,13 +242,8 @@
   <xs:element name="NotifyGameStarted">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="PartyID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="GameID" type="xs:int" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="NotifyGameStartedResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveReplay">
@@ -304,11 +301,6 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="SubscribeToGameEventsResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Demo">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

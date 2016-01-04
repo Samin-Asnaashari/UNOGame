@@ -104,26 +104,29 @@ namespace UNOService
             return false;
         }
 
-        public void StartGame(string host)
+        public int StartGame(string host)
         {
             //maybe need to check authorized Host and players  
             if (GetPartyMembers(host).Count >= 2 && GetPartyMembers(host).Count <= 4)
             {
-                Game.Game Game = new Game.Game(gameID, GetPartyMembers(host));
                 gameID++;
+                Game.Game Game = new Game.Game(gameID, GetPartyMembers(host));
                 games.Add(Game);
-                for (int i = 1; i < GetPartyMembers(host).Count; i++)
+
+                for (int i = 1; i < GetPartyMembers(host).Count; i++) //Skip the host to prevent deadlock
                 {
-                    //everyone will be notified except host
-                    GetPartyMembers(host)[i].ILobbyCallback.NotifyGameStarted(host);
+                    GetPartyMembers(host)[i].ILobbyCallback.NotifyGameStarted(gameID);
                 }
+
                 parties.Remove(host);
+
+                return gameID;
             }
             else
             {
-                throw new Exception("Party needs to be full....");
+                //throw new Exception("Party needs to be full....");
+                return -1; //TODO: Handle this on the client side
             }
-
         }
 
         public void SendMessageParty(string message, string host)

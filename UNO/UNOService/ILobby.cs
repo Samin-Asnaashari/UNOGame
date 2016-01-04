@@ -52,10 +52,12 @@ namespace UNOService
         bool AnswerInvite(Party p);
 
         /// <summary>
-        /// 
+        /// Starts a new game
         /// </summary>
+        /// <param name="host"></param>
+        /// <returns>GameID</returns>
         [OperationContract]
-        void StartGame(string host);
+        int StartGame(string host);
 
         /// <summary>
         /// message sended in chat
