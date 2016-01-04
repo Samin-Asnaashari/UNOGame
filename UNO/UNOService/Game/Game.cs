@@ -24,7 +24,9 @@ namespace UNOService.Game
         {
             this.GameID = gameID;
             this.Players = players;
+
             this.Deck = new List<Card>();
+            this.PlayedCards = new List<Card>();
 
             this.Direction = Direction.clockwise;
             

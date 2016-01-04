@@ -73,5 +73,19 @@ namespace UnoClient.Game
             Card takenCard = await GameProxy.takeCardAsync(GameID);
             player1Hand.addCard(new CardControl(takenCard));
         }
+
+        public void changePlayedCard(CardControl cardControl)
+        {
+            lastPlayedCard = cardControl;
+            lastPlayedCard.UpdateLayout();
+            Card card = cardControl.getCard();
+
+            GameProxy.playCardAsync(GameID, card);
+        }
+
+        public void CardPlayed(Card c)
+        {
+            lastPlayedCard = new CardControl(c);
+        }
     }
 }

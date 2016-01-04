@@ -324,6 +324,18 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="CardPlayed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="c" nillable="true" type="q19:Card" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CardPlayedResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SendMessageGameCallback">
     <xs:complexType>
       <xs:sequence>

@@ -31,6 +31,7 @@ namespace UnoClient
 
         public CardControl(Card c)
         {
+            this.Cursor = Cursors.Hand;
             card = c;
             picturePath = "/Images/";
             
@@ -59,6 +60,11 @@ namespace UnoClient
 
             InitializeComponent();
             image.Source = new BitmapImage(uriSource);
+        }
+
+        public Card getCard()
+        {
+            return card;
         }
     }
 }
