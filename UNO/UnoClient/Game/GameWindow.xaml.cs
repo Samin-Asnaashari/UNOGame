@@ -23,17 +23,20 @@ namespace UnoClient.Game
     public partial class GameWindow : proxy.IGameCallback
     {
         private GameClient GameProxy;
-        private string username;
 
+        private string username;
+        private int GameID;
 
         // TODO Authenticate using password
-        public GameWindow(string username,int GameID)
+        public GameWindow(string username, int GameID)
         {
             this.username = username;
-            InitializeComponent();
-            GameProxy = new GameClient(new InstanceContext(this));
-            GameProxy.SubscribeToGameEvents(username,GameID);
+            this.GameID = GameID;
 
+            GameProxy = new GameClient(new InstanceContext(this));
+            GameProxy.SubscribeToGameEvents(username, GameID);
+
+            InitializeComponent();
             //TODO: position the players
         }
 
@@ -41,8 +44,7 @@ namespace UnoClient.Game
         {
             foreach(Card c in cards)
             {
-                player1Hand.addCard(new CardControl(c));
-                player3Hand.addCard(new CardControl(c));
+                player1Hand.addCard(new CardControl(c)); //Add cards to your own hand
             }
         }
 
@@ -64,6 +66,12 @@ namespace UnoClient.Game
         public void NotifyOpponentsOfPlayerPunished(string userName)
         {
             throw new NotImplementedException();
+        }
+
+        private async void DeckOfCards_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Card takenCard = await GameProxy.takeCardAsync(GameID);
+            player1Hand.addCard(new CardControl(takenCard));
         }
     }
 }
