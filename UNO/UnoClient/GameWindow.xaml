@@ -147,14 +147,10 @@
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
-            <RichTextBox x:Name="Messgae" HorizontalAlignment="Left" Height="22" Margin="24,124.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="102" Background="#FFDACDB9">
-                <FlowDocument>
-                    <Paragraph>
-                        <Run Text="Message"/>
-                    </Paragraph>
-                </FlowDocument>
-            </RichTextBox>
-            <Button x:Name="button" Content="" HorizontalAlignment="Left" Margin="126,127.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="25" Height="19" RenderTransformOrigin="0.544,0.158">
+            <TextBox x:Name="Messgae" HorizontalAlignment="Left" Height="22" Margin="24,124.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="102" Background="#FFDACDB9" Text="Message">
+               
+            </TextBox>
+            <Button x:Name="sendmessagebutton" Content="" HorizontalAlignment="Left" Margin="126,127.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="25" Height="19" RenderTransformOrigin="0.544,0.158" Click="sendmessagebutton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="Images/Send.png" Stretch="UniformToFill"/>
                 </Button.Background>

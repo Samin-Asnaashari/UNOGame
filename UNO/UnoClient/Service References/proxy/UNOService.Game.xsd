@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/UNOService.Game" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UNOService.Game" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:simpleType name="PlayerState">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="InLobby" />
-      <xs:enumeration value="InGame" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="PlayerState" nillable="true" type="tns:PlayerState" />
   <xs:simpleType name="CardColor">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Red" />
@@ -28,4 +21,11 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="CardType" nillable="true" type="tns:CardType" />
+  <xs:simpleType name="PlayerState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="InLobby" />
+      <xs:enumeration value="InGame" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PlayerState" nillable="true" type="tns:PlayerState" />
 </xs:schema>

@@ -106,25 +106,111 @@ namespace UNOService
             return null;
         }
 
-        public Card takeCard(int GameID)
+        public Card takeCard()
         {
-            return FindGame(GameID).Deck[0];
+            Game.Game game = FindGame(getPlayerFromGameContext().GameID);
+            if (game.Deck.Count() == 0)
+            {
+                game.Deck = game.tempDeck;
+                game.Shuffle(game.Deck);
+            }
+            //???
+            List<Card> c = new List<Card>();
+            c.Add(game.Deck[0]);
+            getPlayerFromGameContext().IGameCallback.CardsAssigned(c);
+            return game.Deck[0];
         }
 
-        public void playCard(int GameID, Card card)
+        public bool CheckPlayedCard(Card tablecard,Card cardtoplay)
         {
-            //get player 
-            //is it valid card ?  // maybe with method better 
-            //put cart in the table (public Card ACardOnTheTable { get; set; }  [playedcards.count-1])
-            //add it to the game playedcard
-            //delete from hand 
-            //add to the last card of the deck of card (when a card assign to the player will be deleted from game deck of card)
-            // if is it is  last card player won 
-            //if after this play only one left another methode will take care of said uno condition
-            Player PlayerWhoWantsToPlaACard = getPlayerFromGameContext();
-                    FindGame(GameID).PlayedCards.Add(card);
-                    PlayerWhoWantsToPlaACard.Remove(card);
-                    FindGame(GameID).Deck.Add(card);
+            if(cardtoplay.Type == CardType.Draw4Wild || cardtoplay.Type == CardType.Wild)
+            {
+                return true;
+            }
+            else
+            {
+                if(cardtoplay.Type == tablecard.Type || cardtoplay.Color == tablecard.Color)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public bool playCard(Card card)
+        {
+            Player PlayerWhoWantsToPlayCard = getPlayerFromGameContext();
+            Game.Game g = FindGame(PlayerWhoWantsToPlayCard.GameID);
+            if (CheckPlayedCard(FindGame(PlayerWhoWantsToPlayCard.GameID).PlayedCards[0],card))
+            {
+                g.PlayedCards.Add(card);
+                PlayerWhoWantsToPlayCard.Hand.Remove(card);
+                g.tempDeck.Add(card);
+
+                getPlayerFromGameContext().IGameCallback.CardPlayed(card);
+                Player next = g.Players[g.Players.IndexOf(getPlayerFromGameContext()) + 1];
+                g.TurnToPlay = next;
+                getPlayerFromGameContext().IGameCallback.TurnChanged(next);
+                CardAction(card);  //??
+
+                return true;
+            }
+            return false;
+
+            //check if won   / check if said uno 
+        }
+
+        public void CardAction(Card card)
+        {
+            Game.Game g = FindGame(getPlayerFromGameContext().GameID);
+
+            if (card.Type == CardType.Skip)
+            {
+                Player next = g.Players[g.Players.IndexOf(getPlayerFromGameContext())+2];
+                g.TurnToPlay = next;
+                getPlayerFromGameContext().IGameCallback.TurnChanged(next);
+            }
+            else if(card.Type == CardType.Reverse)
+            {
+                if(g.Direction == Direction.clockwise)
+                {
+                    g.Direction = Direction.counterClockwise;
+                }
+                else
+                {
+                    g.Direction = Direction.clockwise;
+                }
+            }
+            else if (card.Type == CardType.Draw2)
+            {
+                //wait for next player action
+                //AssignCard to next player if he/she didn't put also draw2 otherwise add 4 to next next 
+            }
+            else if (card.Type == CardType.Wild)
+            {
+                //show color to other player to choose
+            }
+            else if (card.Type == CardType.Draw4Wild)
+            {
+                //AssignCards4
+            }
+            //notify who punished 
+        }
+
+        public void AssignCards(Player player ,int numberofcardtoassign)
+        {
+            List<Card> cards = new List<Card>();
+            for (int i = 0; i < numberofcardtoassign; i++)
+            {
+                Card Cardtoassign = takeCard();
+                player.Hand.Add(Cardtoassign);
+                FindGame(player.GameID).Deck.Remove(Cardtoassign);
+                cards.Add(Cardtoassign);
+            }
+
+            getPlayerFromGameContext().IGameCallback.CardsAssigned(cards);
+
         }
 
         /// <summary>
@@ -139,6 +225,17 @@ namespace UNOService
 
             return player != null;
         }
+
+        //public void GetPlayerFromUsername(string username, out Player player)
+        //{
+        //    player = playersOnline.FirstOrDefault(x => x.UserName == username);
+        //}
+        //public void GetGame(string username, out Game.Game game)
+        //{
+        //    Player p;
+        //    GetPlayerFromUsername(username, out p);
+        //    game = games.FirstOrDefault(x => x.GameID == p.GameID);
+        //}
 
         /// <summary>
         /// Get the player from the game context. Safe to assume this is never null.
@@ -253,22 +350,9 @@ namespace UNOService
 
         public void SubscribeToGameEvents(string userName)
         {
-            IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
-            Player player = games.Find(x => x.GameID == gameID).Players.Find(y => y.UserName.CompareTo(userName) == 0);
-            player.IGameCallback = clientCallbackGame;
-
-            foreach (var item in games.Find(x => x.GameID == gameID).Players)
-            {
-                if (item != player)
-                {
-                    //item.IGameCallback.CardsAssigned();
-                    //item.IGameCallback.SendMessageGameCallback();  
-                    //item.IGameCallback.TurnChanged(player);
-                    //item.IGameCallback.NotifyOpponentsOfPlayerPunished(item.UserName);
-                    //item.IGameCallback.CardPlayed();
-                }
+            AssignCards(getPlayerFromGameContext(),7);
                     
-            }
+            
         }
 
     }

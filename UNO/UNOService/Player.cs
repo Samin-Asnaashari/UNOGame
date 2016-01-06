@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using UNOService;
 using UNOService.Game;
 using System.ServiceModel;
 
@@ -14,13 +15,17 @@ namespace UNOService
     {
         [DataMember]
         public string UserName { get; private set; } //unique
+        [DataMember]
         public List<Card> Hand { get; set; }
         [DataMember]
         public PlayerState State { get; set; }
         public ILobbyCallback ILobbyCallback { get; set; }
         public IGameCallback IGameCallback { get; set; }
+        [DataMember]
         public int GameID { get; set; }
+        [DataMember]
         public Party Party { get; set; }
+        [DataMember]
         public bool UnoSaid { get; set; }
 
 

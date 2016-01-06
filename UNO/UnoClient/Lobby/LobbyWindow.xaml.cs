@@ -24,11 +24,14 @@ namespace UnoClient
     {
         private LobbyClient LobbyProxy;
         PartyControl party;
+
         string username;
+        string password;
 
         public LobbyWindow(string username, string password)
         {
             this.username = username;
+            this.password = password;
             InitializeComponent();
             LobbyProxy = new LobbyClient(new InstanceContext(this));
             LobbyProxy.SubscribeToLobbyEvents(username, password);
@@ -89,7 +92,6 @@ namespace UnoClient
             }
 
             listOnlinePlayers.Children.Add(new PlayerListElementControl(player));
-
             inviteButton.IsEnabled = true;
         }
 
@@ -238,10 +240,32 @@ namespace UnoClient
 
         public void NotifyGameStarted()
         {
-            throw new NotImplementedException();
-            //GameWindow Game = new GameWindow(username);
-            //this.Hide();
-            //Game.Show();
+            //TODO :  Rework into the UI
+            //TODO : min nr of player in party is 2 so rework this   
+            try
+            {
+                if (LobbyProxy.GetPartyMembers().Count() == 4)
+                {
+                    LobbyProxy.StartGame();
+                    new GameWindow(username, password).Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Max member in party must be 4 before starting the game!!!");
+                }
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("An Error Occurred while connecting to the game!!!");
+            }
+           
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //
         }
     }
 }

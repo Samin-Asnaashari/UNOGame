@@ -20,12 +20,18 @@ namespace UNOService.Game
         public bool UNOsaidAlready { get; set; }
         public Player TurnToPlay { get; set; }
 
+        //public int PositioninWindow { get; set; }
+        //public int  Turn { get; set; }
+
+        public List<Card> tempDeck { get; set; }
+
         public Game(int gameID, List<Player> players)
         {
             this.GameID = gameID;
             this.Direction = Direction.clockwise;
             this.Players = players;
             CreateDeck();
+            tempDeck = new List<Card>();
         }
 
         public void Shuffle(List<Card> deckToShuffle)

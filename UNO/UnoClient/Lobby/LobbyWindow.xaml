@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:UnoClient"
         Width="600"
-		Height="400" Background="#2E4372">
+		Height="400" Background="#2E4372" Closing="Window_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

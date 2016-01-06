@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e12b62b7-7570-45b2-9f44-e663010a6c39" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2f097047-8472-4003-96e5-0b8481019370" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,12 +22,12 @@
     <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="ead759d3-49cf-4f67-96a5-7137711db1d8" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="80757a1a-77a8-42eb-a043-3b530380997b" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="0ab84392-6a5c-4d27-af95-df7c7ec9560c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
-    <MetadataFile FileName="UNOService.xsd" MetadataType="Schema" ID="36230ef7-4be2-4759-b42c-e5f6645f8381" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
-    <MetadataFile FileName="UNOService.Game.xsd" MetadataType="Schema" ID="fabe0b8f-7e71-490e-b86b-50628dcde4bc" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="b018593b-c24a-437d-af7e-0bd4d723d153" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="4717f6b5-414f-4a2b-8aa4-2a14fab76b29" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="2eb842a9-e94e-4415-aa58-a9f03d633f92" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="5a0d3d3f-9d20-4cc5-a2ad-67330b4d4ce8" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="UNOService.xsd" MetadataType="Schema" ID="dbd4f704-1393-45da-9f4a-50e6f67eb646" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="UNOService.Game.xsd" MetadataType="Schema" ID="70a74cbb-a5f3-4144-b2e2-6b509bf063aa" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="be9c4771-1231-4371-8326-fb2eefd7d458" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary2/Service1/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

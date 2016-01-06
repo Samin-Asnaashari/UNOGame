@@ -17,17 +17,17 @@ using UnoClient.proxy;
 
 namespace UnoClient
 {
-	/// <summary>
-	/// Interaction logic for LoginAndRegisterWindow.xaml
-	/// </summary>
-	public partial class LoginAndRegisterWindow : Window
-	{
+    /// <summary>
+    /// Interaction logic for LoginAndRegisterWindow.xaml
+    /// </summary>
+    public partial class LoginAndRegisterWindow : Window
+    {
         private LoginAndSignUpClient client; //the proxy 
 
         public LoginAndRegisterWindow()
-		{
+        {
             client = new LoginAndSignUpClient();
-			InitializeComponent();
+            InitializeComponent();
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -116,7 +116,7 @@ namespace UnoClient
         {
             if (wpRegisterControls.Height > 0) //Register WrapPanel is visible
             {
-                if(((SolidColorBrush)txtPassword.Background).Color.Equals(Color.FromRgb(255, 85, 85)))
+                if (((SolidColorBrush)txtPassword.Background).Color.Equals(Color.FromRgb(255, 85, 85)))
                 {
                     if (txtPassword.Password.Length >= 6)
                         txtPassword.Background = Brushes.White;

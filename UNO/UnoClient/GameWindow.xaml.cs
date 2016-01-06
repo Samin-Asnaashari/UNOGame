@@ -24,27 +24,35 @@ namespace UnoClient
     {
         private GameClient GameProxy;
         private string username;
+        private Player player;
+
+        public delegate void SendMessageHandler(string message);
+        public SendMessageHandler OnSendMessage;
+
 
         // TODO Authenticate using password
-        public GameWindow(string username)
+        public GameWindow(string username, string password)
         {
             this.username = username;
             InitializeComponent();
             GameProxy = new GameClient(new InstanceContext(this));
             GameProxy.SubscribeToGameEvents(username);
+            OnSendMessage += GameProxy.SendMessageGame;
+            player = GameProxy.GetPlayerFromUsername(username);
 
             //position the players and cards 
 
-            //foreach (var item in ?username)
-            //{
-            //    var cardControl=(CardControl)item;
-            //    PlayerCards.Children.Add(cardControl);
-            //}
+            PlayerName.Content = username;
+            Game g = GameProxy.GetGame(username);
         }
 
         public void CardsAssigned(Card[] cards)
         {
             throw new NotImplementedException();
+            //foreach (var Card in player.Hand)
+            //{
+            //    PlayerCards.Children.Add(new CardControl(Card,));
+            //}
         }
 
         public void NotifyPlayerLeft(string userName)
@@ -65,6 +73,12 @@ namespace UnoClient
         public void NotifyOpponentsOfPlayerPunished(string userName)
         {
             throw new NotImplementedException();
+        }
+
+        private void sendmessagebutton_Click(object sender, RoutedEventArgs e)
+        {
+            ChatrichTextBox.AppendText($"{player}: {Messgae.Text}");
+            OnSendMessage?.Invoke(Messgae.Text);
         }
     }
 }
