@@ -19,7 +19,7 @@ namespace UNOService
         public PlayerState State { get; set; }
         public ILobbyCallback ILobbyCallback { get; set; }
         public IGameCallback IGameCallback { get; set; }
-        public int GameID { get; set; }
+        public Game.Game Game { get; set; }
         public Party Party { get; set; }
         public bool UnoSaid { get; set; }
 

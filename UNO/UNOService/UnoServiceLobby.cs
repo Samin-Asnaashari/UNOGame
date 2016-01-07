@@ -143,29 +143,30 @@ namespace UNOService
 
         public void StartGame()
         {
-            Player player = getPlayerFromLobbyContext();
+            Player host = getPlayerFromLobbyContext();
 
-            if (player.Party == null)
+            if (host.Party == null)
             {
-                Debug.WriteLine($"{player.UserName} tried to start a game but was not in a party");
+                Debug.WriteLine($"{host.UserName} tried to start a game but was not in a party");
                 return;
             }
 
-            if (player != player.Party.Host)
+            if (host != host.Party.Host)
             {
-                Debug.WriteLine($"{player.UserName} tried to start a game but was not host");
+                Debug.WriteLine($"{host.UserName} tried to start a game but was not host");
                 return;
             }
 
-            if (player.Party.Players.Count >= 2 && player.Party.Players.Count <= 4)
+            if (host.Party.Players.Count >= 2 && host.Party.Players.Count <= 4)
             {
-                Game.Game Game = new Game.Game(gameID, player.Party.Players);
+                Game.Game Game = new Game.Game(gameID, host.Party.Players);
                 gameID++;
                 games.Add(Game);
-                foreach (Player partyMember in player.Party.Players)
+                foreach (Player partyMember in host.Party.Players)
                 {
-                    //everyone will be notified except host who initated this function
-                    if (partyMember != player)
+                    partyMember.Game = Game;
+                    //Everyone will be notified except host who initated this function
+                    if (partyMember != host)
                     {
                         partyMember.ILobbyCallback.NotifyGameStarted();
                     }
@@ -173,7 +174,7 @@ namespace UNOService
             }
             else
             {
-                Debug.WriteLine($"{player.UserName} tried to start a game but party did not have enough players: {player.Party.Players.Count}");
+                Debug.WriteLine($"{host.UserName} tried to start a game but party did not have enough players: {host.Party.Players.Count}");
                 return;
             }
 

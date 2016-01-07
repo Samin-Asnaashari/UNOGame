@@ -42,7 +42,7 @@
                 <Button x:Name="buttonPartyClose" Click="buttonPartyClose_Click" Content="X" Background="Tomato" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right"/>
             </Grid>
             <Grid Grid.Row="1">
-                <Button x:Name="buttonStartGame" Height="30" IsEnabled="False" Visibility="Collapsed" Content="Start Game" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Button x:Name="buttonStartGame" Click="buttonStartGame_Click" Height="30" IsEnabled="False" Visibility="Collapsed" Content="Start Game" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
         </Grid>
     </Grid>

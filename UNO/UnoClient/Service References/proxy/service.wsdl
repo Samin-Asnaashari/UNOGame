@@ -919,29 +919,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_ChangePlayerState_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SendChatMessageLobbyCallback_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -965,53 +942,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SendChatMessageLobbyCallback_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_NotifyGameStarted_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_NotifyGameStarted_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1630,20 +1561,11 @@
   <wsdl:message name="ILobby_ChangePlayerState_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ChangePlayerState" />
   </wsdl:message>
-  <wsdl:message name="ILobby_ChangePlayerState_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ChangePlayerStateResponse" />
-  </wsdl:message>
   <wsdl:message name="ILobby_SendChatMessageLobbyCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendChatMessageLobbyCallback" />
   </wsdl:message>
-  <wsdl:message name="ILobby_SendChatMessageLobbyCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:SendChatMessageLobbyCallbackResponse" />
-  </wsdl:message>
   <wsdl:message name="ILobby_NotifyGameStarted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyGameStarted" />
-  </wsdl:message>
-  <wsdl:message name="ILobby_NotifyGameStarted_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:NotifyGameStartedResponse" />
   </wsdl:message>
   <wsdl:message name="IGame_SaveReplay_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveReplay" />
@@ -1767,15 +1689,12 @@
     </wsdl:operation>
     <wsdl:operation name="ChangePlayerState">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/ChangePlayerState" message="tns:ILobby_ChangePlayerState_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/ChangePlayerStateResponse" message="tns:ILobby_ChangePlayerState_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendChatMessageLobbyCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/SendChatMessageLobbyCallback" message="tns:ILobby_SendChatMessageLobbyCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/SendChatMessageLobbyCallbackResponse" message="tns:ILobby_SendChatMessageLobbyCallback_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="NotifyGameStarted">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/NotifyGameStarted" message="tns:ILobby_NotifyGameStarted_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/NotifyGameStartedResponse" message="tns:ILobby_NotifyGameStarted_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGame">
@@ -2000,10 +1919,6 @@
     </wsdl:operation>
     <wsdl:operation name="ChangePlayerState">
       <soap12:operation soapAction="http://tempuri.org/ILobby/ChangePlayerState" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_ChangePlayerState_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_ChangePlayerState_output_policy" />
         <soap12:body use="literal" />
@@ -2011,10 +1926,6 @@
     </wsdl:operation>
     <wsdl:operation name="SendChatMessageLobbyCallback">
       <soap12:operation soapAction="http://tempuri.org/ILobby/SendChatMessageLobbyCallback" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SendChatMessageLobbyCallback_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SendChatMessageLobbyCallback_output_policy" />
         <soap12:body use="literal" />
@@ -2022,10 +1933,6 @@
     </wsdl:operation>
     <wsdl:operation name="NotifyGameStarted">
       <soap12:operation soapAction="http://tempuri.org/ILobby/NotifyGameStarted" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_NotifyGameStarted_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_NotifyGameStarted_output_policy" />
         <soap12:body use="literal" />

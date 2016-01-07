@@ -197,7 +197,7 @@ namespace UNOService
             Player player = getPlayerFromGameContext();
             if (player != null)
             {
-                Game.Game game = games.Find(x => x.GameID == player.GameID);
+                Game.Game game = player.Game;
 
                 bool messageAlreadySent = false;
 
@@ -268,9 +268,10 @@ namespace UNOService
         public void SubscribeToGameEvents(string userName, int gameID)
         {
             IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
-            Game.Game game = games.Find(x => x.GameID == gameID);
 
-            Player self = game.Players.Find(y => y.UserName.CompareTo(userName) == 0);
+            Player self = playersOnline.Find(y => y.UserName.Equals(userName));
+            Game.Game game = self.Game;
+
             self.IGameCallback = clientCallbackGame;
 
             foreach (Player player in game.Players)

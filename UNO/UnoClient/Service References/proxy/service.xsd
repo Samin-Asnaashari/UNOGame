@@ -198,11 +198,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ChangePlayerStateResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="SendChatMessageLobbyCallback">
     <xs:complexType>
       <xs:sequence>
@@ -210,17 +205,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendChatMessageLobbyCallbackResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="NotifyGameStarted">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="NotifyGameStartedResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

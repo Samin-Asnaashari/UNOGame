@@ -420,13 +420,13 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/PartyIsFull")]
         void PartyIsFull();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/ChangePlayerState", ReplyAction="http://tempuri.org/ILobby/ChangePlayerStateResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/ChangePlayerState")]
         void ChangePlayerState(UnoClient.proxy.Player player);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SendChatMessageLobbyCallback", ReplyAction="http://tempuri.org/ILobby/SendChatMessageLobbyCallbackResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/SendChatMessageLobbyCallback")]
         void SendChatMessageLobbyCallback(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/NotifyGameStarted", ReplyAction="http://tempuri.org/ILobby/NotifyGameStartedResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/NotifyGameStarted")]
         void NotifyGameStarted();
     }
     

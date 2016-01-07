@@ -25,13 +25,14 @@ namespace UnoClient.Game
         private GameClient GameProxy;
 
         private string username;
+
+        // Game ID should only be known serverside. The player has a game variable so the game id can be found from the context.
         private int GameID;
 
         // TODO Authenticate using password
-        public GameWindow(string username, int GameID)
+        public GameWindow(string username, string password)
         {
             this.username = username;
-            this.GameID = GameID;
 
             GameProxy = new GameClient(new InstanceContext(this));
             GameProxy.SubscribeToGameEvents(username, GameID);

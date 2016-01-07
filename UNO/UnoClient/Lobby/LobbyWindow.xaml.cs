@@ -163,7 +163,7 @@ namespace UnoClient
                 LobbyProxy.CreateParty();
             }
             //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
-            party = new PartyControl(username, host, leaveParty, LobbyProxy.SendMessageParty);
+            party = new PartyControl(username, host, leaveParty, LobbyProxy.SendMessageParty, startGame);
             foreach (var player in LobbyProxy.GetPartyMembers())
             {
                 // Host and player are already in the lobby, due to being required in constructor
@@ -236,12 +236,20 @@ namespace UnoClient
             }
         }
 
+        private void startGame()
+        {
+            if (party.Host.Equals(username))
+            {
+                LobbyProxy.StartGame();
+                
+                NotifyGameStarted();
+            }
+        }
+
         public void NotifyGameStarted()
         {
-            throw new NotImplementedException();
-            //GameWindow Game = new GameWindow(username);
-            //this.Hide();
-            //Game.Show();
+            new Game.GameWindow(username, "password").Show();
+            this.Hide();
         }
     }
 }

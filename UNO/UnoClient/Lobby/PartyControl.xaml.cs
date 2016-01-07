@@ -26,15 +26,19 @@ namespace UnoClient
         public delegate void SendMessageHandler(string message);
         public SendMessageHandler OnSendMessage;
 
+        public delegate void StartGameHandler();
+        public StartGameHandler OnStartGame;
+
         public string Host
         {
             get; private set;
         }
         string player;
-        public PartyControl(string player, string host, LeavePartyHandler leavePartyDelegate, SendMessageHandler sendMessageDelegate)
+        public PartyControl(string player, string host, LeavePartyHandler leavePartyDelegate, SendMessageHandler sendMessageDelegate, StartGameHandler startGameDelegate)
         {
-            OnLeaveParty += leavePartyDelegate;
-            OnSendMessage += sendMessageDelegate;
+            OnLeaveParty = leavePartyDelegate;
+            OnSendMessage = sendMessageDelegate;
+            OnStartGame = startGameDelegate;
 
             this.Host = host;
             this.player = player;
@@ -98,6 +102,12 @@ namespace UnoClient
         public void DisplayMessage(string message)
         {
             listBoxPartyChat.Items.Add(message);
+        }
+
+        // Start game
+        private void buttonStartGame_Click(object sender, RoutedEventArgs e)
+        {
+            OnStartGame?.Invoke();
         }
     }
 

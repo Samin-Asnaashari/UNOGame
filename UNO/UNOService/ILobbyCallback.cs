@@ -54,16 +54,16 @@ namespace UNOService
         /// A player online status has changed (e.g. online/in game), and needs to be updated in the client list
         /// </summary>
         /// <param name="player"></param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void ChangePlayerState(Player player);
 
         /// <summary>
-        /// Message sended from service to all players in game
+        /// Message sent from service to all players in lobby
         /// </summary>
-        [OperationContract]
-        void SendChatMessageLobbyCallback(String message);
+        [OperationContract(IsOneWay = true)]
+        void SendChatMessageLobbyCallback(string message);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void NotifyGameStarted();
     }
 }

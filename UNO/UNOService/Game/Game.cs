@@ -12,7 +12,7 @@ namespace UNOService.Game
     public class Game
     {
         [DataMember]
-        public int GameID { get; set; }
+        public int GameID { get; private set; }
 
         [DataMember]
         public List<Player> Players { get; set; }

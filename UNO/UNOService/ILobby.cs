@@ -44,7 +44,7 @@ namespace UNOService
         bool AnswerInvite(string inviteSender);
 
         /// <summary>
-        /// 
+        /// Start the game for members in hosts party
         /// </summary>
         [OperationContract]
         void StartGame();
