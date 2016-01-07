@@ -42,7 +42,7 @@ namespace UnoClient.Game
 
         public void CardsAssigned(Card[] cards)
         {
-            foreach(Card c in cards)
+            foreach (Card c in cards)
             {
                 player1Hand.addCard(new CardControl(c)); //Add cards to your own hand
             }
