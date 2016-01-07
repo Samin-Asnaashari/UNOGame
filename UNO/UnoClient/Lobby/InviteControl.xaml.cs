@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using UnoClient.proxy;
 
 namespace UnoClient
 {
@@ -24,17 +23,13 @@ namespace UnoClient
         public delegate void ResponseButtonHandler(bool accept, InviteControl inviteControl);
         public ResponseButtonHandler OnButtonPress;
         public string InviteSenderName { get; private set; }
-
-        public Party partyInQuestion;
-
-        public InviteControl(Party p, ResponseButtonHandler buttonPressDelegate)
+        public InviteControl(string inviteSenderName, ResponseButtonHandler buttonPressDelegate)
         {
             InitializeComponent();
 
-            partyInQuestion = p;
-            InviteSenderName = p.Host.UserName;
+            InviteSenderName = inviteSenderName;
             OnButtonPress = buttonPressDelegate;
-            inviteMessage.Text = $"{InviteSenderName} has invited you to their party";
+            inviteMessage.Text = $"{inviteSenderName} has invited you to their party";
         }
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)

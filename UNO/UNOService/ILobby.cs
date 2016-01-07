@@ -21,7 +21,7 @@ namespace UNOService
         /// Party signal sent to be created
         /// </summary>
         [OperationContract]
-        Party CreateParty();
+        void CreateParty();
 
         /// <summary>
         /// Leave the current party
@@ -47,7 +47,7 @@ namespace UNOService
         /// 
         /// </summary>
         [OperationContract]
-        int StartGame();
+        void StartGame();
 
         /// <summary>
         /// message sended in chat
@@ -62,9 +62,6 @@ namespace UNOService
         /// <returns></returns>
         [OperationContract]
         List<Player> GetPartyMembers();
-
-        [OperationContract]
-        Player getPlayerFromName(string username);
 
         /// <summary>
         /// Subscribe to lobby events

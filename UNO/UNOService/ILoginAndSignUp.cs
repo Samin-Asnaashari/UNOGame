@@ -27,7 +27,7 @@ namespace UNOService
         /// <returns></returns>
         [OperationContract]
         StatusCode SignUp(string userName, string password);
-        
+
         /// <summary>
         /// CheckUserName for uniqueness
         /// </summary>

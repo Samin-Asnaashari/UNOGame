@@ -41,7 +41,7 @@ namespace UNOService
         /// </summary>
         /// <param name="hostName"></param>
         [OperationContract(IsOneWay = true)]
-        void ReceiveInvite(Party p);
+        void ReceiveInvite(string hostName);
 
         /// <summary>
         /// Party is full so user receives notification
@@ -63,7 +63,7 @@ namespace UNOService
         [OperationContract]
         void SendChatMessageLobbyCallback(String message);
 
-        [OperationContract(IsOneWay = true)]
-        void NotifyGameStarted(int GameID);
+        [OperationContract]
+        void NotifyGameStarted();
     }
 }

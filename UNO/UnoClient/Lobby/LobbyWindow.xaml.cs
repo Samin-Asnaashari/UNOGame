@@ -23,19 +23,15 @@ namespace UnoClient
     public partial class LobbyWindow : ILobbyCallback
     {
         private LobbyClient LobbyProxy;
-        private PartyControl partyControl;
-        private Party party;
-        private Player self;
+        PartyControl party;
+        string username;
 
         public LobbyWindow(string username, string password)
         {
-            LobbyProxy = new LobbyClient(new InstanceContext(this));
-            party = null;
-            this.self = LobbyProxy.getPlayerFromName(username);
-
-            LobbyProxy.SubscribeToLobbyEvents(username, password);
-
+            this.username = username;
             InitializeComponent();
+            LobbyProxy = new LobbyClient(new InstanceContext(this));
+            LobbyProxy.SubscribeToLobbyEvents(username, password);
 
             labelUsername.Content = "Welcome " + username;
 
@@ -74,7 +70,7 @@ namespace UnoClient
         // Add a player to the party
         public void PlayerAddedToParty(string playerName)
         {
-            partyControl?.AddPlayer(playerName);
+            party?.AddPlayer(playerName);
         }
 
         // Add a player to the online list
@@ -121,53 +117,65 @@ namespace UnoClient
         // Remove player from the party list
         public void PlayerLeftParty(Player player)
         {
-            if (player.UserName == partyControl.getParty().Host.UserName)
+            if (player.UserName == party.Host)
             {
                 hidePartyWindow();
             }
             else
             {
-                partyControl.RemovePlayer(player.UserName);
+                party.RemovePlayer(player.UserName);
             }
         }
 
         // Recieve a message to show in the party
         public void SendChatMessageLobbyCallback(string message)
         {
-            partyControl?.DisplayMessage(message);
+            party?.DisplayMessage(message);
         }
 
-        public void ReceiveInvite(Party p)
+        public void ReceiveInvite(string hostName)
         {
             // Prevent multiple invites from the same person
             foreach (var inviteChild in listInvitations.Children)
             {
                 var inviteControl = (InviteControl)inviteChild;
-                if (inviteControl.InviteSenderName == p.Host.UserName)
+                if (inviteControl.InviteSenderName == hostName)
                     return;
             }
 
-            listInvitations.Children.Add(new InviteControl(p, inviteResponse));
+            listInvitations.Children.Add(new InviteControl(hostName, inviteResponse));
         }
 
         // Show a new party window, host name is used to enable/disable the invite button
         private void hidePartyWindow()
         {
-            partyControl = null;
+            party = null;
             partyGrid.Children.Clear();
             // Enable the player to invite other players (would create a new party)
             inviteButton.IsEnabled = true;
         }
 
         // Show a new party window, host name is used to enable/disable the invite button
-        private void showPartyControl(Party p)
+        private void showPartyWindow(string host)
         {
-            party = p;
-            partyControl = new PartyControl(self, party, ref LobbyProxy);
+            if (host == username)
+            {
+                LobbyProxy.CreateParty();
+            }
+            //party?.Leave() // Maybe need to leave any existing party first, but it shouldn't be needed
+            party = new PartyControl(username, host, leaveParty, LobbyProxy.SendMessageParty);
+            foreach (var player in LobbyProxy.GetPartyMembers())
+            {
+                // Host and player are already in the lobby, due to being required in constructor
+                if (player.UserName != username && player.UserName != host)
+                {
+                    party.AddPlayer(player.UserName);
+                }
+            }
 
-            partyGrid.Children.Add(partyControl);
+            partyGrid.Children.Add(party);
 
-            inviteButton.IsEnabled = (self.UserName == p.Host.UserName);
+            inviteButton.IsEnabled = (username == host);
         }
 
         private void inviteButton_Click(object sender, RoutedEventArgs e)
@@ -189,14 +197,24 @@ namespace UnoClient
 
             if (playersToInvite.Count > 0)
             {
-                if (partyControl == null)
+                if (party == null)
                 {
-                    party = LobbyProxy.CreateParty();
-                    showPartyControl(party);
-
-                    LobbyProxy.SendInvites(playersToInvite.ToArray());
+                    showPartyWindow(username);
                 }
+                LobbyProxy.SendInvites(playersToInvite.ToArray());
             }
+        }
+
+        // Is called from within the PartyControl
+        private void leaveParty(string host)
+        {
+            // Remove lobby window visually
+            partyGrid.Children.Clear();
+            // Tell server we left the party
+            LobbyProxy.LeaveParty();
+            party = null;
+            // Enable the player to invite other players (would create a new party)
+            inviteButton.IsEnabled = true;
         }
 
         // Accept or decline an invitation
@@ -206,9 +224,9 @@ namespace UnoClient
 
             if (accept)
             {
-                if (LobbyProxy.AnswerInvite(sender.partyInQuestion.Host.UserName))
+                if (LobbyProxy.AnswerInvite(sender.InviteSenderName))
                 {
-                    showPartyControl(sender.partyInQuestion);
+                    showPartyWindow(sender.InviteSenderName);
                 }
                 else
                 {
@@ -218,10 +236,12 @@ namespace UnoClient
             }
         }
 
-        public void NotifyGameStarted(int GameID)
+        public void NotifyGameStarted()
         {
-            new Game.GameWindow(self.UserName, GameID).Show();
-            this.Hide();
+            throw new NotImplementedException();
+            //GameWindow Game = new GameWindow(username);
+            //this.Hide();
+            //Game.Show();
         }
     }
 }

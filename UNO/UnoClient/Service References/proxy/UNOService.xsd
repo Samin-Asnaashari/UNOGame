@@ -27,14 +27,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Player" nillable="true" type="tns:Player" />
-  <xs:complexType name="Party">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Host" nillable="true" type="tns:Player" />
-      <xs:element minOccurs="0" name="PartyID" type="xs:int" />
-      <xs:element minOccurs="0" name="Players" nillable="true" type="tns:ArrayOfPlayer" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Party" nillable="true" type="tns:Party" />
   <xs:complexType name="Card">
     <xs:sequence>
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Color" type="q2:CardColor" />

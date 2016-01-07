@@ -173,9 +173,6 @@
     <None Include="Service References\proxy\UnoClient.proxy.Card.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\proxy\UnoClient.proxy.Party.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\proxy\UnoClient.proxy.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

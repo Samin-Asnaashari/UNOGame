@@ -20,29 +20,23 @@ namespace UNOService
             return playersOnline.Where(x => x.ILobbyCallback != currentPlayerCallback).ToList();
         }
 
-        public Player getPlayerFromLobbyContext()
+        /// <summary>
+        /// Get the player from the lobby context. Safe to assume this is never null.
+        /// </summary>
+        /// <returns></returns>
+        private Player getPlayerFromLobbyContext()
         {
             ILobbyCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
 
             return playersOnline.Find(x => x.ILobbyCallback == currentPlayerCallback);
         }
 
-        public Party CreateParty()
+        public void CreateParty()
         {
-            try
-            {
-                Player host = getPlayerFromLobbyContext();
-                Party party = new Party(host);
-
-                parties.Add(party);
-                host.Party = party;
-
-                return party;
-            }
-            catch
-            {
-                return null;
-            }
+            Player host = getPlayerFromLobbyContext();
+            Party party = new Party(host);
+            parties.Add(party);
+            host.Party = party;
         }
 
         public void LeaveParty()
@@ -72,6 +66,7 @@ namespace UNOService
             }
 
             player.Party = null;
+
         }
 
         public void SendInvites(List<string> playerNames)
@@ -98,7 +93,7 @@ namespace UNOService
                 {
                     if (!host.Party.Players.Contains(player)) // Prevent sending invites to players in the party already
                     {
-                        player.ILobbyCallback.ReceiveInvite(host.Party);
+                        player.ILobbyCallback.ReceiveInvite(host.UserName);
                     }
                 }
             }
@@ -131,7 +126,6 @@ namespace UNOService
             return false;
         }
 
-
         private bool tryGetPartyFromHost(string host, out Party foundParty)
         {
             foreach (Party party in parties)
@@ -147,20 +141,20 @@ namespace UNOService
             return false;
         }
 
-        public int StartGame()
+        public void StartGame()
         {
             Player player = getPlayerFromLobbyContext();
 
             if (player.Party == null)
             {
                 Debug.WriteLine($"{player.UserName} tried to start a game but was not in a party");
-                return -1;
+                return;
             }
 
             if (player != player.Party.Host)
             {
                 Debug.WriteLine($"{player.UserName} tried to start a game but was not host");
-                return -1;
+                return;
             }
 
             if (player.Party.Players.Count >= 2 && player.Party.Players.Count <= 4)
@@ -173,19 +167,17 @@ namespace UNOService
                     //everyone will be notified except host who initated this function
                     if (partyMember != player)
                     {
-                        partyMember.ILobbyCallback.NotifyGameStarted(gameID);
+                        partyMember.ILobbyCallback.NotifyGameStarted();
                     }
                 }
-
-                return gameID;
             }
             else
             {
                 Debug.WriteLine($"{player.UserName} tried to start a game but party did not have enough players: {player.Party.Players.Count}");
-                return -1;
+                return;
             }
-        }
 
+        }
 
         public void SendMessageParty(string message)
         {
@@ -206,17 +198,6 @@ namespace UNOService
                     player.ILobbyCallback.SendChatMessageLobbyCallback(message);
                 }
             }
-        }
-
-        public Player getPlayerFromName(string username)
-        {
-            foreach(Player p in playersOnline)
-            {
-                if (p.UserName == username)
-                    return p;
-            }
-
-            return null;
         }
 
         public void SubscribeToLobbyEvents(string username, string password)
