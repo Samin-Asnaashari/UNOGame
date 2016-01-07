@@ -31,8 +31,8 @@ namespace UnoClient
         {
             LobbyProxy = new LobbyClient(new InstanceContext(this));
             party = null;
-            this.self = LobbyProxy.getPlayerFromName(username);
 
+            this.self = LobbyProxy.getPlayerFromName(username);
             LobbyProxy.SubscribeToLobbyEvents(username, password);
 
             InitializeComponent();
@@ -139,14 +139,6 @@ namespace UnoClient
 
         public void ReceiveInvite(Party p)
         {
-            // Prevent multiple invites from the same person
-            foreach (var inviteChild in listInvitations.Children)
-            {
-                var inviteControl = (InviteControl)inviteChild;
-                if (inviteControl.InviteSenderName == p.Host.UserName)
-                    return;
-            }
-
             listInvitations.Children.Add(new InviteControl(p, inviteResponse));
         }
 
@@ -194,7 +186,7 @@ namespace UnoClient
                     party = LobbyProxy.CreateParty();
                     showPartyControl(party);
 
-                    LobbyProxy.SendInvites(playersToInvite.ToArray());
+                    LobbyProxy.SendInvites(party, playersToInvite.ToArray());
                 }
             }
         }
@@ -206,7 +198,7 @@ namespace UnoClient
 
             if (accept)
             {
-                if (LobbyProxy.AnswerInvite(sender.partyInQuestion.Host.UserName))
+                if (LobbyProxy.AnswerInvite(sender.partyInQuestion))
                 {
                     showPartyControl(sender.partyInQuestion);
                 }
@@ -218,10 +210,12 @@ namespace UnoClient
             }
         }
 
-        public void NotifyGameStarted(int GameID)
+        public void NotifyGameStarted(string PartyID)
         {
-            new Game.GameWindow(self.UserName, GameID).Show();
-            this.Hide();
+            throw new NotImplementedException();
+            //GameWindow Game = new GameWindow(username);
+            //this.Hide();
+            //Game.Show();
         }
     }
 }

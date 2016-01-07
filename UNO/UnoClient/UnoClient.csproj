@@ -151,9 +151,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="ClassDiagram11.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -190,13 +187,43 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\proxy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\proxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\proxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\proxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Table.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Images\DeckOfCards.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Send.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Draw2\Blue_Draw2.png" />
+    <Resource Include="Images\Draw2\Green_Draw2.png" />
+    <Resource Include="Images\Draw2\Red_Draw2.png" />
+    <Resource Include="Images\Draw2\Yellow_Draw2.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Numbered_Blue\Blue_0.png" />
@@ -247,44 +274,20 @@
     <Resource Include="Images\Numbered_Yellow\Yellow_9.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\reverse\Blue.png" />
-    <Resource Include="Images\reverse\Green.png" />
-    <Resource Include="Images\reverse\Red.png" />
-    <Resource Include="Images\reverse\Yellow.png" />
+    <Resource Include="Images\Reverse\Blue_Reverse.png" />
+    <Resource Include="Images\Reverse\Green_Reverse.png" />
+    <Resource Include="Images\Reverse\Red_Reverse.png" />
+    <Resource Include="Images\Reverse\Yellow_Reverse.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\skip\Blue.png" />
-    <Resource Include="Images\skip\Green.png" />
-    <Resource Include="Images\skip\Red.png" />
-    <Resource Include="Images\skip\Yellow.png" />
+    <Resource Include="Images\Skip\Blue_Skip.png" />
+    <Resource Include="Images\Skip\Green_Skip.png" />
+    <Resource Include="Images\Skip\Red_Skip.png" />
+    <Resource Include="Images\Skip\Yellow_Skip.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\wild\Draw4Wild.png" />
-    <Resource Include="Images\wild\Wild.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\draw2\Blue.png" />
-    <Resource Include="Images\draw2\Green.png" />
-    <Resource Include="Images\draw2\Red.png" />
-    <Resource Include="Images\draw2\Yellow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\cover.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\proxy\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\proxy\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\proxy\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\proxy\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <Resource Include="Images\Wild\Draw4Wild.png" />
+    <Resource Include="Images\Wild\Wild.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

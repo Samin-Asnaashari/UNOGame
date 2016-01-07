@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -11,7 +10,7 @@ namespace UNOService
 {
     public partial class UnoService : ILobby
     {
-        private List<Party> parties = new List<Party>();
+        private Dictionary<string, Party> parties = new Dictionary<string, Party>();
 
         public List<Player> GetOnlineList()
         {
@@ -29,76 +28,50 @@ namespace UNOService
 
         public Party CreateParty()
         {
-            try
-            {
-                Player host = getPlayerFromLobbyContext();
-                Party party = new Party(host);
+            Player host = getPlayerFromLobbyContext();
+            Party party = new Party(host);
+            parties.Add(host.UserName, party);
+            host.IsInParty = true;
 
-                parties.Add(party);
-                host.Party = party;
-
-                return party;
-            }
-            catch
-            {
-                return null;
-            }
+            return party;
         }
 
-        public void LeaveParty()
+        public void LeaveParty(string host)
         {
+            Party p = getPartyFromName(host);
             Player player = getPlayerFromLobbyContext();
 
-            if (player.Party == null)
+            p.Players.Remove(player);
+            player.IsInParty = false;
+
+            foreach (Player currentPlayer in p.Players)
             {
-                Debug.WriteLine($"{player.UserName} tried to leave a party but was not in a party");
-                return;
+                if (player.UserName != currentPlayer.UserName) //To prevent deadlock
+                    currentPlayer.ILobbyCallback.PlayerLeftParty(player);
             }
 
-            player.Party.Players.Remove(player);
-
-            foreach (Player currentPlayer in player.Party.Players)
+            if (player.UserName == p.Host.UserName) // If host leaves, disband the whole party.
             {
-                currentPlayer.ILobbyCallback.PlayerLeftParty(player);
-            }
-
-            if (player == player.Party.Host) // If host leaves, disband the whole party.
-            {
-                foreach (Player currentPlayer in player.Party.Players)
+                foreach (Player currentPlayer in p.Players)
                 {
-                    currentPlayer.Party = null;
+                    currentPlayer.IsInParty = false;
                 }
-                parties.Remove(player.Party);
-            }
 
-            player.Party = null;
+                parties.Remove(p.Host.UserName);
+            }
         }
 
-        public void SendInvites(List<string> playerNames)
+        public void SendInvites(Party p, List<string> playerNames)
         {
-            Player host = getPlayerFromLobbyContext();
-
-            if (host.Party == null)
-            {
-                Debug.WriteLine($"{host.UserName} tried to invite players but was not in a party");
-                return;
-            }
-
-            if (host.Party.Host != host)
-            {
-                Debug.WriteLine($"{host.UserName} tried to invite players but was not a host");
-                return;
-            }
-
             foreach (string username in playerNames)
             {
                 Player player;
 
                 if (tryGetPlayerFromUsername(username, out player))
                 {
-                    if (!host.Party.Players.Contains(player)) // Prevent sending invites to players in the party already
+                    if (!p.Players.Contains(player)) // Prevent sending invites to players in the party already
                     {
-                        player.ILobbyCallback.ReceiveInvite(host.Party);
+                        player.ILobbyCallback.ReceiveInvite(p);
                     }
                 }
             }
@@ -109,12 +82,12 @@ namespace UNOService
         /// </summary>
         /// <param name="host"></param>
         /// <returns></returns>
-        public bool AnswerInvite(string host)
+        public bool AnswerInvite(Party p)
         {
             Player player = getPlayerFromLobbyContext();
-            Party partyPlayerWasInvitedTo;
+            Party partyPlayerWasInvitedTo = p; //TODO: Fixme
 
-            if (player.Party == null && tryGetPartyFromHost(host, out partyPlayerWasInvitedTo)) // They can only join a party if they are not in one yet.
+            if (player.IsInParty == false && parties.TryGetValue(partyPlayerWasInvitedTo.Host.UserName, out partyPlayerWasInvitedTo)) // They can only join a party if they are not in one yet.
             {
                 if (partyPlayerWasInvitedTo.Players.Count < 4)
                 {
@@ -123,7 +96,7 @@ namespace UNOService
                         partyPlayer.ILobbyCallback.PlayerAddedToParty(player.UserName);
                     }
                     partyPlayerWasInvitedTo.Players.Add(player);
-                    player.Party = partyPlayerWasInvitedTo;
+                    player.IsInParty = true;
                     return true;
                 }
             }
@@ -131,118 +104,86 @@ namespace UNOService
             return false;
         }
 
-
-        private bool tryGetPartyFromHost(string host, out Party foundParty)
+        public void StartGame(string host)
         {
-            foreach (Party party in parties)
+            //maybe need to check authorized Host and players  
+            if (GetPartyMembers(host).Count >= 2 && GetPartyMembers(host).Count <= 4)
             {
-                if (party.Host.UserName.Equals(host))
-                {
-                    foundParty = party;
-                    return true;
-                }
-            }
-
-            foundParty = null;
-            return false;
-        }
-
-        public int StartGame()
-        {
-            Player player = getPlayerFromLobbyContext();
-
-            if (player.Party == null)
-            {
-                Debug.WriteLine($"{player.UserName} tried to start a game but was not in a party");
-                return -1;
-            }
-
-            if (player != player.Party.Host)
-            {
-                Debug.WriteLine($"{player.UserName} tried to start a game but was not host");
-                return -1;
-            }
-
-            if (player.Party.Players.Count >= 2 && player.Party.Players.Count <= 4)
-            {
-                Game.Game Game = new Game.Game(gameID, player.Party.Players);
+                Game.Game Game = new Game.Game(gameID, GetPartyMembers(host));
                 gameID++;
                 games.Add(Game);
-                foreach (Player partyMember in player.Party.Players)
+                for (int i = 1; i < GetPartyMembers(host).Count; i++)
                 {
-                    //everyone will be notified except host who initated this function
-                    if (partyMember != player)
-                    {
-                        partyMember.ILobbyCallback.NotifyGameStarted(gameID);
-                    }
+                    //everyone will be notified except host
+                    GetPartyMembers(host)[i].ILobbyCallback.NotifyGameStarted(host);
                 }
-
-                return gameID;
+                parties.Remove(host);
             }
             else
             {
-                Debug.WriteLine($"{player.UserName} tried to start a game but party did not have enough players: {player.Party.Players.Count}");
-                return -1;
+                throw new Exception("Party needs to be full....");
             }
+
         }
 
-
-        public void SendMessageParty(string message)
+        public void SendMessageParty(string message, string host)
         {
             Player messageSender = getPlayerFromLobbyContext();
 
-            if (messageSender.Party == null)
-            {
-                Debug.WriteLine($"{messageSender.UserName} tried to send a message but was not in a party");
-                return;
-            }
-
             message = $"{messageSender.UserName}: {message}";
 
-            foreach (Player player in messageSender.Party.Players)
+            Party party = getPartyFromName(host);
+
+            foreach (Player player in party.Players)
             {
-                if (player != messageSender)
+                if (player.UserName != messageSender.UserName) //To prevent deadlock
                 {
                     player.ILobbyCallback.SendChatMessageLobbyCallback(message);
                 }
             }
         }
 
-        public Player getPlayerFromName(string username)
+        public List<Player> GetPartyMembers(string host)
         {
-            foreach(Player p in playersOnline)
+            Party party;
+
+            if (parties.TryGetValue(host, out party))
             {
-                if (p.UserName == username)
-                    return p;
+                return party.Players;
             }
 
-            return null;
+            return new List<Player>();
+        }
+
+        public Player getPlayerFromName(string username)
+        {
+            return playersOnline.Find(x => x.UserName == username);
+        }
+
+        public Party getPartyFromName(string host)
+        {
+            if (parties.ContainsKey(host))
+                return parties[host];
+            else
+                return null;
         }
 
         public void SubscribeToLobbyEvents(string username, string password)
         {
             //TODO Validate subscription using password
             ILobbyCallback clientCallbackLobby = OperationContext.Current.GetCallbackChannel<ILobbyCallback>();
-            Player player = playersOnline.Find(x => x.UserName == username);
+            Player player = getPlayerFromName(username);
             player.ILobbyCallback = clientCallbackLobby;
 
-            foreach (var onlinePlayer in playersOnline)
+            foreach (Player onlinePlayer in playersOnline)
             {
-                if (onlinePlayer != player)
-                    onlinePlayer.ILobbyCallback?.PlayerConnected(player); // Added null check because it could fail if 2 people logged in at the same time
+                if (onlinePlayer.UserName != player.UserName) //Prevent deadlock
+                {
+                    if(onlinePlayer.IGameCallback != null) //When the user did not subscribe itself yet (So when two people try to sign in at the same time)
+                        onlinePlayer.ILobbyCallback.PlayerConnected(player);
+                }
             }
         }
 
-        public List<Player> GetPartyMembers()
-        {
-            Player player = getPlayerFromLobbyContext();
-
-            if (player.Party == null)
-            {
-                Debug.WriteLine($"{player.UserName} tried to get party members but was not in a party");
-                return new List<Player>();
-            }
-            return player.Party.Players;
-        }
     }
 }

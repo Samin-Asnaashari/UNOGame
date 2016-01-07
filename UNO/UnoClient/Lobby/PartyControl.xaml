@@ -26,7 +26,7 @@
             <Grid Grid.Row="1" Margin="0,0,10,0">
                 <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
                     <Button x:Name="buttonSendPartyMessage" Click="buttonSendPartyMessage_Click" DockPanel.Dock="Right" Content="Send" Width="75"/>
-                    <TextBox x:Name="textBoxPartyChat" TextWrapping="Wrap" Text=""/>
+                    <TextBox x:Name="textBoxPartyChat" TextWrapping="Wrap" Text="Type a message..."/>
                 </DockPanel>
             </Grid>
         </Grid>
@@ -46,4 +46,5 @@
             </Grid>
         </Grid>
     </Grid>
+
 </UserControl>

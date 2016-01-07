@@ -5,24 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnoClient.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="600">
+             d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ScrollViewer x:Name="sv" Background="#FF9B6C29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewMouseWheel="sv_PreviewMouseWheel" Margin="10">
-            <ScrollViewer.Style>
-                <Style TargetType="{x:Type ScrollViewer}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsHorizontal}" Value="True">
-                            <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
-                            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=Horizontal}" Value="False">
-                            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-                            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ScrollViewer.Style>
-            <WrapPanel x:Name="Hand"/>
-        </ScrollViewer>
+        <ListBox x:Name="Hand" Margin="20" Background="#FF9B6C29" ItemsSource="{Binding cards}">
+        </ListBox>
     </Grid>
 </UserControl>
