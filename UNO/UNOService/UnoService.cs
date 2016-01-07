@@ -286,21 +286,5 @@ namespace UNOService
                     
             }
         }
-
-        /*public void Demo()
-        {
-            List<Player> players = new List<Player>();
-            players.Add(new Player("Rutger"));
-            players.Add(new Player("Test"));
-
-            games.Add(new Game.Game(0, players));
-            games[0].CreateDeck();
-
-            foreach (Player p in games[0].Players)
-            {
-                p.IGameCallback.CardsAssigned(games[0].Deck.GetRange(0, 7));
-                games[0].Deck.RemoveRange(0, 7);
-            }
-        }*/
     }
 }

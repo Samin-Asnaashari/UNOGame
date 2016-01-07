@@ -31,8 +31,8 @@ namespace UnoClient
         {
             LobbyProxy = new LobbyClient(new InstanceContext(this));
             party = null;
-
             this.self = LobbyProxy.getPlayerFromName(username);
+
             LobbyProxy.SubscribeToLobbyEvents(username, password);
 
             InitializeComponent();
@@ -139,6 +139,14 @@ namespace UnoClient
 
         public void ReceiveInvite(Party p)
         {
+            // Prevent multiple invites from the same person
+            foreach (var inviteChild in listInvitations.Children)
+            {
+                var inviteControl = (InviteControl)inviteChild;
+                if (inviteControl.InviteSenderName == p.Host.UserName)
+                    return;
+            }
+
             listInvitations.Children.Add(new InviteControl(p, inviteResponse));
         }
 
@@ -186,7 +194,7 @@ namespace UnoClient
                     party = LobbyProxy.CreateParty();
                     showPartyControl(party);
 
-                    LobbyProxy.SendInvites(party, playersToInvite.ToArray());
+                    LobbyProxy.SendInvites(playersToInvite.ToArray());
                 }
             }
         }
@@ -198,7 +206,7 @@ namespace UnoClient
 
             if (accept)
             {
-                if (LobbyProxy.AnswerInvite(sender.partyInQuestion))
+                if (LobbyProxy.AnswerInvite(sender.partyInQuestion.Host.UserName))
                 {
                     showPartyControl(sender.partyInQuestion);
                 }

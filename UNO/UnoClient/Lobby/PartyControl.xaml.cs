@@ -72,7 +72,7 @@ namespace UnoClient
         // Leave the party and notify the server
         public void Leave()
         {
-            lobbyProxy.LeaveParty(party.Host.UserName);
+            lobbyProxy.LeaveParty();
             ((Panel)this.Parent).Children.Remove(this); //Remove the usercontrol from window
         }
 
@@ -80,7 +80,7 @@ namespace UnoClient
         private void buttonSendPartyMessage_Click(object sender, RoutedEventArgs e)
         {
             listBoxPartyChat.Items.Add($"{self.UserName}: {textBoxPartyChat.Text}");
-            lobbyProxy.SendMessageParty(textBoxPartyChat.Text, party.Host.UserName);
+            lobbyProxy.SendMessageParty(textBoxPartyChat.Text);
 
             textBoxPartyChat.Text = "";
         }
@@ -106,7 +106,7 @@ namespace UnoClient
             buttonStartGame.IsEnabled = false;
             if (party.Host.UserName.Equals(self.UserName))
             {
-                int GameID = lobbyProxy.StartGame(self.UserName);
+                int GameID = lobbyProxy.StartGame();
                 new Game.GameWindow(self.UserName, GameID).Show();
             }
             else

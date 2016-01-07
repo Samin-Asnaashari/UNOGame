@@ -427,12 +427,6 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/GetOnlineList", ReplyAction="http://tempuri.org/ILobby/GetOnlineListResponse")]
         System.Threading.Tasks.Task<UnoClient.proxy.Player[]> GetOnlineListAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/getPlayerFromLobbyContext", ReplyAction="http://tempuri.org/ILobby/getPlayerFromLobbyContextResponse")]
-        UnoClient.proxy.Player getPlayerFromLobbyContext();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/getPlayerFromLobbyContext", ReplyAction="http://tempuri.org/ILobby/getPlayerFromLobbyContextResponse")]
-        System.Threading.Tasks.Task<UnoClient.proxy.Player> getPlayerFromLobbyContextAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/CreateParty", ReplyAction="http://tempuri.org/ILobby/CreatePartyResponse")]
         UnoClient.proxy.Party CreateParty();
         
@@ -440,34 +434,40 @@ namespace UnoClient.proxy {
         System.Threading.Tasks.Task<UnoClient.proxy.Party> CreatePartyAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/LeaveParty", ReplyAction="http://tempuri.org/ILobby/LeavePartyResponse")]
-        void LeaveParty(string host);
+        void LeaveParty();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/LeaveParty", ReplyAction="http://tempuri.org/ILobby/LeavePartyResponse")]
-        System.Threading.Tasks.Task LeavePartyAsync(string host);
+        System.Threading.Tasks.Task LeavePartyAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SendInvites", ReplyAction="http://tempuri.org/ILobby/SendInvitesResponse")]
-        void SendInvites(UnoClient.proxy.Party p, string[] playerNames);
+        void SendInvites(string[] playerNames);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SendInvites", ReplyAction="http://tempuri.org/ILobby/SendInvitesResponse")]
-        System.Threading.Tasks.Task SendInvitesAsync(UnoClient.proxy.Party p, string[] playerNames);
+        System.Threading.Tasks.Task SendInvitesAsync(string[] playerNames);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/AnswerInvite", ReplyAction="http://tempuri.org/ILobby/AnswerInviteResponse")]
-        bool AnswerInvite(UnoClient.proxy.Party p);
+        bool AnswerInvite(string inviteSender);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/AnswerInvite", ReplyAction="http://tempuri.org/ILobby/AnswerInviteResponse")]
-        System.Threading.Tasks.Task<bool> AnswerInviteAsync(UnoClient.proxy.Party p);
+        System.Threading.Tasks.Task<bool> AnswerInviteAsync(string inviteSender);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/StartGame", ReplyAction="http://tempuri.org/ILobby/StartGameResponse")]
-        int StartGame(string host);
+        int StartGame();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/StartGame", ReplyAction="http://tempuri.org/ILobby/StartGameResponse")]
-        System.Threading.Tasks.Task<int> StartGameAsync(string host);
+        System.Threading.Tasks.Task<int> StartGameAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SendMessageParty", ReplyAction="http://tempuri.org/ILobby/SendMessagePartyResponse")]
-        void SendMessageParty(string message, string host);
+        void SendMessageParty(string message);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SendMessageParty", ReplyAction="http://tempuri.org/ILobby/SendMessagePartyResponse")]
-        System.Threading.Tasks.Task SendMessagePartyAsync(string message, string host);
+        System.Threading.Tasks.Task SendMessagePartyAsync(string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/GetPartyMembers", ReplyAction="http://tempuri.org/ILobby/GetPartyMembersResponse")]
+        UnoClient.proxy.Player[] GetPartyMembers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/GetPartyMembers", ReplyAction="http://tempuri.org/ILobby/GetPartyMembersResponse")]
+        System.Threading.Tasks.Task<UnoClient.proxy.Player[]> GetPartyMembersAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/getPlayerFromName", ReplyAction="http://tempuri.org/ILobby/getPlayerFromNameResponse")]
         UnoClient.proxy.Player getPlayerFromName(string username);
@@ -549,14 +549,6 @@ namespace UnoClient.proxy {
             return base.Channel.GetOnlineListAsync();
         }
         
-        public UnoClient.proxy.Player getPlayerFromLobbyContext() {
-            return base.Channel.getPlayerFromLobbyContext();
-        }
-        
-        public System.Threading.Tasks.Task<UnoClient.proxy.Player> getPlayerFromLobbyContextAsync() {
-            return base.Channel.getPlayerFromLobbyContextAsync();
-        }
-        
         public UnoClient.proxy.Party CreateParty() {
             return base.Channel.CreateParty();
         }
@@ -565,44 +557,52 @@ namespace UnoClient.proxy {
             return base.Channel.CreatePartyAsync();
         }
         
-        public void LeaveParty(string host) {
-            base.Channel.LeaveParty(host);
+        public void LeaveParty() {
+            base.Channel.LeaveParty();
         }
         
-        public System.Threading.Tasks.Task LeavePartyAsync(string host) {
-            return base.Channel.LeavePartyAsync(host);
+        public System.Threading.Tasks.Task LeavePartyAsync() {
+            return base.Channel.LeavePartyAsync();
         }
         
-        public void SendInvites(UnoClient.proxy.Party p, string[] playerNames) {
-            base.Channel.SendInvites(p, playerNames);
+        public void SendInvites(string[] playerNames) {
+            base.Channel.SendInvites(playerNames);
         }
         
-        public System.Threading.Tasks.Task SendInvitesAsync(UnoClient.proxy.Party p, string[] playerNames) {
-            return base.Channel.SendInvitesAsync(p, playerNames);
+        public System.Threading.Tasks.Task SendInvitesAsync(string[] playerNames) {
+            return base.Channel.SendInvitesAsync(playerNames);
         }
         
-        public bool AnswerInvite(UnoClient.proxy.Party p) {
-            return base.Channel.AnswerInvite(p);
+        public bool AnswerInvite(string inviteSender) {
+            return base.Channel.AnswerInvite(inviteSender);
         }
         
-        public System.Threading.Tasks.Task<bool> AnswerInviteAsync(UnoClient.proxy.Party p) {
-            return base.Channel.AnswerInviteAsync(p);
+        public System.Threading.Tasks.Task<bool> AnswerInviteAsync(string inviteSender) {
+            return base.Channel.AnswerInviteAsync(inviteSender);
         }
         
-        public int StartGame(string host) {
-            return base.Channel.StartGame(host);
+        public int StartGame() {
+            return base.Channel.StartGame();
         }
         
-        public System.Threading.Tasks.Task<int> StartGameAsync(string host) {
-            return base.Channel.StartGameAsync(host);
+        public System.Threading.Tasks.Task<int> StartGameAsync() {
+            return base.Channel.StartGameAsync();
         }
         
-        public void SendMessageParty(string message, string host) {
-            base.Channel.SendMessageParty(message, host);
+        public void SendMessageParty(string message) {
+            base.Channel.SendMessageParty(message);
         }
         
-        public System.Threading.Tasks.Task SendMessagePartyAsync(string message, string host) {
-            return base.Channel.SendMessagePartyAsync(message, host);
+        public System.Threading.Tasks.Task SendMessagePartyAsync(string message) {
+            return base.Channel.SendMessagePartyAsync(message);
+        }
+        
+        public UnoClient.proxy.Player[] GetPartyMembers() {
+            return base.Channel.GetPartyMembers();
+        }
+        
+        public System.Threading.Tasks.Task<UnoClient.proxy.Player[]> GetPartyMembersAsync() {
+            return base.Channel.GetPartyMembersAsync();
         }
         
         public UnoClient.proxy.Player getPlayerFromName(string username) {
