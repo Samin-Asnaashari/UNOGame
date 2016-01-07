@@ -58,18 +58,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getPlayerFromLobbyContext">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="getPlayerFromLobbyContextResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="getPlayerFromLobbyContextResult" nillable="true" type="q4:Player" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="CreateParty">
     <xs:complexType>
       <xs:sequence />
@@ -78,15 +66,13 @@
   <xs:element name="CreatePartyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="CreatePartyResult" nillable="true" type="q5:Party" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="CreatePartyResult" nillable="true" type="q4:Party" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="LeaveParty">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="host" nillable="true" type="xs:string" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="LeavePartyResponse">
@@ -97,8 +83,7 @@
   <xs:element name="SendInvites">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="p" nillable="true" type="q6:Party" />
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="playerNames" nillable="true" type="q7:ArrayOfstring" />
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="playerNames" nillable="true" type="q5:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -110,7 +95,7 @@
   <xs:element name="AnswerInvite">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="p" nillable="true" type="q8:Party" />
+        <xs:element minOccurs="0" name="inviteSender" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -123,27 +108,38 @@
   </xs:element>
   <xs:element name="StartGame">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="host" nillable="true" type="xs:string" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="StartGameResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StartGameResult" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SendMessageParty">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="host" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SendMessagePartyResponse">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPartyMembers">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPartyMembersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="GetPartyMembersResult" nillable="true" type="q6:ArrayOfPlayer" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="getPlayerFromName">
@@ -156,7 +152,7 @@
   <xs:element name="getPlayerFromNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="getPlayerFromNameResult" nillable="true" type="q9:Player" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="getPlayerFromNameResult" nillable="true" type="q7:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -176,21 +172,21 @@
   <xs:element name="PlayerConnected">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q10:Player" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q8:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PlayerDisconnected">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q11:Player" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q9:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PlayerLeftParty">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q12:Player" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q10:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -204,7 +200,7 @@
   <xs:element name="ReceiveInvite">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="p" nillable="true" type="q13:Party" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="p" nillable="true" type="q11:Party" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -216,7 +212,7 @@
   <xs:element name="ChangePlayerState">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q14:Player" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q12:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -240,13 +236,8 @@
   <xs:element name="NotifyGameStarted">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="PartyID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="GameID" type="xs:int" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="NotifyGameStartedResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveReplay">
@@ -271,7 +262,7 @@
   <xs:element name="takeCardResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="takeCardResult" nillable="true" type="q15:Card" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="takeCardResult" nillable="true" type="q13:Card" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -279,7 +270,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GameID" type="xs:int" />
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="card" nillable="true" type="q16:Card" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="card" nillable="true" type="q14:Card" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -311,23 +302,30 @@
   <xs:element name="CardsAssigned">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q17:ArrayOfCard" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q15:ArrayOfCard" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="CardsAssignedResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="TurnChanged">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q18:Player" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q16:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TurnChangedResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CardPlayed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="c" nillable="true" type="q17:Card" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CardPlayedResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

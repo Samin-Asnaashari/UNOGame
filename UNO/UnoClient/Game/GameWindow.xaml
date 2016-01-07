@@ -1,9 +1,10 @@
-﻿<Window x:Class="UnoClient.Game.GameWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:g="clr-namespace:UnoClient.Game"
+        xmlns:UnoClient="clr-namespace:UnoClient" x:Class="UnoClient.Game.GameWindow"
         Title="Uno Game"
-        Height="710" Width="710">
+        Width="900" Height="675" MinWidth="900" MinHeight="675">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.Background>
             <RadialGradientBrush>
@@ -12,18 +13,31 @@
             </RadialGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="170*"/>
+            <RowDefinition Height="340*"/>
+            <RowDefinition Height="169*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="176*"/>
+            <ColumnDefinition Width="351*"/>
+            <ColumnDefinition Width="175*"/>
         </Grid.ColumnDefinitions>
-        <g:CardHand x:Name="player1Hand" Grid.Row="2" Grid.Column="1"/>
-        <g:CardHand x:Name="player2Hand" Grid.Column="1"/>
-        <g:CardHand x:Name="player3Hand" Grid.Row="1"/>
-            <g:CardHand x:Name="player4Hand" Grid.Row="1" Grid.Column="2"/>
+        <g:CardHand x:Name="player1Hand" IsHorizontal="True" Grid.Row="2" Grid.Column="1"/>
+        <g:CardHand x:Name="player2Hand" IsHorizontal="True" Grid.Column="1"/>
+        <g:CardHand x:Name="player3Hand" IsHorizontal="False" Grid.Row="1"/>
+        <g:CardHand x:Name="player4Hand" IsHorizontal="False" Grid.Row="1" Grid.Column="2"/>
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image x:Name="DeckOfCards" Source="/UnoClient;component/Images/DeckOfCards.png" Margin="50,90" MaxWidth="677" MaxHeight="977" MinWidth="69" MinHeight="100" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="DeckOfCards_MouseDown">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <UnoClient:CardControl x:Name="lastPlayedCard" MaxWidth="677" MaxHeight="977" MinWidth="100" MinHeight="139" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,90"/>
+            </WrapPanel>
+        </Grid>
     </Grid>
 </Window>

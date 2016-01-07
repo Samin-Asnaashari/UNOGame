@@ -13,7 +13,7 @@ namespace UNOService
 		/// The client gets an unspecified amount of cards.
 		/// </summary>
 		/// <param name="cards"></param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void CardsAssigned(List<Card> cards);
 
 		/// <summary>
@@ -23,11 +23,12 @@ namespace UNOService
 		[OperationContract]
 		void TurnChanged(Player player);
 
-		/// <summary>
-		/// Crad that has been played notify other opponents
-		/// </summary>
-		/// <param name="c"></param>
-		void CardPlayed(Card c);
+        /// <summary>
+        /// Crad that has been played notify other opponents
+        /// </summary>
+        /// <param name="c"></param>
+        [OperationContract]
+        void CardPlayed(Card c);
 
         /// <summary>
         /// message sended in chat

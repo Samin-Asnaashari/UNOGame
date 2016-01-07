@@ -18,16 +18,8 @@ namespace UNOService
         List<Player> GetOnlineList();
 
         /// <summary>
-        /// Get the player from the lobby context. Safe to assume this is never null.
-        /// </summary>
-        /// <returns></returns>
-        [OperationContract]
-        Player getPlayerFromLobbyContext();
-
-        /// <summary>
         /// Party signal sent to be created
         /// </summary>
-        /// <returns>Returns the created party</returns>
         [OperationContract]
         Party CreateParty();
 
@@ -35,39 +27,42 @@ namespace UNOService
         /// Leave the current party
         /// </summary>
         [OperationContract]
-        void LeaveParty(string host);
+        void LeaveParty();
 
         /// <summary>
         /// Selected players from online list get sent to the server
         /// </summary>
         /// <param name="players"></param>
         [OperationContract]
-        void SendInvites(Party p, List<string> playerNames);
+        void SendInvites(List<string> playerNames);
 
         /// <summary>
         /// Player answering the invite from the service(host)
         /// </summary>
         /// <param name="answer"></param>
         [OperationContract]
-        bool AnswerInvite(Party p);
+        bool AnswerInvite(string inviteSender);
 
         /// <summary>
         /// 
         /// </summary>
         [OperationContract]
-        void StartGame(string host);
+        int StartGame();
 
         /// <summary>
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>
         [OperationContract]
-        void SendMessageParty(string message, string host);
+        void SendMessageParty(string message);
 
         /// <summary>
-        /// Returns a Player object of the username
+        /// Returns a list of players already in the party
         /// </summary>
-        /// <param name="username"></param>
+        /// <returns></returns>
+        [OperationContract]
+        List<Player> GetPartyMembers();
+
         [OperationContract]
         Player getPlayerFromName(string username);
 

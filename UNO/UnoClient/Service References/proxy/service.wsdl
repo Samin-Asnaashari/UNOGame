@@ -390,52 +390,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_getPlayerFromLobbyContext_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_getPlayerFromLobbyContext_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_CreateParty_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -690,6 +644,52 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_SendMessageParty_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_GetPartyMembers_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_GetPartyMembers_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1057,29 +1057,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_NotifyGameStarted_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -1413,29 +1390,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_CardsAssigned_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_TurnChanged_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -1460,6 +1414,52 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_TurnChanged_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_CardPlayed_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_CardPlayed_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1584,12 +1584,6 @@
   <wsdl:message name="ILobby_GetOnlineList_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetOnlineListResponse" />
   </wsdl:message>
-  <wsdl:message name="ILobby_getPlayerFromLobbyContext_InputMessage">
-    <wsdl:part name="parameters" element="tns:getPlayerFromLobbyContext" />
-  </wsdl:message>
-  <wsdl:message name="ILobby_getPlayerFromLobbyContext_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getPlayerFromLobbyContextResponse" />
-  </wsdl:message>
   <wsdl:message name="ILobby_CreateParty_InputMessage">
     <wsdl:part name="parameters" element="tns:CreateParty" />
   </wsdl:message>
@@ -1625,6 +1619,12 @@
   </wsdl:message>
   <wsdl:message name="ILobby_SendMessageParty_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendMessagePartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILobby_GetPartyMembers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPartyMembers" />
+  </wsdl:message>
+  <wsdl:message name="ILobby_GetPartyMembers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPartyMembersResponse" />
   </wsdl:message>
   <wsdl:message name="ILobby_getPlayerFromName_InputMessage">
     <wsdl:part name="parameters" element="tns:getPlayerFromName" />
@@ -1671,9 +1671,6 @@
   <wsdl:message name="ILobby_NotifyGameStarted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyGameStarted" />
   </wsdl:message>
-  <wsdl:message name="ILobby_NotifyGameStarted_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:NotifyGameStartedResponse" />
-  </wsdl:message>
   <wsdl:message name="IGame_SaveReplay_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveReplay" />
   </wsdl:message>
@@ -1704,14 +1701,17 @@
   <wsdl:message name="IGame_CardsAssigned_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CardsAssigned" />
   </wsdl:message>
-  <wsdl:message name="IGame_CardsAssigned_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:CardsAssignedResponse" />
-  </wsdl:message>
   <wsdl:message name="IGame_TurnChanged_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:TurnChanged" />
   </wsdl:message>
   <wsdl:message name="IGame_TurnChanged_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:TurnChangedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGame_CardPlayed_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CardPlayed" />
+  </wsdl:message>
+  <wsdl:message name="IGame_CardPlayed_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CardPlayedResponse" />
   </wsdl:message>
   <wsdl:message name="IGame_SendMessageGameCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendMessageGameCallback" />
@@ -1741,10 +1741,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ILobby/GetOnlineList" message="tns:ILobby_GetOnlineList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/GetOnlineListResponse" message="tns:ILobby_GetOnlineList_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="getPlayerFromLobbyContext">
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/getPlayerFromLobbyContext" message="tns:ILobby_getPlayerFromLobbyContext_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/getPlayerFromLobbyContextResponse" message="tns:ILobby_getPlayerFromLobbyContext_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="CreateParty">
       <wsdl:input wsaw:Action="http://tempuri.org/ILobby/CreateParty" message="tns:ILobby_CreateParty_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/CreatePartyResponse" message="tns:ILobby_CreateParty_OutputMessage" />
@@ -1768,6 +1764,10 @@
     <wsdl:operation name="SendMessageParty">
       <wsdl:input wsaw:Action="http://tempuri.org/ILobby/SendMessageParty" message="tns:ILobby_SendMessageParty_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/SendMessagePartyResponse" message="tns:ILobby_SendMessageParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPartyMembers">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/GetPartyMembers" message="tns:ILobby_GetPartyMembers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/GetPartyMembersResponse" message="tns:ILobby_GetPartyMembers_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="getPlayerFromName">
       <wsdl:input wsaw:Action="http://tempuri.org/ILobby/getPlayerFromName" message="tns:ILobby_getPlayerFromName_InputMessage" />
@@ -1805,7 +1805,6 @@
     </wsdl:operation>
     <wsdl:operation name="NotifyGameStarted">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/NotifyGameStarted" message="tns:ILobby_NotifyGameStarted_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/NotifyGameStartedResponse" message="tns:ILobby_NotifyGameStarted_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGame">
@@ -1830,11 +1829,14 @@
     </wsdl:operation>
     <wsdl:operation name="CardsAssigned">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/CardsAssigned" message="tns:IGame_CardsAssigned_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IGame/CardsAssignedResponse" message="tns:IGame_CardsAssigned_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="TurnChanged">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/TurnChanged" message="tns:IGame_TurnChanged_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IGame/TurnChangedResponse" message="tns:IGame_TurnChanged_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CardPlayed">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGame/CardPlayed" message="tns:IGame_CardPlayed_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGame/CardPlayedResponse" message="tns:IGame_CardPlayed_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendMessageGameCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/SendMessageGameCallback" message="tns:IGame_SendMessageGameCallback_OutputCallbackMessage" />
@@ -1892,17 +1894,6 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_GetOnlineList_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getPlayerFromLobbyContext">
-      <soap12:operation soapAction="http://tempuri.org/ILobby/getPlayerFromLobbyContext" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_getPlayerFromLobbyContext_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_getPlayerFromLobbyContext_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -1969,6 +1960,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_SendMessageParty_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartyMembers">
+      <soap12:operation soapAction="http://tempuri.org/ILobby/GetPartyMembers" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_GetPartyMembers_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_GetPartyMembers_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -2060,10 +2062,6 @@
     </wsdl:operation>
     <wsdl:operation name="NotifyGameStarted">
       <soap12:operation soapAction="http://tempuri.org/ILobby/NotifyGameStarted" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_NotifyGameStarted_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_NotifyGameStarted_output_policy" />
         <soap12:body use="literal" />
@@ -2126,10 +2124,6 @@
     </wsdl:operation>
     <wsdl:operation name="CardsAssigned">
       <soap12:operation soapAction="http://tempuri.org/IGame/CardsAssigned" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_CardsAssigned_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_CardsAssigned_output_policy" />
         <soap12:body use="literal" />
@@ -2143,6 +2137,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_TurnChanged_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CardPlayed">
+      <soap12:operation soapAction="http://tempuri.org/IGame/CardPlayed" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_CardPlayed_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_CardPlayed_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

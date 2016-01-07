@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using System.ServiceModel;
 
 namespace UNOService.Game
 {
@@ -12,7 +13,10 @@ namespace UNOService.Game
     {
         [DataMember]
         public int GameID { get; set; }
+
+        [DataMember]
         public List<Player> Players { get; set; }
+
         public List<Card> Deck { get; set; }
         public List<Card> PlayedCards { get; set; }
         public Direction Direction { get; set; }
@@ -22,8 +26,13 @@ namespace UNOService.Game
         public Game(int gameID, List<Player> players)
         {
             this.GameID = gameID;
-            this.Direction = Direction.clockwise;
             this.Players = players;
+
+            this.Deck = new List<Card>();
+            this.PlayedCards = new List<Card>();
+
+            this.Direction = Direction.clockwise;
+            
             CreateDeck();
         }
 

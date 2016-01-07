@@ -21,29 +21,29 @@ namespace UnoClient
     /// </summary>
     public partial class PartyControl : UserControl
     {
-        private Player player;
+        private Player self;
         private Party party;
 
         private LobbyClient lobbyProxy;
         
         public PartyControl(Player player, Party party, ref LobbyClient lobbyProxy)
         {
-            this.player = player;
+            this.self = player;
             this.party = party;
             this.lobbyProxy = lobbyProxy;
 
             InitializeComponent();
 
-            if (party.Host.Equals(player))
+            if (party.Host.UserName.Equals(player.UserName))
                 buttonStartGame.Visibility = Visibility.Visible;
-            else
-                AddPlayer(player.UserName);
+
+            AddPlayer(player.UserName);
         }
 
         // Only host can use the start game button, when at least 2 people are in the lobby
         private void updateStartGameButton()
         {
-            if (party.Host.Equals(player))
+            if (party.Host.UserName.Equals(self.UserName))
             {
                 buttonStartGame.IsEnabled = (listBoxPlayersInParty.Items.Count >= 2);
             }
@@ -72,15 +72,15 @@ namespace UnoClient
         // Leave the party and notify the server
         public void Leave()
         {
-            lobbyProxy.LeaveParty(party.Host.UserName);
+            lobbyProxy.LeaveParty();
             ((Panel)this.Parent).Children.Remove(this); //Remove the usercontrol from window
         }
 
         // Send a message
         private void buttonSendPartyMessage_Click(object sender, RoutedEventArgs e)
         {
-            listBoxPartyChat.Items.Add($"{player.UserName}: {textBoxPartyChat.Text}");
-            lobbyProxy.SendMessageParty(textBoxPartyChat.Text, party.Host.UserName);
+            listBoxPartyChat.Items.Add($"{self.UserName}: {textBoxPartyChat.Text}");
+            lobbyProxy.SendMessageParty(textBoxPartyChat.Text);
 
             textBoxPartyChat.Text = "";
         }
@@ -100,6 +100,19 @@ namespace UnoClient
         {
             party = p;
         }
-    }
 
+        private void buttonStartGame_Click(object sender, RoutedEventArgs e)
+        {
+            buttonStartGame.IsEnabled = false;
+            if (party.Host.UserName.Equals(self.UserName))
+            {
+                int GameID = lobbyProxy.StartGame();
+                new Game.GameWindow(self.UserName, GameID).Show();
+            }
+            else
+            {
+                buttonStartGame.Visibility = Visibility.Collapsed;
+            }
+        }
+    }
 }

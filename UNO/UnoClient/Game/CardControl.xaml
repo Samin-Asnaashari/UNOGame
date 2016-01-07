@@ -5,10 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnoClient"
              mc:Ignorable="d" 
-             Width="45" Height="60">
-            
-    <Grid Background="AliceBlue">
-        <Image x:Name="image" />
+             MinWidth="71" MinHeight="100" MaxWidth="676" MaxHeight="940" Margin="2,5">
+
+    <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="100" MinHeight="139" MaxWidth="676" MaxHeight="940">
+        <Image x:Name="image" Source="/UnoClient;component/Images/cover.png" Width="Auto" Height="Auto">
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+                </Style>
+            </Image.Style>
+        </Image>
     </Grid>
-    
 </UserControl>

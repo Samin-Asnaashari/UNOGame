@@ -22,8 +22,13 @@ namespace UNOService
         [DataMember]
         public Player Host
         {
-            get { return Players[0]; }
-            private set { }
+            get
+            {
+                if (Players.Count > 0)
+                    return Players[0];
+                else
+                    return null;
+            }
         }
 
         [DataMember]

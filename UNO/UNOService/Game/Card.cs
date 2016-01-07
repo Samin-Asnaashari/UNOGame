@@ -26,8 +26,6 @@ namespace UNOService
             this.Type = Type;
             this.Color = Color;
             this.Number = Number;
-        }
-
-
+        }       
     }
 }

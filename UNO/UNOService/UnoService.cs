@@ -32,6 +32,8 @@ namespace UNOService
                     loginSuccessful = databaseHandler.CheckLogin(userName, password);
                     if (loginSuccessful)
                         CreatePlayer(userName);
+                    else
+                        return new StatusCode(-21); //Credentials incorrect
                 }
                 else
                 {
@@ -108,7 +110,11 @@ namespace UNOService
 
         public Card takeCard(int GameID)
         {
-            return FindGame(GameID).Deck[0];
+            Game.Game game = FindGame(GameID);
+            Card c = game.Deck[0];
+            game.Deck.RemoveAt(0);
+
+            return c;
         }
 
         public void playCard(int GameID, Card card)
@@ -121,10 +127,18 @@ namespace UNOService
             //add to the last card of the deck of card (when a card assign to the player will be deleted from game deck of card)
             // if is it is  last card player won 
             //if after this play only one left another methode will take care of said uno condition
-            Player PlayerWhoWantsToPlaACard = getPlayerFromGameContext();
-                    FindGame(GameID).PlayedCards.Add(card);
-                    PlayerWhoWantsToPlaACard.Remove(card);
-                    FindGame(GameID).Deck.Add(card);
+            Game.Game game = FindGame(GameID);
+
+            Player PlayerWhoWantsToPlayACard = getPlayerFromGameContext();
+            game.PlayedCards.Add(card);
+            PlayerWhoWantsToPlayACard.Remove(card);
+            game.Deck.Add(card);
+
+            foreach(Player p in game.Players)
+            {
+                if(p.UserName != PlayerWhoWantsToPlayACard.UserName) //Prevent deadlock
+                    p.IGameCallback.CardPlayed(card);
+            }
         }
 
         /// <summary>
@@ -251,15 +265,17 @@ namespace UNOService
             }
         }
 
-        public void SubscribeToGameEvents(string userName,int gameID)
+        public void SubscribeToGameEvents(string userName, int gameID)
         {
             IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
-            Player player = games.Find(x => x.GameID == gameID).Players.Find(y => y.UserName.CompareTo(userName) == 0);
-            player.IGameCallback = clientCallbackGame;
+            Game.Game game = games.Find(x => x.GameID == gameID);
 
-            foreach (var item in games.Find(x => x.GameID == gameID).Players)
+            Player self = game.Players.Find(y => y.UserName.CompareTo(userName) == 0);
+            self.IGameCallback = clientCallbackGame;
+
+            foreach (Player player in game.Players)
             {
-                if (item != player)
+                if (player.UserName != self.UserName)
                 {
                     //item.IGameCallback.CardsAssigned();
                     //item.IGameCallback.SendMessageGameCallback();  
@@ -270,6 +286,5 @@ namespace UNOService
                     
             }
         }
-
     }
 }

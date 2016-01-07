@@ -29,11 +29,12 @@ namespace UnoClient
 
         public InviteControl(Party p, ResponseButtonHandler buttonPressDelegate)
         {
+            InitializeComponent();
+
             partyInQuestion = p;
             InviteSenderName = p.Host.UserName;
             OnButtonPress = buttonPressDelegate;
-            InitializeComponent();
-            inviteMessage.Text = $"Join {InviteSenderName}'s party?";
+            inviteMessage.Text = $"{InviteSenderName} has invited you to their party";
         }
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)

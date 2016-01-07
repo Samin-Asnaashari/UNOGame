@@ -23,28 +23,29 @@ namespace UnoClient.Game
     public partial class GameWindow : proxy.IGameCallback
     {
         private GameClient GameProxy;
-        private string username;
 
-        public GameWindow()
-        {
-            Card c = new Card();
-            player1Hand.addCard(new CardControl(
-        }
+        private string username;
+        private int GameID;
 
         // TODO Authenticate using password
-        public GameWindow(string username,int GameID)
+        public GameWindow(string username, int GameID)
         {
             this.username = username;
-            InitializeComponent();
-            GameProxy = new GameClient(new InstanceContext(this));
-            GameProxy.SubscribeToGameEvents(username,GameID);
+            this.GameID = GameID;
 
+            GameProxy = new GameClient(new InstanceContext(this));
+            GameProxy.SubscribeToGameEvents(username, GameID);
+
+            InitializeComponent();
             //TODO: position the players
         }
 
         public void CardsAssigned(Card[] cards)
         {
-            throw new NotImplementedException();
+            foreach(Card c in cards)
+            {
+                player1Hand.addCard(new CardControl(c)); //Add cards to your own hand
+            }
         }
 
         public void NotifyPlayerLeft(string userName)
@@ -65,6 +66,26 @@ namespace UnoClient.Game
         public void NotifyOpponentsOfPlayerPunished(string userName)
         {
             throw new NotImplementedException();
+        }
+
+        private async void DeckOfCards_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Card takenCard = await GameProxy.takeCardAsync(GameID);
+            player1Hand.addCard(new CardControl(takenCard));
+        }
+
+        public void changePlayedCard(CardControl cardControl)
+        {
+            lastPlayedCard = cardControl;
+            lastPlayedCard.UpdateLayout();
+            Card card = cardControl.getCard();
+
+            GameProxy.playCardAsync(GameID, card);
+        }
+
+        public void CardPlayed(Card c)
+        {
+            lastPlayedCard = new CardControl(c);
         }
     }
 }
