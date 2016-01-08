@@ -22,10 +22,10 @@ namespace UnoClient.Game
     /// </summary>
     public partial class GameWindow : proxy.IGameCallback
     {
-        private GameClient GameProxy;
+        public GameClient GameProxy;
 
         private string username;
-        private int GameID;
+        public int GameID;
 
         // TODO Authenticate using password
         public GameWindow(string username, string password)
@@ -82,7 +82,7 @@ namespace UnoClient.Game
 
         public void CardPlayed(Card c)
         {
-            lastPlayedCard = new CardControl(c);
+            lastPlayedCard.Content = new CardControl(c);
         }
 
         private void buttonSendMessage_Click(object sender, RoutedEventArgs e)

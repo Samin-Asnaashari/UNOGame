@@ -10,6 +10,9 @@ namespace UNOService
 {
     partial class UnoService : IGame
     {
+        private delegate void AllPlayersConnectedEventHandler(object sender, Game.Game game);
+        private event AllPlayersConnectedEventHandler AllPlayersConnected;
+
         public void playCard(int GameID, Card card)
         {
             //get player 
@@ -37,9 +40,21 @@ namespace UNOService
         // TODO use password
         public void SubscribeToGameEvents(string userName, int gameID)
         {
-            Player player = playersOnline.Find(x => x.UserName == userName);
-            player.IGameCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
-            AssignCards(getPlayerFromGameContext(), 7);
+            IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
+            Game.Game game = games.Find(x => x.GameID == gameID);
+
+            Player self = game.Players.Find(y => y.UserName.CompareTo(userName) == 0);
+            self.IGameCallback = clientCallbackGame;
+
+            foreach (Player player in game.Players)
+            {
+                if (player.IGameCallback == null)
+                    return;
+            }
+
+            //Every player now has a game callback, so we can start sending events            
+            if (AllPlayersConnected != null)
+                AllPlayersConnected(this, game);
         }
 
         public void AssignCards(Player player, int numberofcardtoassign)
@@ -55,29 +70,6 @@ namespace UNOService
 
             getPlayerFromGameContext().IGameCallback.CardsAssigned(cards);
 
-        }
-
-
-        private void AllPlayersConnected(object sender, Game.Game game)
-        {
-            game.CreateDeck();
-            game.Shuffle();
-
-            foreach (Player player in game.Players)
-            {
-                List<Card> hand = game.Deck.GetRange(0, 7);
-                player.IGameCallback.CardsAssigned(hand);
-                game.Deck.RemoveRange(0, 7); //Remove from deck
-            }
-
-            game.PlayedCards.Add(game.Deck.First());
-            game.Deck.RemoveAt(0); //Remove next card from deck
-
-            foreach (Player player in game.Players)
-            {
-                player.IGameCallback.CardPlayed(game.PlayedCards.First());
-                player.IGameCallback.TurnChanged(game.CurrentPlayer); //Notify that the host is the first player to start
-            }
         }
 
         public void SaveReplay(int gameID)
@@ -106,8 +98,9 @@ namespace UNOService
                     if (player != playerWhoCalledUno)
                     {
                         if (player.Hand.Count == 1 && player.UnoSaid == false)
-                        {
-                            //player.IGameCallback.CardsAssigned(// 2 cards from pile)
+                        {           
+                            player.UnoSaid = true;
+                            //player.IGameCallback.CardsAssigned(
                         }
                     }
                 }
@@ -138,7 +131,6 @@ namespace UNOService
                 }
             }
             return OrderedPlayerPositions;
-
         }
 
 
@@ -188,6 +180,28 @@ namespace UNOService
             IGameCallback currentPlayerCallback = OperationContext.Current.GetCallbackChannel<IGameCallback>();
 
             return playersOnline.Find(x => x.IGameCallback == currentPlayerCallback);
+        }
+
+        private void UnoServiceGame_AllPlayersConnected(object sender, Game.Game game)
+        {
+            game.CreateDeck();
+            game.Shuffle();
+
+            foreach (Player player in game.Players)
+            {
+                List<Card> hand = game.Deck.GetRange(0, 7);
+                player.IGameCallback.CardsAssigned(hand);
+                game.Deck.RemoveRange(0, 7); //Remove from deck
+            }
+
+            game.PlayedCards.Add(game.Deck.First());
+            game.Deck.RemoveAt(0); //Remove next card from deck
+
+            foreach (Player player in game.Players)
+            {
+                player.IGameCallback.CardPlayed(game.PlayedCards.First());
+                player.IGameCallback.TurnChanged(game.CurrentPlayer); //Notify that the host is the first player to start
+            }
         }
     }
 }
