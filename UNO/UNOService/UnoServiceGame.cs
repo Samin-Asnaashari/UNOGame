@@ -87,7 +87,15 @@ namespace UNOService
 
         private void Uno(Player playerWhoCalledUno, Game.Game game)
         {
-            if (playerWhoCalledUno == game.PreviousPlayer) // Player called Uno on himself
+            //Hi coen I dont want to change your code or delete hahah like someone did to mine so I wrote what I think is missing or incorrect.
+            //so as we know players can call uno on the playerWhoShouldCallUNO only while the NEXT(player next to playerWhoShouldCallUNO depending on the current direcion of the game) player turn is not played.
+            //So this check is missing here otherwise at the next next player turn(or any other turn hope you understand) anyone can still call uno on all(foreach loop) the players
+            //that has one card in their hand and they will get punished at the moment. And also the playerWhoShouldCallUNO can also say uno at the next next player turn and be safe.
+            //The method should be made from a perspective that you dont know which player is gonna call uno first but I think you know this. 
+            //And the game.currentPlayer should match, at the moment of saying Uno or calling UNO on somebody, the player next to the playerWhoShouldCallUNO depending on the current direcion of the game.
+            //(Thats why my method calculatePlayerPositions that calculates positions depending on the player who is saying or calling Uno)
+
+            if (playerWhoCalledUno == game.PreviousPlayer && playerWhoCalledUno.UnoSaid == false) // Player called Uno on himself // added that piece just to not double put true if already true(if playerWhoShouldCallUNO say uno two times)
             {
                 playerWhoCalledUno.UnoSaid = true;
             }
@@ -148,7 +156,7 @@ namespace UNOService
 
             foreach (Player currentPlayer in game.Players)
             {
-                if (currentPlayer != player)
+                if (currentPlayer != player)//how is the player who is sending the message gonna see the message in the chat?Handled in the client?
                 {
                     currentPlayer.IGameCallback.SendMessageGameCallback(message);
                 }

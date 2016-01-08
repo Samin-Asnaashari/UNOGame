@@ -33,6 +33,8 @@ namespace UnoClient
             GameProxy = new GameClient(new InstanceContext(this));
             GameProxy.SubscribeToGameEvents(username, GameID);
 
+
+
             //TODO: position the players
         }
 
