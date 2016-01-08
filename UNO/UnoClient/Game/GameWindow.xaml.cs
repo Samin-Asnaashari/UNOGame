@@ -22,7 +22,7 @@ namespace UnoClient.Game
     /// </summary>
     public partial class GameWindow : proxy.IGameCallback
     {
-        private GameClient GameProxy;
+        public GameClient GameProxy;
 
         private string username;
         private int GameID;

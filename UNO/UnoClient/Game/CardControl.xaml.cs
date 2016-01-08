@@ -60,5 +60,10 @@ namespace UnoClient
             InitializeComponent();
             image.Source = new BitmapImage(uriSource);
         }
+
+        public Card getCard()
+        {
+            return card;
+        }
     }
 }

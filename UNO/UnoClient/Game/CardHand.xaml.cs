@@ -31,7 +31,14 @@ namespace UnoClient.Game
 
         public void addCard(CardControl c)
         {
+            c.AddHandler(MouseUpEvent, new RoutedEventHandler(CardClicked));
             Hand.Children.Insert(0, c);
+        }
+
+        private void CardClicked(object sender, RoutedEventArgs e)
+        {
+            CardControl cardControl = ((CardControl)sender);
+            ((GameWindow)Window.GetWindow(this)).GameProxy.playCard(cardControl.getCard());
         }
 
         private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
