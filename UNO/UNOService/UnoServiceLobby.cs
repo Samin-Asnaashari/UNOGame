@@ -107,15 +107,20 @@ namespace UNOService
         public int StartGame(string host)
         {
             //maybe need to check authorized Host and players  
-            if (GetPartyMembers(host).Count >= 2 && GetPartyMembers(host).Count <= 4)
+            List<Player> partyMembers = GetPartyMembers(host);
+
+            if (partyMembers.Count >= 2 && partyMembers.Count <= 4)
             {
                 gameID++;
-                Game.Game Game = new Game.Game(gameID, GetPartyMembers(host));
+                Game.Game Game = new Game.Game(gameID, partyMembers);
                 games.Add(Game);
 
-                for (int i = 1; i < GetPartyMembers(host).Count; i++) //Skip the host to prevent deadlock
+                partyMembers[0].GameID = gameID;
+
+                for (int i = 1; i < partyMembers.Count; i++) //Skip the host to prevent deadlock
                 {
-                    GetPartyMembers(host)[i].ILobbyCallback.NotifyGameStarted(gameID);
+                    partyMembers[i].ILobbyCallback.NotifyGameStarted(gameID);
+                    partyMembers[i].GameID = gameID;
                 }
 
                 parties.Remove(host);

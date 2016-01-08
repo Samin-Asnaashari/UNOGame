@@ -60,7 +60,8 @@ namespace UnoClient.Game
 
         public void SendMessageGameCallback(string message)
         {
-            throw new NotImplementedException();
+            chat.Items.Add(message);
+            chat.ScrollIntoView(chat.Items[chat.Items.Count - 1]); //Scroll to bottom
         }
 
         public void TurnChanged(Player player)
@@ -82,6 +83,14 @@ namespace UnoClient.Game
         public void CardPlayed(Card c)
         {
             lastPlayedCard = new CardControl(c);
+        }
+
+        private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
+        {
+            chat.Items.Add($"{username}: {chatMessage.Text}");
+            GameProxy.SendMessageGame(chatMessage.Text);
+
+            chatMessage.Text = "";
         }
     }
 }

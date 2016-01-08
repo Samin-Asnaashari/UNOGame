@@ -45,12 +45,12 @@
         <Grid Grid.Row="2" Grid.Column="3" Margin="5,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
             
             <ListBox x:Name="chat" HorizontalAlignment="Stretch" Grid.Row="0"/>
             <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Grid.Row="1">
-                <Button x:Name="buttonSendMessage" DockPanel.Dock="Right" Content="Send" Width="75"/>
+                <Button x:Name="buttonSendMessage" DockPanel.Dock="Right" Content="Send" Width="75" Click="buttonSendMessage_Click"/>
                 <TextBox x:Name="chatMessage" TextWrapping="Wrap"/>
             </DockPanel>
         </Grid>

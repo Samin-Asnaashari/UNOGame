@@ -200,71 +200,40 @@ namespace UNOService
         public void SendMessageGame(string message)
         {
             Player player = getPlayerFromGameContext();
-            if (player != null)
+            Game.Game game = games.Find(x => x.GameID == player.GameID);
+
+            if (message.ToLower().Contains("uno"))
             {
-                Game.Game game = games.Find(x => x.GameID == player.GameID);
+                Uno(player, game);
+            }
 
-                bool messageAlreadySent = false;
+            message = $"{player.UserName}: {message}";
 
-                if (message.ToLower().IndexOf("uno", 0, 3) == 0 && message.Length == 3)//checking for uno
+            foreach (Player currentPlayer in game.Players)
+            {
+                if (currentPlayer != player)
                 {
-                    if (!game.UNOsaidAlready)
-                    {
-                        game.UNOsaidAlready = true;//make sure that only one 'saying uno' at a time
-
-                        List<Player> OrderedPlayers = CalculateGamePlayerPositions(player, game);
-
-                        if (OrderedPlayers[0].Hand.Count == 1 && game.TurnToPlay.UserName == OrderedPlayers[1].UserName && !OrderedPlayers[0].UnoSaid)
-                        {
-                            OrderedPlayers[0].UnoSaid = true; //put this variable also true if after next player turn nobody said uno in turn to play and make it untrue if player has one card but has to draw a card
-                            foreach (var item3 in game.Players)//send everybody the text message and maybe also saying that he is save from punishment cause he was the first
-                            {
-                                item3.IGameCallback.SendMessageGameCallback(message);
-                            }
-                            messageAlreadySent = true;
-                        }
-                        else if (OrderedPlayers[0].UserName == game.TurnToPlay.UserName && OrderedPlayers[2].Hand.Count == 1 && !OrderedPlayers[2].UnoSaid)
-                        {
-                            OrderedPlayers[2].IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck and punish the player //also a method needed to notify all other players for this change
-                            OrderedPlayers[2].AddCard(new List<Card>());//same cards that have been sent
-                            foreach (var item3 in game.Players)
-                            {
-                                item3.IGameCallback.SendMessageGameCallback(message);
-                                item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[2].UserName);
-                            }
-                            messageAlreadySent = true;
-                        }
-                        else if (OrderedPlayers[2].UserName == game.TurnToPlay.UserName && OrderedPlayers[3].Hand.Count == 1 && !OrderedPlayers[3].UnoSaid)
-                        {
-                            OrderedPlayers[3].IGameCallback.CardsAssigned(new List<Card>());//draw two cards from deck and punish the player //also a method needed to notify all other players for this change
-                            OrderedPlayers[3].AddCard(new List<Card>());//same cards that have been sent
-                            foreach (var item3 in game.Players)
-                            {
-                                item3.IGameCallback.SendMessageGameCallback(message);
-                                item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[3].UserName);
-                            }
-                            messageAlreadySent = true;
-                        }
-                        else if (OrderedPlayers[3].UserName == game.TurnToPlay.UserName && OrderedPlayers[2].Hand.Count == 1 && !OrderedPlayers[2].UnoSaid)
-                        {
-                            OrderedPlayers[2].IGameCallback.CardsAssigned(new List<Card>());
-                            OrderedPlayers[3].AddCard(new List<Card>());//same cards that have been sent
-                            foreach (var item3 in game.Players)
-                            {
-                                item3.IGameCallback.SendMessageGameCallback(message);
-                                item3.IGameCallback.NotifyOpponentsOfPlayerPunished(OrderedPlayers[2].UserName);
-                            }
-                            messageAlreadySent = true;
-                        }
-                        game.UNOsaidAlready = false;
-                    }
+                    currentPlayer.IGameCallback.SendMessageGameCallback(message);
                 }
+            }
+        }
 
-                if (!messageAlreadySent)
+        private void Uno(Player playerWhoCalledUno, Game.Game game)
+        {
+            if (playerWhoCalledUno == game.PreviousPlayer) // Player called Uno on himself
+            {
+                playerWhoCalledUno.UnoSafe = true;
+            }
+            else // Call Uno on other players
+            {
+                foreach (Player player in game.Players)
                 {
-                    foreach (var item3 in game.Players)
+                    if (player != playerWhoCalledUno)
                     {
-                        item3.IGameCallback.SendMessageGameCallback(message);
+                        if (player.Hand.Count == 1 && player.UnoSafe == false)
+                        {
+                            //player.IGameCallback.CardsAssigned(// 2 cards from pile)
+                        }
                     }
                 }
             }
@@ -294,8 +263,6 @@ namespace UNOService
             game.CreateDeck();
             game.Shuffle();
 
-            game.TurnToPlay = game.Players[0];
-
             foreach (Player player in game.Players)
             {
                 List<Card> hand = game.Deck.GetRange(0, 7);
@@ -309,7 +276,7 @@ namespace UNOService
             foreach (Player player in game.Players)
             {
                 player.IGameCallback.CardPlayed(game.PlayedCards.First());
-                player.IGameCallback.TurnChanged(game.TurnToPlay); //Notify that the host is the first player to start
+                player.IGameCallback.TurnChanged(game.CurrentPlayer); //Notify that the host is the first player to start
             }
         }
     }

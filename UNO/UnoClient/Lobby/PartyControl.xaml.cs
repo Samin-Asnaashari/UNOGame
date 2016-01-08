@@ -89,6 +89,7 @@ namespace UnoClient
         public void DisplayMessage(string message)
         {
             listBoxPartyChat.Items.Add(message);
+            listBoxPartyChat.ScrollIntoView(listBoxPartyChat.Items[listBoxPartyChat.Items.Count - 1]); //Scroll to bottom
         }
 
         public Party getParty()

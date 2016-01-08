@@ -21,8 +21,7 @@ namespace UNOService
         public IGameCallback IGameCallback { get; set; }
         public int GameID { get; set; }
         public bool IsInParty { get; set; }   
-        public bool UnoSaid { get; set; }
-
+        public bool UnoSafe { get; set; }
 
         public Player(String username)
         {
