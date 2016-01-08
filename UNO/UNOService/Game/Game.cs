@@ -19,10 +19,10 @@ namespace UNOService.Game
 
         public Direction Direction { get; set; }
 
-        private int PreviousTurn { get; set; }
-        private int CurrentTurn { get; set; }
-        public Player CurrentPlayer { get { return Players[CurrentTurn]; } }
-        public Player PreviousPlayer { get { return Players[PreviousTurn]; } }
+        private int previousTurn { get; set; }
+        private int currentTurn { get; set; }
+        public Player CurrentPlayer { get { return Players[currentTurn]; } }
+        public Player PreviousPlayer { get { return Players[previousTurn]; } }
 
 
         public Game(int gameID, List<Player> players)
@@ -99,20 +99,20 @@ namespace UNOService.Game
 
         public void EndTurn()
         {
-            CurrentPlayer.UnoSaid = true; // Make player immune to uno after next turn has started
+            previousTurn = currentTurn;
+            PreviousPlayer.UnoSaid = true; // Make player immune to uno after next turn has started
 
-            PreviousTurn = CurrentTurn;
             if (Direction == Direction.clockwise)
             {
-                CurrentTurn = (CurrentTurn + 1) % Players.Count();
+                currentTurn = (currentTurn + 1) % Players.Count();
             }
             else
             {
-                CurrentTurn--;
+                currentTurn--;
 
-                if (CurrentTurn < 0)
+                if (currentTurn < 0)
                 {
-                    CurrentTurn += Players.Count();
+                    currentTurn += Players.Count();
                 }
             }
 
