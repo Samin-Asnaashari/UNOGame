@@ -31,11 +31,10 @@ namespace UnoClient
 
         public CardControl(Card c)
         {
-            this.Cursor = Cursors.Hand;
             card = c;
             picturePath = "/Images/";
-
-            switch (card.Type)
+            
+            switch(card.Type)
             {
                 case CardType.normal:
                     picturePath += "Numbered_" + card.Color.ToString() + "/";
@@ -53,18 +52,13 @@ namespace UnoClient
                 default:
                     picturePath += card.Type.ToString() + "/";
                     picturePath += card.Color.ToString() + ".png";
-                    break;
+                        break;
             }
 
             Uri uriSource = new Uri(@"/UnoClient;component" + picturePath, UriKind.Relative);
 
             InitializeComponent();
             image.Source = new BitmapImage(uriSource);
-        }
-
-        public Card getCard()
-        {
-            return card;
         }
     }
 }

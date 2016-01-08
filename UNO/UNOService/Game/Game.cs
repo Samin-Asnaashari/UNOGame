@@ -12,40 +12,40 @@ namespace UNOService.Game
     public class Game
     {
         [DataMember]
-        public int GameID { get; private set; }
-
-        [DataMember]
+        public int GameID { get; set; }
         public List<Player> Players { get; set; }
-
         public List<Card> Deck { get; set; }
         public List<Card> PlayedCards { get; set; }
+
         public Direction Direction { get; set; }
-        public bool UNOsaidAlready { get; set; }
-        public Player TurnToPlay { get; set; }
+
+        private int PreviousTurn { get; set; }
+        private int CurrentTurn { get; set; }
+        public Player CurrentPlayer { get { return Players[CurrentTurn]; } }
+        public Player PreviousPlayer { get { return Players[PreviousTurn]; } }
+
 
         public Game(int gameID, List<Player> players)
         {
             this.GameID = gameID;
             this.Players = players;
-
             this.Deck = new List<Card>();
             this.PlayedCards = new List<Card>();
-
             this.Direction = Direction.clockwise;
-            
+
             CreateDeck();
         }
 
-        public void Shuffle(List<Card> deckToShuffle)
+        public void Shuffle()
         {
             Random r = new Random();
 
-            for (int n = (deckToShuffle.Count - 1); n > 0; --n)
+            for (int n = (Deck.Count - 1); n > 0; --n)
             {
                 int k = r.Next(n + 1);
-                Card temp = deckToShuffle[n];
-                deckToShuffle[n] = deckToShuffle[k];
-                deckToShuffle[k] = temp;
+                Card temp = Deck[n];
+                Deck[n] = Deck[k];
+                Deck[k] = temp;
             }
         }
 
@@ -95,7 +95,38 @@ namespace UNOService.Game
 
                 cardColors.RemoveAt(cardColors.Count - 1);
             }
-            Shuffle(Deck);
+        }
+
+        public void EndTurn()
+        {
+            CurrentPlayer.UnoSaid = true; // Make player immune to uno after next turn has started
+
+            PreviousTurn = CurrentTurn;
+            if (Direction == Direction.clockwise)
+            {
+                CurrentTurn = (CurrentTurn + 1) % Players.Count();
+            }
+            else
+            {
+                CurrentTurn--;
+
+                if (CurrentTurn < 0)
+                {
+                    CurrentTurn += Players.Count();
+                }
+            }
+        }
+
+        public void SwitchDirection()
+        {
+            if (Direction == Direction.clockwise)
+            {
+                Direction = Direction.counterClockwise;
+            }
+            else
+            {
+                Direction = Direction.clockwise;
+            }
         }
     }
 }

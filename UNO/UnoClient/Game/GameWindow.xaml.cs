@@ -25,28 +25,32 @@ namespace UnoClient.Game
         private GameClient GameProxy;
 
         private string username;
-
-        // Game ID should only be known serverside. The player has a game variable so the game id can be found from the context.
         private int GameID;
 
         // TODO Authenticate using password
         public GameWindow(string username, string password)
         {
             this.username = username;
+            this.GameID = 1;
 
             GameProxy = new GameClient(new InstanceContext(this));
             GameProxy.SubscribeToGameEvents(username, GameID);
 
             InitializeComponent();
+            this.Title = "Uno Game: " + username;
+            player1Hand.Username = username;
             //TODO: position the players
         }
 
         public void CardsAssigned(Card[] cards)
         {
-            foreach (Card c in cards)
+            foreach(Card c in cards)
             {
                 player1Hand.addCard(new CardControl(c)); //Add cards to your own hand
             }
+
+            for (int i = 0; i < 7; i++)
+                player2Hand.addCard(new CardControl());
         }
 
         public void NotifyPlayerLeft(string userName)
@@ -56,12 +60,13 @@ namespace UnoClient.Game
 
         public void SendMessageGameCallback(string message)
         {
-            throw new NotImplementedException();
+            chat.Items.Add(message);
+            chat.ScrollIntoView(chat.Items[chat.Items.Count - 1]); //Scroll to bottom
         }
 
         public void TurnChanged(Player player)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void NotifyOpponentsOfPlayerPunished(string userName)
@@ -75,18 +80,17 @@ namespace UnoClient.Game
             player1Hand.addCard(new CardControl(takenCard));
         }
 
-        public void changePlayedCard(CardControl cardControl)
-        {
-            lastPlayedCard = cardControl;
-            lastPlayedCard.UpdateLayout();
-            Card card = cardControl.getCard();
-
-            GameProxy.playCardAsync(GameID, card);
-        }
-
         public void CardPlayed(Card c)
         {
             lastPlayedCard = new CardControl(c);
+        }
+
+        private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
+        {
+            chat.Items.Add($"{username}: {chatMessage.Text}");
+            GameProxy.SendMessageGame(chatMessage.Text);
+
+            chatMessage.Text = "";
         }
     }
 }
