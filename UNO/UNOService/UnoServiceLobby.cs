@@ -87,6 +87,7 @@ namespace UNOService
 
             foreach (string username in playerNames)
             {
+                throw new Exception();
                 Player player;
 
                 if (tryGetPlayerFromUsername(username, out player))

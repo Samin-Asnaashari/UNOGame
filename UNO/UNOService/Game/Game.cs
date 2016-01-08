@@ -115,6 +115,9 @@ namespace UNOService.Game
                     CurrentTurn += Players.Count();
                 }
             }
+
+            // This is now the next player
+            CurrentPlayer.UnoSaid = false;
         }
 
         public void SwitchDirection()

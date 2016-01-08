@@ -98,8 +98,9 @@ namespace UNOService
                     if (player != playerWhoCalledUno)
                     {
                         if (player.Hand.Count == 1 && player.UnoSaid == false)
-                        {
-                            //player.IGameCallback.CardsAssigned(// 2 cards from pile)
+                        {           
+                            player.UnoSaid = true;
+                            //player.IGameCallback.CardsAssigned(
                         }
                     }
                 }
