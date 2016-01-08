@@ -159,8 +159,8 @@ namespace UNOService
 
             if (host.Party.Players.Count >= 2 && host.Party.Players.Count <= 4)
             {
-                Game.Game Game = new Game.Game(gameID, host.Party.Players);
                 gameID++;
+                Game.Game Game = new Game.Game(gameID, host.Party.Players);
                 games.Add(Game);
                 foreach (Player partyMember in host.Party.Players)
                 {
