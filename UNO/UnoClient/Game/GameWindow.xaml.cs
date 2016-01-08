@@ -37,6 +37,7 @@ namespace UnoClient.Game
             GameProxy.SubscribeToGameEvents(username, GameID);
 
             InitializeComponent();
+            this.Title = "Uno Game: " + username;
             //TODO: position the players
         }
 
@@ -46,6 +47,9 @@ namespace UnoClient.Game
             {
                 player1Hand.addCard(new CardControl(c)); //Add cards to your own hand
             }
+
+            for (int i = 0; i < 7; i++)
+                player2Hand.addCard(new CardControl());
         }
 
         public void NotifyPlayerLeft(string userName)
@@ -60,7 +64,7 @@ namespace UnoClient.Game
 
         public void TurnChanged(Player player)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void NotifyOpponentsOfPlayerPunished(string userName)
@@ -72,6 +76,11 @@ namespace UnoClient.Game
         {
             Card takenCard = await GameProxy.takeCardAsync(GameID);
             player1Hand.addCard(new CardControl(takenCard));
+        }
+
+        public void CardPlayed(Card c)
+        {
+            lastPlayedCard = new CardControl(c);
         }
     }
 }

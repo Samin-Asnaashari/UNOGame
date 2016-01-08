@@ -4,7 +4,7 @@
         xmlns:g="clr-namespace:UnoClient.Game"
         xmlns:UnoClient="clr-namespace:UnoClient" x:Class="UnoClient.Game.GameWindow"
         Title="Uno Game"
-        Width="900" Height="675" MinWidth="900" MinHeight="675">
+        Width="900" Height="800" MinWidth="900" MinHeight="800">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.Background>
             <RadialGradientBrush>
@@ -28,16 +28,18 @@
         <g:CardHand x:Name="player4Hand" IsHorizontal="False" Grid.Row="1" Grid.Column="2"/>
 
         <Grid Grid.Column="1" Grid.Row="1">
-            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image x:Name="DeckOfCards" Source="/UnoClient;component/Images/DeckOfCards.png" Margin="50,90" MaxWidth="677" MaxHeight="977" MinWidth="69" MinHeight="100" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="DeckOfCards_MouseDown">
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
-                        </Style>
-                    </Image.Style>
-                </Image>
-                <UnoClient:CardControl x:Name="lastPlayedCard" MaxWidth="677" MaxHeight="977" MinWidth="100" MinHeight="139" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,90"/>
-            </WrapPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image x:Name="DeckOfCards" Source="/UnoClient;component/Images/DeckOfCards.png" MaxWidth="677" MaxHeight="977" MinWidth="69" MinHeight="100" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="DeckOfCards_MouseDown" Margin="40">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+                    </Style>
+                </Image.Style>
+            </Image>
+            <UnoClient:CardControl x:Name="lastPlayedCard" MaxWidth="677" MaxHeight="977" MinWidth="100" MinHeight="139" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="40"/>
         </Grid>
     </Grid>
 </Window>

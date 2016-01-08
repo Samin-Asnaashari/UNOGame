@@ -300,11 +300,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SubscribeToGameEventsResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="CardsAssigned">
     <xs:complexType>
       <xs:sequence>
@@ -319,9 +314,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="TurnChangedResponse">
+  <xs:element name="CardPlayed">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="c" nillable="true" type="q19:Card" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SendMessageGameCallback">
@@ -336,11 +333,6 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="NotifyOpponentsOfPlayerPunishedResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
 </xs:schema>

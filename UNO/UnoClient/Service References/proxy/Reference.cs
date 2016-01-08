@@ -650,10 +650,10 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
         System.Threading.Tasks.Task SendMessageGameAsync(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SubscribeToGameEvents", ReplyAction="http://tempuri.org/IGame/SubscribeToGameEventsResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToGameEvents")]
         void SubscribeToGameEvents(string UserName, int GameID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SubscribeToGameEvents", ReplyAction="http://tempuri.org/IGame/SubscribeToGameEventsResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToGameEvents")]
         System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName, int GameID);
     }
     
@@ -663,13 +663,16 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/CardsAssigned")]
         void CardsAssigned(UnoClient.proxy.Card[] cards);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/TurnChanged", ReplyAction="http://tempuri.org/IGame/TurnChangedResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TurnChanged")]
         void TurnChanged(UnoClient.proxy.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/CardPlayed")]
+        void CardPlayed(UnoClient.proxy.Card c);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGameCallback")]
         void SendMessageGameCallback(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/NotifyOpponentsOfPlayerPunished", ReplyAction="http://tempuri.org/IGame/NotifyOpponentsOfPlayerPunishedResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/NotifyOpponentsOfPlayerPunished")]
         void NotifyOpponentsOfPlayerPunished(string userName);
     }
     

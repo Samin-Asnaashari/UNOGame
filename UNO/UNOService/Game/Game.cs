@@ -27,20 +27,22 @@ namespace UNOService.Game
             this.Deck = new List<Card>();
 
             this.Direction = Direction.clockwise;
-            
+
+            PlayedCards = new List<Card>();
+
             CreateDeck();
         }
 
-        public void Shuffle(List<Card> deckToShuffle)
+        public void Shuffle()
         {
             Random r = new Random();
 
-            for (int n = (deckToShuffle.Count - 1); n > 0; --n)
+            for (int n = (Deck.Count - 1); n > 0; --n)
             {
                 int k = r.Next(n + 1);
-                Card temp = deckToShuffle[n];
-                deckToShuffle[n] = deckToShuffle[k];
-                deckToShuffle[k] = temp;
+                Card temp = Deck[n];
+                Deck[n] = Deck[k];
+                Deck[k] = temp;
             }
         }
 
@@ -90,7 +92,6 @@ namespace UNOService.Game
 
                 cardColors.RemoveAt(cardColors.Count - 1);
             }
-            Shuffle(Deck);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Threading.Tasks;
 using UNOService.Game;
 
 namespace UNOService
@@ -17,8 +18,12 @@ namespace UNOService
         private List<Player> playersOnline = new List<Player>();
         private List<Game.Game> games = new List<Game.Game>();
 
+        private delegate void AllPlayersConnectedEventHandler(object sender, Game.Game game);
+        private event AllPlayersConnectedEventHandler AllPlayersConnected;
+
         public UnoService()
         {
+            this.AllPlayersConnected += UnoService_AllPlayersConnected;
             databaseHandler = new DatabaseHandler();
         }
 
@@ -32,6 +37,8 @@ namespace UNOService
                     loginSuccessful = databaseHandler.CheckLogin(userName, password);
                     if (loginSuccessful)
                         CreatePlayer(userName);
+                    else
+                        return new StatusCode(-21); //Credentials incorrect
                 }
                 else
                 {
@@ -108,7 +115,11 @@ namespace UNOService
 
         public Card takeCard(int GameID)
         {
-            return FindGame(GameID).Deck[0];
+            Game.Game game = FindGame(GameID);
+            Card c = game.Deck[0];
+            game.Deck.RemoveAt(0);
+
+            return c;
         }
 
         public void playCard(int GameID, Card card)
@@ -121,10 +132,18 @@ namespace UNOService
             //add to the last card of the deck of card (when a card assign to the player will be deleted from game deck of card)
             // if is it is  last card player won 
             //if after this play only one left another methode will take care of said uno condition
-            Player PlayerWhoWantsToPlaACard = getPlayerFromGameContext();
-                    FindGame(GameID).PlayedCards.Add(card);
-                    PlayerWhoWantsToPlaACard.Remove(card);
-                    FindGame(GameID).Deck.Add(card);
+            Game.Game game = FindGame(GameID);
+
+            Player PlayerWhoWantsToPlayACard = getPlayerFromGameContext();
+            game.PlayedCards.Add(card);
+            PlayerWhoWantsToPlayACard.Remove(card);
+            game.Deck.Add(card);
+
+            foreach (Player p in game.Players)
+            {
+                if (p.UserName != PlayerWhoWantsToPlayACard.UserName) //Prevent deadlock
+                    p.IGameCallback.CardPlayed(card);
+            }
         }
 
         /// <summary>
@@ -254,37 +273,44 @@ namespace UNOService
         public void SubscribeToGameEvents(string userName, int gameID)
         {
             IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
-            Player player = games.Find(x => x.GameID == gameID).Players.Find(y => y.UserName.CompareTo(userName) == 0);
-            player.IGameCallback = clientCallbackGame;
+            Game.Game game = games.Find(x => x.GameID == gameID);
 
-            foreach (var item in games.Find(x => x.GameID == gameID).Players)
+            Player self = game.Players.Find(y => y.UserName.CompareTo(userName) == 0);
+            self.IGameCallback = clientCallbackGame;
+
+            foreach (Player player in game.Players)
             {
-                if (item != player)
-                {
-                    //item.IGameCallback.CardsAssigned();
-                    //item.IGameCallback.SendMessageGameCallback();  
-                    //item.IGameCallback.TurnChanged(player);
-                    //item.IGameCallback.NotifyOpponentsOfPlayerPunished(item.UserName);
-                    //item.IGameCallback.CardPlayed();
-                }
-                    
+                if (player.IGameCallback == null)
+                    return;
             }
+
+            //Every player now has a game callback, so we can start sending events            
+            if(AllPlayersConnected != null)
+                AllPlayersConnected(this, game);
         }
 
-        /*public void Demo()
+        private void UnoService_AllPlayersConnected(object sender, Game.Game game)
         {
-            List<Player> players = new List<Player>();
-            players.Add(new Player("Rutger"));
-            players.Add(new Player("Test"));
+            game.CreateDeck();
+            game.Shuffle();
 
-            games.Add(new Game.Game(0, players));
-            games[0].CreateDeck();
+            game.TurnToPlay = game.Players[0];
 
-            foreach (Player p in games[0].Players)
+            foreach (Player player in game.Players)
             {
-                p.IGameCallback.CardsAssigned(games[0].Deck.GetRange(0, 7));
-                games[0].Deck.RemoveRange(0, 7);
+                List<Card> hand = game.Deck.GetRange(0, 7);
+                player.IGameCallback.CardsAssigned(hand);
+                game.Deck.RemoveRange(0, 7); //Remove from deck
             }
-        }*/
+
+            game.PlayedCards.Add(game.Deck.First());
+            game.Deck.RemoveAt(0); //Remove next card from deck
+
+            foreach (Player player in game.Players)
+            {
+                player.IGameCallback.CardPlayed(game.PlayedCards.First());
+                player.IGameCallback.TurnChanged(game.TurnToPlay); //Notify that the host is the first player to start
+            }
+        }
     }
 }

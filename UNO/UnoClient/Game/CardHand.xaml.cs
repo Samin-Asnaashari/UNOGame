@@ -30,7 +30,7 @@ namespace UnoClient.Game
 
         public void addCard(CardControl c)
         {
-            Hand.Children.Add(c);
+            Hand.Children.Insert(0, c);
         }
 
         private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
