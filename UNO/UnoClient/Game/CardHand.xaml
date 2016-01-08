@@ -7,7 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="600">
     <Grid>
-        <ScrollViewer x:Name="sv" Background="#FF9B6C29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewMouseWheel="sv_PreviewMouseWheel" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="83*"/>
+            <RowDefinition Height="17*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="21*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer x:Name="sv" Background="#FF9B6C29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewMouseWheel="sv_PreviewMouseWheel" Grid.Column="1">
             <ScrollViewer.Style>
                 <Style TargetType="{x:Type ScrollViewer}">
                     <Style.Triggers>
@@ -24,5 +32,6 @@
             </ScrollViewer.Style>
             <WrapPanel x:Name="Hand"/>
         </ScrollViewer>
+        <Label x:Name="label" Content="{Binding Path=Username}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="10" Width="10"/>
     </Grid>
 </UserControl>

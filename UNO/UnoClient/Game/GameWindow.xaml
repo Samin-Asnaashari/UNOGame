@@ -27,7 +27,7 @@
         <g:CardHand x:Name="player3Hand" IsHorizontal="False" Grid.Row="1"/>
         <g:CardHand x:Name="player4Hand" IsHorizontal="False" Grid.Row="1" Grid.Column="2"/>
 
-        <Grid Grid.Column="1" Grid.Row="1">
+        <Grid Grid.Column="1" Grid.Row="1" MinWidth="440" MinHeight="380">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -40,6 +40,19 @@
                 </Image.Style>
             </Image>
             <UnoClient:CardControl x:Name="lastPlayedCard" MaxWidth="677" MaxHeight="977" MinWidth="100" MinHeight="139" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="40"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="3" Margin="5,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            
+            <ListBox x:Name="chat" HorizontalAlignment="Stretch" Grid.Row="0"/>
+            <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Grid.Row="1">
+                <Button x:Name="buttonSendMessage" DockPanel.Dock="Right" Content="Send" Width="75"/>
+                <TextBox x:Name="chatMessage" TextWrapping="Wrap"/>
+            </DockPanel>
         </Grid>
     </Grid>
 </Window>

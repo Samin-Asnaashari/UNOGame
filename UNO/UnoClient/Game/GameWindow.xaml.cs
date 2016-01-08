@@ -38,6 +38,7 @@ namespace UnoClient.Game
 
             InitializeComponent();
             this.Title = "Uno Game: " + username;
+            player1Hand.Username = username;
             //TODO: position the players
         }
 
