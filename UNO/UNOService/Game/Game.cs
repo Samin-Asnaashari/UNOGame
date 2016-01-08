@@ -99,8 +99,10 @@ namespace UNOService.Game
 
         public void EndTurn()
         {
+            //TODO This also needs to be implemented everywhere the player can perform a first action...
+            PreviousPlayer.UnoSaid = true; // Make player immune to uno.
+
             previousTurn = currentTurn;
-            PreviousPlayer.UnoSaid = true; // Make player immune to uno after next turn has started
 
             if (Direction == Direction.clockwise)
             {
