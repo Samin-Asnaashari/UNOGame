@@ -14,13 +14,17 @@ namespace UNOService
     {
         [DataMember]
         public string UserName { get; private set; } //unique
+        [DataMember]
         public List<Card> Hand { get; set; }
         [DataMember]
         public PlayerState State { get; set; }
         public ILobbyCallback ILobbyCallback { get; set; }
         public IGameCallback IGameCallback { get; set; }
+        [DataMember]
         public Game.Game Game { get; set; }
+        [DataMember]
         public Party Party { get; set; }
+        [DataMember]
         public bool UnoSaid { get; set; }
 
 

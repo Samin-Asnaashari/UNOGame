@@ -13,27 +13,56 @@ namespace UNOService
         private delegate void AllPlayersConnectedEventHandler(object sender, Game.Game game);
         private event AllPlayersConnectedEventHandler AllPlayersConnected;
 
-        public void playCard(int GameID, Card card)
+        public bool playCard(Card card)
         {
-            //get player 
-            //is it valid card ?  // maybe with method better 
-            //put cart in the table (public Card ACardOnTheTable { get; set; }  [playedcards.count-1])
-            //add it to the game playedcard
-            //delete from hand 
-            //add to the last card of the deck of card (when a card assign to the player will be deleted from game deck of card)
-            // if is it is  last card player won 
-            //if after this play only one left another methode will take care of said uno condition
 
             Player PlayerWhoWantsToPlayACard = getPlayerFromGameContext();
             Game.Game game = PlayerWhoWantsToPlayACard.Game;
-            game.PlayedCards.Add(card);
-            PlayerWhoWantsToPlayACard.Remove(card);
-            game.Deck.Add(card);
-
-            foreach (Player p in game.Players)
+                               //game.PlayedCards.LastOrDefault();
+            if(CheckPlayedCard(game.PlayedCards[game.PlayedCards.Count-1],card))
             {
-                if (p.UserName != PlayerWhoWantsToPlayACard.UserName) //Prevent deadlock
-                    p.IGameCallback.CardPlayed(card);
+                game.PlayedCards.Add(card);
+                PlayerWhoWantsToPlayACard.Hand.Remove(card);
+
+                foreach (Player p in game.Players)
+                {
+                    if (p.UserName != PlayerWhoWantsToPlayACard.UserName) //Prevent deadlock
+                        p.IGameCallback.CardPlayed(card);
+                }
+
+                if(PlayerWhoWantsToPlayACard.Hand.Count() == 0)
+                {
+                    //game.End();
+                }
+                else
+                {
+                    game.EndTurn();
+                    game.CardAction(card);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+                //message in logstatus wrong card for playing
+            }
+
+        }
+
+
+        public bool CheckPlayedCard(Card tablecard, Card cardtoplay)
+        {
+            if (cardtoplay.Type == CardType.draw4Wild || cardtoplay.Type == CardType.wild)
+            {
+                return true;
+            }
+            else if(cardtoplay.Color == tablecard.Color || (cardtoplay.Type == CardType.normal && cardtoplay.Number == tablecard.Number))
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
             }
         }
 
@@ -45,6 +74,8 @@ namespace UNOService
 
             Player self = game.Players.Find(y => y.UserName.CompareTo(userName) == 0);
             self.IGameCallback = clientCallbackGame;
+
+            AssignCards(getPlayerFromGameContext(),7);
 
             foreach (Player player in game.Players)
             {
@@ -62,7 +93,7 @@ namespace UNOService
             List<Card> cards = new List<Card>();
             for (int i = 0; i < numberofcardtoassign; i++)
             {
-                Card Cardtoassign = takeCard(-1);
+                Card Cardtoassign = takeCard();
                 player.Hand.Add(Cardtoassign);
                 player.Game.Deck.Remove(Cardtoassign);
                 cards.Add(Cardtoassign);
@@ -71,6 +102,22 @@ namespace UNOService
             getPlayerFromGameContext().IGameCallback.CardsAssigned(cards);
 
         }
+
+        public Card takeCard()
+        {
+           Game.Game game = getPlayerFromGameContext().Game;
+            if (game.Deck.Count() == 0)
+            {
+                game.CreateDeck();
+                game.Shuffle();
+            }
+            //make it better 
+            List<Card> card=new List<Card>();
+            card.Add(game.Deck[game.Deck.Count -1]);
+            getPlayerFromGameContext().IGameCallback.CardsAssigned(card);
+            return game.Deck[game.Deck.Count - 1];
+        }
+
 
         public void SaveReplay(int gameID)
         {
@@ -153,22 +200,6 @@ namespace UNOService
                     currentPlayer.IGameCallback.SendMessageGameCallback(message);
                 }
             }
-        }
-
-        public Card takeCard(int removethis)
-        {
-            Player player = getPlayerFromGameContext();
-            Game.Game game = player.Game;
-            if (game.Deck.Count() == 0)
-            {
-                game.Deck = game.PlayedCards;
-                game.Shuffle();
-            }
-            //???
-            List<Card> c = new List<Card>();
-            c.Add(game.Deck[0]);
-            player.IGameCallback.CardsAssigned(c);
-            return game.Deck[0];
         }
 
         /// <summary>

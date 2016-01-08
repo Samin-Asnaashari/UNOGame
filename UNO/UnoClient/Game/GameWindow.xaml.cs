@@ -76,7 +76,7 @@ namespace UnoClient.Game
 
         private async void DeckOfCards_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Card takenCard = await GameProxy.takeCardAsync(GameID);
+            Card takenCard = await GameProxy.takeCardAsync();
             player1Hand.addCard(new CardControl(takenCard));
         }
 

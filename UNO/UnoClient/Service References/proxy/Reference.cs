@@ -83,7 +83,19 @@ namespace UnoClient.proxy {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.Game GameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.Card[] HandField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.Party PartyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private UnoClient.proxy.PlayerState StateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool UnoSaidField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
@@ -99,6 +111,45 @@ namespace UnoClient.proxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.Game Game {
+            get {
+                return this.GameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GameField, value) != true)) {
+                    this.GameField = value;
+                    this.RaisePropertyChanged("Game");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.Card[] Hand {
+            get {
+                return this.HandField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HandField, value) != true)) {
+                    this.HandField = value;
+                    this.RaisePropertyChanged("Hand");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.Party Party {
+            get {
+                return this.PartyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyField, value) != true)) {
+                    this.PartyField = value;
+                    this.RaisePropertyChanged("Party");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public UnoClient.proxy.PlayerState State {
             get {
                 return this.StateField;
@@ -107,6 +158,19 @@ namespace UnoClient.proxy {
                 if ((this.StateField.Equals(value) != true)) {
                     this.StateField = value;
                     this.RaisePropertyChanged("State");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool UnoSaid {
+            get {
+                return this.UnoSaidField;
+            }
+            set {
+                if ((this.UnoSaidField.Equals(value) != true)) {
+                    this.UnoSaidField = value;
+                    this.RaisePropertyChanged("UnoSaid");
                 }
             }
         }
@@ -134,15 +198,126 @@ namespace UnoClient.proxy {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerState", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
-    public enum PlayerState : int {
+    [System.Runtime.Serialization.DataContractAttribute(Name="Game", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
+    [System.SerializableAttribute()]
+    public partial class Game : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        InLobby = 0,
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        InGame = 1,
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int GameIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int GameID {
+            get {
+                return this.GameIDField;
+            }
+            set {
+                if ((this.GameIDField.Equals(value) != true)) {
+                    this.GameIDField = value;
+                    this.RaisePropertyChanged("GameID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Party", Namespace="http://schemas.datacontract.org/2004/07/UNOService")]
+    [System.SerializableAttribute()]
+    public partial class Party : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.Player HostField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PartyIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.Player[] PlayersField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.Player Host {
+            get {
+                return this.HostField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HostField, value) != true)) {
+                    this.HostField = value;
+                    this.RaisePropertyChanged("Host");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PartyID {
+            get {
+                return this.PartyIDField;
+            }
+            set {
+                if ((this.PartyIDField.Equals(value) != true)) {
+                    this.PartyIDField = value;
+                    this.RaisePropertyChanged("PartyID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.Player[] Players {
+            get {
+                return this.PlayersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayersField, value) != true)) {
+                    this.PlayersField = value;
+                    this.RaisePropertyChanged("Players");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -220,6 +395,17 @@ namespace UnoClient.proxy {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerState", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
+    public enum PlayerState : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InLobby = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InGame = 1,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -542,16 +728,16 @@ namespace UnoClient.proxy {
         System.Threading.Tasks.Task SaveReplayAsync(int gameID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/takeCard", ReplyAction="http://tempuri.org/IGame/takeCardResponse")]
-        UnoClient.proxy.Card takeCard(int GameID);
+        UnoClient.proxy.Card takeCard();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/takeCard", ReplyAction="http://tempuri.org/IGame/takeCardResponse")]
-        System.Threading.Tasks.Task<UnoClient.proxy.Card> takeCardAsync(int GameID);
+        System.Threading.Tasks.Task<UnoClient.proxy.Card> takeCardAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/playCard", ReplyAction="http://tempuri.org/IGame/playCardResponse")]
-        void playCard(int GameID, UnoClient.proxy.Card card);
+        bool playCard(UnoClient.proxy.Card card);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/playCard", ReplyAction="http://tempuri.org/IGame/playCardResponse")]
-        System.Threading.Tasks.Task playCardAsync(int GameID, UnoClient.proxy.Card card);
+        System.Threading.Tasks.Task<bool> playCardAsync(UnoClient.proxy.Card card);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
         void SendMessageGame(string message);
@@ -621,20 +807,20 @@ namespace UnoClient.proxy {
             return base.Channel.SaveReplayAsync(gameID);
         }
         
-        public UnoClient.proxy.Card takeCard(int GameID) {
-            return base.Channel.takeCard(GameID);
+        public UnoClient.proxy.Card takeCard() {
+            return base.Channel.takeCard();
         }
         
-        public System.Threading.Tasks.Task<UnoClient.proxy.Card> takeCardAsync(int GameID) {
-            return base.Channel.takeCardAsync(GameID);
+        public System.Threading.Tasks.Task<UnoClient.proxy.Card> takeCardAsync() {
+            return base.Channel.takeCardAsync();
         }
         
-        public void playCard(int GameID, UnoClient.proxy.Card card) {
-            base.Channel.playCard(GameID, card);
+        public bool playCard(UnoClient.proxy.Card card) {
+            return base.Channel.playCard(card);
         }
         
-        public System.Threading.Tasks.Task playCardAsync(int GameID, UnoClient.proxy.Card card) {
-            return base.Channel.playCardAsync(GameID, card);
+        public System.Threading.Tasks.Task<bool> playCardAsync(UnoClient.proxy.Card card) {
+            return base.Channel.playCardAsync(card);
         }
         
         public void SendMessageGame(string message) {

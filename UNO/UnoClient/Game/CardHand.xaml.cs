@@ -39,7 +39,7 @@ namespace UnoClient.Game
         {
             CardControl cardControl = ((CardControl)sender);
             GameWindow parent = ((GameWindow)Window.GetWindow(this));
-            parent.GameProxy.playCard(parent.GameID, cardControl.getCard());
+            parent.GameProxy.playCard(/*parent.GameID, */cardControl.getCard());
         }
 
         private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

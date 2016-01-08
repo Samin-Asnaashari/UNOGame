@@ -24,15 +24,17 @@ namespace UNOService
 		/// <permission>Only the player whose turn it is can take a card.</permission>
 		/// <returns>Card</returns>
 		[OperationContract]
-		Card takeCard(int GameID);
+		Card takeCard();
 
-		/// <summary>
-		/// Player who calls this metod will play card c.
-		/// </summary>
-		/// <permission>Only the player whose turn it is can play a card.</permission>
-		/// <param name="c"></param>
-		[OperationContract]
-		void playCard(int GameID, Card card);
+        /// <summary>
+        /// Player who calls this metod will play card c.
+        /// </summary>
+        /// <permission>Only the player whose turn it is can play a card.</permission>
+        /// <param name="c"></param>
+        /// 
+        //[OperationContract(IsOneWay = true)]
+        [OperationContract]
+		bool playCard(Card card);
 
         /// <summary>
         /// message sended in chat

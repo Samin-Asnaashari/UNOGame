@@ -16,7 +16,6 @@ namespace UNOService.Game
         public List<Player> Players { get; set; }
         public List<Card> Deck { get; set; }
         public List<Card> PlayedCards { get; set; }
-
         public Direction Direction { get; set; }
 
         private int previousTurn { get; set; }
@@ -24,6 +23,7 @@ namespace UNOService.Game
         public Player CurrentPlayer { get { return Players[currentTurn]; } }
         public Player PreviousPlayer { get { return Players[previousTurn]; } }
 
+        int draw2s;
 
         public Game(int gameID, List<Player> players)
         {
@@ -34,6 +34,8 @@ namespace UNOService.Game
             this.Direction = Direction.clockwise;
 
             CreateDeck();
+
+            draw2s = 0;
         }
 
         public void Shuffle()
@@ -60,7 +62,7 @@ namespace UNOService.Game
             List<CardType> cardTypes = new List<CardType>();
             cardTypes.Add(CardType.draw2);
             cardTypes.Add(CardType.reverse);
-            cardTypes.Add(CardType.skip);
+            cardTypes.Add(CardType.skip);           
 
             for (int i = 0; i < 4; i++)//adding cards with only 4 ocurrences
             {
@@ -133,5 +135,33 @@ namespace UNOService.Game
                 Direction = Direction.clockwise;
             }
         }
+
+
+        public void CardAction(Card card)
+        {
+            if (card.Type == CardType.skip)
+            {
+                //skip
+            }
+            else if (card.Type == CardType.reverse)
+            {
+                SwitchDirection();
+            }
+            else if (card.Type == CardType.draw2)
+            {
+                //wait for next player action
+                //AssignCard to next player if he/she didn't put also draw2 otherwise add 4 to next next 
+            }
+            else if (card.Type == CardType.wild)
+            {
+                //show color to other player to choose
+            }
+            else if (card.Type == CardType.draw4Wild)
+            {
+                //AssignCards4
+            }
+            //notify who punished 
+        }
+
     }
 }
