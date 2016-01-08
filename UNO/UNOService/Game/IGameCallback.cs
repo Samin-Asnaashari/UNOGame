@@ -23,12 +23,11 @@ namespace UNOService
 		[OperationContract]
 		void TurnChanged(Player player);
 
-        /// <summary>
-        /// Crad that has been played notify other opponents
-        /// </summary>
-        /// <param name="c"></param>
-        [OperationContract]
-        void CardPlayed(Card c);
+		/// <summary>
+		/// Crad that has been played notify other opponents
+		/// </summary>
+		/// <param name="c"></param>
+		void CardPlayed(Card c);
 
         /// <summary>
         /// message sended in chat

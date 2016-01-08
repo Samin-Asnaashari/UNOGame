@@ -66,9 +66,6 @@ namespace UNOService
                     case -20:
                         status = "User already logged in.";
                         break;
-                    case -21:
-                        status = "Username or password incorrect.";
-                        break;
 
                     /* Succeeds: */
                     //Registration:

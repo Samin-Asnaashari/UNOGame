@@ -666,9 +666,6 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/TurnChanged", ReplyAction="http://tempuri.org/IGame/TurnChangedResponse")]
         void TurnChanged(UnoClient.proxy.Player player);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/CardPlayed", ReplyAction="http://tempuri.org/IGame/CardPlayedResponse")]
-        void CardPlayed(UnoClient.proxy.Card c);
-        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGameCallback")]
         void SendMessageGameCallback(string message);
         

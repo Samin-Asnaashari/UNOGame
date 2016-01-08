@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using UnoClient.proxy;
 
 namespace UnoClient.Game
 {
@@ -31,14 +30,7 @@ namespace UnoClient.Game
 
         public void addCard(CardControl c)
         {
-            c.AddHandler(MouseUpEvent, new RoutedEventHandler(CardClicked));
             Hand.Children.Add(c);
-        }
-
-        private void CardClicked(object sender, RoutedEventArgs e)
-        {
-            CardControl cardControl = ((CardControl)sender);
-            ((GameWindow)Window.GetWindow(this)).changePlayedCard(cardControl);
         }
 
         private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
