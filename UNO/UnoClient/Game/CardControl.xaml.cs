@@ -52,13 +52,19 @@ namespace UnoClient
                 default:
                     picturePath += card.Type.ToString() + "/";
                     picturePath += card.Color.ToString() + ".png";
-                        break;
+                    break;
             }
 
             Uri uriSource = new Uri(@"/UnoClient;component" + picturePath, UriKind.Relative);
 
             InitializeComponent();
             image.Source = new BitmapImage(uriSource);
+            this.Cursor = Cursors.Hand;
+        }
+
+        public Card getCard()
+        {
+            return card;
         }
     }
 }
