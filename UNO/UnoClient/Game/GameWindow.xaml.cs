@@ -112,7 +112,6 @@ namespace UnoClient.Game
 
         public void CardPlayed(Card c, string playerWhoPlayed)
         {
-            MessageBox.Show(player1Hand.Username + " sssss " + player2Hand.Username + " ssssss " + player3Hand.Username + " sssss " + player4Hand.Username + "s");
             if (player2Hand.Username == playerWhoPlayed)
                 player2Hand.Hand.Children.RemoveAt(0);
             else if (player3Hand.Username == playerWhoPlayed)
