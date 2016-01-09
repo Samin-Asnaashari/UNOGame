@@ -36,6 +36,10 @@ namespace UNOService
                 }
                 else
                 {
+                    if(game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                    {
+                        game.PreviousPlayer.UnoSaid = true;
+                    }
                     game.EndTurn();
                     game.CardAction(card);
                 }
@@ -70,12 +74,14 @@ namespace UNOService
         public void SubscribeToGameEvents(string userName, int gameID)
         {
             IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
-            Game.Game game = games.Find(x => x.GameID == gameID);
 
-            Player self = game.Players.Find(y => y.UserName.CompareTo(userName) == 0);
+            Player self = playersOnline.Find(x => x.UserName == userName);
+
             self.IGameCallback = clientCallbackGame;
 
-            AssignCards(getPlayerFromGameContext(),7);
+            Game.Game game = self.Game;
+
+            //AssignCards(self,2);
 
             foreach (Player player in game.Players)
             {
@@ -99,7 +105,7 @@ namespace UNOService
                 cards.Add(Cardtoassign);
             }
 
-            getPlayerFromGameContext().IGameCallback.CardsAssigned(cards);
+            player.IGameCallback.CardsAssigned(cards);
 
         }
 
@@ -132,7 +138,6 @@ namespace UNOService
             //that has one card in their hand and they will get punished at the moment. And also the playerWhoShouldCallUNO can also say uno at the next next player turn and be safe.
             //The method should be made from a perspective that you dont know which player is gonna call uno first but I think you know this. 
             //And the game.currentPlayer should match, at the moment of saying Uno or calling UNO on somebody, the player next to the playerWhoShouldCallUNO depending on the current direcion of the game.
-            //(Thats why my method calculatePlayerPositions that calculates positions depending on the player who is saying or calling Uno)
 
             if (playerWhoCalledUno == game.PreviousPlayer && playerWhoCalledUno.UnoSaid == false) // Player called Uno on himself // added that piece just to not double put true if already true(if playerWhoShouldCallUNO say uno two times)
             {
@@ -217,12 +222,11 @@ namespace UNOService
         {
             game.CreateDeck();
             game.Shuffle();
+            game.GiveEachPlayer7Cards();
 
             foreach (Player player in game.Players)
             {
-                List<Card> hand = game.Deck.GetRange(0, 7);
-                player.IGameCallback.CardsAssigned(hand);
-                game.Deck.RemoveRange(0, 7); //Remove from deck
+                player.IGameCallback.CardsAssigned(player.Hand);
             }
 
             game.PlayedCards.Add(game.Deck.First());

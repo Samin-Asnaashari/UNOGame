@@ -36,6 +36,24 @@ namespace UNOService.Game
             draw2s = 0;
         }
 
+        public void GiveEachPlayer7Cards()
+        {
+            List<Card> cards;
+            int count;
+            foreach (var item in Players)
+            {
+                count = 0;
+                cards = new List<Card>();
+                while (count != 7)
+                {
+                    cards.Add(Deck[0]);
+                    Deck.RemoveAt(0);
+                    count++;
+                }
+                item.AddCard(cards);
+            }
+        }
+
         public void Shuffle()
         {
             Random r = new Random();
@@ -100,7 +118,7 @@ namespace UNOService.Game
         public void EndTurn()
         {
             //TODO This also needs to be implemented everywhere the player can perform a first action...
-            PreviousPlayer.UnoSaid = true; // Make player immune to uno.
+            //PreviousPlayer.UnoSaid = true; // Make player immune to uno.
 
             previousTurn = currentTurn;
 
