@@ -42,7 +42,7 @@ namespace UnoClient.Game
             //TODO: position the players
         }
 
-        public void CardsAssigned(Card[] cards)
+        public void CardsAssigned(List<Card> cards)
         {
             foreach(Card c in cards)
             {

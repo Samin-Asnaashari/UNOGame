@@ -201,7 +201,7 @@ namespace UnoClient
                 {
                     showPartyWindow(username);
                 }
-                LobbyProxy.SendInvites(playersToInvite.ToArray());
+                LobbyProxy.SendInvites(playersToInvite);
             }
         }
 
