@@ -52,7 +52,14 @@ namespace UNOService
 
         public void Remove(Card card)
         {
-            Hand.Remove(card);
+            foreach (var item in Hand)
+            {
+                if (item.Color == card.Color && item.Number == card.Number && item.Type == card.Type)
+                {
+                    Hand.Remove(item);
+                    break;
+                }
+            }
         }
     }
 }

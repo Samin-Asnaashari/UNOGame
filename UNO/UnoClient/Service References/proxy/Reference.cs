@@ -560,23 +560,23 @@ namespace UnoClient.proxy {
         System.Threading.Tasks.Task SendMessageGameAsync(string message);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToGameEvents")]
-        void SubscribeToGameEvents(string UserName, int GameID);
+        void SubscribeToGameEvents(string UserName);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToGameEvents")]
-        System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName, int GameID);
+        System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IGameCallback {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/CardsAssigned")]
-        void CardsAssigned(System.Collections.Generic.List<UnoClient.proxy.Card> cards);
+        void CardsAssigned(System.Collections.Generic.List<UnoClient.proxy.Card> cards, System.Collections.Generic.List<string> playersUserNames);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TurnChanged")]
         void TurnChanged(UnoClient.proxy.Player player);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/CardPlayed")]
-        void CardPlayed(UnoClient.proxy.Card c);
+        void CardPlayed(UnoClient.proxy.Card c, string playerWhoPlayed);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGameCallback")]
         void SendMessageGameCallback(string message);
@@ -645,12 +645,12 @@ namespace UnoClient.proxy {
             return base.Channel.SendMessageGameAsync(message);
         }
         
-        public void SubscribeToGameEvents(string UserName, int GameID) {
-            base.Channel.SubscribeToGameEvents(UserName, GameID);
+        public void SubscribeToGameEvents(string UserName) {
+            base.Channel.SubscribeToGameEvents(UserName);
         }
         
-        public System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName, int GameID) {
-            return base.Channel.SubscribeToGameEventsAsync(UserName, GameID);
+        public System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName) {
+            return base.Channel.SubscribeToGameEventsAsync(UserName);
         }
     }
 }

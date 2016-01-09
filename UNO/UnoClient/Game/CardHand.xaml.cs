@@ -39,7 +39,15 @@ namespace UnoClient.Game
         {
             CardControl cardControl = ((CardControl)sender);
             GameWindow parent = ((GameWindow)Window.GetWindow(this));
-            parent.GameProxy.playCard(/*parent.GameID, */cardControl.getCard());
+            bool playSucces = parent.GameProxy.playCard(/*parent.GameID, */cardControl.getCard());
+            if (playSucces)
+            {
+                parent.CardPlayed(cardControl.getCard(), "PlayerWhoPLayed");
+                Hand.Children.Remove(cardControl);
+            }
+            else
+                MessageBox.Show("Invalid move");
+            
         }
 
         private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

@@ -25,32 +25,62 @@ namespace UnoClient.Game
         public GameClient GameProxy;
 
         private string username;
-        public int GameID;
 
         // TODO Authenticate using password
         public GameWindow(string username, string password)
         {
             this.username = username;
-            this.GameID = 1;
+            //this.GameID = 1;
 
             GameProxy = new GameClient(new InstanceContext(this));
-            GameProxy.SubscribeToGameEvents(username, GameID);
+
+            GameProxy.SubscribeToGameEvents(username);
 
             InitializeComponent();
             this.Title = "Uno Game: " + username;
             player1Hand.Username = username;
+
             //TODO: position the players
         }
 
-        public void CardsAssigned(List<Card> cards)
+        public void CardsAssigned(List<Card> cards, List<string> playersUserNames)
         {
             foreach(Card c in cards)
             {
                 player1Hand.addCard(new CardControl(c)); //Add cards to your own hand
             }
 
-            for (int i = 0; i < 7; i++)
-                player2Hand.addCard(new CardControl());
+            if (playersUserNames != null)
+            {
+                List<CardHand> playerHands = new List<CardHand>();
+                playerHands.Add(player2Hand);
+                playerHands.Add(player3Hand);
+                playerHands.Add(player4Hand);
+
+                for (int i = 0; i < playersUserNames.Count ; i++)
+                {
+                    if (username != playersUserNames[i])
+                        playerHands[i].Username = playersUserNames[i];
+                    else
+                    {
+                        playersUserNames.RemoveAt(i);
+                        i--;
+                    }
+                }
+
+
+                if(player2Hand.Username != null)
+                    for (int i = 0; i < 7; i++)
+                        player2Hand.addCard(new CardControl());
+
+                if (player3Hand.Username != null)
+                    for (int i = 0; i < 7; i++)
+                        player3Hand.addCard(new CardControl());
+
+                if (player4Hand.Username != null)
+                    for (int i = 0; i < 7; i++)
+                        player4Hand.addCard(new CardControl());
+            }
         }
 
         public void NotifyPlayerLeft(string userName)
@@ -80,8 +110,16 @@ namespace UnoClient.Game
             player1Hand.addCard(new CardControl(takenCard));
         }
 
-        public void CardPlayed(Card c)
+        public void CardPlayed(Card c, string playerWhoPlayed)
         {
+            MessageBox.Show(player1Hand.Username + " sssss " + player2Hand.Username + " ssssss " + player3Hand.Username + " sssss " + player4Hand.Username + "s");
+            if (player2Hand.Username == playerWhoPlayed)
+                player2Hand.Hand.Children.RemoveAt(0);
+            else if (player3Hand.Username == playerWhoPlayed)
+                player3Hand.Hand.Children.RemoveAt(0);
+            else if (player4Hand.Username == playerWhoPlayed)
+                player4Hand.Hand.Children.RemoveAt(0);
+
             lastPlayedCard.Content = new CardControl(c);
         }
 

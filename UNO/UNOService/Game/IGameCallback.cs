@@ -14,7 +14,7 @@ namespace UNOService
 		/// </summary>
 		/// <param name="cards"></param>
 		[OperationContract(IsOneWay = true)]
-		void CardsAssigned(List<Card> cards);
+		void CardsAssigned(List<Card> cards, List<string> playersUserNames);
 
         /// <summary>
         /// Will notify the client that someone's turn has ended and someone else turn starts.
@@ -28,7 +28,7 @@ namespace UNOService
         /// </summary>
         /// <param name="c"></param>
         [OperationContract(IsOneWay = true)]
-        void CardPlayed(Card c);
+        void CardPlayed(Card c, string playerWhoPlayed);
 
         /// <summary>
         /// message sended in chat

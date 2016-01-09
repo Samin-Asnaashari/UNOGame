@@ -18,38 +18,47 @@ namespace UNOService
 
             Player PlayerWhoWantsToPlayACard = getPlayerFromGameContext();
             Game.Game game = PlayerWhoWantsToPlayACard.Game;
-                               //game.PlayedCards.LastOrDefault();
-            if(CheckPlayedCard(game.PlayedCards[game.PlayedCards.Count-1],card))
+            //game.PlayedCards.LastOrDefault();
+            if (game.CurrentPlayer.UserName == PlayerWhoWantsToPlayACard.UserName)
             {
-                game.PlayedCards.Add(card);
-                PlayerWhoWantsToPlayACard.Hand.Remove(card);
-
-                foreach (Player p in game.Players)
+                if (CheckPlayedCard(game.PlayedCards[game.PlayedCards.Count - 1], card))
                 {
-                    if (p.UserName != PlayerWhoWantsToPlayACard.UserName) //Prevent deadlock
-                        p.IGameCallback.CardPlayed(card);
-                }
+                    game.PlayedCards.Add(card);
 
-                if(PlayerWhoWantsToPlayACard.Hand.Count() == 0)
-                {
-                    //game.End();
+                    PlayerWhoWantsToPlayACard.Remove(card);
+
+                    foreach (Player p in game.Players)
+                    {
+                        if (p.UserName != PlayerWhoWantsToPlayACard.UserName) //Prevent deadlock
+                            p.IGameCallback.CardPlayed(card, PlayerWhoWantsToPlayACard.UserName);
+                    }
+
+                    if (PlayerWhoWantsToPlayACard.Hand.Count() == 0)
+                    {
+                        //game.End();
+                    }
+                    else
+                    {
+                        game.CardAction(card);
+                        game.EndTurn();
+                        if (game.PreviousPlayer != null)
+                        {
+                            if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                            {
+                                game.PreviousPlayer.UnoSaid = true;
+                            }
+                        }
+                    }
+                    return true;
                 }
                 else
                 {
-                    if(game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
-                    {
-                        game.PreviousPlayer.UnoSaid = true;
-                    }
-                    game.EndTurn();
-                    game.CardAction(card);
+                    return false;
+                    //message in logstatus wrong card for playing
                 }
-                return true;
             }
             else
-            {
                 return false;
-                //message in logstatus wrong card for playing
-            }
 
         }
 
@@ -64,6 +73,10 @@ namespace UNOService
             {
                 return true;
             }
+            else if(cardtoplay.Type == tablecard.Type && cardtoplay.Type != CardType.normal)
+            {
+                return true;
+            }
             else 
             {
                 return false;
@@ -71,7 +84,7 @@ namespace UNOService
         }
 
         // TODO use password
-        public void SubscribeToGameEvents(string userName, int gameID)
+        public void SubscribeToGameEvents(string userName)
         {
             IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
 
@@ -105,7 +118,7 @@ namespace UNOService
                 cards.Add(Cardtoassign);
             }
 
-            player.IGameCallback.CardsAssigned(cards);
+            player.IGameCallback.CardsAssigned(cards, null);
 
         }
 
@@ -120,7 +133,7 @@ namespace UNOService
             //make it better 
             List<Card> card=new List<Card>();
             card.Add(game.Deck[game.Deck.Count -1]);
-            getPlayerFromGameContext().IGameCallback.CardsAssigned(card);
+            getPlayerFromGameContext().IGameCallback.CardsAssigned(card, null);
             return game.Deck[game.Deck.Count - 1];
         }
 
@@ -224,9 +237,22 @@ namespace UNOService
             game.Shuffle();
             game.GiveEachPlayer7Cards();
 
+            List<string> playersUserNames = new List<string>();
+
+            foreach (var item in game.Players)
+            {
+                playersUserNames.Add(item.UserName);
+            }
+
             foreach (Player player in game.Players)
             {
-                player.IGameCallback.CardsAssigned(player.Hand);
+                player.IGameCallback.CardsAssigned(player.Hand, playersUserNames);
+            }
+
+            while(game.Deck.First().Type != CardType.normal)
+            {
+                game.PlayedCards.Add(game.Deck.First());
+                game.Deck.RemoveAt(0); //Remove next card from deck
             }
 
             game.PlayedCards.Add(game.Deck.First());
@@ -234,7 +260,7 @@ namespace UNOService
 
             foreach (Player player in game.Players)
             {
-                player.IGameCallback.CardPlayed(game.PlayedCards.First());
+                player.IGameCallback.CardPlayed(game.PlayedCards.Last(), "FirstAtStart");
                 player.IGameCallback.TurnChanged(game.CurrentPlayer); //Notify that the host is the first player to start
             }
         }

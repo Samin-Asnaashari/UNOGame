@@ -47,6 +47,6 @@ namespace UNOService
         /// Subscribe to All Game Events
         /// </summary>
         [OperationContract(IsOneWay = true)]
-        void SubscribeToGameEvents(string UserName, int GameID);
+        void SubscribeToGameEvents(string UserName);
     }
 }

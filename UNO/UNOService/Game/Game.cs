@@ -19,7 +19,7 @@ namespace UNOService.Game
         private int previousTurn { get; set; }
         private int currentTurn { get; set; }
         public Player CurrentPlayer { get { return Players[currentTurn]; } }
-        public Player PreviousPlayer { get { return Players[previousTurn]; } }
+        public Player PreviousPlayer { get { if (previousTurn == -1) { return null; } else { return Players[previousTurn]; } } }
 
         int draw2s;
 
@@ -149,7 +149,7 @@ namespace UNOService.Game
             }
 
             // This is now the next player
-            CurrentPlayer.UnoSaid = false;
+            //CurrentPlayer.UnoSaid = false;
         }
 
         public void SwitchDirection()
