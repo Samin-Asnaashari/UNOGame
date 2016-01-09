@@ -22,35 +22,23 @@
   <xs:element name="ArrayOfPlayer" nillable="true" type="tns:ArrayOfPlayer" />
   <xs:complexType name="Player">
     <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Game" nillable="true" type="q1:Game" />
-      <xs:element minOccurs="0" name="Hand" nillable="true" type="tns:ArrayOfCard" />
-      <xs:element minOccurs="0" name="Party" nillable="true" type="tns:Party" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="State" type="q2:PlayerState" />
-      <xs:element minOccurs="0" name="UnoSaid" type="xs:boolean" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="State" type="q1:PlayerState" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Player" nillable="true" type="tns:Player" />
+  <xs:complexType name="Card">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Color" type="q2:CardColor" />
+      <xs:element minOccurs="0" name="Number" type="xs:int" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Type" type="q3:CardType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Card" nillable="true" type="tns:Card" />
   <xs:complexType name="ArrayOfCard">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Card" nillable="true" type="tns:Card" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfCard" nillable="true" type="tns:ArrayOfCard" />
-  <xs:complexType name="Card">
-    <xs:sequence>
-      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Color" type="q3:CardColor" />
-      <xs:element minOccurs="0" name="Number" type="xs:int" />
-      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Type" type="q4:CardType" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Card" nillable="true" type="tns:Card" />
-  <xs:complexType name="Party">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Host" nillable="true" type="tns:Player" />
-      <xs:element minOccurs="0" name="PartyID" type="xs:int" />
-      <xs:element minOccurs="0" name="Players" nillable="true" type="tns:ArrayOfPlayer" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Party" nillable="true" type="tns:Party" />
 </xs:schema>

@@ -8,10 +8,8 @@ using System.ServiceModel;
 
 namespace UNOService.Game
 {
-    [DataContract]
     public class Game
     {
-        [DataMember]
         public int GameID { get; set; }
         public List<Player> Players { get; set; }
         public List<Card> Deck { get; set; }
