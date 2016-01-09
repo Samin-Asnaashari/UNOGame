@@ -36,6 +36,18 @@ namespace UNOService.Game
             draw2s = 0;
         }
 
+        public List<Card> PickANumberOfCardsFromDeck(int numberOfCardsToPick)
+        {
+            List<Card> pickedCards = new List<Card>();
+            for (int i = 0; i < numberOfCardsToPick; i++)
+            {
+                pickedCards.Add(Deck[0]);
+                Deck.RemoveAt(0);
+            }
+
+            return pickedCards;
+        }
+
         public void GiveEachPlayer7Cards()
         {
             List<Card> cards;
