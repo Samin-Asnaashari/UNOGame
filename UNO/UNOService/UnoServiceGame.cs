@@ -26,9 +26,9 @@ namespace UNOService
 
         public bool playCard(Card card)
         {
-
             Player PlayerWhoWantsToPlayACard = getPlayerFromGameContext();
             Game.Game game = PlayerWhoWantsToPlayACard.Game;
+
             if (game.CurrentPlayer.UserName == PlayerWhoWantsToPlayACard.UserName)
             {
                 if (CheckPlayedCard(game.PlayedCards[game.PlayedCards.Count - 1], card))
@@ -45,11 +45,12 @@ namespace UNOService
                     if (PlayerWhoWantsToPlayACard.Hand.Count() == 0)
                     {
                         //game.End();
-                        foreach(Player p in game.Players)
+                        foreach (Player p in game.Players)
                         {
                             if (p.UserName != PlayerWhoWantsToPlayACard.UserName) //Prevent deadlock
                                 p.IGameCallback.EndOfTheGame(PlayerWhoWantsToPlayACard.UserName);
                         }
+                        return true;
                     }
                     else
                     {
@@ -62,17 +63,15 @@ namespace UNOService
                         //        game.PreviousPlayer.UnoSaid = true;
                         //    }
                         //}
+                        return true;
                     }
-                    return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
             else
+            {
                 return false;
-
+            }
         }
 
 
@@ -105,7 +104,7 @@ namespace UNOService
 
             self.IGameCallback = clientCallbackGame;
 
-            Game.Game game = self.Game;            
+            Game.Game game = self.Game;
 
             foreach (Player player in game.Players)
             {
@@ -137,7 +136,7 @@ namespace UNOService
 
         public Card takeCard()
         {
-           Player callingPlayer = getPlayerFromGameContext();
+            Player callingPlayer = getPlayerFromGameContext();
            Game.Game game = callingPlayer.Game;
             if (game.Deck.Count() == 0)
             {
@@ -146,6 +145,9 @@ namespace UNOService
 
             Card taken = game.Deck[0];
             game.Deck.RemoveAt(0);
+
+            callingPlayer.UnoSaid = false;//if he had uno but could not play/win
+            callingPlayer.AddCard(taken);
 
             foreach (var item in game.Players)
             {
@@ -195,7 +197,7 @@ namespace UNOService
                             item.IGameCallback.NotifyOpponentsOfPlayerPunished(callingPlayer.UserName);
                     }
                 }
-            }
+        }
 
             game.EndTurn();
 
@@ -213,7 +215,7 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        private void Uno(Player playerWhoCalledUno, Game.Game game)
+        private bool Uno(Player playerWhoCalledUno, Game.Game game)
         {
             //Hi coen I dont want to change your code or delete hahah like someone did to mine so I wrote what I think is missing or incorrect.
             //so as we know players can call uno on the playerWhoShouldCallUNO only while the NEXT(player next to playerWhoShouldCallUNO depending on the current direcion of the game) player turn is not played.
@@ -222,23 +224,42 @@ namespace UNOService
             //The method should be made from a perspective that you dont know which player is gonna call uno first but I think you know this. 
             //And the game.currentPlayer should match, at the moment of saying Uno or calling UNO on somebody, the player next to the playerWhoShouldCallUNO depending on the current direcion of the game.
 
-            if (playerWhoCalledUno == game.PreviousPlayer && playerWhoCalledUno.UnoSaid == false) // Player called Uno on himself // added that piece just to not double put true if already true(if playerWhoShouldCallUNO say uno two times)
+            if (playerWhoCalledUno == game.PreviousPlayer && playerWhoCalledUno.Hand.Count == 1 && playerWhoCalledUno.UnoSaid == false) // Player called Uno on himself // added that piece just to not double put true if already true(if playerWhoShouldCallUNO say uno two times)
             {
                 playerWhoCalledUno.UnoSaid = true;
+                return true;
             }
             else // Call Uno on other players
             {
+                List<Card> cards = new List<Card>();
+                Player playerPunished = null;
                 foreach (Player player in game.Players)
                 {
                     if (player != playerWhoCalledUno)
                     {
                         if (player.Hand.Count == 1 && player.UnoSaid == false)
                         {           
-                            player.UnoSaid = true;
+                            cards = game.PickANumberOfCardsFromDeck(2);
+                            player.AddCard(cards);
+                            player.IGameCallback.CardsAssigned(cards, null);
+                            playerPunished = player;
+                            break;
+                            //player.UnoSaid = true;
                             //player.IGameCallback.CardsAssigned(
                         }
                     }
                 }
+                if (playerPunished != null)
+                {
+                    foreach (Player player in game.Players)
+                    {
+                        if (player.UserName != playerPunished.UserName)
+                            player.IGameCallback.NotifyPlayersNumberOfCardsTaken(2, playerPunished.UserName);
+                    }
+                    return false;
+                }
+                else
+                    return true;
             }
         }
 
@@ -274,16 +295,38 @@ namespace UNOService
             Player player = getPlayerFromGameContext();
             Game.Game game = player.Game;
 
-            if (message.ToLower().Contains("uno"))
-            {
-                Uno(player, game);
-            }
+            bool saved = false;
 
+            if (message.Length == 3)
+            {
+                if (message.ToLower().IndexOf("uno", 0, 3) == 0)
+                {
+                    message = $"{player.UserName}: {message}";
+                    if (!game.UnoSaidAlready)//prevent multiple unos and multiple incorrect punishments
+                    {
+                        game.UnoSaidAlready = true;
+                        saved = Uno(player, game);
+                        game.UnoSaidAlready = false;
+            }
+                    else
+                        saved = true;
+
+                    if (saved)
+                    {
+                        message += "(saved)";
+                    }
+                    else
+                        message += "(Punished)";
+                }
+                else
+                    message = $"{player.UserName}: {message}";
+            }
+            else
             message = $"{player.UserName}: {message}";
 
             foreach (Player currentPlayer in game.Players)
             {
-                if (currentPlayer != player)//how is the player who is sending the message gonna see the message in the chat?Handled in the client?
+                //if (currentPlayer != player)//how is the player who is sending the message gonna see the message in the chat?Handled in the client?
                 {
                     currentPlayer.IGameCallback.SendMessageGameCallback(message);
                 }
@@ -303,7 +346,7 @@ namespace UNOService
 
         private void UnoServiceGame_AllPlayersConnected(object sender, Game.Game game)
         {
-            game.CreateDeck();
+            //game.CreateDeck();//deck already created in constructor
             game.GiveEachPlayer7Cards();
 
             List<string> playersUserNames = new List<string>();
