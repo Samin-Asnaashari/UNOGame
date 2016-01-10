@@ -58,7 +58,7 @@ namespace UNOService.Game
             {
                 count = 0;
                 cards = new List<Card>();
-                while (count != 3)
+                while (count != 7)
                 {
                     cards.Add(Deck[0]);
                     Deck.RemoveAt(0);
