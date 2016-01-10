@@ -39,8 +39,6 @@ namespace UNOService
                     }
                     else
                     {
-                        game.CardAction(card);
-                        game.EndTurn();
                         if (game.PreviousPlayer != null)
                         {
                             if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
@@ -48,6 +46,9 @@ namespace UNOService
                                 game.PreviousPlayer.UnoSaid = true;
                             }
                         }
+                        game.CardAction(card);
+                        game.EndTurn();
+                        
                     }
                     return true;
                 }
