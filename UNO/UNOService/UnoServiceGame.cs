@@ -128,8 +128,7 @@ namespace UNOService
             if (game.Deck.Count() == 0)
             {
                 game.ReFillDeck();
-            }
-            //make it better 
+            } 
 
             Card taken = game.Deck[0];
             game.Deck.RemoveAt(0);
@@ -288,7 +287,7 @@ namespace UNOService
 
         private void UnoServiceGame_AllPlayersConnected(object sender, Game.Game game)
         {
-            game.CreateDeck();
+            //game.CreateDeck();//deck already created in constructor
             game.GiveEachPlayer7Cards();
 
             List<string> playersUserNames = new List<string>();
