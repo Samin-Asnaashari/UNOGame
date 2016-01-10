@@ -137,7 +137,7 @@ namespace UnoClient.Game
 
         private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
         {
-            chat.Items.Add($"{username}: {chatMessage.Text}");
+            //chat.Items.Add($"{username}: {chatMessage.Text}");
             GameProxy.SendMessageGame(chatMessage.Text);
 
             chatMessage.Text = "";

@@ -16,6 +16,8 @@ namespace UNOService.Game
         public List<Card> PlayedCards { get; set; }
         public Direction Direction { get; set; }
 
+        public bool UnoSaidAlready { get; set; }
+
         private int previousTurn { get; set; }
         private int currentTurn { get; set; }
         public Player CurrentPlayer { get { return Players[currentTurn]; } }

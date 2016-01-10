@@ -14,7 +14,7 @@ namespace UNOService
 		/// </summary>
 		/// <param name="cards"></param>
 		[OperationContract(IsOneWay = true)]
-		void CardsAssigned(List<Card> cards, List<string> playersUserNames);
+		void CardsAssigned(List<Card> cards, List<string> playersUserNames);//second parameter needed for when initializing game for first time.. fill null at all other places used
 
         [OperationContract(IsOneWay = true)]
         void NotifyPlayersNumberOfCardsTaken(int nrOfCardsTaken, string playerWhoTookCardsUserName);

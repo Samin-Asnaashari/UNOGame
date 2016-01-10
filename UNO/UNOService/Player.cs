@@ -45,6 +45,11 @@ namespace UNOService
             
         }
 
+        public void AddCard(Card card)
+        {
+            this.Hand.Add(card);
+        }
+
         public override string ToString()
         {
             return this.UserName + "--- " + this.State;
@@ -55,6 +60,11 @@ namespace UNOService
             foreach (var item in Hand)
             {
                 if (item.Color == card.Color && item.Number == card.Number && item.Type == card.Type)
+                {
+                    Hand.Remove(item);
+                    break;
+                }
+                else if (card.Type == item.Type && (card.Type == CardType.wild || card.Type == CardType.draw4Wild))
                 {
                     Hand.Remove(item);
                     break;
