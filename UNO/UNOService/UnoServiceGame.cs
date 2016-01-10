@@ -13,18 +13,27 @@ namespace UNOService
         private delegate void AllPlayersConnectedEventHandler(object sender, Game.Game game);
         private event AllPlayersConnectedEventHandler AllPlayersConnected;
 
+        public bool ValidPlayerTurn(string UserName)
+        {
+            Game.Game game = getPlayerFromGameContext().Game;
+            if (game.CurrentPlayer.UserName == UserName)
+            {
+                return true;
+            }
+            else
+            return false;
+        }
+
         public bool playCard(Card card)
         {
 
             Player PlayerWhoWantsToPlayACard = getPlayerFromGameContext();
             Game.Game game = PlayerWhoWantsToPlayACard.Game;
-            //game.PlayedCards.LastOrDefault();
             if (game.CurrentPlayer.UserName == PlayerWhoWantsToPlayACard.UserName)
             {
                 if (CheckPlayedCard(game.PlayedCards[game.PlayedCards.Count - 1], card))
                 {
                     game.PlayedCards.Add(card);
-
                     PlayerWhoWantsToPlayACard.Remove(card);
 
                     foreach (Player p in game.Players)
@@ -36,25 +45,29 @@ namespace UNOService
                     if (PlayerWhoWantsToPlayACard.Hand.Count() == 0)
                     {
                         //game.End();
+                        foreach(Player p in game.Players)
+                        {
+                            if (p.UserName != PlayerWhoWantsToPlayACard.UserName) //Prevent deadlock
+                                p.IGameCallback.EndOfTheGame(PlayerWhoWantsToPlayACard.UserName);
+                        }
                     }
                     else
                     {
-                        game.CardAction(card);
-                        game.EndTurn();
-                        if (game.PreviousPlayer != null)
-                        {
-                            if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
-                            {
-                                game.PreviousPlayer.UnoSaid = true;
-                            }
-                        }
+                        CardAction(card);
+                        //game.EndTurn();
+                        //if (game.PreviousPlayer != null)
+                        //{
+                        //    if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                        //    {
+                        //        game.PreviousPlayer.UnoSaid = true;
+                        //    }
+                        //}
                     }
                     return true;
                 }
                 else
                 {
                     return false;
-                    //message in logstatus wrong card for playing
                 }
             }
             else
@@ -92,9 +105,7 @@ namespace UNOService
 
             self.IGameCallback = clientCallbackGame;
 
-            Game.Game game = self.Game;
-
-            //AssignCards(self,2);
+            Game.Game game = self.Game;            
 
             foreach (Player player in game.Players)
             {
@@ -105,9 +116,11 @@ namespace UNOService
             //Every player now has a game callback, so we can start sending events            
             if (AllPlayersConnected != null)
                 AllPlayersConnected(this, game);
+
+            //AssignCards(self,7);
         }
 
-        public void AssignCards(Player player, int numberofcardtoassign)
+        public void AssignCards(Player player, int numberofcardtoassign) //used for start up for game and punishments 
         {
             List<Card> cards = new List<Card>();
             for (int i = 0; i < numberofcardtoassign; i++)
@@ -124,13 +137,12 @@ namespace UNOService
 
         public Card takeCard()
         {
-            Player callingPlayer = getPlayerFromGameContext();
+           Player callingPlayer = getPlayerFromGameContext();
            Game.Game game = callingPlayer.Game;
             if (game.Deck.Count() == 0)
             {
                 game.ReFillDeck();
             }
-            //make it better 
 
             Card taken = game.Deck[0];
             game.Deck.RemoveAt(0);
@@ -142,17 +154,63 @@ namespace UNOService
             }
 
             return taken;
-
-            //List<Card> card=new List<Card>();
-            //card.Add(game.Deck[game.Deck.Count -1]);
-            //getPlayerFromGameContext().IGameCallback.CardsAssigned(card, null);
-            //return game.Deck[game.Deck.Count - 1];
         }
 
-
-        public void SaveReplay(int gameID)
+        public void CardAction(Card card)
         {
-            throw new NotImplementedException();//jndjnjdn
+            Player callingPlayer = getPlayerFromGameContext();
+            Game.Game game = callingPlayer.Game; 
+
+            if(card.Type== CardType.draw2)
+            {
+                game.draw2and4s += 2;
+            }
+            else if(card.Type==CardType.draw4Wild)
+            {
+                game.draw2and4s += 4;
+                //choose the color 
+            }
+            else
+            {
+                if (card.Type == CardType.skip)
+                {
+                    game.EndTurn();
+                }
+                else if (card.Type == CardType.reverse)
+                {
+                    game.SwitchDirection();
+                }
+                else if (card.Type == CardType.wild)
+                {
+                    //show color oanel to player to choose
+                }
+                if(game.draw2and4s !=0 )
+                {
+                    AssignCards(callingPlayer,game.draw2and4s);
+
+                    //is this punish for playcard action you guys mean ? 
+                    foreach (var item in game.Players)
+                    {
+                        if (item.UserName != callingPlayer.UserName)
+                            item.IGameCallback.NotifyOpponentsOfPlayerPunished(callingPlayer.UserName);
+                    }
+                }
+            }
+
+            game.EndTurn();
+
+            if (game.PreviousPlayer != null)
+            {
+                if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                {
+                    game.PreviousPlayer.UnoSaid = true;
+                }
+            }
+        }
+
+        public void SaveReplay()
+        {
+            throw new NotImplementedException();
         }
 
         private void Uno(Player playerWhoCalledUno, Game.Game game)

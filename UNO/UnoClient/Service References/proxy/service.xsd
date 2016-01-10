@@ -212,9 +212,7 @@
   </xs:element>
   <xs:element name="SaveReplay">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="gameID" type="xs:int" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveReplayResponse">
@@ -262,6 +260,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ValidPlayerTurn">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidPlayerTurnResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ValidPlayerTurnResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CardsAssigned">
     <xs:complexType>
       <xs:sequence>
@@ -304,6 +316,13 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EndOfTheGame">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="winner" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

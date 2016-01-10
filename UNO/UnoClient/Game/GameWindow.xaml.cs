@@ -26,11 +26,15 @@ namespace UnoClient.Game
 
         private string username;
 
+        private string password;
+
         // TODO Authenticate using password
         public GameWindow(string username, string password)
         {
             this.username = username;
             //this.GameID = 1;
+
+            this.password = password;
 
             GameProxy = new GameClient(new InstanceContext(this));
 
@@ -96,7 +100,7 @@ namespace UnoClient.Game
 
         public void TurnChanged(Player player)
         {
-            
+           
         }
 
         public void NotifyOpponentsOfPlayerPunished(string userName)
@@ -106,10 +110,19 @@ namespace UnoClient.Game
 
         private async void DeckOfCards_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Card takenCard = await GameProxy.takeCardAsync();
-            player1Hand.addCard(new CardControl(takenCard));
+            if (GameProxy.ValidPlayerTurn(username))
+            {
+                Card takenCard = await GameProxy.takeCardAsync();
+                player1Hand.addCard(new CardControl(takenCard));
+            }
+            else
+            {
+                MessageBox.Show("Is Not Your Turn!");
+            }
+            
         }
 
+        //check if it right player who want is its turn 
         public void CardPlayed(Card c, string playerWhoPlayed)
         {
             if (player2Hand.Username == playerWhoPlayed)
@@ -147,7 +160,15 @@ namespace UnoClient.Game
                 {
                     player4Hand.addCard(new CardControl());
                 }
-
         }
+
+        public void EndOfTheGame(string winner)
+        {
+            AfterGameWindow end = new AfterGameWindow(username,winner,password);
+            end.Show();
+            this.Close();
+        }
+
+
     }
 }

@@ -21,7 +21,7 @@ namespace UNOService.Game
         public Player CurrentPlayer { get { return Players[currentTurn]; } }
         public Player PreviousPlayer { get { if (previousTurn == -1) { return null; } else { return Players[previousTurn]; } } }
 
-        int draw2s;
+        public int draw2and4s;
 
         public Game(int gameID, List<Player> players)
         {
@@ -33,7 +33,7 @@ namespace UNOService.Game
 
             CreateDeck();
 
-            draw2s = 0;
+            draw2and4s = 0;
         }
 
         public List<Card> PickANumberOfCardsFromDeck(int numberOfCardsToPick)
@@ -164,33 +164,6 @@ namespace UNOService.Game
             {
                 Direction = Direction.clockwise;
             }
-        }
-
-
-        public void CardAction(Card card)
-        {
-            if (card.Type == CardType.skip)
-            {
-                //skip
-            }
-            else if (card.Type == CardType.reverse)
-            {
-                SwitchDirection();
-            }
-            else if (card.Type == CardType.draw2)
-            {
-                //wait for next player action
-                //AssignCard to next player if he/she didn't put also draw2 otherwise add 4 to next next 
-            }
-            else if (card.Type == CardType.wild)
-            {
-                //show color to other player to choose
-            }
-            else if (card.Type == CardType.draw4Wild)
-            {
-                //AssignCards4
-            }
-            //notify who punished 
         }
 
         public void ReFillDeck()

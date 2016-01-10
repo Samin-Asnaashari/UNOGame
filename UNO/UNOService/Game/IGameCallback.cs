@@ -46,5 +46,9 @@ namespace UNOService
         [OperationContract(IsOneWay = true)]
         void NotifyOpponentsOfPlayerPunished(string userName);
 
+        [OperationContract(IsOneWay = true)]
+        void EndOfTheGame(string winner);
+
+
     }
 }

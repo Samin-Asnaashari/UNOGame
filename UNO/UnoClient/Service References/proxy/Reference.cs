@@ -143,6 +143,9 @@ namespace UnoClient.proxy {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         InGame = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InAfterGame = 2,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -536,10 +539,10 @@ namespace UnoClient.proxy {
     public interface IGame {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SaveReplay", ReplyAction="http://tempuri.org/IGame/SaveReplayResponse")]
-        void SaveReplay(int gameID);
+        void SaveReplay();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SaveReplay", ReplyAction="http://tempuri.org/IGame/SaveReplayResponse")]
-        System.Threading.Tasks.Task SaveReplayAsync(int gameID);
+        System.Threading.Tasks.Task SaveReplayAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/takeCard", ReplyAction="http://tempuri.org/IGame/takeCardResponse")]
         UnoClient.proxy.Card takeCard();
@@ -564,6 +567,12 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToGameEvents")]
         System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/ValidPlayerTurn", ReplyAction="http://tempuri.org/IGame/ValidPlayerTurnResponse")]
+        bool ValidPlayerTurn(string UserName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/ValidPlayerTurn", ReplyAction="http://tempuri.org/IGame/ValidPlayerTurnResponse")]
+        System.Threading.Tasks.Task<bool> ValidPlayerTurnAsync(string UserName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -586,6 +595,9 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/NotifyOpponentsOfPlayerPunished")]
         void NotifyOpponentsOfPlayerPunished(string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/EndOfTheGame")]
+        void EndOfTheGame(string winner);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -616,12 +628,12 @@ namespace UnoClient.proxy {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void SaveReplay(int gameID) {
-            base.Channel.SaveReplay(gameID);
+        public void SaveReplay() {
+            base.Channel.SaveReplay();
         }
         
-        public System.Threading.Tasks.Task SaveReplayAsync(int gameID) {
-            return base.Channel.SaveReplayAsync(gameID);
+        public System.Threading.Tasks.Task SaveReplayAsync() {
+            return base.Channel.SaveReplayAsync();
         }
         
         public UnoClient.proxy.Card takeCard() {
@@ -654,6 +666,14 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName) {
             return base.Channel.SubscribeToGameEventsAsync(UserName);
+        }
+        
+        public bool ValidPlayerTurn(string UserName) {
+            return base.Channel.ValidPlayerTurn(UserName);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ValidPlayerTurnAsync(string UserName) {
+            return base.Channel.ValidPlayerTurnAsync(UserName);
         }
     }
 }

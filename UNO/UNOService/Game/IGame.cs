@@ -15,7 +15,7 @@ namespace UNOService
         /// Saves the the game played with all moves
         /// </summary>
         [OperationContract]
-        void SaveReplay(int gameID);
+        void SaveReplay();
 		//List<Player> players;
 
 		/// <summary>
@@ -48,5 +48,8 @@ namespace UNOService
         /// </summary>
         [OperationContract(IsOneWay = true)]
         void SubscribeToGameEvents(string UserName);
+
+        [OperationContract]
+        bool ValidPlayerTurn(string UserName);
     }
 }

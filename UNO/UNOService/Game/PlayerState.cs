@@ -8,6 +8,6 @@ namespace UNOService.Game
 {
     public enum PlayerState
     {
-        InLobby, InGame
+        InLobby, InGame, InAfterGame
     }
 }

@@ -1,0 +1,22 @@
+﻿<Window x:Class="UnoClient.Game.AfterGameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnoClient.Game"
+        mc:Ignorable="d"
+        Title="AfterGameWindow" Height="300" Width="300">
+    <Grid Background="#FF2C7E1B">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="53" Margin="76,58,0,0" VerticalAlignment="Top" Width="60" Source="/UnoClient;component/Images/Winner.jpg"/>
+        <TextBlock x:Name="Winner" HorizontalAlignment="Left" Margin="136,78,0,0" TextWrapping="Wrap" Text="player " VerticalAlignment="Top" Height="19" Width="84" TextAlignment="Center"/>
+        <Button x:Name="save" Content="Save" HorizontalAlignment="Left" Margin="156,15.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="54" Height="19" Background="#FF9A8787" Click="save_Click"/>
+        <Label x:Name="label" Content="Do you want to save the game?" HorizontalAlignment="Left" Margin="10,9.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="189" Height="25" FontSize="9.333"/>
+        <Button x:Name="gotolobby" Content="Lobby" HorizontalAlignment="Left" Margin="223,85.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="61" Height="32" Background="#FFA8A8A8" FontWeight="Bold" Click="gotolobby_Click"/>
+        <TextBlock x:Name="status" Margin="26,10,22.6,0" TextWrapping="Wrap" Text="win Or Loose " VerticalAlignment="Top" Height="18" TextAlignment="Center"/>
+
+    </Grid>
+</Window>
