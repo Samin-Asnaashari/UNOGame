@@ -239,26 +239,32 @@ namespace UNOService
 
             bool saved = false;
 
-            if (message.ToLower().IndexOf("uno", 0, 3) == 0 && message.Length == 3)
+            if (message.Length == 3)
             {
-                if (!game.UnoSaidAlready)//prevent multiple unos and multiple incorrect punishments
+                if (message.ToLower().IndexOf("uno", 0, 3) == 0)
                 {
-                    game.UnoSaidAlready = true;
-                    saved = Uno(player, game);
-                    game.UnoSaidAlready = false;
+                    message = $"{player.UserName}: {message}";
+                    if (!game.UnoSaidAlready)//prevent multiple unos and multiple incorrect punishments
+                    {
+                        game.UnoSaidAlready = true;
+                        saved = Uno(player, game);
+                        game.UnoSaidAlready = false;
+                    }
+                    else
+                        saved = true;
+
+                    if (saved)
+                    {
+                        message += "(saved)";
+                    }
+                    else
+                        message += "(Punished)";
                 }
                 else
-                    saved = true;
-            }
-
-            message = $"{player.UserName}: {message}";
-
-            if (saved)
-            {
-                message += "(saved)";
+                    message = $"{player.UserName}: {message}";
             }
             else
-                message += "(Punished)";
+                message = $"{player.UserName}: {message}";
 
             foreach (Player currentPlayer in game.Players)
             {
