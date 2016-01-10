@@ -572,6 +572,9 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/CardsAssigned")]
         void CardsAssigned(System.Collections.Generic.List<UnoClient.proxy.Card> cards, System.Collections.Generic.List<string> playersUserNames);
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/NotifyPlayersNumberOfCardsTaken")]
+        void NotifyPlayersNumberOfCardsTaken(int nrOfCardsTaken, string playerWhoTookCardsUserName);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TurnChanged")]
         void TurnChanged(UnoClient.proxy.Player player);
         

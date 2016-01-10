@@ -124,17 +124,29 @@ namespace UNOService
 
         public Card takeCard()
         {
-           Game.Game game = getPlayerFromGameContext().Game;
+            Player callingPlayer = getPlayerFromGameContext();
+           Game.Game game = callingPlayer.Game;
             if (game.Deck.Count() == 0)
             {
-                game.CreateDeck();
-                game.Shuffle();
+                game.ReFillDeck();
             }
             //make it better 
-            List<Card> card=new List<Card>();
-            card.Add(game.Deck[game.Deck.Count -1]);
-            getPlayerFromGameContext().IGameCallback.CardsAssigned(card, null);
-            return game.Deck[game.Deck.Count - 1];
+
+            Card taken = game.Deck[0];
+            game.Deck.RemoveAt(0);
+
+            foreach (var item in game.Players)
+            {
+                if (item.UserName != callingPlayer.UserName)
+                    item.IGameCallback.NotifyPlayersNumberOfCardsTaken(1, callingPlayer.UserName);
+            }
+
+            return taken;
+
+            //List<Card> card=new List<Card>();
+            //card.Add(game.Deck[game.Deck.Count -1]);
+            //getPlayerFromGameContext().IGameCallback.CardsAssigned(card, null);
+            //return game.Deck[game.Deck.Count - 1];
         }
 
 
@@ -234,7 +246,6 @@ namespace UNOService
         private void UnoServiceGame_AllPlayersConnected(object sender, Game.Game game)
         {
             game.CreateDeck();
-            game.Shuffle();
             game.GiveEachPlayer7Cards();
 
             List<string> playersUserNames = new List<string>();

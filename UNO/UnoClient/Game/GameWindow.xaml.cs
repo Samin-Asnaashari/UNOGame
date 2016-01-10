@@ -70,7 +70,7 @@ namespace UnoClient.Game
 
 
                 if(player2Hand.Username != null)
-                    for (int i = 0; i < 7; i++)
+                    for (int i = 0; i < 3; i++)
                         player2Hand.addCard(new CardControl());
 
                 if (player3Hand.Username != null)
@@ -128,6 +128,26 @@ namespace UnoClient.Game
             GameProxy.SendMessageGame(chatMessage.Text);
 
             chatMessage.Text = "";
+        }
+
+        public void NotifyPlayersNumberOfCardsTaken(int nrOfCardsTaken, string playerWhoTookCardsUserName)
+        {
+            if (player2Hand.Username == playerWhoTookCardsUserName)
+                for (int i = 0; i < nrOfCardsTaken; i++)
+                {
+                    player2Hand.addCard(new CardControl());
+                }
+            else if (player3Hand.Username == playerWhoTookCardsUserName)
+                for (int i = 0; i < nrOfCardsTaken; i++)
+                {
+                    player3Hand.addCard(new CardControl());
+                }
+            else if (player4Hand.Username == playerWhoTookCardsUserName)
+                for (int i = 0; i < nrOfCardsTaken; i++)
+                {
+                    player4Hand.addCard(new CardControl());
+                }
+
         }
     }
 }

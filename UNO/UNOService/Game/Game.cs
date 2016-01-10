@@ -56,7 +56,7 @@ namespace UNOService.Game
             {
                 count = 0;
                 cards = new List<Card>();
-                while (count != 7)
+                while (count != 3)
                 {
                     cards.Add(Deck[0]);
                     Deck.RemoveAt(0);
@@ -66,16 +66,16 @@ namespace UNOService.Game
             }
         }
 
-        public void Shuffle()
+        public void Shuffle(List<Card> deckToShuffle)
         {
             Random r = new Random();
 
-            for (int n = (Deck.Count - 1); n > 0; --n)
+            for (int n = (deckToShuffle.Count - 1); n > 0; --n)
             {
                 int k = r.Next(n + 1);
-                Card temp = Deck[n];
-                Deck[n] = Deck[k];
-                Deck[k] = temp;
+                Card temp = deckToShuffle[n];
+                deckToShuffle[n] = deckToShuffle[k];
+                deckToShuffle[k] = temp;
             }
         }
 
@@ -125,6 +125,8 @@ namespace UNOService.Game
 
                 cardColors.RemoveAt(cardColors.Count - 1);
             }
+
+            Shuffle(this.Deck);
         }
 
         public void EndTurn()
@@ -191,5 +193,14 @@ namespace UNOService.Game
             //notify who punished 
         }
 
+        public void ReFillDeck()
+        {
+            Card lastCard = PlayedCards.Last();
+            PlayedCards.Remove(lastCard);
+            this.Shuffle(PlayedCards);
+            this.Deck = this.PlayedCards;
+            this.PlayedCards = new List<Card>();
+            PlayedCards.Add(lastCard);
+        }
     }
 }

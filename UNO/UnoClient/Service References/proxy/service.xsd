@@ -270,6 +270,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="NotifyPlayersNumberOfCardsTaken">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nrOfCardsTaken" type="xs:int" />
+        <xs:element minOccurs="0" name="playerWhoTookCardsUserName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="TurnChanged">
     <xs:complexType>
       <xs:sequence>

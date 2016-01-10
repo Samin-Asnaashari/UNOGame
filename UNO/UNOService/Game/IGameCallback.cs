@@ -16,6 +16,9 @@ namespace UNOService
 		[OperationContract(IsOneWay = true)]
 		void CardsAssigned(List<Card> cards, List<string> playersUserNames);
 
+        [OperationContract(IsOneWay = true)]
+        void NotifyPlayersNumberOfCardsTaken(int nrOfCardsTaken, string playerWhoTookCardsUserName);
+
         /// <summary>
         /// Will notify the client that someone's turn has ended and someone else turn starts.
         /// </summary>
