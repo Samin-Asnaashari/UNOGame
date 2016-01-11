@@ -33,6 +33,26 @@ namespace UNOService
             {
                 if (CheckPlayedCard(game.PlayedCards[game.PlayedCards.Count - 1], card))
                 {
+                    if (game.draw2and4s != 0)
+                    {
+                        List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
+
+                        foreach (var item in game.Players)
+                        {
+                            if (item.UserName != PlayerWhoWantsToPlayACard.UserName)//prevent deadlock
+                                item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, PlayerWhoWantsToPlayACard.UserName);
+                        }
+                        PlayerWhoWantsToPlayACard.IGameCallback.CardsAssigned(cards, null);
+                        if (game.PreviousPlayer != null)
+                        {
+                            if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                            {
+                                game.PreviousPlayer.UnoSaid = true;
+                            }
+                        }
+                        game.EndTurn();
+                        return false;
+                    }
                     game.PlayedCards.Add(card);
                     PlayerWhoWantsToPlayACard.Remove(card);
 
@@ -54,15 +74,16 @@ namespace UNOService
                     }
                     else
                     {
+                        if (game.PreviousPlayer != null)
+                        {
+                            if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                            {
+                                game.PreviousPlayer.UnoSaid = true;
+                            }
+                        }
                         CardAction(card);
-                        //game.EndTurn();
-                        //if (game.PreviousPlayer != null)
-                        //{
-                        //    if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
-                        //    {
-                        //        game.PreviousPlayer.UnoSaid = true;
-                        //    }
-                        //}
+                        game.EndTurn();
+                        
                         return true;
                     }
                 }
@@ -70,6 +91,8 @@ namespace UNOService
             }
             else
             {
+                CardAction(card);
+                game.EndTurn();
                 return false;
             }
         }
@@ -89,7 +112,7 @@ namespace UNOService
             {
                 return true;
             }
-            else 
+             
             {
                 return false;
             }
@@ -158,54 +181,61 @@ namespace UNOService
             return taken;
         }
 
+
         public void CardAction(Card card)
         {
             Player callingPlayer = getPlayerFromGameContext();
-            Game.Game game = callingPlayer.Game; 
+            Game.Game game = callingPlayer.Game;
 
-            if(card.Type== CardType.draw2)
+            if (card.Type == CardType.draw2)
             {
                 game.draw2and4s += 2;
-            }
-            else if(card.Type==CardType.draw4Wild)
-            {
-                game.draw2and4s += 4;
-                //choose the color 
-            }
-            else
-            {
-                if (card.Type == CardType.skip)
+                Card c = game.findnextplayer().Hand.Find(x => x.Type == CardType.draw2);
+                if (c == null)
                 {
-                    game.EndTurn();
-                }
-                else if (card.Type == CardType.reverse)
-                {
-                    game.SwitchDirection();
-                }
-                else if (card.Type == CardType.wild)
-                {
-                    //show color oanel to player to choose
-                }
-                if(game.draw2and4s !=0 )
-                {
-                    AssignCards(callingPlayer,game.draw2and4s);
+                    List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
 
-                    //is this punish for playcard action you guys mean ? 
                     foreach (var item in game.Players)
                     {
-                        if (item.UserName != callingPlayer.UserName)
-                            item.IGameCallback.NotifyOpponentsOfPlayerPunished(callingPlayer.UserName);
+                        if (item.UserName != callingPlayer.UserName)//prevent deadlock
+                            item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, game.findnextplayer().UserName);
+                    }
+                    game.findnextplayer().IGameCallback.CardsAssigned(cards, null);
+                    game.draw2and4s = 0;
+                }
+
+                else if (card.Type == CardType.draw4Wild)
+                {
+                    game.draw2and4s += 4;
+                    //choose the color 
+                    Card cc = game.findnextplayer().Hand.Find(x => x.Type == CardType.draw4Wild);
+                    if (c == null)
+                    {
+                        List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
+
+                        foreach (var item in game.Players)
+                        {
+                            if (item.UserName != callingPlayer.UserName)//prevent deadlock
+                                item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, game.findnextplayer().UserName);
+                        }
+                        game.findnextplayer().IGameCallback.CardsAssigned(cards, null);
+                        game.draw2and4s = 0;
                     }
                 }
-        }
-
-            game.EndTurn();
-
-            if (game.PreviousPlayer != null)
-            {
-                if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
-                {
-                    game.PreviousPlayer.UnoSaid = true;
+                else
+                {                   
+                    if (card.Type == CardType.skip)
+                    {
+                        //game.EndTurn();
+                    }
+                    else if (card.Type == CardType.reverse)
+                    {
+                        game.SwitchDirection();
+                    }
+                    else if (card.Type == CardType.wild)
+                    {
+                        //show color oanel to player to choose
+                    }
                 }
             }
         }

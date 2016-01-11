@@ -58,7 +58,7 @@ namespace UNOService.Game
             {
                 count = 0;
                 cards = new List<Card>();
-                while (count != 3)
+                while (count != 7)
                 {
                     cards.Add(Deck[0]);
                     Deck.RemoveAt(0);
@@ -177,5 +177,25 @@ namespace UNOService.Game
             this.PlayedCards = new List<Card>();
             PlayedCards.Add(lastCard);
         }
+
+        public Player findnextplayer()
+        {
+            int i = Players.FindIndex(x => x.UserName == CurrentPlayer.UserName); ;
+            if (Direction == Direction.clockwise)
+            {
+                return Players[(i+1)%Players.Count];
+            }
+            else
+            {
+                i--;
+
+                if (i < 0)
+                {
+                    i += Players.Count();
+                }
+                return Players[i];
+            }
+        }
+
     }
 }

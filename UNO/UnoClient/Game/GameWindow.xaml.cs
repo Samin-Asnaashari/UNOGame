@@ -74,7 +74,7 @@ namespace UnoClient.Game
 
 
                 if(player2Hand.Username != null)
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 7; i++)
                         player2Hand.addCard(new CardControl());
 
                 if (player3Hand.Username != null)
