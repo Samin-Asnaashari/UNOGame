@@ -76,6 +76,9 @@
     <Compile Include="Game\CardHand.xaml.cs">
       <DependentUpon>CardHand.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Game\ColorPickerWindow.xaml.cs">
+      <DependentUpon>ColorPickerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lobby\InviteControl.xaml.cs">
       <DependentUpon>InviteControl.xaml</DependentUpon>
     </Compile>
@@ -102,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Game\CardHand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Game\ColorPickerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
