@@ -158,13 +158,21 @@ namespace UNOService.Game
 
         public void SwitchDirection()
         {
+            previousTurn = currentTurn;
             if (Direction == Direction.clockwise)
             {
                 Direction = Direction.counterClockwise;
+                currentTurn--; ;
+
+                if (currentTurn < 0)
+                {
+                    currentTurn += Players.Count();
+                }
             }
             else
             {
                 Direction = Direction.clockwise;
+                currentTurn = (currentTurn + 1) % Players.Count();
             }
         }
 
@@ -180,7 +188,7 @@ namespace UNOService.Game
 
         public Player findnextplayer()
         {
-            int i = Players.FindIndex(x => x.UserName == CurrentPlayer.UserName); ;
+            int i = Players.FindIndex(x => x.UserName == CurrentPlayer.UserName); 
             if (Direction == Direction.clockwise)
             {
                 return Players[(i+1)%Players.Count];
@@ -194,6 +202,24 @@ namespace UNOService.Game
                     i += Players.Count();
                 }
                 return Players[i];
+            }
+        }
+
+        public void Skip()
+        {
+            previousTurn = currentTurn;
+            if (Direction == Direction.clockwise)
+            {
+                currentTurn = (currentTurn + 2) % Players.Count();
+            }
+            else
+            {
+                currentTurn -= 2;
+
+                if (currentTurn < 0)
+                {
+                    currentTurn += Players.Count();
+                }
             }
         }
 

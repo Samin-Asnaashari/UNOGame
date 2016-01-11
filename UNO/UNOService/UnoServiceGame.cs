@@ -35,23 +35,27 @@ namespace UNOService
                 {
                     if (game.draw2and4s != 0)
                     {
-                        List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
+                        if (card.Type != CardType.draw4Wild || card.Type != CardType.wild)
+                        {
+                            List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
 
-                        foreach (var item in game.Players)
-                        {
-                            if (item.UserName != PlayerWhoWantsToPlayACard.UserName)//prevent deadlock
-                                item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, PlayerWhoWantsToPlayACard.UserName);
-                        }
-                        PlayerWhoWantsToPlayACard.IGameCallback.CardsAssigned(cards, null);
-                        if (game.PreviousPlayer != null)
-                        {
-                            if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                            foreach (var item in game.Players)
                             {
-                                game.PreviousPlayer.UnoSaid = true;
+                                if (item.UserName != PlayerWhoWantsToPlayACard.UserName)//prevent deadlock
+                                    item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, PlayerWhoWantsToPlayACard.UserName);
                             }
+                            PlayerWhoWantsToPlayACard.IGameCallback.CardsAssigned(cards, null);
+                            if (game.PreviousPlayer != null)
+                            {
+                                if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                                {
+                                    game.PreviousPlayer.UnoSaid = true;
+                                }
+                            }
+                            game.EndTurn();
+                            game.draw2and4s = 0;
+                            return false;
                         }
-                        game.EndTurn();
-                        return false;
                     }
                     game.PlayedCards.Add(card);
                     PlayerWhoWantsToPlayACard.Remove(card);
@@ -74,6 +78,8 @@ namespace UNOService
                     }
                     else
                     {
+                        //need to be consider the all situation
+                        //server saved the previous player 
                         if (game.PreviousPlayer != null)
                         {
                             if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
@@ -82,17 +88,16 @@ namespace UNOService
                             }
                         }
                         CardAction(card);
-                        game.EndTurn();
-                        
+                        if(card.Type != CardType.skip)
+                            game.EndTurn();
                         return true;
                     }
                 }
-                return true;
+                else
+                return false;
             }
             else
             {
-                CardAction(card);
-                game.EndTurn();
                 return false;
             }
         }
@@ -221,20 +226,18 @@ namespace UNOService
                         game.findnextplayer().IGameCallback.CardsAssigned(cards, null);
                         game.draw2and4s = 0;
                     }
+                    //uno problem
                 }
                 else
                 {                   
                     if (card.Type == CardType.skip)
                     {
-                        //game.EndTurn();
+                        game.Skip();
                     }
                     else if (card.Type == CardType.reverse)
                     {
                         game.SwitchDirection();
-                    }
-                    else if (card.Type == CardType.wild)
-                    {
-                        //show color oanel to player to choose
+
                     }
                 }
             }
