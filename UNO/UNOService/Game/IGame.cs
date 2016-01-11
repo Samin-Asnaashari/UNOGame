@@ -51,5 +51,8 @@ namespace UNOService
 
         [OperationContract]
         bool ValidPlayerTurn(string UserName);
+
+        [OperationContract(IsOneWay = true)]
+        void EndGame();
     }
 }

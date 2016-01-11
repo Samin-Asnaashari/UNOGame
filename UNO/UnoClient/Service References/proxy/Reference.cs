@@ -573,6 +573,12 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/ValidPlayerTurn", ReplyAction="http://tempuri.org/IGame/ValidPlayerTurnResponse")]
         System.Threading.Tasks.Task<bool> ValidPlayerTurnAsync(string UserName);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/EndGame")]
+        void EndGame();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/EndGame")]
+        System.Threading.Tasks.Task EndGameAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -674,6 +680,14 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task<bool> ValidPlayerTurnAsync(string UserName) {
             return base.Channel.ValidPlayerTurnAsync(UserName);
+        }
+        
+        public void EndGame() {
+            base.Channel.EndGame();
+        }
+        
+        public System.Threading.Tasks.Task EndGameAsync() {
+            return base.Channel.EndGameAsync();
         }
     }
 }
