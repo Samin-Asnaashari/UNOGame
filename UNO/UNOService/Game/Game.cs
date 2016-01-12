@@ -395,9 +395,8 @@ namespace UNOService.Game
             }
         }
 
-        public void Start()
+        public void StartGame()
         {
-
             List<string> playersUserNames = Players.Select(x => x.UserName).ToList();
 
             foreach (Player player in Players)

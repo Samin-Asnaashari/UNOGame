@@ -49,6 +49,8 @@ namespace UnoClient.Game
 
             this.Title = "Uno Game: " + username;
             player1Hand.Instantiate(username, playCard);
+
+            setControlsEnabled(false);
         }
 
         // Give client information about other players in the game
@@ -218,11 +220,12 @@ namespace UnoClient.Game
 
         public void SetActivePlayer()
         {
-            //player1Hand.Hand.IsEnabled = true;
-            //DeckOfCards.IsEnabled = true;
+            setControlsEnabled(true);
             player1Hand.sv.Background = Brushes.Yellow;
             Debug.WriteLine($"{username} started turn clientside");
 
+            // Bring Window to foreground
+            this.Activate();
         }
 
         private void endTurn()
@@ -238,9 +241,14 @@ namespace UnoClient.Game
             }
 
             player1Hand.sv.Background = Brushes.Brown;
-            //player1Hand.Hand.IsEnabled = false;
-            //DeckOfCards.IsEnabled = false;
+            setControlsEnabled(false);
             Debug.WriteLine($"{username} ended turn clientside");
+        }
+
+        private void setControlsEnabled(bool enabled)
+        {
+            player1Hand.Hand.IsEnabled = enabled;
+            DeckOfCards.IsEnabled = enabled;
         }
 
     }

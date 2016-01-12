@@ -35,7 +35,7 @@ namespace UNOService
                     return;
             }
 
-            game.Start();
+            game.StartGame();
         }
 
         public void SaveReplay()
