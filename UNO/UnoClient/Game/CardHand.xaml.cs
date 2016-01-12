@@ -33,6 +33,7 @@ namespace UnoClient.Game
 
             if (!active)
             {
+                // TODO Make sure this is 7, lowered to test UNO
                 AddFakeCards(7);
             }
         }

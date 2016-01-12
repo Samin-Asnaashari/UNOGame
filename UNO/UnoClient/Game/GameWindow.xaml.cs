@@ -82,7 +82,7 @@ namespace UnoClient.Game
 
         public void AssignCards(List<Card> cards)
         {
-            Debug.WriteLine($"{username} received {cards.Count} cards");
+            SendMessageGameCallback($"{username} received {cards.Count} cards");
 
             foreach (Card c in cards)
             {
@@ -146,8 +146,7 @@ namespace UnoClient.Game
 
             cardHand.AddFakeCards(nrOfCardsTaken);
 
-            chat.Items.Add($"{playerWhoTookCardsUserName} recieved {nrOfCardsTaken} cards");
-            chat.ScrollIntoView(chat.Items[chat.Items.Count - 1]); //Scroll to bottom
+            SendMessageGameCallback($"{playerWhoTookCardsUserName} recieved {nrOfCardsTaken} cards");
         }
 
         public void EndOfTheGame(string winner)
