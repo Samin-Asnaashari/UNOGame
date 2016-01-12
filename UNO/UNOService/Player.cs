@@ -27,7 +27,7 @@ namespace UNOService
         public Party Party { get; set; }
 
         public bool UnoSaid { get; set; }
-
+        public bool AlreadyPickedCards;
 
         public Player(String username)
         {

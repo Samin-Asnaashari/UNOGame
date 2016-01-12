@@ -14,17 +14,13 @@ namespace UNOService
 		/// </summary>
 		/// <param name="cards"></param>
 		[OperationContract(IsOneWay = true)]
-		void CardsAssigned(List<Card> cards, List<string> playersUserNames);//second parameter needed for when initializing game for first time.. fill null at all other places used
+		void AssignCards(List<Card> cards);
+
+        [OperationContract(IsOneWay = true)]
+        void InitializeGame(List<Card> cards, List<string> playersUserNames);
 
         [OperationContract(IsOneWay = true)]
         void NotifyPlayersNumberOfCardsTaken(int nrOfCardsTaken, string playerWhoTookCardsUserName);
-
-        /// <summary>
-        /// Will notify the client that someone's turn has ended and someone else turn starts.
-        /// </summary>
-        /// <param name="player"></param>
-        [OperationContract(IsOneWay = true)]
-        void TurnChanged(Player player);
 
         /// <summary>
         /// Crad that has been played notify other opponents
@@ -40,14 +36,11 @@ namespace UNOService
         [OperationContract(IsOneWay = true)]
         void SendMessageGameCallback(string message);
 
-        /// <summary>
-        /// when a player gets punished notify all other players in game
-        /// </summary>
-        [OperationContract(IsOneWay = true)]
-        void NotifyOpponentsOfPlayerPunished(string userName);
-
         [OperationContract(IsOneWay = true)]
         void EndOfTheGame(string winner);
+
+        [OperationContract(IsOneWay = true)]
+        void SetActivePlayer();
 
 
     }

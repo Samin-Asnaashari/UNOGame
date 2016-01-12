@@ -8,24 +8,24 @@ using UNOService.Game;
 
 namespace UNOService
 {
-	[ServiceContract(CallbackContract = typeof(IGameCallback))]
+    [ServiceContract(CallbackContract = typeof(IGameCallback))]
     [ServiceKnownType(typeof(CardColor))]
     public interface IGame
-	{
+    {
         /// <summary>
         /// Saves the the game played with all moves
         /// </summary>
         [OperationContract]
         void SaveReplay();
-		//List<Player> players;
+        //List<Player> players;
 
-		/// <summary>
-		/// Assigns the taken card to the players deck and returns that card.
-		/// </summary>
-		/// <permission>Only the player whose turn it is can take a card.</permission>
-		/// <returns>Card</returns>
-		[OperationContract]
-		Card takeCard();
+        /// <summary>
+        /// Assigns the taken card to the players deck and returns that card.
+        /// </summary>
+        /// <permission>Only the player whose turn it is can take a card.</permission>
+        /// <returns>Card</returns>
+        [OperationContract(IsOneWay = true)]
+        void TakeCards();
 
         /// <summary>
         /// Player who calls this metod will play card c.
@@ -35,13 +35,13 @@ namespace UNOService
         /// 
         //[OperationContract(IsOneWay = true)]
         [OperationContract]
-		bool playCard(Card card);
+        bool TryPlayCard(Card card);
 
         /// <summary>
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract]
         void SendMessageGame(string message);
 
         /// <summary>
@@ -49,9 +49,6 @@ namespace UNOService
         /// </summary>
         [OperationContract(IsOneWay = true)]
         void SubscribeToGameEvents(string UserName);
-
-        [OperationContract]
-        bool ValidPlayerTurn(string UserName);
 
         [OperationContract(IsOneWay = true)]
         void EndGame();

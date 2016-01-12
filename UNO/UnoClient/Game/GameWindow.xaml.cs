@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -27,6 +28,8 @@ namespace UnoClient.Game
         private string username;
 
         private string password;
+        List<CardHand> playerHands;
+
 
         // TODO Authenticate using password
         public GameWindow(string username, string password)
@@ -40,11 +43,15 @@ namespace UnoClient.Game
             GameProxy.SubscribeToGameEvents(username);
 
             InitializeComponent();
+
+            playerHands = new List<CardHand>() { player1Hand, player2Hand, player3Hand, player4Hand };
+
             this.Title = "Uno Game: " + username;
             player1Hand.Instantiate(username, true);
         }
 
-        public void CardsAssigned(List<Card> cards, List<string> playersUserNames)
+        // Give client information about other players in the game
+        public void InitializeGame(List<Card> cards, List<string> playersUserNames)
         {
             foreach (Card c in cards)
             {
@@ -58,11 +65,33 @@ namespace UnoClient.Game
                 playersUserNames.Remove(playersUserNames.First());
             }
 
-            List<CardHand> playerHands = new List<CardHand>() { player1Hand, player2Hand, player3Hand, player4Hand };
-
             for (int i = 1; i < playersUserNames.Count; i++) // Start at 1 because we are always at 0
             {
                 playerHands[i].Instantiate(playersUserNames[i]);
+            }
+
+            List<CardHand> notActivePlayers = playerHands.Where(x => string.IsNullOrWhiteSpace(x.Username)).ToList();
+
+            foreach (var control in notActivePlayers)
+            {
+                control.Visibility = Visibility.Hidden;
+                playerHands.Remove(control);
+            }
+
+        }
+
+        public void AssignCards(List<Card> cards)
+        {
+            Debug.WriteLine($"{username} received {cards.Count} cards");
+
+            foreach (Card c in cards)
+            {
+                player1Hand.AddCard(new CardControl(c)); //Add cards to your own hand
+            }
+
+            if (cards.Count > 1)
+            {
+                endTurn();
             }
         }
 
@@ -77,28 +106,14 @@ namespace UnoClient.Game
             chat.ScrollIntoView(chat.Items[chat.Items.Count - 1]); //Scroll to bottom
         }
 
-        public void TurnChanged(Player player)
-        {
-
-        }
-
         public void NotifyOpponentsOfPlayerPunished(string userName)
         {
             throw new NotImplementedException();
         }
 
-        private async void DeckOfCards_MouseDown(object sender, MouseButtonEventArgs e)
+        private void DeckOfCards_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (GameProxy.ValidPlayerTurn(username))
-            {
-                Card takenCard = await GameProxy.takeCardAsync();
-                player1Hand.AddCard(new CardControl(takenCard));
-            }
-            else
-            {
-                MessageBox.Show("Is Not Your Turn!");
-            }
-
+            GameProxy.TakeCards();
         }
 
         //check if it right player who want is its turn 
@@ -110,35 +125,33 @@ namespace UnoClient.Game
                 player3Hand.Hand.Children.RemoveAt(0);
             else if (player4Hand.Username == playerWhoPlayed)
                 player4Hand.Hand.Children.RemoveAt(0);
+            else
+            {
+                endTurn();
+            }
 
             lastPlayedCard.Content = new CardControl(c);
         }
 
         private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
         {
-            //chat.Items.Add($"{username}: {chatMessage.Text}");
+            chat.Items.Add(chatMessage.Text);
+            chat.ScrollIntoView(chat.Items[chat.Items.Count - 1]);
             GameProxy.SendMessageGame(chatMessage.Text);
-
-            chatMessage.Text = "";
         }
 
         public void NotifyPlayersNumberOfCardsTaken(int nrOfCardsTaken, string playerWhoTookCardsUserName)
         {
+            CardHand cardHand = null;
+
             if (player2Hand.Username == playerWhoTookCardsUserName)
-                for (int i = 0; i < nrOfCardsTaken; i++)
-                {
-                    player2Hand.AddCard(new CardControl());
-                }
+                cardHand = player2Hand;
             else if (player3Hand.Username == playerWhoTookCardsUserName)
-                for (int i = 0; i < nrOfCardsTaken; i++)
-                {
-                    player3Hand.AddCard(new CardControl());
-                }
+                cardHand = player3Hand;
             else if (player4Hand.Username == playerWhoTookCardsUserName)
-                for (int i = 0; i < nrOfCardsTaken; i++)
-                {
-                    player4Hand.AddCard(new CardControl());
-                }
+                cardHand = player4Hand;
+
+            cardHand.AddFakeCards(nrOfCardsTaken);
         }
 
         public void EndOfTheGame(string winner)
@@ -152,5 +165,34 @@ namespace UnoClient.Game
         {
             GameProxy.EndGame();
         }
+
+        public void SetActivePlayer()
+        {
+            //player1Hand.Hand.IsEnabled = true;
+            //DeckOfCards.IsEnabled = true;
+            player1Hand.sv.Background = Brushes.Yellow;
+            Debug.WriteLine($"{username} started turn");
+
+        }
+
+        private void endTurn()
+        {
+            // If only two players and skipping turns, don't change active player
+            if (playerHands.Count == 2)
+            {
+                Card card = lastPlayedCard.GetCard();
+                if (card != null)
+                {
+                    if (card.Type == CardType.skip)
+                        return;
+                }
+            }
+
+            player1Hand.sv.Background = Brushes.Brown;
+            //player1Hand.Hand.IsEnabled = false;
+            //DeckOfCards.IsEnabled = false;
+            Debug.WriteLine($"{username} ended turn");
+        }
+
     }
 }

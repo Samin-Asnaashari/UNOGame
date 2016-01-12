@@ -507,22 +507,22 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SaveReplay", ReplyAction="http://tempuri.org/IGame/SaveReplayResponse")]
         System.Threading.Tasks.Task SaveReplayAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/takeCard", ReplyAction="http://tempuri.org/IGame/takeCardResponse")]
-        UnoClient.proxy.Card takeCard();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TakeCards")]
+        void TakeCards();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/takeCard", ReplyAction="http://tempuri.org/IGame/takeCardResponse")]
-        System.Threading.Tasks.Task<UnoClient.proxy.Card> takeCardAsync();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TakeCards")]
+        System.Threading.Tasks.Task TakeCardsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/playCard", ReplyAction="http://tempuri.org/IGame/playCardResponse")]
-        bool playCard(UnoClient.proxy.Card card);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/TryPlayCard", ReplyAction="http://tempuri.org/IGame/TryPlayCardResponse")]
+        bool TryPlayCard(UnoClient.proxy.Card card);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/playCard", ReplyAction="http://tempuri.org/IGame/playCardResponse")]
-        System.Threading.Tasks.Task<bool> playCardAsync(UnoClient.proxy.Card card);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/TryPlayCard", ReplyAction="http://tempuri.org/IGame/TryPlayCardResponse")]
+        System.Threading.Tasks.Task<bool> TryPlayCardAsync(UnoClient.proxy.Card card);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SendMessageGame", ReplyAction="http://tempuri.org/IGame/SendMessageGameResponse")]
         void SendMessageGame(string message);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SendMessageGame", ReplyAction="http://tempuri.org/IGame/SendMessageGameResponse")]
         System.Threading.Tasks.Task SendMessageGameAsync(string message);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToGameEvents")]
@@ -530,12 +530,6 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToGameEvents")]
         System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/ValidPlayerTurn", ReplyAction="http://tempuri.org/IGame/ValidPlayerTurnResponse")]
-        bool ValidPlayerTurn(string UserName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/ValidPlayerTurn", ReplyAction="http://tempuri.org/IGame/ValidPlayerTurnResponse")]
-        System.Threading.Tasks.Task<bool> ValidPlayerTurnAsync(string UserName);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/EndGame")]
         void EndGame();
@@ -547,14 +541,14 @@ namespace UnoClient.proxy {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IGameCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/CardsAssigned")]
-        void CardsAssigned(System.Collections.Generic.List<UnoClient.proxy.Card> cards, System.Collections.Generic.List<string> playersUserNames);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/AssignCards")]
+        void AssignCards(System.Collections.Generic.List<UnoClient.proxy.Card> cards);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/InitializeGame")]
+        void InitializeGame(System.Collections.Generic.List<UnoClient.proxy.Card> cards, System.Collections.Generic.List<string> playersUserNames);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/NotifyPlayersNumberOfCardsTaken")]
         void NotifyPlayersNumberOfCardsTaken(int nrOfCardsTaken, string playerWhoTookCardsUserName);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TurnChanged")]
-        void TurnChanged(UnoClient.proxy.Player player);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/CardPlayed")]
         void CardPlayed(UnoClient.proxy.Card c, string playerWhoPlayed);
@@ -562,11 +556,11 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGameCallback")]
         void SendMessageGameCallback(string message);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/NotifyOpponentsOfPlayerPunished")]
-        void NotifyOpponentsOfPlayerPunished(string userName);
-        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/EndOfTheGame")]
         void EndOfTheGame(string winner);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SetActivePlayer")]
+        void SetActivePlayer();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -605,20 +599,20 @@ namespace UnoClient.proxy {
             return base.Channel.SaveReplayAsync();
         }
         
-        public UnoClient.proxy.Card takeCard() {
-            return base.Channel.takeCard();
+        public void TakeCards() {
+            base.Channel.TakeCards();
         }
         
-        public System.Threading.Tasks.Task<UnoClient.proxy.Card> takeCardAsync() {
-            return base.Channel.takeCardAsync();
+        public System.Threading.Tasks.Task TakeCardsAsync() {
+            return base.Channel.TakeCardsAsync();
         }
         
-        public bool playCard(UnoClient.proxy.Card card) {
-            return base.Channel.playCard(card);
+        public bool TryPlayCard(UnoClient.proxy.Card card) {
+            return base.Channel.TryPlayCard(card);
         }
         
-        public System.Threading.Tasks.Task<bool> playCardAsync(UnoClient.proxy.Card card) {
-            return base.Channel.playCardAsync(card);
+        public System.Threading.Tasks.Task<bool> TryPlayCardAsync(UnoClient.proxy.Card card) {
+            return base.Channel.TryPlayCardAsync(card);
         }
         
         public void SendMessageGame(string message) {
@@ -635,14 +629,6 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName) {
             return base.Channel.SubscribeToGameEventsAsync(UserName);
-        }
-        
-        public bool ValidPlayerTurn(string UserName) {
-            return base.Channel.ValidPlayerTurn(UserName);
-        }
-        
-        public System.Threading.Tasks.Task<bool> ValidPlayerTurnAsync(string UserName) {
-            return base.Channel.ValidPlayerTurnAsync(UserName);
         }
         
         public void EndGame() {

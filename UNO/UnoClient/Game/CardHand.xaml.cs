@@ -33,10 +33,7 @@ namespace UnoClient.Game
 
             if (!active)
             {
-                for (int i = 0; i < 7; i++)
-                {
-                    AddCard(new CardControl());
-                }
+                AddFakeCards(7);
             }
         }
 
@@ -44,6 +41,14 @@ namespace UnoClient.Game
         {
             InitializeComponent();
             this.DataContext = this;
+        }
+
+        public void AddFakeCards(int nrOfCards)
+        {
+            for (int i = 0; i < nrOfCards; i++)
+            {
+                AddCard(new CardControl());
+            }
         }
 
         public void AddCard(CardControl c)
@@ -70,7 +75,7 @@ namespace UnoClient.Game
                 cardToBePlayed.Color = colorPicker.SelectedColor;
             }
 
-            bool playSucces = parent.GameProxy.playCard(cardToBePlayed);//if special card, color chosen is saved in color attribute to be handled in the server
+            bool playSucces = parent.GameProxy.TryPlayCard(cardToBePlayed);//if special card, color chosen is saved in color attribute to be handled in the server
 
             if (playSucces)
             {

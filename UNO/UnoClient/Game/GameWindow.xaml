@@ -39,7 +39,7 @@
                     </Style>
                 </Image.Style>
             </Image>
-            <UnoClient:CardControl x:Name="lastPlayedCard" MaxWidth="677" MaxHeight="977" MinWidth="100" MinHeight="139" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="40"/>
+            <UnoClient:CardControl x:Name="lastPlayedCard" IsEnabled="False" MaxWidth="677" MaxHeight="977" MinWidth="100" MinHeight="139" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="40"/>
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="3" Margin="5,0,0,0">

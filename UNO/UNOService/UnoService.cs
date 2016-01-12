@@ -19,7 +19,6 @@ namespace UNOService
 
         public UnoService()
         {
-            this.AllPlayersConnected += UnoServiceGame_AllPlayersConnected;
             databaseHandler = new DatabaseHandler();
         }
 

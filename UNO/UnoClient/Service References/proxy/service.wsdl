@@ -1114,7 +1114,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_takeCard_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_TakeCards_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1137,7 +1137,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_takeCard_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_TryPlayCard_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1160,30 +1160,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_playCard_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_playCard_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_TryPlayCard_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1229,53 +1206,30 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_SendMessageGame_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_SubscribeToGameEvents_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_ValidPlayerTurn_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_ValidPlayerTurn_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1321,7 +1275,30 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_CardsAssigned_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_AssignCards_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_InitializeGame_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1345,29 +1322,6 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_NotifyPlayersNumberOfCardsTaken_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_TurnChanged_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1436,7 +1390,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_NotifyOpponentsOfPlayerPunished_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_EndOfTheGame_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1459,7 +1413,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_EndOfTheGame_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_SetActivePlayer_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1596,41 +1550,35 @@
   <wsdl:message name="IGame_SaveReplay_OutputMessage">
     <wsdl:part name="parameters" element="tns:SaveReplayResponse" />
   </wsdl:message>
-  <wsdl:message name="IGame_takeCard_InputMessage">
-    <wsdl:part name="parameters" element="tns:takeCard" />
+  <wsdl:message name="IGame_TakeCards_InputMessage">
+    <wsdl:part name="parameters" element="tns:TakeCards" />
   </wsdl:message>
-  <wsdl:message name="IGame_takeCard_OutputMessage">
-    <wsdl:part name="parameters" element="tns:takeCardResponse" />
+  <wsdl:message name="IGame_TryPlayCard_InputMessage">
+    <wsdl:part name="parameters" element="tns:TryPlayCard" />
   </wsdl:message>
-  <wsdl:message name="IGame_playCard_InputMessage">
-    <wsdl:part name="parameters" element="tns:playCard" />
-  </wsdl:message>
-  <wsdl:message name="IGame_playCard_OutputMessage">
-    <wsdl:part name="parameters" element="tns:playCardResponse" />
+  <wsdl:message name="IGame_TryPlayCard_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TryPlayCardResponse" />
   </wsdl:message>
   <wsdl:message name="IGame_SendMessageGame_InputMessage">
     <wsdl:part name="parameters" element="tns:SendMessageGame" />
   </wsdl:message>
+  <wsdl:message name="IGame_SendMessageGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageGameResponse" />
+  </wsdl:message>
   <wsdl:message name="IGame_SubscribeToGameEvents_InputMessage">
     <wsdl:part name="parameters" element="tns:SubscribeToGameEvents" />
-  </wsdl:message>
-  <wsdl:message name="IGame_ValidPlayerTurn_InputMessage">
-    <wsdl:part name="parameters" element="tns:ValidPlayerTurn" />
-  </wsdl:message>
-  <wsdl:message name="IGame_ValidPlayerTurn_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ValidPlayerTurnResponse" />
   </wsdl:message>
   <wsdl:message name="IGame_EndGame_InputMessage">
     <wsdl:part name="parameters" element="tns:EndGame" />
   </wsdl:message>
-  <wsdl:message name="IGame_CardsAssigned_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:CardsAssigned" />
+  <wsdl:message name="IGame_AssignCards_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:AssignCards" />
+  </wsdl:message>
+  <wsdl:message name="IGame_InitializeGame_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:InitializeGame" />
   </wsdl:message>
   <wsdl:message name="IGame_NotifyPlayersNumberOfCardsTaken_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyPlayersNumberOfCardsTaken" />
-  </wsdl:message>
-  <wsdl:message name="IGame_TurnChanged_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:TurnChanged" />
   </wsdl:message>
   <wsdl:message name="IGame_CardPlayed_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CardPlayed" />
@@ -1638,11 +1586,11 @@
   <wsdl:message name="IGame_SendMessageGameCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendMessageGameCallback" />
   </wsdl:message>
-  <wsdl:message name="IGame_NotifyOpponentsOfPlayerPunished_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:NotifyOpponentsOfPlayerPunished" />
-  </wsdl:message>
   <wsdl:message name="IGame_EndOfTheGame_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:EndOfTheGame" />
+  </wsdl:message>
+  <wsdl:message name="IGame_SetActivePlayer_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SetActivePlayer" />
   </wsdl:message>
   <wsdl:portType name="ILoginAndSignUp">
     <wsdl:operation name="Login">
@@ -1728,35 +1676,31 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IGame/SaveReplay" message="tns:IGame_SaveReplay_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/SaveReplayResponse" message="tns:IGame_SaveReplay_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="takeCard">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGame/takeCard" message="tns:IGame_takeCard_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGame/takeCardResponse" message="tns:IGame_takeCard_OutputMessage" />
+    <wsdl:operation name="TakeCards">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGame/TakeCards" message="tns:IGame_TakeCards_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="playCard">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGame/playCard" message="tns:IGame_playCard_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGame/playCardResponse" message="tns:IGame_playCard_OutputMessage" />
+    <wsdl:operation name="TryPlayCard">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGame/TryPlayCard" message="tns:IGame_TryPlayCard_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGame/TryPlayCardResponse" message="tns:IGame_TryPlayCard_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendMessageGame">
       <wsdl:input wsaw:Action="http://tempuri.org/IGame/SendMessageGame" message="tns:IGame_SendMessageGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGame/SendMessageGameResponse" message="tns:IGame_SendMessageGame_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SubscribeToGameEvents">
       <wsdl:input wsaw:Action="http://tempuri.org/IGame/SubscribeToGameEvents" message="tns:IGame_SubscribeToGameEvents_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ValidPlayerTurn">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGame/ValidPlayerTurn" message="tns:IGame_ValidPlayerTurn_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGame/ValidPlayerTurnResponse" message="tns:IGame_ValidPlayerTurn_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="EndGame">
       <wsdl:input wsaw:Action="http://tempuri.org/IGame/EndGame" message="tns:IGame_EndGame_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="CardsAssigned">
-      <wsdl:output wsaw:Action="http://tempuri.org/IGame/CardsAssigned" message="tns:IGame_CardsAssigned_OutputCallbackMessage" />
+    <wsdl:operation name="AssignCards">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGame/AssignCards" message="tns:IGame_AssignCards_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InitializeGame">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGame/InitializeGame" message="tns:IGame_InitializeGame_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="NotifyPlayersNumberOfCardsTaken">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/NotifyPlayersNumberOfCardsTaken" message="tns:IGame_NotifyPlayersNumberOfCardsTaken_OutputCallbackMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="TurnChanged">
-      <wsdl:output wsaw:Action="http://tempuri.org/IGame/TurnChanged" message="tns:IGame_TurnChanged_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="CardPlayed">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/CardPlayed" message="tns:IGame_CardPlayed_OutputCallbackMessage" />
@@ -1764,11 +1708,11 @@
     <wsdl:operation name="SendMessageGameCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/SendMessageGameCallback" message="tns:IGame_SendMessageGameCallback_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="NotifyOpponentsOfPlayerPunished">
-      <wsdl:output wsaw:Action="http://tempuri.org/IGame/NotifyOpponentsOfPlayerPunished" message="tns:IGame_NotifyOpponentsOfPlayerPunished_OutputCallbackMessage" />
-    </wsdl:operation>
     <wsdl:operation name="EndOfTheGame">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/EndOfTheGame" message="tns:IGame_EndOfTheGame_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetActivePlayer">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGame/SetActivePlayer" message="tns:IGame_SetActivePlayer_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_ILoginAndSignUp" type="tns:ILoginAndSignUp">
@@ -1988,25 +1932,21 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="takeCard">
-      <soap12:operation soapAction="http://tempuri.org/IGame/takeCard" style="document" />
+    <wsdl:operation name="TakeCards">
+      <soap12:operation soapAction="http://tempuri.org/IGame/TakeCards" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_takeCard_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_TakeCards_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_takeCard_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="playCard">
-      <soap12:operation soapAction="http://tempuri.org/IGame/playCard" style="document" />
+    <wsdl:operation name="TryPlayCard">
+      <soap12:operation soapAction="http://tempuri.org/IGame/TryPlayCard" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_playCard_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_TryPlayCard_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_playCard_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_TryPlayCard_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -2016,6 +1956,10 @@
         <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_SendMessageGame_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_SendMessageGame_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SubscribeToGameEvents">
       <soap12:operation soapAction="http://tempuri.org/IGame/SubscribeToGameEvents" style="document" />
@@ -2024,17 +1968,6 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="ValidPlayerTurn">
-      <soap12:operation soapAction="http://tempuri.org/IGame/ValidPlayerTurn" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_ValidPlayerTurn_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_ValidPlayerTurn_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="EndGame">
       <soap12:operation soapAction="http://tempuri.org/IGame/EndGame" style="document" />
       <wsdl:input>
@@ -2042,10 +1975,17 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="CardsAssigned">
-      <soap12:operation soapAction="http://tempuri.org/IGame/CardsAssigned" style="document" />
+    <wsdl:operation name="AssignCards">
+      <soap12:operation soapAction="http://tempuri.org/IGame/AssignCards" style="document" />
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_CardsAssigned_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_AssignCards_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InitializeGame">
+      <soap12:operation soapAction="http://tempuri.org/IGame/InitializeGame" style="document" />
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_InitializeGame_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -2053,13 +1993,6 @@
       <soap12:operation soapAction="http://tempuri.org/IGame/NotifyPlayersNumberOfCardsTaken" style="document" />
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_NotifyPlayersNumberOfCardsTaken_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="TurnChanged">
-      <soap12:operation soapAction="http://tempuri.org/IGame/TurnChanged" style="document" />
-      <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_TurnChanged_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -2077,17 +2010,17 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="NotifyOpponentsOfPlayerPunished">
-      <soap12:operation soapAction="http://tempuri.org/IGame/NotifyOpponentsOfPlayerPunished" style="document" />
-      <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_NotifyOpponentsOfPlayerPunished_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="EndOfTheGame">
       <soap12:operation soapAction="http://tempuri.org/IGame/EndOfTheGame" style="document" />
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_EndOfTheGame_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetActivePlayer">
+      <soap12:operation soapAction="http://tempuri.org/IGame/SetActivePlayer" style="document" />
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_SetActivePlayer_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

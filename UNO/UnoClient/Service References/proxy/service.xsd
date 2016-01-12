@@ -220,29 +220,22 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="takeCard">
+  <xs:element name="TakeCards">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="takeCardResponse">
+  <xs:element name="TryPlayCard">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="takeCardResult" nillable="true" type="q10:Card" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="card" nillable="true" type="q10:Card" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="playCard">
+  <xs:element name="TryPlayCardResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="card" nillable="true" type="q11:Card" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="playCardResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="playCardResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="TryPlayCardResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -253,24 +246,15 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SendMessageGameResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SubscribeToGameEvents">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ValidPlayerTurn">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ValidPlayerTurnResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="ValidPlayerTurnResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -279,7 +263,14 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="CardsAssigned">
+  <xs:element name="AssignCards">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q11:ArrayOfCard" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InitializeGame">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q12:ArrayOfCard" />
@@ -295,17 +286,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="TurnChanged">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="player" nillable="true" type="q14:Player" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="CardPlayed">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="c" nillable="true" type="q15:Card" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="c" nillable="true" type="q14:Card" />
         <xs:element minOccurs="0" name="playerWhoPlayed" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -317,18 +301,16 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="NotifyOpponentsOfPlayerPunished">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="EndOfTheGame">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="winner" nillable="true" type="xs:string" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetActivePlayer">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
 </xs:schema>

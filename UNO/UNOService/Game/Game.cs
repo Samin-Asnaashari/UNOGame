@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.Diagnostics;
 
 namespace UNOService.Game
 {
@@ -12,76 +13,233 @@ namespace UNOService.Game
     {
         public int GameID { get; set; }
         public List<Player> Players { get; set; }
-        public List<Card> Deck { get; set; }
-        public List<Card> PlayedCards { get; set; }
+        public Stack<Card> Deck { get; set; }
+        public Stack<Card> PlayedCards { get; set; }
         public Direction Direction { get; set; }
+        Random rand;
 
-        public bool UnoSaidAlready { get; set; }
+        private int nextPlayerTurn;
+        public Player CurrentPlayer { get; private set; }
+        private Player PreviousPlayer;
 
-        private int previousTurn { get; set; }
-        private int currentTurn { get; set; }
-        public Player CurrentPlayer { get { return Players[currentTurn]; } }
-        public Player PreviousPlayer { get { if (previousTurn == -1) { return null; } else { return Players[previousTurn]; } } }
-
-        public int draw2and4s;
+        public int cardPickQueue;
 
         public Game(int gameID, List<Player> players)
         {
+            rand = new Random(GameID);
             this.GameID = gameID;
             this.Players = players;
-            this.Deck = new List<Card>();
-            this.PlayedCards = new List<Card>();
+            this.Deck = new Stack<Card>();
+            this.PlayedCards = new Stack<Card>();
             this.Direction = Direction.clockwise;
+            CurrentPlayer = Players[0];
 
-            CreateDeck();
-
-            draw2and4s = 0;
+            createDeck();
+            cardPickQueue = 0;
         }
 
-        public List<Card> PickANumberOfCardsFromDeck(int numberOfCardsToPick)
+        public void Uno(Player playerWhoCalledUno)
         {
+            if (playerWhoCalledUno == PreviousPlayer && playerWhoCalledUno.Hand.Count == 1 && playerWhoCalledUno.UnoSaid == false) // Player called Uno on himself
+            {
+                Debug.WriteLine($"{playerWhoCalledUno.UserName} said Uno on themself");
+                playerWhoCalledUno.UnoSaid = true;
+            }
+            else // Call Uno on other players
+            {
+                foreach (Player player in Players)
+                {
+                    if (player != playerWhoCalledUno)
+                    {
+                        if (player.Hand.Count == 1 && player.UnoSaid == false)
+                        {
+                            Debug.WriteLine($"{playerWhoCalledUno.UserName} said Uno on {player.UserName}");
+                            GiveCardsToPlayer(player, 2);
+                            player.UnoSaid = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool isValidMove(Player player, Card cardtoplay)
+        {
+            Card tableCard = PlayedCards.Peek();
+
+            // Only current player may play a card
+            if (CurrentPlayer != player)
+            {
+                return false;
+            }
+
+            // If there is a card draw queue, only 'attack' cards may be played
+            if (cardPickQueue != 0)
+            {
+                if (cardtoplay.Type == CardType.draw4Wild || cardtoplay.Type == CardType.draw2)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            // Wild cards can be played on any color
+            if (cardtoplay.Type == CardType.draw4Wild || cardtoplay.Type == CardType.wild)
+            {
+                return true;
+            }
+            // Any matching color can be played, or matching numbers for normal cards
+            else if (cardtoplay.Color == tableCard.Color || (cardtoplay.Type == CardType.normal && cardtoplay.Number == tableCard.Number))
+            {
+                return true;
+            }
+            // Any matching types can also be played
+            else if (cardtoplay.Type == tableCard.Type && cardtoplay.Type != CardType.normal)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool TryPlayCard(Player playerWhoPerformedAction, Card card)
+        {
+            if (isValidMove(playerWhoPerformedAction, card))
+            {
+                cardAction(card);
+
+                PlayedCards.Push(card);
+                playerWhoPerformedAction.Remove(card);
+
+                // Tell other users a card was played
+                foreach (Player p in Players)
+                {
+                    if (p.UserName != playerWhoPerformedAction.UserName) //Prevent deadlock
+                        p.IGameCallback.CardPlayed(card, playerWhoPerformedAction.UserName);
+                }
+
+                // Check end game condition
+                if (playerWhoPerformedAction.Hand.Count() == 0)
+                {
+                    //game.End();
+                    foreach (Player player in Players)
+                    {
+                        if (player != playerWhoPerformedAction) //Prevent deadlock
+                            player.IGameCallback.EndOfTheGame(playerWhoPerformedAction.UserName);
+                    }
+                }
+
+                // An action has happened, previous player is safe from UNO
+                if (PreviousPlayer != null)
+                {
+                    PreviousPlayer.UnoSaid = true;
+                }
+
+                EndTurn();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private void cardAction(Card card)
+        {
+            switch (card.Type)
+            {
+                case CardType.draw2:
+                    cardPickQueue += 2;
+                    break;
+                case CardType.draw4Wild:
+                    cardPickQueue += 4;
+                    break;
+                case CardType.skip:
+                    skip();
+                    break;
+                case CardType.reverse:
+                    switchDirection();
+                    break;
+            }
+        }
+
+        public void GiveCardsToPlayer(Player player)
+        {
+            if (cardPickQueue == 0)
+            {
+                GiveCardsToPlayer(player, 1);
+            }
+            else
+            {
+                GiveCardsToPlayer(player, cardPickQueue);
+            }
+
+        }
+
+        public void GiveCardsToPlayer(Player player, int amountOfCards)
+        {
+            if (player.AlreadyPickedCards)
+            {
+                return;
+            }
+            else
+            {
+                player.AlreadyPickedCards = true;
+            }
+
+            player.IGameCallback.AssignCards(pickANumberOfCardsFromDeck(amountOfCards));
+
+            foreach (Player otherPlayer in Players)
+            {
+                if (otherPlayer != player)
+                {
+                    otherPlayer.IGameCallback.NotifyPlayersNumberOfCardsTaken(amountOfCards, player.UserName);
+                }
+            }
+
+            if (amountOfCards > 1)
+                EndTurn();
+        }
+
+        private List<Card> pickANumberOfCardsFromDeck(int numberOfCardsToPick)
+        {
+            // An action has happened, previous player is safe from UNO
+            if (PreviousPlayer != null)
+            {
+                PreviousPlayer.UnoSaid = true;
+            }
+
             List<Card> pickedCards = new List<Card>();
             for (int i = 0; i < numberOfCardsToPick; i++)
             {
-                pickedCards.Add(Deck[0]);
-                Deck.RemoveAt(0);
+                if (Deck.Count == 0)
+                {
+                    refillDeck();
+                }
+
+                pickedCards.Add(Deck.Pop());
             }
 
             return pickedCards;
         }
 
-        public void GiveEachPlayer7Cards()
+        private Stack<Card> shuffle(Stack<Card> deckToShuffle)
         {
-            List<Card> cards;
-            int count;
-            foreach (var item in Players)
-            {
-                count = 0;
-                cards = new List<Card>();
-                while (count != 7)
-                {
-                    cards.Add(Deck[0]);
-                    Deck.RemoveAt(0);
-                    count++;
-                }
-                item.AddCard(cards);
-            }
-        }
-
-        public void Shuffle(List<Card> deckToShuffle)
-        {
-            Random r = new Random();
+            List<Card> cards = deckToShuffle.ToList();
 
             for (int n = (deckToShuffle.Count - 1); n > 0; --n)
             {
-                int k = r.Next(n + 1);
-                Card temp = deckToShuffle[n];
-                deckToShuffle[n] = deckToShuffle[k];
-                deckToShuffle[k] = temp;
+                int k = rand.Next(n + 1);
+                Card temp = cards[n];
+                cards[n] = cards[k];
+                cards[k] = temp;
             }
+
+            return new Stack<Card>(cards);
         }
 
-        public void CreateDeck()
+        private void createDeck()
         {
             List<CardColor> cardColors = new List<CardColor>();
             cardColors.Add(CardColor.Blue);
@@ -92,12 +250,12 @@ namespace UNOService.Game
             List<CardType> cardTypes = new List<CardType>();
             cardTypes.Add(CardType.draw2);
             cardTypes.Add(CardType.reverse);
-            cardTypes.Add(CardType.skip);           
+            cardTypes.Add(CardType.skip);
 
             for (int i = 0; i < 4; i++)//adding cards with only 4 ocurrences
             {
-                Deck.Add(new Card(CardType.draw4Wild, CardColor.None, -1));
-                Deck.Add(new Card(CardType.wild, CardColor.None, -1));
+                Deck.Push(new Card(CardType.draw4Wild, CardColor.None, -1));
+                Deck.Push(new Card(CardType.wild, CardColor.None, -1));
             }
 
             while (cardTypes.Count != 0)// adding the remaining 3 types
@@ -106,7 +264,7 @@ namespace UNOService.Game
                 {
                     for (int i2 = 0; i2 < 2; i2++)
                     {
-                        Deck.Add(new Card(cardTypes[cardTypes.Count - 1], cardColors[i], -1));
+                        Deck.Push(new Card(cardTypes[cardTypes.Count - 1], cardColors[i], -1));
                     }
                 }
                 cardTypes.RemoveAt(cardTypes.Count - 1);
@@ -114,114 +272,104 @@ namespace UNOService.Game
 
             for (int i = 0; i < 4; i++)//adding normal cards 0
             {
-                Deck.Add(new Card(CardType.normal, cardColors[i], 0));
+                Deck.Push(new Card(CardType.normal, cardColors[i], 0));
             }
 
             while (cardColors.Count != 0)//adding normal cards 1 to 9
             {
                 for (int i = 1; i < 10; i++)
                 {
-                    Deck.Add(new Card(CardType.normal, cardColors[cardColors.Count - 1], i));
-                    Deck.Add(new Card(CardType.normal, cardColors[cardColors.Count - 1], i));
+                    Deck.Push(new Card(CardType.normal, cardColors[cardColors.Count - 1], i));
+                    Deck.Push(new Card(CardType.normal, cardColors[cardColors.Count - 1], i));
                 }
 
                 cardColors.RemoveAt(cardColors.Count - 1);
             }
 
-            Shuffle(this.Deck);
+            this.Deck = shuffle(this.Deck);
         }
 
         public void EndTurn()
         {
-            //TODO This also needs to be implemented everywhere the player can perform a first action...
-            //PreviousPlayer.UnoSaid = true; // Make player immune to uno.
-
-            previousTurn = currentTurn;
+            PreviousPlayer = CurrentPlayer;
 
             if (Direction == Direction.clockwise)
             {
-                currentTurn = (currentTurn + 1) % Players.Count();
+                nextPlayerTurn = (nextPlayerTurn + 1) % Players.Count();
             }
             else
             {
-                currentTurn--;
-
-                if (currentTurn < 0)
-                {
-                    currentTurn += Players.Count();
-                }
+                nextPlayerTurn = (nextPlayerTurn - 1 + Players.Count) % Players.Count();
             }
 
-            // This is now the next player
-            //CurrentPlayer.UnoSaid = false;
+            CurrentPlayer = Players[nextPlayerTurn];
+            CurrentPlayer.UnoSaid = false;
+            CurrentPlayer.AlreadyPickedCards = false;
+
+            if (PreviousPlayer != CurrentPlayer) // Prevent deadlock when skipping turn with two players.
+            {
+                CurrentPlayer.IGameCallback.SetActivePlayer();
+            }
+
         }
 
-        public void SwitchDirection()
+        private void switchDirection()
         {
-            previousTurn = currentTurn;
             if (Direction == Direction.clockwise)
             {
                 Direction = Direction.counterClockwise;
-                currentTurn--; ;
-
-                if (currentTurn < 0)
-                {
-                    currentTurn += Players.Count();
-                }
             }
             else
             {
                 Direction = Direction.clockwise;
-                currentTurn = (currentTurn + 1) % Players.Count();
             }
         }
 
-        public void ReFillDeck()
+        private void refillDeck()
         {
-            Card lastCard = PlayedCards.Last();
-            PlayedCards.Remove(lastCard);
-            this.Shuffle(PlayedCards);
+            Card lastCard = PlayedCards.Pop();
+            PlayedCards = shuffle(PlayedCards);
             this.Deck = this.PlayedCards;
-            this.PlayedCards = new List<Card>();
-            PlayedCards.Add(lastCard);
+            this.PlayedCards = new Stack<Card>();
+            PlayedCards.Push(lastCard);
         }
 
-        public Player findnextplayer()
+        private void skip()
         {
-            int i = Players.FindIndex(x => x.UserName == CurrentPlayer.UserName); 
             if (Direction == Direction.clockwise)
             {
-                return Players[(i+1)%Players.Count];
+                nextPlayerTurn = (nextPlayerTurn + 1) % Players.Count();
             }
             else
             {
-                i--;
-
-                if (i < 0)
-                {
-                    i += Players.Count();
-                }
-                return Players[i];
+                nextPlayerTurn = (nextPlayerTurn - 1 + Players.Count) % Players.Count();
             }
         }
 
-        public void Skip()
+        public void Start()
         {
-            previousTurn = currentTurn;
-            if (Direction == Direction.clockwise)
-            {
-                currentTurn = (currentTurn + 2) % Players.Count();
-            }
-            else
-            {
-                currentTurn -= 2;
 
-                if (currentTurn < 0)
-                {
-                    currentTurn += Players.Count();
-                }
+            List<string> playersUserNames = Players.Select(x => x.UserName).ToList();
+
+            foreach (Player player in Players)
+            {
+                player.AddCard(pickANumberOfCardsFromDeck(7));
+                player.IGameCallback.InitializeGame(player.Hand, playersUserNames);
             }
+
+            do
+            {
+                PlayedCards.Push(Deck.Pop());
+            }
+            while (PlayedCards.Peek().Type != CardType.normal);
+
+
+            foreach (Player player in Players)
+            {
+                player.IGameCallback.CardPlayed(PlayedCards.Peek(), "FirstAtStart");
+            }
+
+            CurrentPlayer.IGameCallback.SetActivePlayer();
         }
-
     }
 }

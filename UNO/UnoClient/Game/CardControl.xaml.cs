@@ -21,7 +21,7 @@ namespace UnoClient
     /// </summary>
     public partial class CardControl : UserControl
     {
-        private Card card;
+        private Card card = null;
         private string picturePath;
 
         public CardControl()  //Unkown type of card, so 'closed' card
