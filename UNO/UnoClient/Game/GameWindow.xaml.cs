@@ -48,7 +48,7 @@ namespace UnoClient.Game
             playerHands = new List<CardHand>() { player1Hand, player2Hand, player3Hand, player4Hand };
 
             this.Title = "Uno Game: " + username;
-            player1Hand.Instantiate(username, true);
+            player1Hand.Instantiate(username, playCard);
         }
 
         // Give client information about other players in the game
@@ -95,7 +95,9 @@ namespace UnoClient.Game
             else
             {
                 Card card = cards.First();
+                CardControl cardControl = new CardControl(card);
                 var action = DrawCardChoiceWindow.UserChoice.Keep;
+                player1Hand.AddCard(cardControl);
 
                 // If picked card can be played, show the user a choice
                 if (GameProxy.IsValidCard(card))
@@ -110,21 +112,12 @@ namespace UnoClient.Game
                 {
                     case DrawCardChoiceWindow.UserChoice.Keep:
                         {
-                            player1Hand.AddCard(new CardControl(card));
                             GameProxy.ChooseNotToPlayCard();
                         }
                         break;
                     case DrawCardChoiceWindow.UserChoice.Play:
                         {
-                            if (GameProxy.TryPlayCard(card))
-                            {
-                                CardPlayed(card, username);
-                            }
-                            else
-                            {
-                                // Should never happen
-                                throw new Exception("Card could not be played");
-                            }
+                            playCard(cardControl);
                         }
                         break;
                     default:
@@ -134,6 +127,29 @@ namespace UnoClient.Game
             }
 
             endTurn();
+        }
+
+        private void playCard(CardControl cardControl)
+        {
+            Card card = cardControl.GetCard();
+            if (card.Type == CardType.draw4Wild || card.Type == CardType.wild)
+            {
+                ColorPickerWindow colorPicker = new ColorPickerWindow();
+                colorPicker.Owner = this;
+                colorPicker.ShowDialog();
+
+                card.Color = colorPicker.SelectedColor;
+            }
+
+            bool playSucces = GameProxy.TryPlayCard(card);//if special card, color chosen is saved in color attribute to be handled in the server
+
+            if (playSucces)
+            {
+                CardPlayed(card, username);
+                player1Hand.RemoveCard(cardControl);
+            }
+            else
+                MessageBox.Show("Invalid move");
         }
 
         public void NotifyPlayerLeft(string userName)
@@ -183,7 +199,7 @@ namespace UnoClient.Game
             else if (player4Hand.Username == playerWhoTookCardsUserName)
                 cardHand = player4Hand;
 
-            cardHand.AddFakeCards(nrOfCardsTaken);
+            cardHand.AddPlaceHolderCards(nrOfCardsTaken);
 
             SendMessageGameCallback($"{playerWhoTookCardsUserName} recieved {nrOfCardsTaken} cards");
         }
@@ -205,7 +221,7 @@ namespace UnoClient.Game
             //player1Hand.Hand.IsEnabled = true;
             //DeckOfCards.IsEnabled = true;
             player1Hand.sv.Background = Brushes.Yellow;
-            Debug.WriteLine($"{username} started turn");
+            Debug.WriteLine($"{username} started turn clientside");
 
         }
 
@@ -215,7 +231,8 @@ namespace UnoClient.Game
             if (playerHands.Count == 2)
             {
                 // TODO This always returns null, so skip cards look incorrect clientside
-                Card card = lastPlayedCard.GetCard();
+                CardControl cardControl = lastPlayedCard.Content as CardControl;
+                var card = cardControl.GetCard();
                 if (card != null)
                 {
                     if (card.Type == CardType.skip)
@@ -226,7 +243,7 @@ namespace UnoClient.Game
             player1Hand.sv.Background = Brushes.Brown;
             //player1Hand.Hand.IsEnabled = false;
             //DeckOfCards.IsEnabled = false;
-            Debug.WriteLine($"{username} ended turn");
+            Debug.WriteLine($"{username} ended turn clientside");
         }
 
     }

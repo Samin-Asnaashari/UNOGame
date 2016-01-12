@@ -24,17 +24,25 @@ namespace UnoClient.Game
     {
         public bool IsHorizontal { get; set; }
         public string Username { get; private set; }
-        bool active; // If cards should be clickable for the user
+        private UIElementCollection cards { get { return Hand.Children; } }
 
-        public void Instantiate(string userName, bool active = false)
+
+        public delegate void CardClickedHandler(CardControl cardControl);
+        public CardClickedHandler OnCardClicked;
+
+        public void Instantiate(string userName, CardClickedHandler onCardClicked = null)
         {
             this.Username = userName;
-            this.active = active;
 
-            if (!active)
+            // This is the clients control
+            if (onCardClicked != null)
+            {
+                OnCardClicked = onCardClicked;
+            }
+            else // This is other players control
             {
                 // TODO Make sure this is 7, lowered to test UNO
-                AddFakeCards(7);
+                AddPlaceHolderCards(7);
             }
         }
 
@@ -44,7 +52,7 @@ namespace UnoClient.Game
             this.DataContext = this;
         }
 
-        public void AddFakeCards(int nrOfCards)
+        public void AddPlaceHolderCards(int nrOfCards)
         {
             for (int i = 0; i < nrOfCards; i++)
             {
@@ -54,38 +62,26 @@ namespace UnoClient.Game
 
         public void AddCard(CardControl c)
         {
-            if (active)
+            if (OnCardClicked != null)
             {
                 c.AddHandler(MouseUpEvent, new RoutedEventHandler(cardClicked));
             }
-            Hand.Children.Insert(0, c);
+
+            cards.Insert(0, c);
         }
+
+        public void RemoveCard(CardControl cardControl)
+        {
+            cards.Remove(cardControl);
+        }
+
 
         private void cardClicked(object sender, RoutedEventArgs e)
         {
             CardControl cardControl = ((CardControl)sender);
             GameWindow parent = ((GameWindow)Window.GetWindow(this));
-            Card cardToBePlayed = cardControl.GetCard();
 
-            if (cardToBePlayed.Type == CardType.draw4Wild || cardToBePlayed.Type == CardType.wild)
-            {
-                ColorPickerWindow colorPicker = new ColorPickerWindow();
-                colorPicker.Owner = parent;
-                colorPicker.ShowDialog();
-
-                cardToBePlayed.Color = colorPicker.SelectedColor;
-            }
-
-            bool playSucces = parent.GameProxy.TryPlayCard(cardToBePlayed);//if special card, color chosen is saved in color attribute to be handled in the server
-
-            if (playSucces)
-            {
-                parent.CardPlayed(cardControl.GetCard(), Username);
-                Hand.Children.Remove(cardControl);
-            }
-            else
-                MessageBox.Show("Invalid move");
-
+            OnCardClicked(cardControl);
         }
 
         private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
