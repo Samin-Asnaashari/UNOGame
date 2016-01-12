@@ -23,7 +23,22 @@ namespace UnoClient.Game
     public partial class CardHand : UserControl
     {
         public bool IsHorizontal { get; set; }
-        public string Username { get; set; }
+        public string Username { get; private set; }
+        bool active; // If cards should be clickable for the user
+
+        public void Instantiate(string userName, bool active = false)
+        {
+            this.Username = userName;
+            this.active = active;
+
+            if (!active)
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    AddCard(new CardControl());
+                }
+            }
+        }
 
         public CardHand()
         {
@@ -31,17 +46,20 @@ namespace UnoClient.Game
             this.DataContext = this;
         }
 
-        public void addCard(CardControl c)
+        public void AddCard(CardControl c)
         {
-            c.AddHandler(MouseUpEvent, new RoutedEventHandler(CardClicked));
+            if (active)
+            {
+                c.AddHandler(MouseUpEvent, new RoutedEventHandler(cardClicked));
+            }
             Hand.Children.Insert(0, c);
         }
 
-        private void CardClicked(object sender, RoutedEventArgs e)
+        private void cardClicked(object sender, RoutedEventArgs e)
         {
             CardControl cardControl = ((CardControl)sender);
             GameWindow parent = ((GameWindow)Window.GetWindow(this));
-            Card cardToBePlayed = cardControl.getCard();
+            Card cardToBePlayed = cardControl.GetCard();
 
             if (cardToBePlayed.Type == CardType.draw4Wild || cardToBePlayed.Type == CardType.wild)
             {
@@ -56,7 +74,7 @@ namespace UnoClient.Game
 
             if (playSucces)
             {
-                parent.CardPlayed(cardControl.getCard(), "PlayerWhoPLayed");
+                parent.CardPlayed(cardControl.GetCard(), "PlayerWhoPLayed");
                 Hand.Children.Remove(cardControl);
             }
             else

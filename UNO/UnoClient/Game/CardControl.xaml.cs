@@ -62,7 +62,7 @@ namespace UnoClient
             this.Cursor = Cursors.Hand;
         }
 
-        public Card getCard()
+        public Card GetCard()
         {
             return card;
         }

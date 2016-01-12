@@ -32,7 +32,6 @@ namespace UnoClient.Game
         public GameWindow(string username, string password)
         {
             this.username = username;
-            //this.GameID = 1;
 
             this.password = password;
 
@@ -42,48 +41,28 @@ namespace UnoClient.Game
 
             InitializeComponent();
             this.Title = "Uno Game: " + username;
-            player1Hand.Username = username;
-
-            //TODO: position the players
+            player1Hand.Instantiate(username, true);
         }
 
         public void CardsAssigned(List<Card> cards, List<string> playersUserNames)
         {
-            foreach(Card c in cards)
+            foreach (Card c in cards)
             {
-                player1Hand.addCard(new CardControl(c)); //Add cards to your own hand
+                player1Hand.AddCard(new CardControl(c)); //Add cards to your own hand
             }
 
-            if (playersUserNames != null)
+            // Shift list until player is first
+            while (playersUserNames.First() != username)
             {
-                List<CardHand> playerHands = new List<CardHand>();
-                playerHands.Add(player2Hand);
-                playerHands.Add(player3Hand);
-                playerHands.Add(player4Hand);
+                playersUserNames.Add(playersUserNames.First());
+                playersUserNames.Remove(playersUserNames.First());
+            }
 
-                for (int i = 0; i < playersUserNames.Count ; i++)
-                {
-                    if (username != playersUserNames[i])
-                        playerHands[i].Username = playersUserNames[i];
-                    else
-                    {
-                        playersUserNames.RemoveAt(i);
-                        i--;
-                    }
-                }
+            List<CardHand> playerHands = new List<CardHand>() { player1Hand, player2Hand, player3Hand, player4Hand };
 
-
-                if(player2Hand.Username != null)
-                    for (int i = 0; i < 7; i++)
-                        player2Hand.addCard(new CardControl());
-
-                if (player3Hand.Username != null)
-                    for (int i = 0; i < 7; i++)
-                        player3Hand.addCard(new CardControl());
-
-                if (player4Hand.Username != null)
-                    for (int i = 0; i < 7; i++)
-                        player4Hand.addCard(new CardControl());
+            for (int i = 1; i < playersUserNames.Count; i++) // Start at 1 because we are always at 0
+            {
+                playerHands[i].Instantiate(playersUserNames[i]);
             }
         }
 
@@ -100,7 +79,7 @@ namespace UnoClient.Game
 
         public void TurnChanged(Player player)
         {
-           
+
         }
 
         public void NotifyOpponentsOfPlayerPunished(string userName)
@@ -113,13 +92,13 @@ namespace UnoClient.Game
             if (GameProxy.ValidPlayerTurn(username))
             {
                 Card takenCard = await GameProxy.takeCardAsync();
-                player1Hand.addCard(new CardControl(takenCard));
+                player1Hand.AddCard(new CardControl(takenCard));
             }
             else
             {
                 MessageBox.Show("Is Not Your Turn!");
             }
-            
+
         }
 
         //check if it right player who want is its turn 
@@ -148,23 +127,23 @@ namespace UnoClient.Game
             if (player2Hand.Username == playerWhoTookCardsUserName)
                 for (int i = 0; i < nrOfCardsTaken; i++)
                 {
-                    player2Hand.addCard(new CardControl());
+                    player2Hand.AddCard(new CardControl());
                 }
             else if (player3Hand.Username == playerWhoTookCardsUserName)
                 for (int i = 0; i < nrOfCardsTaken; i++)
                 {
-                    player3Hand.addCard(new CardControl());
+                    player3Hand.AddCard(new CardControl());
                 }
             else if (player4Hand.Username == playerWhoTookCardsUserName)
                 for (int i = 0; i < nrOfCardsTaken; i++)
                 {
-                    player4Hand.addCard(new CardControl());
+                    player4Hand.AddCard(new CardControl());
                 }
         }
 
         public void EndOfTheGame(string winner)
         {
-            AfterGameWindow end = new AfterGameWindow(username,winner,password);
+            AfterGameWindow end = new AfterGameWindow(username, winner, password);
             end.Show();
             this.Close();
         }
