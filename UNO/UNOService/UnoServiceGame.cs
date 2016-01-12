@@ -33,25 +33,29 @@ namespace UNOService
             {
                 if (CheckPlayedCard(game.PlayedCards[game.PlayedCards.Count - 1], card))
                 {
-                    if (game.draw2and4s != 0)
+                    if ((card.Type != CardType.draw4Wild && card.Type != CardType.draw2) && game.draw2and4s != 0)
                     {
-                        List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
+                        if (card.Type != CardType.draw4Wild || card.Type != CardType.wild)
+                        {
+                            List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
 
-                        foreach (var item in game.Players)
-                        {
-                            if (item.UserName != PlayerWhoWantsToPlayACard.UserName)//prevent deadlock
-                                item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, PlayerWhoWantsToPlayACard.UserName);
-                        }
-                        PlayerWhoWantsToPlayACard.IGameCallback.CardsAssigned(cards, null);
-                        if (game.PreviousPlayer != null)
-                        {
-                            if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                            foreach (var item in game.Players)
                             {
-                                game.PreviousPlayer.UnoSaid = true;
+                                if (item.UserName != PlayerWhoWantsToPlayACard.UserName)//prevent deadlock
+                                    item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, PlayerWhoWantsToPlayACard.UserName);
                             }
+                            PlayerWhoWantsToPlayACard.IGameCallback.CardsAssigned(cards, null);
+                            if (game.PreviousPlayer != null)
+                            {
+                                if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
+                                {
+                                    game.PreviousPlayer.UnoSaid = true;
+                                }
+                            }
+                            game.EndTurn();
+                            game.draw2and4s = 0;
+                            return false;
                         }
-                        game.EndTurn();
-                        return false;
                     }
                     game.PlayedCards.Add(card);
                     PlayerWhoWantsToPlayACard.Remove(card);
@@ -74,25 +78,24 @@ namespace UNOService
                     }
                     else
                     {
-                        if (game.PreviousPlayer != null)
-                        {
+                        //need to be consider the all situation
+                        //server saved the previous player 
                             if (game.PreviousPlayer.Hand.Count == 1 && !game.PreviousPlayer.UnoSaid)
                             {
                                 game.PreviousPlayer.UnoSaid = true;
                             }
-                        }
-                        CardAction(card);
-                        game.EndTurn();
                         
+                        bool punish = CardAction(card);
+                        if(card.Type != CardType.skip && !punish)
+                            game.EndTurn();
                         return true;
                     }
                 }
-                return true;
+                else
+                return false;
             }
             else
             {
-                CardAction(card);
-                game.EndTurn();
                 return false;
             }
         }
@@ -181,8 +184,27 @@ namespace UNOService
             return taken;
         }
 
+        public bool Punish(Player callingPlayer,Game.Game game,CardType type)
+        {
+            Card c = game.findnextplayer().Hand.Find(x => x.Type == type);
+            if (c == null)
+            {
+                List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
 
-        public void CardAction(Card card)
+                foreach (var item in game.Players)
+                {
+                    if (item.UserName != callingPlayer.UserName)//prevent deadlock
+                        item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, game.findnextplayer().UserName);
+                }
+                game.findnextplayer().IGameCallback.CardsAssigned(cards, null);
+                game.draw2and4s = 0;
+                game.Skip();
+                return true;
+            }
+            else return false;
+        }
+
+        public bool CardAction(Card card)
         {
             Player callingPlayer = getPlayerFromGameContext();
             Game.Game game = callingPlayer.Game;
@@ -190,53 +212,27 @@ namespace UNOService
             if (card.Type == CardType.draw2)
             {
                 game.draw2and4s += 2;
-                Card c = game.findnextplayer().Hand.Find(x => x.Type == CardType.draw2);
-                if (c == null)
+                return Punish(callingPlayer, game, card.Type);
+            }
+            else if (card.Type == CardType.draw4Wild)
+            {
+                game.draw2and4s += 4;
+                //choose the color 
+                return Punish(callingPlayer, game, card.Type);
+                //uno problem
+            }
+            else
+            {
+                if (card.Type == CardType.skip)
                 {
-                    List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
-
-                    foreach (var item in game.Players)
-                    {
-                        if (item.UserName != callingPlayer.UserName)//prevent deadlock
-                            item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, game.findnextplayer().UserName);
-                    }
-                    game.findnextplayer().IGameCallback.CardsAssigned(cards, null);
-                    game.draw2and4s = 0;
+                    game.Skip();
                 }
-
-                else if (card.Type == CardType.draw4Wild)
+                else if (card.Type == CardType.reverse)
                 {
-                    game.draw2and4s += 4;
-                    //choose the color 
-                    Card cc = game.findnextplayer().Hand.Find(x => x.Type == CardType.draw4Wild);
-                    if (c == null)
-                    {
-                        List<Card> cards = game.PickANumberOfCardsFromDeck(game.draw2and4s);
+                    game.SwitchDirection();
 
-                        foreach (var item in game.Players)
-                        {
-                            if (item.UserName != callingPlayer.UserName)//prevent deadlock
-                                item.IGameCallback.NotifyPlayersNumberOfCardsTaken(cards.Count, game.findnextplayer().UserName);
-                        }
-                        game.findnextplayer().IGameCallback.CardsAssigned(cards, null);
-                        game.draw2and4s = 0;
-                    }
                 }
-                else
-                {                   
-                    if (card.Type == CardType.skip)
-                    {
-                        //game.EndTurn();
-                    }
-                    else if (card.Type == CardType.reverse)
-                    {
-                        game.SwitchDirection();
-                    }
-                    else if (card.Type == CardType.wild)
-                    {
-                        //show color oanel to player to choose
-                    }
-                }
+                return false;
             }
         }
 
@@ -406,5 +402,15 @@ namespace UNOService
                 player.IGameCallback.TurnChanged(game.CurrentPlayer); //Notify that the host is the first player to start
             }
         }
+
+        public void EndGame()
+        {
+            foreach (var item in getPlayerFromGameContext().Game.Players)
+            {
+                item.IGameCallback.EndOfTheGame(null);
+            }
+        }
+
+
     }
 }

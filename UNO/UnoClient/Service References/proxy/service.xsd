@@ -274,6 +274,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="EndGame">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CardsAssigned">
     <xs:complexType>
       <xs:sequence>
