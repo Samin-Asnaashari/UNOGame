@@ -96,8 +96,8 @@ namespace UNOService.Game
 
             for (int i = 0; i < 4; i++)//adding cards with only 4 ocurrences
             {
-                Deck.Add(new Card(CardType.draw4Wild, CardColor.none, -1));
-                Deck.Add(new Card(CardType.wild, CardColor.none, -1));
+                Deck.Add(new Card(CardType.draw4Wild, CardColor.None, -1));
+                Deck.Add(new Card(CardType.wild, CardColor.None, -1));
             }
 
             while (cardTypes.Count != 0)// adding the remaining 3 types

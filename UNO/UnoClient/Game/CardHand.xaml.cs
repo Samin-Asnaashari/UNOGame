@@ -43,24 +43,16 @@ namespace UnoClient.Game
             GameWindow parent = ((GameWindow)Window.GetWindow(this));
             Card cardToBePlayed = cardControl.getCard();
 
-            if(cardToBePlayed.Type == CardType.draw4Wild || cardToBePlayed.Type == CardType.wild)
+            if (cardToBePlayed.Type == CardType.draw4Wild || cardToBePlayed.Type == CardType.wild)
             {
                 ColorPickerWindow colorPicker = new ColorPickerWindow();
+                colorPicker.Owner = parent;
                 colorPicker.ShowDialog();
 
-                Brush selectedColor = colorPicker.selectedColor;
-
-                if (selectedColor.Equals(Brushes.Red))
-                    cardToBePlayed.Color = CardColor.Red;
-                else if (selectedColor.Equals(Brushes.Green))
-                    cardToBePlayed.Color = CardColor.Green;
-                else if (selectedColor.Equals(Brushes.Blue))
-                    cardToBePlayed.Color = CardColor.Blue;
-                else if (selectedColor.Equals(Brushes.Yellow))
-                    cardToBePlayed.Color = CardColor.Yellow;
+                cardToBePlayed.Color = colorPicker.SelectedColor;
             }
 
-            bool playSucces = parent.GameProxy.playCard(/*parent.GameID, */cardToBePlayed);//if special card, color chosen is saved in color attribute to be handled in the server
+            bool playSucces = parent.GameProxy.playCard(cardToBePlayed);//if special card, color chosen is saved in color attribute to be handled in the server
 
             if (playSucces)
             {
@@ -69,7 +61,7 @@ namespace UnoClient.Game
             }
             else
                 MessageBox.Show("Invalid move");
-            
+
         }
 
         private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

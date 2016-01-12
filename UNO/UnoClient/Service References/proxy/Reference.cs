@@ -230,19 +230,19 @@ namespace UnoClient.proxy {
     public enum CardColor : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Red = 0,
+        None = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Green = 1,
+        Red = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Blue = 2,
+        Green = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Yellow = 3,
+        Blue = 3,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        none = 4,
+        Yellow = 4,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]

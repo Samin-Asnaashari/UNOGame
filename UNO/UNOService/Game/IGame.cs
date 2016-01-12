@@ -9,7 +9,8 @@ using UNOService.Game;
 namespace UNOService
 {
 	[ServiceContract(CallbackContract = typeof(IGameCallback))]
-	public interface IGame
+    [ServiceKnownType(typeof(CardColor))]
+    public interface IGame
 	{
         /// <summary>
         /// Saves the the game played with all moves

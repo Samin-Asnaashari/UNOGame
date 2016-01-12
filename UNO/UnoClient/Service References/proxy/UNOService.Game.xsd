@@ -10,11 +10,11 @@
   <xs:element name="PlayerState" nillable="true" type="tns:PlayerState" />
   <xs:simpleType name="CardColor">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
       <xs:enumeration value="Red" />
       <xs:enumeration value="Green" />
       <xs:enumeration value="Blue" />
       <xs:enumeration value="Yellow" />
-      <xs:enumeration value="none" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="CardColor" nillable="true" type="tns:CardColor" />

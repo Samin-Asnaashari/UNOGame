@@ -19,13 +19,13 @@ namespace UnoClient.Game
     /// </summary>
     public partial class ColorPickerWindow : Window
     {
-        public Brush selectedColor;
-        private bool picked = false;
+        public proxy.CardColor SelectedColor
+        {
+            get; private set;
+        }
 
         public ColorPickerWindow()
         {
-            selectedColor = Brushes.Red;
-
             InitializeComponent();
 
             foreach (Rectangle rect in colors.Children)
@@ -40,18 +40,24 @@ namespace UnoClient.Game
             Rectangle color = (Rectangle)sender;
             color.StrokeThickness = 5;
 
-            selectedColor = color.Fill;
-        }
+            Brush colorBrush = color.Fill;
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            picked = true;
+            if (colorBrush.Equals(Brushes.Red))
+                SelectedColor = proxy.CardColor.Red;
+            else if (colorBrush.Equals(Brushes.Green))
+                SelectedColor = proxy.CardColor.Green;
+            else if (colorBrush.Equals(Brushes.Blue))
+                SelectedColor = proxy.CardColor.Blue;
+            else if (colorBrush.Equals(Brushes.Yellow))
+                SelectedColor = proxy.CardColor.Yellow;
+
+            this.DialogResult = true;
             this.Close();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(!picked) //If a person is trying to close the window without having pressed the 'Pick' button, the window won't close.
+            if (SelectedColor == proxy.CardColor.None) //If a person is trying to close the window without having pressed the 'Pick' button, the window won't close.
                 e.Cancel = true;
         }
     }
