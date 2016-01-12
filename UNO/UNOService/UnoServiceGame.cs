@@ -10,18 +10,6 @@ namespace UNOService
 {
     partial class UnoService : IGame
     {
-
-        public bool ValidPlayerTurn(string UserName)
-        {
-            Game.Game game = getPlayerFromGameContext().Game;
-            if (game.CurrentPlayer.UserName == UserName)
-            {
-                return true;
-            }
-            else
-                return false;
-        }
-
         public bool TryPlayCard(Card card)
         {
             Player playerWhoWantsToPlayACard = getPlayerFromGameContext();
@@ -35,15 +23,15 @@ namespace UNOService
         {
             IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
 
-            Player self = playersOnline.Find(x => x.UserName == userName);
+            Player player = playersOnline.Find(x => x.UserName == userName);
 
-            self.IGameCallback = clientCallbackGame;
+            player.IGameCallback = clientCallbackGame;
 
-            Game.Game game = self.Game;
+            Game.Game game = player.Game;
 
-            foreach (Player player in game.Players)
+            foreach (Player otherPlayers in game.Players)
             {
-                if (player.IGameCallback == null)
+                if (otherPlayers.IGameCallback == null)
                     return;
             }
 
@@ -61,18 +49,7 @@ namespace UNOService
             Player player = getPlayerFromGameContext();
             Game.Game game = player.Game;
 
-            if (message.Length == 3 && message.ToLower().Contains("uno"))
-            {
-                game.Uno(player);
-            }
-
-            foreach (Player otherplayer in game.Players)
-            {
-                if (otherplayer != player)
-                {
-                    otherplayer.IGameCallback.SendMessageGameCallback(message);
-                }
-            }
+            game.SendMessage(player, message);
         }
 
         /// <summary>

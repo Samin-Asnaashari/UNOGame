@@ -38,12 +38,44 @@ namespace UNOService.Game
             cardPickQueue = 0;
         }
 
+        public void SendMessage(Player player, string message)
+        {
+            sendMessage(player.UserName, message);
+
+            if (message.Length == 3 && message.ToLower().Contains("uno"))
+            {
+                Uno(player);
+            }
+        }
+
+        private void sendMessage(string message)
+        {
+            foreach (Player player in Players)
+            {
+                player.IGameCallback.SendMessageGameCallback(message);
+            }
+        }
+
+        private void sendMessage(string userNameSender, string message)
+        {
+            sendMessage($"{userNameSender}: {message}");
+        }
+
+        public void StartTurn()
+        {
+            // An action has happened, previous player is safe from UNO
+            if (PreviousPlayer != null)
+            {
+                PreviousPlayer.UnoSaid = true;
+            }
+        }
+
         public void Uno(Player playerWhoCalledUno)
         {
             if (playerWhoCalledUno == PreviousPlayer && playerWhoCalledUno.Hand.Count == 1 && playerWhoCalledUno.UnoSaid == false) // Player called Uno on himself
             {
-                Debug.WriteLine($"{playerWhoCalledUno.UserName} said Uno on themself");
                 playerWhoCalledUno.UnoSaid = true;
+                sendMessage($"{playerWhoCalledUno.UserName} said Uno on themself");
             }
             else // Call Uno on other players
             {
@@ -53,8 +85,8 @@ namespace UNOService.Game
                     {
                         if (player.Hand.Count == 1 && player.UnoSaid == false)
                         {
-                            Debug.WriteLine($"{playerWhoCalledUno.UserName} said Uno on {player.UserName}");
-                            GiveCardsToPlayer(player, 2);
+                            sendMessage($"{playerWhoCalledUno.UserName} said Uno on {player.UserName}");
+                            giveCardsToPlayer(player, 2);
                             player.UnoSaid = true;
                         }
                     }
@@ -108,6 +140,8 @@ namespace UNOService.Game
         {
             if (isValidMove(playerWhoPerformedAction, card))
             {
+                StartTurn();
+
                 cardAction(card);
 
                 PlayedCards.Push(card);
@@ -129,12 +163,6 @@ namespace UNOService.Game
                         if (player != playerWhoPerformedAction) //Prevent deadlock
                             player.IGameCallback.EndOfTheGame(playerWhoPerformedAction.UserName);
                     }
-                }
-
-                // An action has happened, previous player is safe from UNO
-                if (PreviousPlayer != null)
-                {
-                    PreviousPlayer.UnoSaid = true;
                 }
 
                 EndTurn();
@@ -166,19 +194,6 @@ namespace UNOService.Game
 
         public void GiveCardsToPlayer(Player player)
         {
-            if (cardPickQueue == 0)
-            {
-                GiveCardsToPlayer(player, 1);
-            }
-            else
-            {
-                GiveCardsToPlayer(player, cardPickQueue);
-            }
-
-        }
-
-        public void GiveCardsToPlayer(Player player, int amountOfCards)
-        {
             if (player.AlreadyPickedCards)
             {
                 // Player already picked a card, but chose not to play it. Clicking the deck ends the turn.
@@ -186,36 +201,43 @@ namespace UNOService.Game
             }
             else
             {
-                // Reset UNO Status
-                CurrentPlayer.UnoSaid = false;
-                player.AlreadyPickedCards = true;
-                List<Card> cards = pickANumberOfCardsFromDeck(amountOfCards);
-                player.Hand.AddRange(cards);
-                player.IGameCallback.AssignCards(cards);
+                StartTurn();
 
-                foreach (Player otherPlayer in Players)
+                if (cardPickQueue == 0)
                 {
-                    if (otherPlayer != player)
-                    {
-                        otherPlayer.IGameCallback.NotifyPlayersNumberOfCardsTaken(amountOfCards, player.UserName);
-                    }
+                    player.AlreadyPickedCards = true;
+                    giveCardsToPlayer(player, 1);
                 }
-
-                cardPickQueue = 0;
-
-                if (amountOfCards > 1)
+                else
+                {
+                    giveCardsToPlayer(player, cardPickQueue);
+                    cardPickQueue = 0;
                     EndTurn();
+                }
             }
+
         }
 
-        private List<Card> pickANumberOfCardsFromDeck(int numberOfCardsToPick)
+        private void giveCardsToPlayer(Player player, int amountOfCards)
         {
-            // An action has happened, previous player is safe from UNO
-            if (PreviousPlayer != null)
+            List<Card> cards = getCardsFromDeck(amountOfCards);
+            player.Hand.AddRange(cards);
+            player.IGameCallback.AssignCards(cards);
+
+            foreach (Player otherPlayer in Players)
             {
-                PreviousPlayer.UnoSaid = true;
+                if (otherPlayer != player)
+                {
+                    otherPlayer.IGameCallback.NotifyPlayersNumberOfCardsTaken(amountOfCards, player.UserName);
+                }
             }
 
+            // If player picks cards, uno is reset because they have more then one card.
+            CurrentPlayer.UnoSaid = false;
+        }
+
+        private List<Card> getCardsFromDeck(int numberOfCardsToPick)
+        {
             List<Card> pickedCards = new List<Card>();
             for (int i = 0; i < numberOfCardsToPick; i++)
             {
@@ -311,11 +333,13 @@ namespace UNOService.Game
             CurrentPlayer = Players[nextPlayerTurn];
             CurrentPlayer.AlreadyPickedCards = false;
 
+            // If player has one card at beginning of turn, he is safe from Uno
+            CurrentPlayer.UnoSaid = (CurrentPlayer.Hand.Count == 1);
+
             if (PreviousPlayer != CurrentPlayer) // Prevent deadlock when skipping turn with two players.
             {
                 CurrentPlayer.IGameCallback.SetActivePlayer();
             }
-
         }
 
         private void switchDirection()
@@ -359,7 +383,7 @@ namespace UNOService.Game
             foreach (Player player in Players)
             {
                 // TODO Make sure this value is 7, I keep changing it to test UNO
-                player.AddCard(pickANumberOfCardsFromDeck(7));
+                player.AddCard(getCardsFromDeck(3));
                 player.IGameCallback.InitializeGame(player.Hand, playersUserNames);
             }
 

@@ -106,11 +106,6 @@ namespace UnoClient.Game
             chat.ScrollIntoView(chat.Items[chat.Items.Count - 1]); //Scroll to bottom
         }
 
-        public void NotifyOpponentsOfPlayerPunished(string userName)
-        {
-            throw new NotImplementedException();
-        }
-
         private void DeckOfCards_MouseDown(object sender, MouseButtonEventArgs e)
         {
             GameProxy.TakeCards();
@@ -135,8 +130,6 @@ namespace UnoClient.Game
 
         private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
         {
-            chat.Items.Add(chatMessage.Text);
-            chat.ScrollIntoView(chat.Items[chat.Items.Count - 1]);
             GameProxy.SendMessageGame(chatMessage.Text);
         }
 
@@ -152,6 +145,9 @@ namespace UnoClient.Game
                 cardHand = player4Hand;
 
             cardHand.AddFakeCards(nrOfCardsTaken);
+
+            chat.Items.Add($"{playerWhoTookCardsUserName} recieved {nrOfCardsTaken} cards");
+            chat.ScrollIntoView(chat.Items[chat.Items.Count - 1]); //Scroll to bottom
         }
 
         public void EndOfTheGame(string winner)
