@@ -94,13 +94,33 @@ namespace UNOService.Game
             }
         }
 
-        private bool isValidMove(Player player, Card cardtoplay)
+        public void ChooseNotToPlayCard(Player player)
+        {
+            // Make sure this only happen if the player has picked a card
+            if (player.AlreadyPickedCards)
+            {
+                EndTurn();
+            }
+            else
+            {
+                Debug.WriteLine($"{player.UserName} tried to ChooseNotToPlayCard() but has not picked a card");
+            }
+        }
+
+        public bool IsValidCard(Player player, Card cardtoplay)
         {
             Card tableCard = PlayedCards.Peek();
 
             // Only current player may play a card
             if (CurrentPlayer != player)
             {
+                Debug.WriteLine($"{player.UserName} tried to play a card, but it was not their turn");
+                return false;
+            }
+
+            if (!player.HasCard(cardtoplay))
+            {
+                Debug.WriteLine($"{player.UserName} tried to play a card, but it was not in their hand");
                 return false;
             }
 
@@ -113,6 +133,7 @@ namespace UNOService.Game
                 }
                 else
                 {
+                    Debug.WriteLine($"{player.UserName} tried to play a card, but it was not an attack card. Picking queue: {cardPickQueue}");
                     return false;
                 }
             }
@@ -133,12 +154,13 @@ namespace UNOService.Game
                 return true;
             }
 
+            Debug.WriteLine($"{player.UserName} tried to play a card, but it was not a valid card for unknown reasons");
             return false;
         }
 
         public bool TryPlayCard(Player playerWhoPerformedAction, Card card)
         {
-            if (isValidMove(playerWhoPerformedAction, card))
+            if (IsValidCard(playerWhoPerformedAction, card))
             {
                 StartTurn();
 
@@ -194,12 +216,7 @@ namespace UNOService.Game
 
         public void GiveCardsToPlayer(Player player)
         {
-            if (player.AlreadyPickedCards)
-            {
-                // Player already picked a card, but chose not to play it. Clicking the deck ends the turn.
-                EndTurn();
-            }
-            else
+            if (!player.AlreadyPickedCards)
             {
                 StartTurn();
 
@@ -215,7 +232,10 @@ namespace UNOService.Game
                     EndTurn();
                 }
             }
-
+            else
+            {
+                Debug.WriteLine($"{player.UserName} tried to pick a card but has already picked");
+            }
         }
 
         private void giveCardsToPlayer(Player player, int amountOfCards)

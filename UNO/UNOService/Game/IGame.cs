@@ -37,6 +37,14 @@ namespace UNOService
         bool TryPlayCard(Card card);
 
         /// <summary>
+        /// Check if a card is eligable for play
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        [OperationContract]
+        bool IsValidCard(Card card);
+
+        /// <summary>
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>
@@ -51,5 +59,11 @@ namespace UNOService
 
         [OperationContract(IsOneWay = true)]
         void EndGame();
+
+        /// <summary>
+        /// When a played picks a card, they do not have to play it.
+        /// </summary>
+        [OperationContract(IsOneWay = true)]
+        void ChooseNotToPlayCard();
     }
 }

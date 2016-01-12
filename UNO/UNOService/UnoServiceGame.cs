@@ -38,7 +38,6 @@ namespace UNOService
             game.Start();
         }
 
-
         public void SaveReplay()
         {
             throw new NotImplementedException();
@@ -80,6 +79,22 @@ namespace UNOService
             {
                 game.GiveCardsToPlayer(player);
             }
+        }
+
+        public void ChooseNotToPlayCard()
+        {
+            Player player = getPlayerFromGameContext();
+            Game.Game game = player.Game;
+
+            game.ChooseNotToPlayCard(player);
+        }
+
+        public bool IsValidCard(Card card)
+        {
+            Player player = getPlayerFromGameContext();
+            Game.Game game = player.Game;
+
+            return game.IsValidCard(player, card);
         }
     }
 }

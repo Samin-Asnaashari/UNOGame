@@ -519,6 +519,12 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/TryPlayCard", ReplyAction="http://tempuri.org/IGame/TryPlayCardResponse")]
         System.Threading.Tasks.Task<bool> TryPlayCardAsync(UnoClient.proxy.Card card);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/IsValidCard", ReplyAction="http://tempuri.org/IGame/IsValidCardResponse")]
+        bool IsValidCard(UnoClient.proxy.Card card);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/IsValidCard", ReplyAction="http://tempuri.org/IGame/IsValidCardResponse")]
+        System.Threading.Tasks.Task<bool> IsValidCardAsync(UnoClient.proxy.Card card);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
         void SendMessageGame(string message);
         
@@ -536,6 +542,12 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/EndGame")]
         System.Threading.Tasks.Task EndGameAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/ChooseNotToPlayCard")]
+        void ChooseNotToPlayCard();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/ChooseNotToPlayCard")]
+        System.Threading.Tasks.Task ChooseNotToPlayCardAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -615,6 +627,14 @@ namespace UnoClient.proxy {
             return base.Channel.TryPlayCardAsync(card);
         }
         
+        public bool IsValidCard(UnoClient.proxy.Card card) {
+            return base.Channel.IsValidCard(card);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsValidCardAsync(UnoClient.proxy.Card card) {
+            return base.Channel.IsValidCardAsync(card);
+        }
+        
         public void SendMessageGame(string message) {
             base.Channel.SendMessageGame(message);
         }
@@ -637,6 +657,14 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task EndGameAsync() {
             return base.Channel.EndGameAsync();
+        }
+        
+        public void ChooseNotToPlayCard() {
+            base.Channel.ChooseNotToPlayCard();
+        }
+        
+        public System.Threading.Tasks.Task ChooseNotToPlayCardAsync() {
+            return base.Channel.ChooseNotToPlayCardAsync();
         }
     }
 }

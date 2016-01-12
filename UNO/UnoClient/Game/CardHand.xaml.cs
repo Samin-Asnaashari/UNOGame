@@ -80,7 +80,7 @@ namespace UnoClient.Game
 
             if (playSucces)
             {
-                parent.CardPlayed(cardControl.GetCard(), "PlayerWhoPLayed");
+                parent.CardPlayed(cardControl.GetCard(), Username);
                 Hand.Children.Remove(cardControl);
             }
             else

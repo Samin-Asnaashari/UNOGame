@@ -1,8 +1,8 @@
-﻿<Window
+﻿<Window x:Class="UnoClient.Game.GameWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:g="clr-namespace:UnoClient.Game"
-        xmlns:UnoClient="clr-namespace:UnoClient" x:Class="UnoClient.Game.GameWindow"
+        xmlns:UnoClient="clr-namespace:UnoClient"
         Title="Uno Game"
         Width="900" Height="800" MinWidth="900" MinHeight="800" Closing="Window_Closing">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

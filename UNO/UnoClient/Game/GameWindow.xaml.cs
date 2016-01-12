@@ -21,6 +21,7 @@ namespace UnoClient.Game
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)] // Needed for choosing if player keeps or plays the card they pick
     public partial class GameWindow : proxy.IGameCallback
     {
         public GameClient GameProxy;
@@ -84,15 +85,55 @@ namespace UnoClient.Game
         {
             SendMessageGameCallback($"{username} received {cards.Count} cards");
 
-            foreach (Card c in cards)
-            {
-                player1Hand.AddCard(new CardControl(c)); //Add cards to your own hand
-            }
-
             if (cards.Count > 1)
             {
-                endTurn();
+                foreach (Card c in cards)
+                {
+                    player1Hand.AddCard(new CardControl(c)); //Add cards to your own hand
+                }
             }
+            else
+            {
+                Card card = cards.First();
+                var action = DrawCardChoiceWindow.UserChoice.Keep;
+
+                // If picked card can be played, show the user a choice
+                if (GameProxy.IsValidCard(card))
+                {
+                    DrawCardChoiceWindow drawChoiceWindow = new DrawCardChoiceWindow(card);
+                    drawChoiceWindow.Owner = this;
+                    drawChoiceWindow.ShowDialog();
+                    action = drawChoiceWindow.Action;
+                }
+
+                switch (action)
+                {
+                    case DrawCardChoiceWindow.UserChoice.Keep:
+                        {
+                            player1Hand.AddCard(new CardControl(card));
+                            GameProxy.ChooseNotToPlayCard();
+                        }
+                        break;
+                    case DrawCardChoiceWindow.UserChoice.Play:
+                        {
+                            if (GameProxy.TryPlayCard(card))
+                            {
+                                CardPlayed(card, username);
+                            }
+                            else
+                            {
+                                // Should never happen
+                                throw new Exception("Card could not be played");
+                            }
+                        }
+                        break;
+                    default:
+                        // Should never happen
+                        throw new NotImplementedException();
+                }
+            }
+
+            endTurn();
         }
 
         public void NotifyPlayerLeft(string userName)
@@ -114,16 +155,14 @@ namespace UnoClient.Game
         //check if it right player who want is its turn 
         public void CardPlayed(Card c, string playerWhoPlayed)
         {
-            if (player2Hand.Username == playerWhoPlayed)
+            if (player1Hand.Username == playerWhoPlayed)
+                endTurn(); // We played a card so turn ends
+            else if (player2Hand.Username == playerWhoPlayed)
                 player2Hand.Hand.Children.RemoveAt(0);
             else if (player3Hand.Username == playerWhoPlayed)
                 player3Hand.Hand.Children.RemoveAt(0);
             else if (player4Hand.Username == playerWhoPlayed)
                 player4Hand.Hand.Children.RemoveAt(0);
-            else
-            {
-                endTurn();
-            }
 
             lastPlayedCard.Content = new CardControl(c);
         }

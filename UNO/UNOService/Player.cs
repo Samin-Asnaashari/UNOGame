@@ -27,7 +27,7 @@ namespace UNOService
         public Party Party { get; set; }
 
         public bool UnoSaid { get; set; }
-        public bool AlreadyPickedCards;
+        public bool AlreadyPickedCards; // To prevent played getting cards from the deck multiple times. Does not affect UNO or Attack cards.
 
         public Player(String username)
         {
@@ -42,7 +42,7 @@ namespace UNOService
             {
                 this.Hand.Add(item);
             }
-            
+
         }
 
         public void AddCard(Card card)
@@ -52,7 +52,21 @@ namespace UNOService
 
         public override string ToString()
         {
-            return this.UserName + "--- " + this.State;
+            return this.UserName;
+        }
+
+        public bool HasCard(Card card)
+        {
+            foreach (var item in Hand)
+            {
+                if ((item.Color == card.Color && item.Number == card.Number && item.Type == card.Type) ||
+                    (card.Type == item.Type && (card.Type == CardType.wild || card.Type == CardType.draw4Wild)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void Remove(Card card)
