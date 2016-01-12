@@ -96,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="StatusCodeConverter.cs" />
     <Page Include="Game\AfterGameWindow .xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

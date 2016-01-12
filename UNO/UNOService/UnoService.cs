@@ -34,19 +34,19 @@ namespace UNOService
                     if (loginSuccessful)
                         CreatePlayer(userName);
                     else
-                        return new StatusCode(-21); //Credentials incorrect
+                        return StatusCode.LOGIN_INCORRECT; //Credentials incorrect
                 }
                 else
                 {
-                    return new StatusCode(-20); //User already logged in
+                    return StatusCode.LOGIN_ALREADY; //User already logged in
                 }
             }
-            catch (Exception e)
+            catch
             {
-                return new StatusCode(e.Message);
+                return StatusCode.UNKOWN_ERROR; //TODO: Maybe pass the exception with the statuscode in some way? I'm not sure if enums can do this
             }
 
-            return new StatusCode(20); //Login successful
+            return StatusCode.SUCCESS;
         }
 
         private void CreatePlayer(string username) //method maybe not needed
@@ -59,20 +59,20 @@ namespace UNOService
         public StatusCode SignUp(string userName, string password)
         {
             if (CheckUserName(userName))
-                return new StatusCode(-10); //Username is taken
+                return StatusCode.REGISTER_USERNAME_TAKEN;
 
             if (password.Length < 6)
-                return new StatusCode(-11); //Password is too short
+                return StatusCode.REGISTER_PASSWORD_TOO_SHORT;
 
             try
             {
                 databaseHandler.InsertPlayer(userName, password);
                 CreatePlayer(userName);
-                return new StatusCode(10); //Registration successful
+                return StatusCode.SUCCESS;
             }
-            catch (Exception e)
+            catch
             {
-                return new StatusCode(e.Message); //Error status depending on exception
+                return StatusCode.UNKOWN_ERROR;  //TODO: Maybe pass the exception with the statuscode in some way? I'm not sure if enums can do this
             }
         }
 

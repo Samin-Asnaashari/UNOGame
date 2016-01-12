@@ -1,18 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/UNOService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UNOService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/UNOService.Game" />
-  <xs:complexType name="StatusCode">
-    <xs:annotation>
-      <xs:appinfo>
-        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Code" type="xs:int" />
-      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
+  <xs:simpleType name="StatusCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LOGIN_INCORRECT" />
+      <xs:enumeration value="LOGIN_ALREADY" />
+      <xs:enumeration value="REGISTER_USERNAME_TAKEN" />
+      <xs:enumeration value="REGISTER_PASSWORD_TOO_SHORT" />
+      <xs:enumeration value="UNKOWN_ERROR" />
+      <xs:enumeration value="SUCCESS" />
+    </xs:restriction>
+  </xs:simpleType>
   <xs:element name="StatusCode" nillable="true" type="tns:StatusCode" />
   <xs:complexType name="ArrayOfPlayer">
     <xs:sequence>

@@ -1,91 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UNOService
 {
     [DataContract]
-    public struct StatusCode
+    public enum StatusCode
     {
-        private int code;
-        private string status;
+        [EnumMember, Description("Username or password incorrect.")]
+        LOGIN_INCORRECT,
+        [EnumMember, Description("User already logged in.")]
+        LOGIN_ALREADY,
 
-        public StatusCode(int code)
-        {
-            this.code = code;
-            this.status = "";
+        [EnumMember, Description("Username is taken.")]
+        REGISTER_USERNAME_TAKEN,
+        [EnumMember, Description("Password is too short! It should be at least 6 characters long.")]
+        REGISTER_PASSWORD_TOO_SHORT,
 
-            this.Code = code; //Call logic of 'Code'
-        }
+        [EnumMember, Description("An unkown error occured.")]
+        UNKOWN_ERROR,
 
-        public StatusCode(string status) //Only call this constructor when the status depends on a thrown clause
-        {
-            this.code = -99;
-            this.status = status;
-        }
-        
-        [DataMember]
-        public string Status
-        {
-            get
-            {
-                return status;
-            }
-
-            private set //Otherwise WCF chokes during serialization
-            {
-                status = value;
-            }
-        }
-
-        [DataMember]
-        public int Code
-        {
-            get
-            {
-                return code;
-            }
-            set
-            {
-                code = value;
-
-                switch(code)
-                {
-                    /* Errors: */
-                    //Signup:
-                    case -10:
-                        status = "Username is taken.";
-                        break;
-                    case -11:
-                        status = "Password is too short! It should be at least 6 characters long.";
-                        break;
-                    //Login:
-                    case -20:
-                        status = "User already logged in.";
-                        break;
-                    case -21:
-                        status = "Username or password incorrect.";
-                        break;
-
-                    /* Succeeds: */
-                    //Registration:
-                    case 10:
-                        status = "Registration successful";
-                        break;
-                    //Login:
-                    case 20:
-                        status = "Login succesful";
-                        break;
-
-
-                    default:
-                        status = "Unkown status code.";
-                        break;
-                }
-            }
-        }
+        [EnumMember]
+        SUCCESS
     }
 }
