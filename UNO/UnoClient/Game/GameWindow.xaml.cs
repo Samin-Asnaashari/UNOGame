@@ -180,6 +180,7 @@ namespace UnoClient.Game
             // If only two players and skipping turns, don't change active player
             if (playerHands.Count == 2)
             {
+                // TODO This always returns null, so skip cards look incorrect clientside
                 Card card = lastPlayedCard.GetCard();
                 if (card != null)
                 {

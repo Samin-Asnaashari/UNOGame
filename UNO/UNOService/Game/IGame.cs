@@ -33,7 +33,6 @@ namespace UNOService
         /// <permission>Only the player whose turn it is can play a card.</permission>
         /// <param name="c"></param>
         /// 
-        //[OperationContract(IsOneWay = true)]
         [OperationContract]
         bool TryPlayCard(Card card);
 
@@ -41,7 +40,7 @@ namespace UNOService
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SendMessageGame(string message);
 
         /// <summary>

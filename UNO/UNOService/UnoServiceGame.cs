@@ -56,32 +56,6 @@ namespace UNOService
             throw new NotImplementedException();
         }
 
-        private List<Player> CalculateGamePlayerPositions(Player callingPlayer, Game.Game game)//Calculating player positions of a game based on the calling player parameter and depending on direction of the game
-        {
-            List<Player> OrderedPlayerPositions = new List<Player>();
-            OrderedPlayerPositions[0] = callingPlayer;
-
-            for (int i = 0; i < game.Players.Count; i++)
-            {
-                if (OrderedPlayerPositions[0] == game.Players[i])
-                {
-                    if (game.Direction == Direction.clockwise)
-                    {
-                        OrderedPlayerPositions[1] = game.Players[(i + 1) % 4];//nextToMePlayer
-                        OrderedPlayerPositions[2] = game.Players[(i - 1) % 4];//previousToMePlayer
-                        OrderedPlayerPositions[3] = game.Players[(i + 2) % 4];//Last PLayer
-                    }
-                    else
-                    {
-                        OrderedPlayerPositions[1] = game.Players[(i - 1) % 4];
-                        OrderedPlayerPositions[2] = game.Players[(i + 1) % 4];
-                        OrderedPlayerPositions[3] = game.Players[(i + 2) % 4];
-                    }
-                }
-            }
-            return OrderedPlayerPositions;
-        }
-
         public void SendMessageGame(string message)
         {
             Player player = getPlayerFromGameContext();
@@ -92,11 +66,11 @@ namespace UNOService
                 game.Uno(player);
             }
 
-            foreach (Player currentPlayer in game.Players)
+            foreach (Player otherplayer in game.Players)
             {
-                if (currentPlayer != player)
+                if (otherplayer != player)
                 {
-                    currentPlayer.IGameCallback.SendMessageGameCallback(message);
+                    otherplayer.IGameCallback.SendMessageGameCallback(message);
                 }
             }
         }

@@ -186,6 +186,8 @@ namespace UNOService.Game
             }
             else
             {
+                // Reset UNO Status
+                CurrentPlayer.UnoSaid = false;
                 player.AlreadyPickedCards = true;
                 List<Card> cards = pickANumberOfCardsFromDeck(amountOfCards);
                 player.Hand.AddRange(cards);
@@ -307,7 +309,6 @@ namespace UNOService.Game
             }
 
             CurrentPlayer = Players[nextPlayerTurn];
-            CurrentPlayer.UnoSaid = false;
             CurrentPlayer.AlreadyPickedCards = false;
 
             if (PreviousPlayer != CurrentPlayer) // Prevent deadlock when skipping turn with two players.
@@ -357,7 +358,8 @@ namespace UNOService.Game
 
             foreach (Player player in Players)
             {
-                player.AddCard(pickANumberOfCardsFromDeck(7));
+                // TODO Make sure this value is 7, I keep changing it to test UNO
+                player.AddCard(pickANumberOfCardsFromDeck(2));
                 player.IGameCallback.InitializeGame(player.Hand, playersUserNames);
             }
 

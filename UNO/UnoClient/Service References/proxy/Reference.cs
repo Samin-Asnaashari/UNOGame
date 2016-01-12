@@ -519,10 +519,10 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/TryPlayCard", ReplyAction="http://tempuri.org/IGame/TryPlayCardResponse")]
         System.Threading.Tasks.Task<bool> TryPlayCardAsync(UnoClient.proxy.Card card);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SendMessageGame", ReplyAction="http://tempuri.org/IGame/SendMessageGameResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
         void SendMessageGame(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SendMessageGame", ReplyAction="http://tempuri.org/IGame/SendMessageGameResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SendMessageGame")]
         System.Threading.Tasks.Task SendMessageGameAsync(string message);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToGameEvents")]
