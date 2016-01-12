@@ -171,6 +171,8 @@ namespace UnoClient.Game
         //check if it right player who want is its turn 
         public void CardPlayed(Card c, string playerWhoPlayed)
         {
+            lastPlayedCard.Content = new CardControl(c);
+
             if (player1Hand.Username == playerWhoPlayed)
                 endTurn(); // We played a card so turn ends
             else if (player2Hand.Username == playerWhoPlayed)
@@ -179,8 +181,6 @@ namespace UnoClient.Game
                 player3Hand.Hand.Children.RemoveAt(0);
             else if (player4Hand.Username == playerWhoPlayed)
                 player4Hand.Hand.Children.RemoveAt(0);
-
-            lastPlayedCard.Content = new CardControl(c);
         }
 
         private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
@@ -230,14 +230,11 @@ namespace UnoClient.Game
             // If only two players and skipping turns, don't change active player
             if (playerHands.Count == 2)
             {
-                // TODO This always returns null, so skip cards look incorrect clientside
                 CardControl cardControl = lastPlayedCard.Content as CardControl;
                 var card = cardControl.GetCard();
-                if (card != null)
-                {
-                    if (card.Type == CardType.skip)
-                        return;
-                }
+
+                if (card.Type == CardType.skip)
+                    return;
             }
 
             player1Hand.sv.Background = Brushes.Brown;
