@@ -359,7 +359,7 @@ namespace UNOService.Game
             foreach (Player player in Players)
             {
                 // TODO Make sure this value is 7, I keep changing it to test UNO
-                player.AddCard(pickANumberOfCardsFromDeck(2));
+                player.AddCard(pickANumberOfCardsFromDeck(7));
                 player.IGameCallback.InitializeGame(player.Hand, playersUserNames);
             }
 
