@@ -181,25 +181,28 @@ namespace UNOService.Game
         {
             if (player.AlreadyPickedCards)
             {
-                return;
+                // Player already picked a card, but chose not to play it. Clicking the deck ends the turn.
+                EndTurn();
             }
             else
             {
                 player.AlreadyPickedCards = true;
-            }
 
-            player.IGameCallback.AssignCards(pickANumberOfCardsFromDeck(amountOfCards));
+                player.IGameCallback.AssignCards(pickANumberOfCardsFromDeck(amountOfCards));
 
-            foreach (Player otherPlayer in Players)
-            {
-                if (otherPlayer != player)
+                foreach (Player otherPlayer in Players)
                 {
-                    otherPlayer.IGameCallback.NotifyPlayersNumberOfCardsTaken(amountOfCards, player.UserName);
+                    if (otherPlayer != player)
+                    {
+                        otherPlayer.IGameCallback.NotifyPlayersNumberOfCardsTaken(amountOfCards, player.UserName);
+                    }
                 }
-            }
 
-            if (amountOfCards > 1)
-                EndTurn();
+                cardPickQueue = 0;
+
+                if (amountOfCards > 1)
+                    EndTurn();
+            }
         }
 
         private List<Card> pickANumberOfCardsFromDeck(int numberOfCardsToPick)
