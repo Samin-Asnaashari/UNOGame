@@ -37,7 +37,7 @@ namespace UnoClient
 
             StatusCode sc = client.Login(username, txtPassword.Password);
 
-            if (sc.Code > 0)
+            if (sc == StatusCode.SUCCESS)
             {
                 //Login succesful
                 new LobbyWindow(username, txtPassword.Password).Show();
@@ -45,7 +45,7 @@ namespace UnoClient
             }
             else
             {
-                MessageBox.Show(sc.Status, "Error");
+                MessageBox.Show(StatusCodeConverter.GetDescription(sc), "Error");
             }
 
             btnLogin.IsEnabled = true;
@@ -56,7 +56,7 @@ namespace UnoClient
             string username = txtUsername.Text;
 
             StatusCode sc = client.SignUp(username, txtPassword.Password);
-            if (sc.Code > 0)
+            if (sc == StatusCode.SUCCESS)
             {
                 //Register succesful
                 new LobbyWindow(username, txtPassword.Password).Show();
@@ -64,7 +64,7 @@ namespace UnoClient
             }
             else
             {
-                MessageBox.Show(sc.Status, "Error");
+                MessageBox.Show(StatusCodeConverter.GetDescription(sc), "Error");
             }
         }
 

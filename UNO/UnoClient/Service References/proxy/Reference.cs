@@ -13,64 +13,27 @@ namespace UnoClient.proxy {
     using System;
     
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/UNOService")]
-    [System.SerializableAttribute()]
-    public partial struct StatusCode : System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public enum StatusCode : int {
         
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        LOGIN_INCORRECT = 0,
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int CodeField;
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        LOGIN_ALREADY = 1,
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StatusField;
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REGISTER_USERNAME_TAKEN = 2,
         
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REGISTER_PASSWORD_TOO_SHORT = 3,
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Code {
-            get {
-                return this.CodeField;
-            }
-            set {
-                if ((this.CodeField.Equals(value) != true)) {
-                    this.CodeField = value;
-                    this.RaisePropertyChanged("Code");
-                }
-            }
-        }
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNKOWN_ERROR = 4,
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Status {
-            get {
-                return this.StatusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
-                    this.StatusField = value;
-                    this.RaisePropertyChanged("Status");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SUCCESS = 5,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
