@@ -187,8 +187,9 @@ namespace UNOService.Game
             else
             {
                 player.AlreadyPickedCards = true;
-
-                player.IGameCallback.AssignCards(pickANumberOfCardsFromDeck(amountOfCards));
+                List<Card> cards = pickANumberOfCardsFromDeck(amountOfCards);
+                player.Hand.AddRange(cards);
+                player.IGameCallback.AssignCards(cards);
 
                 foreach (Player otherPlayer in Players)
                 {
