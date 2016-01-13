@@ -88,13 +88,5 @@ namespace UNOService
 
             game.ChooseNotToPlayCard(player);
         }
-
-        public bool IsValidCard(Card card)
-        {
-            Player player = getPlayerFromGameContext();
-            Game.Game game = player.Game;
-
-            return game.IsValidCard(player, card);
-        }
     }
 }

@@ -96,31 +96,26 @@ namespace UnoClient.Game
             }
             else
             {
+                // Choose to keep or play the card recieved
+
                 Card card = cards.First();
                 CardControl cardControl = new CardControl(card);
                 var action = DrawCardChoiceWindow.UserChoice.Keep;
                 player1Hand.AddCard(cardControl);
 
-                // If picked card can be played, show the user a choice
-                if (GameProxy.IsValidCard(card))
-                {
-                    DrawCardChoiceWindow drawChoiceWindow = new DrawCardChoiceWindow(card);
-                    drawChoiceWindow.Owner = this;
-                    drawChoiceWindow.ShowDialog();
-                    action = drawChoiceWindow.Action;
-                }
+                DrawCardChoiceWindow drawChoiceWindow = new DrawCardChoiceWindow(card);
+                drawChoiceWindow.Owner = this;
+                drawChoiceWindow.Play.IsEnabled = isValidCard(card);
+                drawChoiceWindow.ShowDialog();
+                action = drawChoiceWindow.Action;
 
                 switch (action)
                 {
                     case DrawCardChoiceWindow.UserChoice.Keep:
-                        {
-                            GameProxy.ChooseNotToPlayCard();
-                        }
+                        GameProxy.ChooseNotToPlayCard();
                         break;
                     case DrawCardChoiceWindow.UserChoice.Play:
-                        {
-                            playCard(cardControl);
-                        }
+                        playCard(cardControl);
                         break;
                     default:
                         // Should never happen
@@ -151,7 +146,10 @@ namespace UnoClient.Game
                 player1Hand.RemoveCard(cardControl);
             }
             else
+            {
+                // Should never happen
                 MessageBox.Show("Invalid move");
+            }
         }
 
         public void NotifyPlayerLeft(string userName)
@@ -173,6 +171,7 @@ namespace UnoClient.Game
         //check if it right player who want is its turn 
         public void CardPlayed(Card c, string playerWhoPlayed)
         {
+            // Every card played is added the the last played card 'pile'
             lastPlayedCard.Content = new CardControl(c);
 
             if (player1Hand.Username == playerWhoPlayed)
@@ -184,6 +183,31 @@ namespace UnoClient.Game
             else if (player4Hand.Username == playerWhoPlayed)
                 player4Hand.Hand.Children.RemoveAt(0);
         }
+
+        private bool isValidCard(Card cardtoplay)
+        {
+            CardControl cardControl = lastPlayedCard.Content as CardControl;
+            Card tableCard = cardControl.GetCard();
+
+            // Wild cards can be played on any color
+            if (cardtoplay.Type == CardType.draw4Wild || cardtoplay.Type == CardType.wild)
+            {
+                return true;
+            }
+            // Any matching color can be played, or matching numbers for normal cards
+            else if (cardtoplay.Color == tableCard.Color || (cardtoplay.Type == CardType.normal && cardtoplay.Number == tableCard.Number))
+            {
+                return true;
+            }
+            // Any matching types can also be played
+            else if (cardtoplay.Type == tableCard.Type && cardtoplay.Type != CardType.normal)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
         {
@@ -234,10 +258,13 @@ namespace UnoClient.Game
             if (playerHands.Count == 2)
             {
                 CardControl cardControl = lastPlayedCard.Content as CardControl;
-                var card = cardControl.GetCard();
+                if (cardControl != null)
+                {
+                    var card = cardControl.GetCard();
 
-                if (card.Type == CardType.skip)
-                    return;
+                    if (card.Type == CardType.skip)
+                        return;
+                }
             }
 
             player1Hand.sv.Background = Brushes.Brown;

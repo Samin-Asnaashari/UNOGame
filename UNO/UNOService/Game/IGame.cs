@@ -37,14 +37,6 @@ namespace UNOService
         bool TryPlayCard(Card card);
 
         /// <summary>
-        /// Check if a card is eligable for play
-        /// </summary>
-        /// <param name="card"></param>
-        /// <returns></returns>
-        [OperationContract]
-        bool IsValidCard(Card card);
-
-        /// <summary>
         /// message sended in chat
         /// </summary>
         /// <param name="message"></param>

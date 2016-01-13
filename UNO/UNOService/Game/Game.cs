@@ -107,7 +107,7 @@ namespace UNOService.Game
             }
         }
 
-        public bool IsValidCard(Player player, Card cardtoplay)
+        private bool isValidCard(Player player, Card cardtoplay)
         {
             Card tableCard = PlayedCards.Peek();
 
@@ -160,7 +160,7 @@ namespace UNOService.Game
 
         public bool TryPlayCard(Player playerWhoPerformedAction, Card card)
         {
-            if (IsValidCard(playerWhoPerformedAction, card))
+            if (isValidCard(playerWhoPerformedAction, card))
             {
                 StartTurn();
 
@@ -402,8 +402,12 @@ namespace UNOService.Game
             foreach (Player player in Players)
             {
                 // TODO Make sure this value is 7, I keep changing it to test UNO
-                player.AddCard(getCardsFromDeck(7));
                 player.IGameCallback.InitializeGame(player.Hand, playersUserNames);
+            }
+
+            foreach (Player player in Players)
+            {
+                giveCardsToPlayer(player, 7);
             }
 
             do

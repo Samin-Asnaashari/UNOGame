@@ -39,11 +39,7 @@ namespace UnoClient.Game
             {
                 OnCardClicked = onCardClicked;
             }
-            else // This is other players control
-            {
-                // TODO Make sure this is 7, lowered to test UNO
-                AddPlaceHolderCards(7);
-            }
+
         }
 
         public CardHand()
