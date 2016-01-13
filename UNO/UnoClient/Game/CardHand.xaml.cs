@@ -27,7 +27,7 @@ namespace UnoClient.Game
         private UIElementCollection cards { get { return Hand.Children; } }
 
 
-        public delegate void CardClickedHandler(CardControl cardControl);
+        public delegate bool CardClickedHandler(CardControl cardControl);
         public CardClickedHandler OnCardClicked;
 
         public void Instantiate(string userName, CardClickedHandler onCardClicked = null)

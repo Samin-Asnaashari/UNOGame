@@ -115,7 +115,8 @@ namespace UnoClient.Game
                         GameProxy.ChooseNotToPlayCard();
                         break;
                     case DrawCardChoiceWindow.UserChoice.Play:
-                        playCard(cardControl);
+                        if (!playCard(cardControl)) // Just in case
+                            GameProxy.ChooseNotToPlayCard();
                         break;
                     default:
                         // Should never happen
@@ -126,7 +127,7 @@ namespace UnoClient.Game
             endTurn();
         }
 
-        private void playCard(CardControl cardControl)
+        private bool playCard(CardControl cardControl)
         {
             Card card = cardControl.GetCard();
             if (card.Type == CardType.draw4Wild || card.Type == CardType.wild)
@@ -138,18 +139,19 @@ namespace UnoClient.Game
                 card.Color = colorPicker.SelectedColor;
             }
 
-            bool playSucces = GameProxy.TryPlayCard(card);//if special card, color chosen is saved in color attribute to be handled in the server
+            bool playSuccess = GameProxy.TryPlayCard(card);//if special card, color chosen is saved in color attribute to be handled in the server
 
-            if (playSucces)
+            if (playSuccess)
             {
                 CardPlayed(card, username);
                 player1Hand.RemoveCard(cardControl);
             }
             else
             {
-                // Should never happen
                 MessageBox.Show("Invalid move");
             }
+
+            return playSuccess;
         }
 
         public void NotifyPlayerLeft(string userName)
