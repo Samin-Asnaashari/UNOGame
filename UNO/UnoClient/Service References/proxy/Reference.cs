@@ -363,6 +363,12 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/SubscribeToLobbyEvents", ReplyAction="http://tempuri.org/ILobby/SubscribeToLobbyEventsResponse")]
         System.Threading.Tasks.Task SubscribeToLobbyEventsAsync(string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/StartTheReplay", ReplyAction="http://tempuri.org/ILobby/StartTheReplayResponse")]
+        void StartTheReplay(int GameID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/StartTheReplay", ReplyAction="http://tempuri.org/ILobby/StartTheReplayResponse")]
+        System.Threading.Tasks.Task StartTheReplayAsync(int GameID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -394,6 +400,9 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/NotifyGameStarted")]
         void NotifyGameStarted();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobby/NotifyRePlayGameStarted")]
+        void NotifyRePlayGameStarted();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -494,6 +503,14 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task SubscribeToLobbyEventsAsync(string username, string password) {
             return base.Channel.SubscribeToLobbyEventsAsync(username, password);
+        }
+        
+        public void StartTheReplay(int GameID) {
+            base.Channel.StartTheReplay(GameID);
+        }
+        
+        public System.Threading.Tasks.Task StartTheReplayAsync(int GameID) {
+            return base.Channel.StartTheReplayAsync(GameID);
         }
     }
     

@@ -248,8 +248,22 @@ namespace UnoClient
 
         public void NotifyGameStarted()
         {
-            new Game.GameWindow(username, "password").Show();
+            new Game.GameWindow(username, "password","Normal").Show();
             this.Hide();
+        }
+
+        public void NotifyRePlayGameStarted()
+        {
+            new Game.GameWindow(username, "password", "RePlay").Show();
+            this.Hide();
+        }
+
+
+        //change this to list of the saved game
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            //now 
+            LobbyProxy.StartTheReplay(1);
         }
     }
 }

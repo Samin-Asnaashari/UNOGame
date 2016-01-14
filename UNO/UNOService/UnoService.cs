@@ -15,6 +15,7 @@ namespace UNOService
         private DatabaseHandler databaseHandler;
 
         private List<Player> playersOnline = new List<Player>();
+        private List<Player> playersInReplay = new List<Player>();
         private List<Game.Game> games = new List<Game.Game>();
 
         public UnoService()

@@ -160,7 +160,7 @@ namespace UNOService
             if (host.Party.Players.Count >= 2 && host.Party.Players.Count <= 4)
             {
                 gameID++;
-                Game.Game Game = new Game.Game(gameID, host.Party.Players);
+                Game.Game Game = new Game.Game(gameID, host.Party.Players,databaseHandler);
                 games.Add(Game);
                 foreach (Player partyMember in host.Party.Players)
                 {
@@ -226,5 +226,39 @@ namespace UNOService
             }
             return player.Party.Players;
         }
+
+        public void StartTheReplay(int GameID)
+        {
+            Player player = getPlayerFromLobbyContext();
+            List<Player> players = databaseHandler.GetPlayersOfTheGame(GameID);
+
+            //put the player on top of the list 
+            foreach (var item in players)
+            {
+                if(item.UserName == player.UserName)
+                {
+                    Player i = item;
+                    players.Remove(i);
+                    players.Insert(0,i);
+                }
+            }
+
+            Game.Game Game = new Game.Game(gameID, players, databaseHandler);
+            Game.Deck = databaseHandler.GetDeck(GameID);
+
+            foreach (var item in players)
+            {
+                playersInReplay.Add(item);
+                item.Game = Game;
+            }
+
+            Game.StartGameReplay(player);
+            player.ILobbyCallback.NotifyGameStarted();
+
+
+        }
+
+
+
     }
 }

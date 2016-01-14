@@ -15,6 +15,8 @@ namespace UNOService
             Player playerWhoWantsToPlayACard = getPlayerFromGameContext();
             Game.Game game = playerWhoWantsToPlayACard.Game;
 
+            game.moves.Add((new Move(playerWhoWantsToPlayACard.UserName, game.GameID, card, Move.Types.Play)));
+
             return game.TryPlayCard(playerWhoWantsToPlayACard, card);
         }
 
@@ -38,9 +40,10 @@ namespace UNOService
             game.StartGame();
         }
 
+
         public void SaveReplay()
         {
-            throw new NotImplementedException();
+           
         }
 
         public void SendMessageGame(string message)
@@ -77,6 +80,7 @@ namespace UNOService
 
             if (player == player.Game.CurrentPlayer)
             {
+                game.moves.Add((new Move(player.UserName, game.GameID, Move.Types.Take)));
                 game.GiveCardsToPlayer(player);
             }
         }
@@ -86,6 +90,7 @@ namespace UNOService
             Player player = getPlayerFromGameContext();
             Game.Game game = player.Game;
 
+            game.moves.Add((new Move(player.UserName, game.GameID, Move.Types.Keep)));
             game.ChooseNotToPlayCard(player);
         }
     }

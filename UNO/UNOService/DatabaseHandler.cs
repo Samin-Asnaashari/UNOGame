@@ -132,20 +132,61 @@ namespace UNOService
             }
         }
 
-        public void InsertMove(int gameID,string username)
+        public int FindCard(Card c)
         {
             try
             {
                 connection.Open();
-                string sqlid = "SELECT COUNT(*) FROM `moves` ;";
-                MySqlCommand cmdid = new MySqlCommand(sqlid, connection);
-                int idNr = Convert.ToInt32(cmdid.ExecuteScalar());
-                idNr++;
-                connection.Close();
+                MySqlCommand cmd1;
+                String sql1 = "SELECT CardID FROM `card` WHERE Type = '" + c.Type + "' AND Color = '" + c.Color + "' AND Number =" + c.Number + ")";
+                cmd1 = new MySqlCommand(sql1, connection);
+                MySqlDataReader reader = cmd1.ExecuteReader();
 
+                string cardID = reader.Read().ToString();
+
+                return Convert.ToInt32(cardID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        //public Card FindCard(int cardID)
+        //{
+        //    try
+        //    {
+        //        connection.Open();
+        //        MySqlCommand cmd1;
+        //        String sql1 = "SELECT CardID FROM `card` WHERE Type = '" + c.Type + "' AND Color = '" + c.Color + "' AND Number =" + c.Number + ")";
+        //        cmd1 = new MySqlCommand(sql1, connection);
+        //        MySqlDataReader reader = cmd1.ExecuteReader();
+
+        //        string cardID = reader.Read().ToString();
+
+        //        return null;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        connection.Close();
+        //    }
+        //}
+
+        public void InsertMove(int gameID, string username, Game.Move.Types moveType)
+        {
+            try
+            {
                 connection.Open();
                 MySqlCommand cmd;
-                String sql = "INSERT INTO `moves` (`ID`, `Username`, `Time`, `Game ID`) VALUES (" + idNr + ", '" + userName + "' ,"+System.DateTime.Now + ", "+ gameID +");";//time
+                String sql = "INSERT INTO `move` (`ID`, `Username`, `GameID` , `Type`) VALUES ('', '" + userName + "' ," + gameID + " , '" + moveType + "')";
                 cmd = new MySqlCommand(sql, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -157,6 +198,89 @@ namespace UNOService
             {
                 connection.Close();
             }
+        }
+
+        public void InsertMove(int gameID, string username, String card, Game.Move.Types moveType)
+        {
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd;
+                String sql = "INSERT INTO `move` (`ID`, `Username`, `GameID` , `Type`, `Card`) VALUES ('', '" + userName + "' ," + gameID + " , '" + moveType + "' , '" + card + "')";
+                cmd = new MySqlCommand(sql, connection);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        //public void InsertMove(int gameID,string username,int cardID)
+        //{
+        //    try
+        //    {
+        //        connection.Open();
+        //        MySqlCommand cmd;
+        //        String sql = "INSERT INTO `moves` (`ID`, `Username`, `Game ID` , `Card`) VALUES ('', '" + userName + "' ," + gameID + " , " + cardID +")";
+        //        cmd = new MySqlCommand(sql, connection);
+        //        cmd.ExecuteNonQuery();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        connection.Close();
+        //    }
+        //}
+
+        public List<Card> GetNextMove(out Game.Move.Types moveType)
+        {
+            //try
+            //{
+            //    connection.Open();
+            //    MySqlCommand cmd;
+            //    String sql = "";
+            //    cmd = new MySqlCommand(sql, connection);
+            //    MySqlDataReader reader = cmd.ExecuteReader();
+
+            //    string info = reader.Read().ToString();
+
+            //    List<Card> cardsPunished = cardsPunished = new List<Card>();
+
+            //    switch(info)
+            //    {
+            //        case "PunishedCard":
+            //            Card foundCard = FindCard(Convert.ToInt32(info));
+            //            cardsPunished.Add(new Card(foundCard.Type, foundCard.Color, foundCard.Number));
+
+            //            while(reader.Read())
+            //            {
+            //                foundCard = FindCard(Convert.ToInt32(info));
+            //                cardsPunished.Add(new Card(foundCard.Type, foundCard.Color, foundCard.Number));
+            //            }
+                        moveType = Game.Move.Types.PunishedCard;
+            //            break;
+            //        case "Take1Card":
+
+            //            break;
+            //    }
+                return null;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception(ex.Message);
+            //}
+            //finally
+            //{
+            //    connection.Close();
+            //}
         }
 
         public bool CheckLogin(string username, string password)
@@ -215,5 +339,122 @@ namespace UNOService
                 connection.Close();
             }
         }
+
+        public void InsertCard(Card card, int gameID)
+        {
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd;
+                String sql = "INSERT INTO `deck` (`ID`, `Type`, `Color`, `Number`) VALUES ("+ gameID + ", '" + card.Type + "' ,'" + card.Color + "', " + card.Number + ");";
+                cmd = new MySqlCommand(sql, connection);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void InsertPlayer(List<Player> players)
+        {
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd;
+                foreach (var item in players)
+                {
+                    String sql = "INSERT INTO `gameinfo` (`GameID`, `PlayerUserName`) VALUES (" + item.Game.GameID + ", '" + item.UserName + "');";
+                    cmd = new MySqlCommand(sql, connection);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public List<Player> GetPlayersOfTheGame(int GameID)
+        {
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd1;
+                String sql1 = "SELECT PlayerUserName FROM `gameinfo` WHERE GameID = " + GameID + ")";
+                cmd1 = new MySqlCommand(sql1, connection);
+                MySqlDataReader reader = cmd1.ExecuteReader();
+
+                string username = reader.Read().ToString();
+                List<Player> players = new List<Player>();
+                if(username!=null)
+                {
+                    Player p = new Player(username);
+                    players.Add(p);
+                }
+                while(reader.Read())
+                {
+                    username = reader.Read().ToString();
+                    if (username != null)
+                    {
+                        Player p = new Player(username);
+                        players.Add(p);
+                    }
+                }
+                return players;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public Stack<Card> GetDeck(int gameID)
+        {
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd1;
+                String sql1 = "SELECT Type,Color,Number FROM `deck` WHERE GameID = " + gameID + "ORDER BY GameID )";
+                cmd1 = new MySqlCommand(sql1, connection);
+                MySqlDataReader reader = cmd1.ExecuteReader();
+
+                string row = reader.Read().ToString();
+                Stack<Card> cards = new Stack<Card>();
+                Game.CardType Type;
+                Game.CardColor Color;
+                int Number;
+                while (reader.Read())
+                {
+                    Type = (Game.CardType)reader[0];
+                    Color = (Game.CardColor)reader[1];
+                    Number = Convert.ToInt32(reader[2]);
+                    cards.Push(new Card(Type, Color, Number));
+                }
+
+                return cards;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
     }
 }

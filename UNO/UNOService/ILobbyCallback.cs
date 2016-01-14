@@ -65,5 +65,8 @@ namespace UNOService
 
         [OperationContract(IsOneWay = true)]
         void NotifyGameStarted();
+
+        [OperationContract(IsOneWay = true)]
+        void NotifyRePlayGameStarted();
     }
 }

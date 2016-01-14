@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnoClient.proxy;
-
+using System.Timers;
 namespace UnoClient.Game
 {
     /// <summary>
@@ -25,18 +25,18 @@ namespace UnoClient.Game
     public partial class GameWindow : proxy.IGameCallback
     {
         public GameClient GameProxy;
-
         private string username;
-
         private string password;
+
         List<CardHand> playerHands;
 
+        //Timer timer;
+        string Type;
 
         // TODO Authenticate using password
-        public GameWindow(string username, string password)
+        public GameWindow(string username, string password, string Type)
         {
             this.username = username;
-
             this.password = password;
 
             GameProxy = new GameClient(new InstanceContext(this));
@@ -51,7 +51,23 @@ namespace UnoClient.Game
             player1Hand.Instantiate(username, playCard);
 
             setControlsEnabled(false);
+
+            this.Type = Type;
+            if (Type == "RePlay")
+            {
+                System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                dispatcherTimer.Interval = new TimeSpan(0, 5, 0);
+                dispatcherTimer.Start();
+                //timer = new Timer();
+            }
         }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            //show hand 
+            //for each time show one move
+        } 
 
         // Give client information about other players in the game
         public void InitializeGame(List<string> playersUserNames)
@@ -275,5 +291,6 @@ namespace UnoClient.Game
             DeckOfCards.IsEnabled = enabled;
         }
 
+        
     }
 }

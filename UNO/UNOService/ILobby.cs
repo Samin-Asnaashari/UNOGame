@@ -69,5 +69,8 @@ namespace UNOService
         /// <returns></returns>
         [OperationContract]
         void SubscribeToLobbyEvents(string username, string password);
+
+        [OperationContract]
+        void StartTheReplay(int GameID);
     }
 }

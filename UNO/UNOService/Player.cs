@@ -17,6 +17,8 @@ namespace UNOService
 
         public List<Card> Hand { get; set; }
 
+        //public List<Card> SaveHands { get; set; }
+
         [DataMember]
         public PlayerState State { get; set; }
         public ILobbyCallback ILobbyCallback { get; set; }
@@ -34,6 +36,8 @@ namespace UNOService
             this.UserName = username;
             this.State = PlayerState.InLobby; //cause after login or sign up it always goes to lobby
             Hand = new List<Card>();
+
+            //SaveHands = new List<Card>(); 
         }
 
         public void AddCard(List<Card> cards)
@@ -45,10 +49,11 @@ namespace UNOService
 
         }
 
-        public void AddCard(Card card)
-        {
-            this.Hand.Add(card);
-        }
+        //public void AddCard(Card card)
+        //{
+        //    this.Hand.Add(card);
+        //    SaveHands.Add(card);
+        //}
 
         public override string ToString()
         {

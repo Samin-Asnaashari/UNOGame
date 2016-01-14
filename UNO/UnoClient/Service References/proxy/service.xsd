@@ -151,6 +151,18 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="StartTheReplay">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GameID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartTheReplayResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="PlayerConnected">
     <xs:complexType>
       <xs:sequence>
@@ -206,6 +218,11 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyGameStarted">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyRePlayGameStarted">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

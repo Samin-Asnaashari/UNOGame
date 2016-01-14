@@ -58,7 +58,7 @@
     <Compile Include="Game\GameEventType.cs" />
     <Compile Include="Game\IGame.cs" />
     <Compile Include="Game\IGameCallback.cs" />
-    <Compile Include="Game\PartyEventType.cs" />
+    <Compile Include="Game\Move.cs" />
     <Compile Include="Game\PlayerState.cs" />
     <Compile Include="ILobby.cs" />
     <Compile Include="ILobbyCallback.cs" />
