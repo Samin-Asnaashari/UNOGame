@@ -17,7 +17,7 @@ namespace UNOService
 		void AssignCards(List<Card> cards);
 
         [OperationContract(IsOneWay = true)]
-        void InitializeGame(List<Card> cards, List<string> playersUserNames);
+        void InitializeGame(List<string> playersUserNames);
 
         [OperationContract(IsOneWay = true)]
         void NotifyPlayersNumberOfCardsTaken(int nrOfCardsTaken, string playerWhoTookCardsUserName);

@@ -273,8 +273,7 @@
   <xs:element name="InitializeGame">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="cards" nillable="true" type="q12:ArrayOfCard" />
-        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="playersUserNames" nillable="true" type="q13:ArrayOfstring" />
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="playersUserNames" nillable="true" type="q12:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -289,7 +288,7 @@
   <xs:element name="CardPlayed">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="c" nillable="true" type="q14:Card" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/UNOService" minOccurs="0" name="c" nillable="true" type="q13:Card" />
         <xs:element minOccurs="0" name="playerWhoPlayed" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>

@@ -54,13 +54,8 @@ namespace UnoClient.Game
         }
 
         // Give client information about other players in the game
-        public void InitializeGame(List<Card> cards, List<string> playersUserNames)
+        public void InitializeGame(List<string> playersUserNames)
         {
-            foreach (Card c in cards)
-            {
-                player1Hand.AddCard(new CardControl(c)); //Add cards to your own hand
-            }
-
             // Shift list until player is first
             while (playersUserNames.First() != username)
             {
