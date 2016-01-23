@@ -39,9 +39,11 @@ namespace UNOService
         [OperationContract(IsOneWay = true)]
         void EndOfTheGame(string winner);
 
+        /// <summary>
+        /// Will notify the client that someone's turn has ended and someone else turn starts.
+        /// </summary>
+        /// <param name="player"></param>
         [OperationContract(IsOneWay = true)]
-        void SetActivePlayer();
-
-
+        void TurnChanged(Player player);
     }
 }

@@ -24,9 +24,22 @@ namespace UnoClient.Game
     /// </summary>
     public partial class CardHand : UserControl
     {
+        private string _username;
+
         public bool IsHorizontal { get; set; }
 
-        public string Username { get; private set; }
+        public string Username
+        {
+            get
+            {
+                return _username;
+            }
+            set
+            {
+                _username = value;
+                label.GetBindingExpression(Label.ContentProperty).UpdateTarget();
+            }
+        }
         public bool IsTurn { get; set; }
 
         private UIElementCollection cards { get { return Hand.Children; } }
@@ -44,7 +57,6 @@ namespace UnoClient.Game
             {
                 OnCardClicked = onCardClicked;
             }
-
         }
 
         public CardHand()

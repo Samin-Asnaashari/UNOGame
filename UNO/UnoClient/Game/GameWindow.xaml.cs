@@ -265,14 +265,24 @@ namespace UnoClient.Game
             GameProxy.EndGame();
         }
 
-        public void SetActivePlayer()
+        public void TurnChanged(Player player)
         {
-            setControlsEnabled(true);
-            player1Hand.sv.Background = Brushes.Yellow;
-            Debug.WriteLine($"{username} started turn clientside");
+            foreach(CardHand hand in playerHands)
+            {
+                if(hand.Username == username && player.UserName == username) //It's our turn
+                {
+                    setControlsEnabled(true);
+                    hand.IsTurn = true;
 
-            // Bring Window to foreground
-            this.Activate();
+                    Debug.WriteLine($"{username} started turn clientside");
+
+                    this.Activate(); // Bring Window to foreground
+                }
+                else if (hand.Username == player.UserName)
+                    hand.IsTurn = true;
+                else
+                    hand.IsTurn = false;
+            }
         }
 
         private void endTurn()
@@ -290,7 +300,7 @@ namespace UnoClient.Game
                 }
             }
 
-            player1Hand.sv.Background = Brushes.Brown;
+            player1Hand.IsTurn = false;
             setControlsEnabled(false);
             Debug.WriteLine($"{username} ended turn clientside");
         }
@@ -299,8 +309,6 @@ namespace UnoClient.Game
         {
             player1Hand.Hand.IsEnabled = enabled;
             DeckOfCards.IsEnabled = enabled;
-        }
-
-        
+        }        
     }
 }
