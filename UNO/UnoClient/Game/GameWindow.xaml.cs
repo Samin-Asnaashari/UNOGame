@@ -140,21 +140,31 @@ namespace UnoClient.Game
 
         private bool playCard(CardControl cardControl)
         {
-            Card card = cardControl.GetCard();
-            if (card.Type == CardType.draw4Wild || card.Type == CardType.wild)
+            Card cardToBePlayed = cardControl.GetCard();
+
+            if (cardToBePlayed.Type == CardType.draw4Wild || cardToBePlayed.Type == CardType.wild)
             {
                 ColorPickerWindow colorPicker = new ColorPickerWindow();
                 colorPicker.Owner = this;
                 colorPicker.ShowDialog();
 
-                card.Color = colorPicker.SelectedColor;
+                Brush selectedColor = colorPicker.selectedColor;
+
+                if (selectedColor.Equals(Brushes.Red))
+                    cardToBePlayed.Color = CardColor.Red;
+                else if (selectedColor.Equals(Brushes.Green))
+                    cardToBePlayed.Color = CardColor.Green;
+                else if (selectedColor.Equals(Brushes.Blue))
+                    cardToBePlayed.Color = CardColor.Blue;
+                else if (selectedColor.Equals(Brushes.Yellow))
+                    cardToBePlayed.Color = CardColor.Yellow;
             }
 
-            bool playSuccess = GameProxy.TryPlayCard(card);//if special card, color chosen is saved in color attribute to be handled in the server
+            bool playSuccess = GameProxy.TryPlayCard(cardToBePlayed);//if special card, color chosen is saved in color attribute to be handled in the server
 
             if (playSuccess)
             {
-                CardPlayed(card, username);
+                CardPlayed(cardToBePlayed, username);
                 player1Hand.RemoveCard(cardControl);
             }
             else

@@ -25,7 +25,10 @@ namespace UnoClient.Game
     public partial class CardHand : UserControl
     {
         public bool IsHorizontal { get; set; }
+
         public string Username { get; private set; }
+        public bool IsTurn { get; set; }
+
         private UIElementCollection cards { get { return Hand.Children; } }
 
 

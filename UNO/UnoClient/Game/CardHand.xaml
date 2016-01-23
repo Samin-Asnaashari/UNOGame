@@ -32,6 +32,19 @@
             </ScrollViewer.Style>
             <WrapPanel x:Name="Hand"/>
         </ScrollViewer>
-        <Label x:Name="label" Content="{Binding Path=Username}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="10" Width="10"/>
+        <Label x:Name="label" Content="{Binding Path=Username}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="10" Width="10">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsTurn}" Value="True">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=IsTurn}" Value="False">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
     </Grid>
 </UserControl>
