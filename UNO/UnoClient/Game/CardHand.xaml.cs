@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,26 +23,27 @@ namespace UnoClient.Game
     /// <summary>
     /// Interaction logic for CardHand.xaml
     /// </summary>
-    public partial class CardHand : UserControl
+    public partial class CardHand : UserControl, INotifyPropertyChanged
     {
-        private string _username;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private bool _isTurn;
 
         public bool IsHorizontal { get; set; }
 
-        public string Username
+        public string Username { get; set; }
+
+        public bool IsTurn
         {
-            get
-            {
-                return _username;
-            }
+            get { return _isTurn; }
             set
             {
-                _username = value;
-                label.GetBindingExpression(Label.ContentProperty).UpdateTarget();
+                _isTurn = value;
+
+                PropertyChanged(this, new PropertyChangedEventArgs("IsTurn")); //To update the UI
             }
         }
-        public bool IsTurn { get; set; }
-
+        
         private UIElementCollection cards { get { return Hand.Children; } }
 
 
