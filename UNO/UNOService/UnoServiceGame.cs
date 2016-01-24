@@ -15,7 +15,7 @@ namespace UNOService
             Player playerWhoWantsToPlayACard = getPlayerFromGameContext();
             Game.Game game = playerWhoWantsToPlayACard.Game;
 
-            game.moves.Add((new Move(playerWhoWantsToPlayACard.UserName, game.GameID, card, Move.Types.Play)));
+            //game.moves.Add((new Move(playerWhoWantsToPlayACard.UserName, game.GameID, card, Move.Types.Play)));
 
             return game.TryPlayCard(playerWhoWantsToPlayACard, card);
         }
@@ -24,11 +24,8 @@ namespace UNOService
         public void SubscribeToGameEvents(string userName)
         {
             IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
-
             Player player = playersOnline.Find(x => x.UserName == userName);
-
             player.IGameCallback = clientCallbackGame;
-
             Game.Game game = player.Game;
 
             foreach (Player otherPlayers in game.Players)
@@ -36,14 +33,20 @@ namespace UNOService
                 if (otherPlayers.IGameCallback == null)
                     return;
             }
-
             game.StartGame();
         }
 
 
         public void SaveReplay()
         {
-           
+            Player p= getPlayerFromGameContext();
+            databaseHandler.InsertGamePlayed(p.Game.GameID,p.UserName);
+            foreach (var item in p.Game.moves)
+            {
+                //databaseHandler.InsertMove(p.Game.GameID,p.UserName,item.Type);
+                databaseHandler.InsertMove(p.Game.GameID, p.UserName,databaseHandler.FindCard(item.card),item.Type);
+            }
+            p.Game.InsertDeckIntoDatabase();
         }
 
         public void SendMessageGame(string message)
@@ -80,7 +83,7 @@ namespace UNOService
 
             if (player == player.Game.CurrentPlayer)
             {
-                game.moves.Add((new Move(player.UserName, game.GameID, Move.Types.Take)));
+                //game.moves.Add((new Move(player.UserName, game.GameID, Move.Types.Take)));
                 game.GiveCardsToPlayer(player);
             }
         }
@@ -90,7 +93,7 @@ namespace UNOService
             Player player = getPlayerFromGameContext();
             Game.Game game = player.Game;
 
-            game.moves.Add((new Move(player.UserName, game.GameID, Move.Types.Keep)));
+            //game.moves.Add((new Move(player.UserName, game.GameID, Move.Types.Keep)));
             game.ChooseNotToPlayCard(player);
         }
     }

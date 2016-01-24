@@ -251,14 +251,15 @@ namespace UNOService
                 playersInReplay.Add(item);
                 item.Game = Game;
             }
-
+            Game.moves = databaseHandler.GettMoves(player.Game.GameID); //GameID: Chosen Game to play  
             Game.StartGameReplay(player);
             player.ILobbyCallback.NotifyGameStarted();
-
-
         }
 
-
+        public List<int> GetSavedGmes(string UserName)
+        {
+            return databaseHandler.GetSavedGame(UserName);
+        }
 
     }
 }

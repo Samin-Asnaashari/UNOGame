@@ -11,7 +11,7 @@ namespace UNOService
     {
         private MySqlConnection connection;
         private string serverIP = "localhost";
-        private string databaseName = "uno";
+        private string databaseName = "unogame";
         private string userName = "root";
         private string password = "";
         private int timeOutSeconds = 30;
@@ -200,7 +200,7 @@ namespace UNOService
             }
         }
 
-        public void InsertMove(int gameID, string username, String card, Game.Move.Types moveType)
+        public void InsertMove(int gameID, string username, int card, Game.Move.Types moveType)
         {
             try
             {
@@ -240,49 +240,78 @@ namespace UNOService
         //    }
         //}
 
-        public List<Card> GetNextMove(out Game.Move.Types moveType)
+        public List<Game.Move> GettMoves(int gameID)
         {
-            //try
-            //{
-            //    connection.Open();
-            //    MySqlCommand cmd;
-            //    String sql = "";
-            //    cmd = new MySqlCommand(sql, connection);
-            //    MySqlDataReader reader = cmd.ExecuteReader();
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd;
+                String sql = "SELECT Username,GameID,Type,Card FROM `move` WHERE GameID = " + gameID + "ORDER BY ID )";
+                cmd = new MySqlCommand(sql, connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
 
-            //    string info = reader.Read().ToString();
+                string row = reader.Read().ToString();
+                List<Game.Move> moves = new List<Game.Move>();
 
-            //    List<Card> cardsPunished = cardsPunished = new List<Card>();
+                string username;
+                Card card;
+                Game.Move.Types type;
 
-            //    switch(info)
-            //    {
-            //        case "PunishedCard":
-            //            Card foundCard = FindCard(Convert.ToInt32(info));
-            //            cardsPunished.Add(new Card(foundCard.Type, foundCard.Color, foundCard.Number));
+                while (reader.Read())
+                {
+                    username = reader[0].ToString();
+                    card = GetCard(Convert.ToInt32(reader[1]));
+                    type = (Game.Move.Types)reader[2];
+                    moves.Add(new Game.Move(username, gameID,card,type));
+                }
 
-            //            while(reader.Read())
-            //            {
-            //                foundCard = FindCard(Convert.ToInt32(info));
-            //                cardsPunished.Add(new Card(foundCard.Type, foundCard.Color, foundCard.Number));
-            //            }
-                        moveType = Game.Move.Types.PunishedCard;
-            //            break;
-            //        case "Take1Card":
-
-            //            break;
-            //    }
-                return null;
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new Exception(ex.Message);
-            //}
-            //finally
-            //{
-            //    connection.Close();
-            //}
+                return moves;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
+        public Card GetCard(int cardID)
+        {
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd;
+                String sql = "SELECT Type,Color,Number FROM `card` WHERE CardID = " + cardID +")";
+                cmd = new MySqlCommand(sql, connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                string row = reader.Read().ToString();
+
+                Game.CardType Type;
+                Game.CardColor Color;
+                int Number;
+                Card c = null;
+                while (reader.Read())
+                {
+                    Type = (Game.CardType)reader[0];
+                    Color = (Game.CardColor)reader[1];
+                    Number = Convert.ToInt32(reader[2]);
+                    c = new Card(Type, Color, Number);
+                }
+
+                return c;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
         public bool CheckLogin(string username, string password)
         {
             try
@@ -389,7 +418,7 @@ namespace UNOService
             {
                 connection.Open();
                 MySqlCommand cmd1;
-                String sql1 = "SELECT PlayerUserName FROM `gameinfo` WHERE GameID = " + GameID + ")";
+                String sql1 = "SELECT PlayerUserName FROM `gameinfo` WHERE GameID = " + GameID + ";";
                 cmd1 = new MySqlCommand(sql1, connection);
                 MySqlDataReader reader = cmd1.ExecuteReader();
 
@@ -427,7 +456,7 @@ namespace UNOService
             {
                 connection.Open();
                 MySqlCommand cmd1;
-                String sql1 = "SELECT Type,Color,Number FROM `deck` WHERE GameID = " + gameID + "ORDER BY GameID )";
+                String sql1 = "SELECT Type,Color,Number FROM `deck` WHERE GameID = " + gameID + "ORDER BY GameID;";
                 cmd1 = new MySqlCommand(sql1, connection);
                 MySqlDataReader reader = cmd1.ExecuteReader();
 
@@ -456,5 +485,37 @@ namespace UNOService
             }
         }
 
+
+        public List<int> GetSavedGame(string username)
+        {
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd;
+                String sql = "SELECT GameID FROM `savegame` WHERE Username = '" + username + "';";
+                cmd = new MySqlCommand(sql, connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                string row = reader.Read().ToString();
+                Stack<Card> cards = new Stack<Card>();
+
+                List<int> id = new List<int>();
+
+                while (reader.Read())
+                {
+                    id.Add(Convert.ToInt32(reader[0]));           
+                }
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }

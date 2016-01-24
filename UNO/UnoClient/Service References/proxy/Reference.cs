@@ -369,6 +369,12 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/StartTheReplay", ReplyAction="http://tempuri.org/ILobby/StartTheReplayResponse")]
         System.Threading.Tasks.Task StartTheReplayAsync(int GameID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/GetSavedGmes", ReplyAction="http://tempuri.org/ILobby/GetSavedGmesResponse")]
+        System.Collections.Generic.List<int> GetSavedGmes(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobby/GetSavedGmes", ReplyAction="http://tempuri.org/ILobby/GetSavedGmesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<int>> GetSavedGmesAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -511,6 +517,14 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task StartTheReplayAsync(int GameID) {
             return base.Channel.StartTheReplayAsync(GameID);
+        }
+        
+        public System.Collections.Generic.List<int> GetSavedGmes(string username) {
+            return base.Channel.GetSavedGmes(username);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<int>> GetSavedGmesAsync(string username) {
+            return base.Channel.GetSavedGmesAsync(username);
         }
     }
     

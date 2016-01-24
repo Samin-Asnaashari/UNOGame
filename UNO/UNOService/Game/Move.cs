@@ -8,7 +8,7 @@ namespace UNOService.Game
 {
     public class Move
     {
-        public enum Types { Play,Keep,Take, PunishedCard}
+        public enum Types { Play,Keep,Take, PunishedCard,Assigned}
         public string UserName { get; set; }
         //public DateTime Time { get; set; }
         public int GameID { get; set; }

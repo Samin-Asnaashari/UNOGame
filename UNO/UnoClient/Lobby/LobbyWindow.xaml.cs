@@ -46,6 +46,19 @@ namespace UnoClient
             {
                 listOnlinePlayers.Children.Add(new PlayerListElementControl(item));
             }
+
+            if(LobbyProxy.GetSavedGmes(username).Count == 0)
+            {
+                SavedGameList.Items.Add("No Saved Game..");
+            }
+            else
+            {
+                foreach (var item in LobbyProxy.GetSavedGmes(username))
+                {
+                    SavedGameList.Items.Add(item);
+                }
+            }
+           
         }
 
         public void ChangePlayerState(Player player)
@@ -246,6 +259,11 @@ namespace UnoClient
             }
         }
 
+        private void startReplayGame()
+        {
+            NotifyRePlayGameStarted();
+        }
+
         public void NotifyGameStarted()
         {
             new Game.GameWindow(username, "password","Normal").Show();
@@ -260,10 +278,10 @@ namespace UnoClient
 
 
         //change this to list of the saved game
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            //now 
-            LobbyProxy.StartTheReplay(1);
-        }
+        //private void button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //now 
+        //    LobbyProxy.StartTheReplay(1);
+        //}
     }
 }

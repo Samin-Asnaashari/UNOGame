@@ -804,6 +804,52 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_GetSavedGmes_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_GetSavedGmes_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_ILobby_PlayerConnected_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -1592,6 +1638,12 @@
   <wsdl:message name="ILobby_StartTheReplay_OutputMessage">
     <wsdl:part name="parameters" element="tns:StartTheReplayResponse" />
   </wsdl:message>
+  <wsdl:message name="ILobby_GetSavedGmes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSavedGmes" />
+  </wsdl:message>
+  <wsdl:message name="ILobby_GetSavedGmes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSavedGmesResponse" />
+  </wsdl:message>
   <wsdl:message name="ILobby_PlayerConnected_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:PlayerConnected" />
   </wsdl:message>
@@ -1724,6 +1776,10 @@
     <wsdl:operation name="StartTheReplay">
       <wsdl:input wsaw:Action="http://tempuri.org/ILobby/StartTheReplay" message="tns:ILobby_StartTheReplay_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/StartTheReplayResponse" message="tns:ILobby_StartTheReplay_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSavedGmes">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobby/GetSavedGmes" message="tns:ILobby_GetSavedGmes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobby/GetSavedGmesResponse" message="tns:ILobby_GetSavedGmes_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="PlayerConnected">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobby/PlayerConnected" message="tns:ILobby_PlayerConnected_OutputCallbackMessage" />
@@ -1949,6 +2005,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_StartTheReplay_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSavedGmes">
+      <soap12:operation soapAction="http://tempuri.org/ILobby/GetSavedGmes" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_GetSavedGmes_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_ILobby_GetSavedGmes_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

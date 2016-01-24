@@ -72,5 +72,8 @@ namespace UNOService
 
         [OperationContract]
         void StartTheReplay(int GameID);
+
+        [OperationContract]
+        List<int> GetSavedGmes(string username);
     }
 }

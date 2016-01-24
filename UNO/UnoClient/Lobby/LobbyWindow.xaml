@@ -30,7 +30,7 @@
                         <StackPanel Orientation="Vertical" x:Name="listInvitations"/>
                     </ScrollViewer>
                 </Grid>
-                <Button x:Name="button" Content="Replay" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="78" Height="42" Click="button_Click"/>
+                <ListBox x:Name="SavedGameList" HorizontalAlignment="Left" Height="113" Margin="20,69,0,0" VerticalAlignment="Top" Width="133"/>
             </Grid>
 
             <Grid x:Name="partyGrid" Grid.Row="1">
