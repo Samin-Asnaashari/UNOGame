@@ -406,9 +406,10 @@ namespace UNOService.Game
             // If player has one card at beginning of turn, he is safe from Uno
             //CurrentPlayer.UnoSaid = (CurrentPlayer.Hand.Count == 1);
 
-            if (PreviousPlayer != CurrentPlayer) // Prevent deadlock when skipping turn with two players.
+            foreach (Player p in Players)
             {
-                CurrentPlayer.IGameCallback.SetActivePlayer();
+                if (p.UserName != PreviousPlayer.UserName) // Prevent deadlock when skipping turn with two players.
+                    p.IGameCallback.TurnChanged(CurrentPlayer);
             }
         }
 
@@ -506,9 +507,8 @@ namespace UNOService.Game
             foreach (Player player in Players)
             {
                 player.IGameCallback.CardPlayed(PlayedCards.Peek(), "FirstAtStart");
+                player.IGameCallback.TurnChanged(CurrentPlayer);
             }
-
-            CurrentPlayer.IGameCallback.SetActivePlayer();
         }
     }
 }

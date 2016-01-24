@@ -596,8 +596,8 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/EndOfTheGame")]
         void EndOfTheGame(string winner);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SetActivePlayer")]
-        void SetActivePlayer();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TurnChanged")]
+        void TurnChanged(UnoClient.proxy.Player player);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

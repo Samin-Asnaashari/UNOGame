@@ -140,21 +140,31 @@ namespace UnoClient.Game
 
         private bool playCard(CardControl cardControl)
         {
-            Card card = cardControl.GetCard();
-            if (card.Type == CardType.draw4Wild || card.Type == CardType.wild)
+            Card cardToBePlayed = cardControl.GetCard();
+
+            if (cardToBePlayed.Type == CardType.draw4Wild || cardToBePlayed.Type == CardType.wild)
             {
                 ColorPickerWindow colorPicker = new ColorPickerWindow();
                 colorPicker.Owner = this;
                 colorPicker.ShowDialog();
 
-                card.Color = colorPicker.SelectedColor;
+                Brush selectedColor = colorPicker.selectedColor;
+
+                if (selectedColor.Equals(Brushes.Red))
+                    cardToBePlayed.Color = CardColor.Red;
+                else if (selectedColor.Equals(Brushes.Green))
+                    cardToBePlayed.Color = CardColor.Green;
+                else if (selectedColor.Equals(Brushes.Blue))
+                    cardToBePlayed.Color = CardColor.Blue;
+                else if (selectedColor.Equals(Brushes.Yellow))
+                    cardToBePlayed.Color = CardColor.Yellow;
             }
 
-            bool playSuccess = GameProxy.TryPlayCard(card);//if special card, color chosen is saved in color attribute to be handled in the server
+            bool playSuccess = GameProxy.TryPlayCard(cardToBePlayed);//if special card, color chosen is saved in color attribute to be handled in the server
 
             if (playSuccess)
             {
-                CardPlayed(card, username);
+                CardPlayed(cardToBePlayed, username);
                 player1Hand.RemoveCard(cardControl);
             }
             else
@@ -255,14 +265,24 @@ namespace UnoClient.Game
             GameProxy.EndGame();
         }
 
-        public void SetActivePlayer()
+        public void TurnChanged(Player player)
         {
-            setControlsEnabled(true);
-            player1Hand.sv.Background = Brushes.Yellow;
-            Debug.WriteLine($"{username} started turn clientside");
+            foreach(CardHand hand in playerHands)
+            {
+                if(hand.Username == username && player.UserName == username) //It's our turn
+                {
+                    setControlsEnabled(true);
+                    hand.IsTurn = true;
 
-            // Bring Window to foreground
-            this.Activate();
+                    Debug.WriteLine($"{username} started turn clientside");
+
+                    this.Activate(); // Bring Window to foreground
+                }
+                else if (hand.Username == player.UserName)
+                    hand.IsTurn = true;
+                else
+                    hand.IsTurn = false;
+            }
         }
 
         private void endTurn()
@@ -280,7 +300,7 @@ namespace UnoClient.Game
                 }
             }
 
-            player1Hand.sv.Background = Brushes.Brown;
+            player1Hand.IsTurn = false;
             setControlsEnabled(false);
             Debug.WriteLine($"{username} ended turn clientside");
         }
@@ -289,8 +309,6 @@ namespace UnoClient.Game
         {
             player1Hand.Hand.IsEnabled = enabled;
             DeckOfCards.IsEnabled = enabled;
-        }
-
-        
+        }        
     }
 }

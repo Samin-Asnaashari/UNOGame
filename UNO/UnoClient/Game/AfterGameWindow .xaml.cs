@@ -30,7 +30,7 @@ namespace UnoClient.Game
             InitializeComponent();
 
             GameProxy = new GameClient(new System.ServiceModel.InstanceContext(null));
-
+            
             this.username = username;
             this.password = password;
 

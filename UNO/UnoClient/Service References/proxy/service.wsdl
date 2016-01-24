@@ -1528,7 +1528,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_SetActivePlayer_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IGame_TurnChanged_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1719,8 +1719,8 @@
   <wsdl:message name="IGame_EndOfTheGame_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:EndOfTheGame" />
   </wsdl:message>
-  <wsdl:message name="IGame_SetActivePlayer_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:SetActivePlayer" />
+  <wsdl:message name="IGame_TurnChanged_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:TurnChanged" />
   </wsdl:message>
   <wsdl:portType name="ILoginAndSignUp">
     <wsdl:operation name="Login">
@@ -1854,8 +1854,8 @@
     <wsdl:operation name="EndOfTheGame">
       <wsdl:output wsaw:Action="http://tempuri.org/IGame/EndOfTheGame" message="tns:IGame_EndOfTheGame_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SetActivePlayer">
-      <wsdl:output wsaw:Action="http://tempuri.org/IGame/SetActivePlayer" message="tns:IGame_SetActivePlayer_OutputCallbackMessage" />
+    <wsdl:operation name="TurnChanged">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGame/TurnChanged" message="tns:IGame_TurnChanged_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_ILoginAndSignUp" type="tns:ILoginAndSignUp">
@@ -2192,10 +2192,10 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SetActivePlayer">
-      <soap12:operation soapAction="http://tempuri.org/IGame/SetActivePlayer" style="document" />
+    <wsdl:operation name="TurnChanged">
+      <soap12:operation soapAction="http://tempuri.org/IGame/TurnChanged" style="document" />
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_SetActivePlayer_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IGame_TurnChanged_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
