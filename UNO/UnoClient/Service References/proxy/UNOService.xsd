@@ -27,6 +27,7 @@
   <xs:element name="Player" nillable="true" type="tns:Player" />
   <xs:complexType name="Card">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Border" type="xs:boolean" />
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Color" type="q2:CardColor" />
       <xs:element minOccurs="0" name="Number" type="xs:int" />
       <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/UNOService.Game" minOccurs="0" name="Type" type="q3:CardType" />
