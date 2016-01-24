@@ -17,7 +17,7 @@ namespace UNOService.Game
         public Stack<Card> PlayedCards { get; set; }
         public Direction Direction { get; set; }
         private DatabaseHandler databaseHandler;
-
+         
         public List<Card> databaseDeck { get; set; }
         public List<Move> moves { get; set; }
 
@@ -77,7 +77,7 @@ namespace UNOService.Game
             PreviousPlayer.UnoSaid = true;
         }
 
-        private Player PlayerToBePunished()//Calculating player positions of a game based on the calling player parameter and depending on direction of the game
+        private Player PlayerToBePunished()//Calculating player of a game based on the calling player parameter and depending on direction of the game
         {
             for (int i = 0; i < this.Players.Count; i++)
             {
@@ -145,7 +145,6 @@ namespace UNOService.Game
         private bool isValidCard(Player player, Card cardtoplay)
         {
             Card tableCard = PlayedCards.Peek();
-
             // Only current player may play a card
             if (CurrentPlayer != player)
             {

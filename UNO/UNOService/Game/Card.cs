@@ -20,7 +20,6 @@ namespace UNOService
         [DataMember]
         public int Number { get; set; }
 
-
         public Card(CardType Type, CardColor Color, int Number)
         {
             this.Type = Type;

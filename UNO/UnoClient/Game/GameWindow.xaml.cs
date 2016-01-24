@@ -175,6 +175,7 @@ namespace UnoClient.Game
             return playSuccess;
         }
 
+
         public void NotifyPlayerLeft(string userName)
         {
             throw new NotImplementedException();
@@ -196,6 +197,13 @@ namespace UnoClient.Game
         {
             // Every card played is added the the last played card 'pile'
             lastPlayedCard.Content = new CardControl(c);
+           
+            //if(c.Border == true)
+            //{
+                Color cc = (Color)ColorConverter.ConvertFromString(Convert.ToString(c.Color));
+                lastPlayedCard.BorderBrush = new SolidColorBrush(cc);
+                lastPlayedCard.BorderThickness = new Thickness(2);
+            //}
 
             if (player1Hand.Username == playerWhoPlayed)
                 endTurn(); // We played a card so turn ends
