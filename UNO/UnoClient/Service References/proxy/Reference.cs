@@ -121,9 +121,6 @@ namespace UnoClient.proxy {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool BorderField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private UnoClient.proxy.CardColor ColorField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -139,19 +136,6 @@ namespace UnoClient.proxy {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Border {
-            get {
-                return this.BorderField;
-            }
-            set {
-                if ((this.BorderField.Equals(value) != true)) {
-                    this.BorderField = value;
-                    this.RaisePropertyChanged("Border");
-                }
             }
         }
         
@@ -589,6 +573,12 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/ChooseNotToPlayCard")]
         System.Threading.Tasks.Task ChooseNotToPlayCardAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/GetCurrentPlayer", ReplyAction="http://tempuri.org/IGame/GetCurrentPlayerResponse")]
+        UnoClient.proxy.Player GetCurrentPlayer();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/GetCurrentPlayer", ReplyAction="http://tempuri.org/IGame/GetCurrentPlayerResponse")]
+        System.Threading.Tasks.Task<UnoClient.proxy.Player> GetCurrentPlayerAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -698,6 +688,14 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task ChooseNotToPlayCardAsync() {
             return base.Channel.ChooseNotToPlayCardAsync();
+        }
+        
+        public UnoClient.proxy.Player GetCurrentPlayer() {
+            return base.Channel.GetCurrentPlayer();
+        }
+        
+        public System.Threading.Tasks.Task<UnoClient.proxy.Player> GetCurrentPlayerAsync() {
+            return base.Channel.GetCurrentPlayerAsync();
         }
     }
 }

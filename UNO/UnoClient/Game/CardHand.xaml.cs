@@ -25,13 +25,23 @@ namespace UnoClient.Game
     /// </summary>
     public partial class CardHand : UserControl, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         private bool _isTurn;
+        private string _Username;
 
         public bool IsHorizontal { get; set; }
 
-        public string Username { get; set; }
+        public string Username
+        {
+            get { return _Username; }
+            set
+            {
+                _Username = value;
+
+                PropertyChanged(this, new PropertyChangedEventArgs("Username")); //To update the UI
+            }
+        }
 
         public bool IsTurn
         {

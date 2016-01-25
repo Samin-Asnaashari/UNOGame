@@ -405,10 +405,14 @@ namespace UNOService.Game
             // If player has one card at beginning of turn, he is safe from Uno
             //CurrentPlayer.UnoSaid = (CurrentPlayer.Hand.Count == 1);
 
+            Task.Factory.StartNew(() => NotifyAllPlayersOfTurnChanged());
+        }
+
+        private void NotifyAllPlayersOfTurnChanged()
+        {
             foreach (Player p in Players)
             {
-                if (p.UserName != PreviousPlayer.UserName) // Prevent deadlock when skipping turn with two players.
-                    p.IGameCallback.TurnChanged(CurrentPlayer);
+                p.IGameCallback.TurnChanged(CurrentPlayer);
             }
         }
 

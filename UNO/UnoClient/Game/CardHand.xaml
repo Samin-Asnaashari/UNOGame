@@ -31,7 +31,7 @@
             </ScrollViewer.Style>
             <WrapPanel x:Name="Hand"/>
         </ScrollViewer>
-        <Label x:Name="label" Content="{Binding Path=Username}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" FontSize="13.333" FontWeight="Bold">
+        <Label x:Name="label" Content="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" FontSize="13.333" FontWeight="Bold">
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>

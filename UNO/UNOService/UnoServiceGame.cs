@@ -96,6 +96,5 @@ namespace UNOService
             //game.moves.Add((new Move(player.UserName, game.GameID, Move.Types.Keep)));
             game.ChooseNotToPlayCard(player);
         }
-
     }
 }
