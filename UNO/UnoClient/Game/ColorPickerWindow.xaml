@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnoClient.Game"
         mc:Ignorable="d"
-        Title="Pick a color..." WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" Height="170" Width="460" Closing="Window_Closing">
+        Title="Pick a color..." WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" Closing="Window_Closing" SizeToContent="WidthAndHeight">
     <Grid>
-        <Button x:Name="button" Content="Pick" HorizontalAlignment="Left" Margin="369,115,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <WrapPanel x:Name="colors" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
-            <Rectangle Fill="Red" HorizontalAlignment="Left" Height="100" Stroke="Black" VerticalAlignment="Top" Width="100" Cursor="Hand" StrokeThickness="5"/>
-            <Rectangle Fill="Green" HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Cursor="Hand"/>
-            <Rectangle Fill="Yellow" HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Cursor="Hand"/>
-            <Rectangle Fill="Blue" HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Cursor="Hand"/>
+        <WrapPanel Orientation="Vertical" Margin="5,0">
+            <WrapPanel x:Name="colors" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                <Rectangle Fill="Red" HorizontalAlignment="Left" Height="100" Stroke="Black" VerticalAlignment="Top" Width="100" Cursor="Hand" StrokeThickness="5"/>
+                <Rectangle Fill="Green" HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Cursor="Hand"/>
+                <Rectangle Fill="Yellow" HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Cursor="Hand"/>
+                <Rectangle Fill="Blue" HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Cursor="Hand"/>
+            </WrapPanel>
+            <Button x:Name="button" Content="Pick" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="button_Click" Margin="0,5"/>
         </WrapPanel>
     </Grid>
 </Window>
