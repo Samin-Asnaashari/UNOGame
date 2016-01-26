@@ -28,6 +28,7 @@ namespace UnoClient.Game
         private string username;
         private string password;
         private bool clockWiseGameDirection = true;
+        bool playedCard; // Needed to prevent skipping a players turn if skip card was played, then we picked a card.
 
         List<CardHand> playerHands;
 
@@ -174,6 +175,7 @@ namespace UnoClient.Game
 
             if (playSuccess)
             {
+                playedCard = true;
                 CardPlayed(cardToBePlayed, username);
                 player1Hand.RemoveCard(cardControl);
             }
@@ -184,7 +186,6 @@ namespace UnoClient.Game
 
             return playSuccess;
         }
-
 
         public void NotifyPlayerLeft(string userName)
         {
@@ -309,17 +310,28 @@ namespace UnoClient.Game
         // Call this locally when turn is finished to prevent deadlock
         private void endTurn()
         {
-            bool skip = false;
-
-            CardControl cardControl = lastPlayedCard.Content as CardControl;
-            if (cardControl != null)
-            {
-                var card = cardControl.GetCard();
-
-                skip = card.Type == CardType.skip;
-            }
-
             int nextPlayerTurn = 0;
+
+            if (playedCard)
+            {
+                CardControl cardControl = lastPlayedCard.Content as CardControl;
+                if (cardControl != null)
+                {
+                    var card = cardControl.GetCard();
+
+                    if (card.Type == CardType.skip) // If we played a skip card, skip the next player
+                    {
+                        if (clockWiseGameDirection)
+                        {
+                            nextPlayerTurn = (nextPlayerTurn + 1) % playerHands.Count();
+                        }
+                        else
+                        {
+                            nextPlayerTurn = (nextPlayerTurn - 1 + playerHands.Count) % playerHands.Count();
+                        }
+                    }
+                }
+            }
 
             if (clockWiseGameDirection)
             {
@@ -330,18 +342,6 @@ namespace UnoClient.Game
                 nextPlayerTurn = (nextPlayerTurn - 1 + playerHands.Count) % playerHands.Count();
             }
 
-            if (skip)
-            {
-                if (clockWiseGameDirection)
-                {
-                    nextPlayerTurn = (nextPlayerTurn + 1) % playerHands.Count();
-                }
-                else
-                {
-                    nextPlayerTurn = (nextPlayerTurn - 1 + playerHands.Count) % playerHands.Count();
-                }
-            }
-
             TurnChanged(playerHands[nextPlayerTurn].Username);
         }
 
@@ -349,6 +349,7 @@ namespace UnoClient.Game
         {
             if (enabled)
             {
+                playedCard = false;
                 Debug.WriteLine($"{username} started turn clientside");
             }
             else
