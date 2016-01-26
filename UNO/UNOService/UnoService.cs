@@ -8,7 +8,7 @@ using UNOService.Game;
 
 namespace UNOService
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
     public partial class UnoService : ILoginAndSignUp
     {
         private static int gameID = 0;

@@ -44,6 +44,6 @@ namespace UNOService
         /// </summary>
         /// <param name="player"></param>
         [OperationContract(IsOneWay = true)]
-        void TurnChanged(Player player);
+        void TurnChanged(string activePlayer);
     }
 }

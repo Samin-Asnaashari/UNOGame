@@ -17,7 +17,7 @@ namespace UNOService.Game
         public Stack<Card> PlayedCards { get; set; }
         public Direction Direction { get; set; }
         private DatabaseHandler databaseHandler;
-         
+
         public List<Card> databaseDeck { get; set; }
         public List<Move> moves { get; set; }
 
@@ -27,7 +27,7 @@ namespace UNOService.Game
         private bool UnoSaidAlready;
         public int cardPickQueue;
 
-        public Game(int gameID, List<Player> players , DatabaseHandler database)
+        public Game(int gameID, List<Player> players, DatabaseHandler database)
         {
             //rand = new Random(GameID);
             this.GameID = gameID;
@@ -111,7 +111,7 @@ namespace UNOService.Game
                 if (playerToBePunished != null)
                 {
                     sendMessage($"{playerWhoCalledUno.UserName} said Uno on {playerToBePunished.UserName}");
-                    giveCardsToPlayer(playerToBePunished, 2,Move.Types.PunishedCard);
+                    giveCardsToPlayer(playerToBePunished, 2, Move.Types.PunishedCard);
                 }
             }
             UnoSaidAlready = false;
@@ -138,7 +138,7 @@ namespace UNOService.Game
         {
             foreach (var item in this.databaseDeck)
             {
-                databaseHandler.InsertCard(item,this.GameID);
+                databaseHandler.InsertCard(item, this.GameID);
             }
         }
 
@@ -196,13 +196,13 @@ namespace UNOService.Game
         {
             if (isValidCard(playerWhoPerformedAction, card))
             {
-                if(PreviousPlayer != null)
-                    if(PreviousPlayer.Hand.Count == 1 && !PreviousPlayer.UnoSaid)
+                if (PreviousPlayer != null)
+                    if (PreviousPlayer.Hand.Count == 1 && !PreviousPlayer.UnoSaid)
                         MakePreviousPlayerUnoSafe();
 
                 cardAction(card);
 
-                moves.Add(new Move(playerWhoPerformedAction.UserName,playerWhoPerformedAction.Game.GameID,card,Move.Types.Play));
+                moves.Add(new Move(playerWhoPerformedAction.UserName, playerWhoPerformedAction.Game.GameID, card, Move.Types.Play));
 
                 PlayedCards.Push(card);
                 playerWhoPerformedAction.Remove(card);
@@ -265,7 +265,7 @@ namespace UNOService.Game
                 {
                     giveCardsToPlayer(player, cardPickQueue, Move.Types.PunishedCard);
                     cardPickQueue = 0;
-                    if(PreviousPlayer.Hand.Count == 1 & !PreviousPlayer.UnoSaid)
+                    if (PreviousPlayer.Hand.Count == 1 & !PreviousPlayer.UnoSaid)
                         MakePreviousPlayerUnoSafe();
                     EndTurn();
                 }
@@ -284,7 +284,7 @@ namespace UNOService.Game
 
             foreach (var item in cards)
             {
-                moves.Add(new Move(player.UserName, player.Game.GameID, item,moveType));
+                moves.Add(new Move(player.UserName, player.Game.GameID, item, moveType));
             }
 
             foreach (Player otherPlayer in Players)
@@ -405,14 +405,12 @@ namespace UNOService.Game
             // If player has one card at beginning of turn, he is safe from Uno
             //CurrentPlayer.UnoSaid = (CurrentPlayer.Hand.Count == 1);
 
-            Task.Factory.StartNew(() => NotifyAllPlayersOfTurnChanged());
-        }
-
-        private void NotifyAllPlayersOfTurnChanged()
-        {
             foreach (Player p in Players)
             {
-                p.IGameCallback.TurnChanged(CurrentPlayer);
+                if (p != PreviousPlayer)
+                {
+                    p.IGameCallback.TurnChanged(CurrentPlayer.UserName);
+                }
             }
         }
 
@@ -481,8 +479,8 @@ namespace UNOService.Game
         //        }
         //    }
 
-            // If player picks cards, uno is reset because they have more then one card.
-           //CurrentPlayer.UnoSaid = false;
+        // If player picks cards, uno is reset because they have more then one card.
+        //CurrentPlayer.UnoSaid = false;
         //}
 
         public void StartGame()
@@ -497,7 +495,7 @@ namespace UNOService.Game
 
             foreach (Player player in Players)
             {
-                giveCardsToPlayer(player, 7,Move.Types.Assigned);
+                giveCardsToPlayer(player, 7, Move.Types.Assigned);
             }
 
             do
@@ -510,7 +508,7 @@ namespace UNOService.Game
             foreach (Player player in Players)
             {
                 player.IGameCallback.CardPlayed(PlayedCards.Peek(), "FirstAtStart");
-                player.IGameCallback.TurnChanged(CurrentPlayer);
+                player.IGameCallback.TurnChanged(CurrentPlayer.UserName);
             }
         }
     }

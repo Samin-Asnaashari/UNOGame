@@ -573,12 +573,6 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/ChooseNotToPlayCard")]
         System.Threading.Tasks.Task ChooseNotToPlayCardAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/GetCurrentPlayer", ReplyAction="http://tempuri.org/IGame/GetCurrentPlayerResponse")]
-        UnoClient.proxy.Player GetCurrentPlayer();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/GetCurrentPlayer", ReplyAction="http://tempuri.org/IGame/GetCurrentPlayerResponse")]
-        System.Threading.Tasks.Task<UnoClient.proxy.Player> GetCurrentPlayerAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -603,7 +597,7 @@ namespace UnoClient.proxy {
         void EndOfTheGame(string winner);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TurnChanged")]
-        void TurnChanged(UnoClient.proxy.Player player);
+        void TurnChanged(string activePlayer);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -688,14 +682,6 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task ChooseNotToPlayCardAsync() {
             return base.Channel.ChooseNotToPlayCardAsync();
-        }
-        
-        public UnoClient.proxy.Player GetCurrentPlayer() {
-            return base.Channel.GetCurrentPlayer();
-        }
-        
-        public System.Threading.Tasks.Task<UnoClient.proxy.Player> GetCurrentPlayerAsync() {
-            return base.Channel.GetCurrentPlayerAsync();
         }
     }
 }

@@ -27,6 +27,7 @@ namespace UnoClient.Game
         public GameClient GameProxy;
         private string username;
         private string password;
+        private bool clockWiseGameDirection = true;
 
         List<CardHand> playerHands;
 
@@ -44,8 +45,6 @@ namespace UnoClient.Game
             GameProxy.SubscribeToGameEvents(username);
 
             InitializeComponent();
-
-            playerHands = new List<CardHand>() { player1Hand, player2Hand, player3Hand, player4Hand };
 
             this.Title = "Uno Game: " + username;
             player1Hand.Instantiate(username, playCard);
@@ -67,11 +66,22 @@ namespace UnoClient.Game
         {
             //show hand 
             //for each time show one move
-        } 
+        }
 
         // Give client information about other players in the game
         public void InitializeGame(List<string> playersUserNames)
         {
+            // If two players, face each other.
+            if (playersUserNames.Count == 2)
+            {
+                playerHands = new List<CardHand>() { player1Hand, player3Hand, player2Hand, player4Hand };
+            }
+            else
+            {
+                // Else player order should be clockwise
+                playerHands = new List<CardHand>() { player1Hand, player2Hand, player3Hand, player4Hand };
+            }
+
             // Shift list until player is first
             while (playersUserNames.First() != username)
             {
@@ -197,13 +207,18 @@ namespace UnoClient.Game
         {
             // Every card played is added the the last played card 'pile'
             lastPlayedCard.Content = new CardControl(c);
-           
+
             //if(c.Border == true)
             //{
-                Color cc = (Color)ColorConverter.ConvertFromString(Convert.ToString(c.Color));
-                lastPlayedCard.BorderBrush = new SolidColorBrush(cc);
-                lastPlayedCard.BorderThickness = new Thickness(2);
+            Color cc = (Color)ColorConverter.ConvertFromString(Convert.ToString(c.Color));
+            lastPlayedCard.BorderBrush = new SolidColorBrush(cc);
+            lastPlayedCard.BorderThickness = new Thickness(2);
             //}
+
+            if (c.Type == CardType.reverse)
+            {
+                clockWiseGameDirection = !clockWiseGameDirection;
+            }
 
             if (player1Hand.Username == playerWhoPlayed)
                 endTurn(); // We played a card so turn ends
@@ -239,7 +254,6 @@ namespace UnoClient.Game
             return false;
         }
 
-
         private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
         {
             GameProxy.SendMessageGame(chatMessage.Text);
@@ -273,50 +287,77 @@ namespace UnoClient.Game
             GameProxy.EndGame();
         }
 
-        public void TurnChanged(Player player)
+        public void TurnChanged(string activePlayer)
         {
-            foreach(CardHand hand in playerHands)
+            setControlsEnabled(false);
+
+            if (activePlayer.Equals(this.username)) // Its our turn
             {
-                if(hand.Username == username && player.UserName == username) //It's our turn
-                {
-                    setControlsEnabled(true);
-                    hand.IsTurn = true;
+                setControlsEnabled(true);
+                this.Activate(); // Bring Window to foreground
+            }
 
-                    Debug.WriteLine($"{username} started turn clientside");
-
-                    this.Activate(); // Bring Window to foreground
-                }
-                else if (hand.Username == player.UserName)
+            foreach (CardHand hand in playerHands)
+            {
+                if (hand.Username.Equals(activePlayer))
                     hand.IsTurn = true;
                 else
                     hand.IsTurn = false;
             }
         }
 
+        // Call this locally when turn is finished to prevent deadlock
         private void endTurn()
         {
-            // If only two players and skipping turns, don't change active player
-            if (playerHands.Count == 2)
-            {
-                CardControl cardControl = lastPlayedCard.Content as CardControl;
-                if (cardControl != null)
-                {
-                    var card = cardControl.GetCard();
+            bool skip = false;
 
-                    if (card.Type == CardType.skip)
-                        return;
+            CardControl cardControl = lastPlayedCard.Content as CardControl;
+            if (cardControl != null)
+            {
+                var card = cardControl.GetCard();
+
+                skip = card.Type == CardType.skip;
+            }
+
+            int nextPlayerTurn = 0;
+
+            if (clockWiseGameDirection)
+            {
+                nextPlayerTurn = (nextPlayerTurn + 1) % playerHands.Count();
+            }
+            else
+            {
+                nextPlayerTurn = (nextPlayerTurn - 1 + playerHands.Count) % playerHands.Count();
+            }
+
+            if (skip)
+            {
+                if (clockWiseGameDirection)
+                {
+                    nextPlayerTurn = (nextPlayerTurn + 1) % playerHands.Count();
+                }
+                else
+                {
+                    nextPlayerTurn = (nextPlayerTurn - 1 + playerHands.Count) % playerHands.Count();
                 }
             }
 
-            player1Hand.IsTurn = false;
-            setControlsEnabled(false);
-            Debug.WriteLine($"{username} ended turn clientside");
+            TurnChanged(playerHands[nextPlayerTurn].Username);
         }
 
         private void setControlsEnabled(bool enabled)
         {
+            if (enabled)
+            {
+                Debug.WriteLine($"{username} started turn clientside");
+            }
+            else
+            {
+                Debug.WriteLine($"{username} ended turn clientside");
+            }
             player1Hand.Hand.IsEnabled = enabled;
             DeckOfCards.IsEnabled = enabled;
-        }        
+        }
+
     }
 }
