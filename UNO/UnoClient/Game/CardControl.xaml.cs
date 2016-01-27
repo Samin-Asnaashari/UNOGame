@@ -37,6 +37,7 @@ namespace UnoClient
             picturePath = "/Images/";
 
             InitializeComponent();
+            this.DataContext = this;
 
             switch (card.Type)
             {
@@ -50,7 +51,8 @@ namespace UnoClient
                     if (c.Color != CardColor.None)
                     {
                         Color cardColor = (Color)ColorConverter.ConvertFromString(Convert.ToString(c.Color));
-                        border.BorderBrush = new SolidColorBrush(cardColor);
+                        this.Color = new SolidColorBrush(cardColor);
+                        border.GetBindingExpression(Border.BorderBrushProperty).UpdateSource();
                     }
                     break;
 
@@ -59,8 +61,8 @@ namespace UnoClient
                     if (c.Color != CardColor.None)
                     {
                         Color cardColor = (Color)ColorConverter.ConvertFromString(Convert.ToString(c.Color));
-                        border.BorderBrush = new SolidColorBrush(cardColor);
-
+                        this.Color = new SolidColorBrush(cardColor);
+                        border.GetBindingExpression(Border.BorderBrushProperty).UpdateSource();
                     }
                     break;
 

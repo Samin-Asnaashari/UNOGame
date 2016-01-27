@@ -30,7 +30,7 @@ namespace UnoClient.Game
         private bool _isTurn;
         private string _Username;
 
-        public bool IsHorizontal { get; set; }
+        public int Rotation { get; set; }
 
         public string Username
         {
@@ -111,20 +111,10 @@ namespace UnoClient.Game
 
         private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (IsHorizontal)
-            {
-                if (e.Delta > 0)
-                    sv.LineLeft();
-                else
-                    sv.LineRight();
-            }
+            if (e.Delta > 0)
+                sv.LineLeft();
             else
-            {
-                if (e.Delta > 0)
-                    sv.LineUp();
-                else
-                    sv.LineDown();
-            }
+                sv.LineRight();
 
             e.Handled = true;
         }

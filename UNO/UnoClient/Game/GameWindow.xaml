@@ -22,10 +22,10 @@
             <ColumnDefinition Width="351*"/>
             <ColumnDefinition Width="175*"/>
         </Grid.ColumnDefinitions>
-        <g:CardHand x:Name="player1Hand" IsHorizontal="True" Grid.Row="2" Grid.Column="1"/>
-        <g:CardHand x:Name="player2Hand" IsHorizontal="False" Grid.Row="1"/>
-        <g:CardHand x:Name="player3Hand" IsHorizontal="True" Grid.Column="1"/>
-        <g:CardHand x:Name="player4Hand" IsHorizontal="False" Grid.Row="1" Grid.Column="2"/>
+        <g:CardHand x:Name="player1Hand" Rotation="0" Grid.Row="2" Grid.Column="1"/>
+        <g:CardHand x:Name="player2Hand" Rotation="90" Grid.Row="1"/>
+        <g:CardHand x:Name="player3Hand" Rotation="180" Grid.Column="1"/>
+        <g:CardHand x:Name="player4Hand" Rotation="-90" Grid.Row="1" Grid.Column="2"/>
 
         <Grid Grid.Column="1" Grid.Row="1" MinWidth="440" MinHeight="380">
             <Grid.ColumnDefinitions>

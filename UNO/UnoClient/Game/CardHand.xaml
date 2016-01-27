@@ -6,7 +6,16 @@
              xmlns:local="clr-namespace:UnoClient.Game"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="600">
-    <Grid>
+    <Grid RenderTransformOrigin="0.5,0.5">
+        <Grid.Style>
+            <Style TargetType="{x:Type Grid}">
+                <Setter Property="Grid.LayoutTransform">
+                    <Setter.Value>
+                        <RotateTransform Angle="{Binding Path=Rotation}"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Style>
         <Grid.RowDefinitions>
             <RowDefinition Height="83*"/>
             <RowDefinition Height="17*"/>
@@ -14,22 +23,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ScrollViewer x:Name="sv" Background="#FF9B6C29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewMouseWheel="sv_PreviewMouseWheel">
-            <ScrollViewer.Style>
-                <Style TargetType="{x:Type ScrollViewer}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsHorizontal}" Value="True">
-                            <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
-                            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=Horizontal}" Value="False">
-                            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-                            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ScrollViewer.Style>
-            <WrapPanel x:Name="Hand"/>
+        <ScrollViewer x:Name="sv" Background="#FF9B6C29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewMouseWheel="sv_PreviewMouseWheel" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+            <WrapPanel x:Name="Hand" />
         </ScrollViewer>
         <Label x:Name="label" Content="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" FontSize="13.333" FontWeight="Bold">
             <Label.Style>
