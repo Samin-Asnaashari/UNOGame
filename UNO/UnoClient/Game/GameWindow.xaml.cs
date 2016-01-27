@@ -262,6 +262,7 @@ namespace UnoClient.Game
         private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
         {
             GameProxy.SendMessageGame(chatMessage.Text);
+            chatMessage.Text = "";
         }
 
         public void NotifyPlayersNumberOfCardsTaken(int nrOfCardsTaken, string playerWhoTookCardsUserName)
@@ -364,5 +365,10 @@ namespace UnoClient.Game
             DeckOfCards.IsEnabled = enabled;
         }
 
+        private void chatMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) //We want to send the message
+                buttonSendMessage_Click(sender, null);
+        }
     }
 }

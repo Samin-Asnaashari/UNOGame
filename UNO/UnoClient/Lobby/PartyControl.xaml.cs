@@ -96,6 +96,8 @@ namespace UnoClient
         {
             listBoxPartyChat.Items.Add($"{player}: {textBoxPartyChat.Text}");
             OnSendMessage?.Invoke(textBoxPartyChat.Text);
+
+            textBoxPartyChat.Text = "";
         }
 
         // Show a recieved message
@@ -108,6 +110,12 @@ namespace UnoClient
         private void buttonStartGame_Click(object sender, RoutedEventArgs e)
         {
             OnStartGame?.Invoke();
+        }
+
+        private void textBoxPartyChat_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter) //We want to send the message
+                buttonSendPartyMessage_Click(sender, null);
         }
     }
 

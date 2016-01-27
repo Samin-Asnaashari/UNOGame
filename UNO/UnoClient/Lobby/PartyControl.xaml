@@ -16,7 +16,7 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="23"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Margin="0,0,10,0">
@@ -26,7 +26,7 @@
             <Grid Grid.Row="1" Margin="0,0,10,0">
                 <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
                     <Button x:Name="buttonSendPartyMessage" Click="buttonSendPartyMessage_Click" DockPanel.Dock="Right" Content="Send" Width="75"/>
-                    <TextBox x:Name="textBoxPartyChat" TextWrapping="Wrap" Text="Type a message..."/>
+                    <TextBox x:Name="textBoxPartyChat" TextWrapping="Wrap" KeyDown="textBoxPartyChat_KeyDown"/>
                 </DockPanel>
             </Grid>
         </Grid>
