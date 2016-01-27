@@ -25,7 +25,7 @@
                 <Label x:Name="labelUsername" FontSize="24" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                 <!--Contains the Invitation List-->
-                <Grid Grid.Column="1" Background="#A7B4CC">
+                <Grid Grid.Column="1">
                     <ScrollViewer Width="auto" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name="listInvitations"/>
                     </ScrollViewer>
