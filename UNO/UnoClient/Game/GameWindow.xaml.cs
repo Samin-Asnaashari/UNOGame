@@ -209,12 +209,16 @@ namespace UnoClient.Game
             // Every card played is added the the last played card 'pile'
             lastPlayedCard.Content = new CardControl(c);
 
-            //if(c.Border == true)
-            //{
-            Color cc = (Color)ColorConverter.ConvertFromString(Convert.ToString(c.Color));
-            lastPlayedCard.BorderBrush = new SolidColorBrush(cc);
-            lastPlayedCard.BorderThickness = new Thickness(2);
-            //}
+            if (c.Type == CardType.draw4Wild || c.Type == CardType.wild)
+            {
+                Color cc = (Color)ColorConverter.ConvertFromString(Convert.ToString(c.Color));
+                lastPlayedCard.BorderBrush = new SolidColorBrush(cc);
+                lastPlayedCard.BorderThickness = new Thickness(3);
+            }
+            else
+            {
+                lastPlayedCard.BorderThickness = new Thickness(0);
+            }
 
             if (c.Type == CardType.reverse)
             {
