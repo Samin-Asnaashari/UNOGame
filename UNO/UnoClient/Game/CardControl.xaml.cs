@@ -24,6 +24,8 @@ namespace UnoClient
         private Card card;
         private string picturePath;
 
+        public SolidColorBrush Color { get; set; }
+
         public CardControl()  //Unkown type of card, so 'closed' card
         {
             InitializeComponent();
@@ -33,8 +35,10 @@ namespace UnoClient
         {
             card = c;
             picturePath = "/Images/";
-            
-            switch(card.Type)
+
+            InitializeComponent();
+
+            switch (card.Type)
             {
                 case CardType.normal:
                     picturePath += "Numbered_" + card.Color.ToString() + "/";
@@ -43,10 +47,21 @@ namespace UnoClient
 
                 case CardType.wild:
                     picturePath += "wild/Wild.png";
+                    if (c.Color != CardColor.None)
+                    {
+                        Color cardColor = (Color)ColorConverter.ConvertFromString(Convert.ToString(c.Color));
+                        border.BorderBrush = new SolidColorBrush(cardColor);
+                    }
                     break;
 
                 case CardType.draw4Wild:
                     picturePath += "wild/Draw4Wild.png";
+                    if (c.Color != CardColor.None)
+                    {
+                        Color cardColor = (Color)ColorConverter.ConvertFromString(Convert.ToString(c.Color));
+                        border.BorderBrush = new SolidColorBrush(cardColor);
+
+                    }
                     break;
 
                 default:
@@ -57,7 +72,6 @@ namespace UnoClient
 
             Uri uriSource = new Uri(@"/UnoClient;component" + picturePath, UriKind.Relative);
 
-            InitializeComponent();
             image.Source = new BitmapImage(uriSource);
             this.Cursor = Cursors.Hand;
         }

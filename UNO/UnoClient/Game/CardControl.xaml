@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnoClient"
              mc:Ignorable="d" 
-             MinWidth="71" MinHeight="100" MaxWidth="676" MaxHeight="940" Margin="2,5">
+            MinWidth="71" MinHeight="100" MaxWidth="676" MaxHeight="940" Margin="2,5">
 
-    <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="100" MinHeight="139" MaxWidth="676" MaxHeight="940">
+    <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="100" MinHeight="139" MaxWidth="676" MaxHeight="940" Background="Black">
         <Image x:Name="image" Source="/UnoClient;component/Images/cover.png" Width="Auto" Height="Auto">
             <Image.Style>
                 <Style TargetType="Image">
@@ -15,5 +15,6 @@
                 </Style>
             </Image.Style>
         </Image>
+        <Border x:Name="border" BorderThickness="10" BorderBrush="#FFFF1919" />
     </Grid>
 </UserControl>
