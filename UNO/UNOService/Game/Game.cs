@@ -384,10 +384,10 @@ namespace UNOService.Game
             }
 
             this.Deck = shuffle(this.Deck);
-            //foreach (var deckitem in this.Deck)
-            //{
-            //    databaseDeck.Add(deckitem);
-            //}
+            foreach (var deckitem in this.Deck)
+            {
+                databaseDeck.Add(deckitem);
+            }
         }
 
         public void EndTurn()
