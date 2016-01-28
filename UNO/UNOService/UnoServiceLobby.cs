@@ -235,25 +235,25 @@ namespace UNOService
             //put the player on top of the list 
             foreach (var item in players)
             {
-                if(item.UserName == player.UserName)
+                if (item.UserName == player.UserName)
                 {
                     Player i = item;
                     players.Remove(i);
-                    players.Insert(0,i);
+                    players.Insert(0, i);
                 }
             }
 
             Game.Game Game = new Game.Game(gameID, players, databaseHandler);
             Game.Deck = databaseHandler.GetDeck(GameID);
+            Game.moves = databaseHandler.GetMoves(player.Game.GameID); //GameID: Chosen Game to play  
 
-            foreach (var item in players)
+            foreach (var item in players) //
             {
                 playersInReplay.Add(item);
                 item.Game = Game;
             }
-            Game.moves = databaseHandler.GettMoves(player.Game.GameID); //GameID: Chosen Game to play  
-            Game.StartGameReplay(player);
-            player.ILobbyCallback.NotifyGameStarted();
+
+            player.ILobbyCallback.NotifyRePlayGameStarted();
         }
 
         public List<int> GetSavedGmes(string UserName)

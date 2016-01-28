@@ -32,6 +32,8 @@ namespace UnoClient.Game
 
         List<CardHand> playerHands;
 
+        List<Move> moves;
+
         //Timer timer;
         string Type;
 
@@ -43,7 +45,14 @@ namespace UnoClient.Game
 
             GameProxy = new GameClient(new InstanceContext(this));
 
-            GameProxy.SubscribeToGameEvents(username);
+            if (Type == "Normal")
+            {
+                GameProxy.SubscribeToGameEvents(username);
+            }
+            else
+            {
+                GameProxy.SubscribeToReplayGameEvents(username);
+            }
 
             InitializeComponent();
 
@@ -55,18 +64,50 @@ namespace UnoClient.Game
             this.Type = Type;
             if (Type == "RePlay")
             {
+                //disable everything
                 System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
                 dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
                 dispatcherTimer.Interval = new TimeSpan(0, 5, 0);
                 dispatcherTimer.Start();
                 //timer = new Timer();
+
+                moves = GameProxy.GetMoves();
             }
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            //show hand 
             //for each time show one move
+            //if {Play,Keep,Take, PunishedCard,Assigned}........do action untill is finished 
+            if (moves.Count != 0)
+            {
+                if (moves[0].Type == Move.Types.Play)
+                {
+
+                }
+                else if (moves[0].Type == Move.Types.Keep)
+                {
+
+                }
+                else if (moves[0].Type == Move.Types.PunishedCard)
+                {
+
+                }
+                else if (moves[0].Type == Move.Types.Assigned)
+                {
+
+                }
+                else if (moves[0].Type == Move.Types.Take)
+                {
+
+                }
+                moves.Remove(moves[0]);
+            }
+            else
+            {
+                new LobbyWindow(username, password).Show();
+                this.Close();
+            }
         }
 
         // Give client information about other players in the game

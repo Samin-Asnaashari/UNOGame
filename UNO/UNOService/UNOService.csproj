@@ -58,6 +58,7 @@
     <Compile Include="Game\GameEventType.cs" />
     <Compile Include="Game\IGame.cs" />
     <Compile Include="Game\IGameCallback.cs" />
+    <Compile Include="Game\IReplay.cs" />
     <Compile Include="Game\Move.cs" />
     <Compile Include="Game\PlayerState.cs" />
     <Compile Include="ILobby.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="UnoService.cs" />
     <Compile Include="UnoServiceGame.cs" />
     <Compile Include="UnoServiceLobby.cs" />
+    <Compile Include="UnoServiceReplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

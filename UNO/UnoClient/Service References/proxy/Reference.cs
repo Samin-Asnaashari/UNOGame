@@ -231,6 +231,103 @@ namespace UnoClient.proxy {
         draw4Wild = 5,
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Move", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
+    [System.SerializableAttribute()]
+    public partial class Move : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.Move.Types TypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private UnoClient.proxy.Card cardField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.Move.Types Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UnoClient.proxy.Card card {
+            get {
+                return this.cardField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.cardField, value) != true)) {
+                    this.cardField = value;
+                    this.RaisePropertyChanged("card");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="Move.Types", Namespace="http://schemas.datacontract.org/2004/07/UNOService.Game")]
+        public enum Types : int {
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            Play = 0,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            Keep = 1,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            Take = 2,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            PunishedCard = 3,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            Assigned = 4,
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="proxy.ILoginAndSignUp")]
     public interface ILoginAndSignUp {
@@ -532,12 +629,6 @@ namespace UnoClient.proxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="proxy.IGame", CallbackContract=typeof(UnoClient.proxy.IGameCallback))]
     public interface IGame {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SaveReplay", ReplyAction="http://tempuri.org/IGame/SaveReplayResponse")]
-        void SaveReplay();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SaveReplay", ReplyAction="http://tempuri.org/IGame/SaveReplayResponse")]
-        System.Threading.Tasks.Task SaveReplayAsync();
-        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TakeCards")]
         void TakeCards();
         
@@ -562,6 +653,12 @@ namespace UnoClient.proxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToGameEvents")]
         System.Threading.Tasks.Task SubscribeToGameEventsAsync(string UserName);
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToReplayGameEvents")]
+        void SubscribeToReplayGameEvents(string UserName);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/SubscribeToReplayGameEvents")]
+        System.Threading.Tasks.Task SubscribeToReplayGameEventsAsync(string UserName);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/EndGame")]
         void EndGame();
         
@@ -573,6 +670,12 @@ namespace UnoClient.proxy {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/ChooseNotToPlayCard")]
         System.Threading.Tasks.Task ChooseNotToPlayCardAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/GetMoves", ReplyAction="http://tempuri.org/IGame/GetMovesResponse")]
+        System.Collections.Generic.List<UnoClient.proxy.Move> GetMoves();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/GetMoves", ReplyAction="http://tempuri.org/IGame/GetMovesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<UnoClient.proxy.Move>> GetMovesAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -628,14 +731,6 @@ namespace UnoClient.proxy {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void SaveReplay() {
-            base.Channel.SaveReplay();
-        }
-        
-        public System.Threading.Tasks.Task SaveReplayAsync() {
-            return base.Channel.SaveReplayAsync();
-        }
-        
         public void TakeCards() {
             base.Channel.TakeCards();
         }
@@ -668,6 +763,14 @@ namespace UnoClient.proxy {
             return base.Channel.SubscribeToGameEventsAsync(UserName);
         }
         
+        public void SubscribeToReplayGameEvents(string UserName) {
+            base.Channel.SubscribeToReplayGameEvents(UserName);
+        }
+        
+        public System.Threading.Tasks.Task SubscribeToReplayGameEventsAsync(string UserName) {
+            return base.Channel.SubscribeToReplayGameEventsAsync(UserName);
+        }
+        
         public void EndGame() {
             base.Channel.EndGame();
         }
@@ -682,6 +785,14 @@ namespace UnoClient.proxy {
         
         public System.Threading.Tasks.Task ChooseNotToPlayCardAsync() {
             return base.Channel.ChooseNotToPlayCardAsync();
+        }
+        
+        public System.Collections.Generic.List<UnoClient.proxy.Move> GetMoves() {
+            return base.Channel.GetMoves();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<UnoClient.proxy.Move>> GetMovesAsync() {
+            return base.Channel.GetMovesAsync();
         }
     }
 }

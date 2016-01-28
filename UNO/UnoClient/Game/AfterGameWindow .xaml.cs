@@ -20,21 +20,21 @@ namespace UnoClient.Game
     /// </summary>
     public partial class AfterGameWindow : Window
     {
-        public GameClient GameProxy;
+        //public ReplayClient ReplayProxy;
 
         private string username;
         private string password;
 
-        public AfterGameWindow(string username , string winner,string password)
+        public AfterGameWindow(string username, string winner, string password)
         {
             InitializeComponent();
 
-            GameProxy = new GameClient(new System.ServiceModel.InstanceContext(null));
-            
+            //ReplayProxy = new ReplayClient();
+
             this.username = username;
             this.password = password;
 
-            if(username == winner)
+            if (username == winner)
             {
                 status.Text = "Congratulation You Won :) ";
             }
@@ -49,7 +49,7 @@ namespace UnoClient.Game
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
-            GameProxy.SaveReplay();
+            //ReplayProxy.SaveReplay();
             new LobbyWindow(username, password).Show();
             this.Close();
 
@@ -60,7 +60,7 @@ namespace UnoClient.Game
         {
             new LobbyWindow(username, password).Show();
             this.Close();
-            
+
             //player state is in lobby
         }
     }

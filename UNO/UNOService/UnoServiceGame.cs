@@ -36,18 +36,29 @@ namespace UNOService
             game.StartGame();
         }
 
-
-        public void SaveReplay()
+        public void SubscribeToReplayGameEvents(string userName)
         {
-            Player p= getPlayerFromGameContext();
-            databaseHandler.InsertGamePlayed(p.Game.GameID,p.UserName);
-            foreach (var item in p.Game.moves)
-            {
-                //databaseHandler.InsertMove(p.Game.GameID,p.UserName,item.Type);
-                databaseHandler.InsertMove(p.Game.GameID, p.UserName,databaseHandler.FindCard(item.card),item.Type);
-            }
-            p.Game.InsertDeckIntoDatabase();
+            IGameCallback clientCallbackGame = OperationContext.Current.GetCallbackChannel<IGameCallback>();
+            Player player = playersOnline.Find(x => x.UserName == userName);
+            player.IGameCallback = clientCallbackGame;
+            Game.Game game = player.Game;
+            game.StartGameReplay(player);
         }
+
+        //public void SaveReplay()  //after game window 
+        //{
+        //    Player p= getPlayerFromGameContext();
+        //    databaseHandler.InsertGamePlayed(p);
+
+        //    databaseHandler.InsertPlayer(p.Game.Players);
+
+        //    foreach (var item in p.Game.moves)
+        //    {
+        //        //databaseHandler.InsertMove(p.Game.GameID,p.UserName,item.Type);
+        //        databaseHandler.InsertMove(p.Game.GameID, p.UserName,databaseHandler.FindCard(item.card),item.Type);
+        //    }
+        //    p.Game.InsertDeckIntoDatabase();
+        //}
 
         public void SendMessageGame(string message)
         {
@@ -70,10 +81,16 @@ namespace UNOService
 
         public void EndGame()
         {
+            //who won ?
             foreach (var player in getPlayerFromGameContext().Game.Players)
             {
-                player.IGameCallback.EndOfTheGame(null);
+                if (player != getPlayerFromGameContext())
+                {
+                    player.IGameCallback.EndOfTheGame(null); //insert the winner 
+                }
+                databaseHandler.AddGamesPlayed(player.UserName);
             }
+            //databaseHandler.AddPlayerWon();
         }
 
         public void TakeCards()
@@ -95,6 +112,12 @@ namespace UNOService
 
             //game.moves.Add((new Move(player.UserName, game.GameID, Move.Types.Keep)));
             game.ChooseNotToPlayCard(player);
+        }
+
+        public List<Move> GetMoves()
+        {
+            //return databaseHandler.GettMoves(getPlayerFromGameContext().Game.GameID);
+            return getPlayerFromGameContext().Game.moves;
         }
     }
 }

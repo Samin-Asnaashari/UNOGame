@@ -92,12 +92,12 @@ namespace UNOService
             }
         }
 
-        public void InsertGamePlayed(int gameID,string username)
+        public void InsertGamePlayed(Player p/*, int gameID,string username*/)
         {
             try
-            {  
+            {
                 connection.Open();
-                string sql = "INSERT INTO `savedgames` (`Game ID`, `Username`) VALUES (" + gameID + ", '" + userName + "');";
+                string sql = "INSERT INTO `savedgames` (`Game ID`, `Username`) VALUES (" + p.Game.GameID + ", '" + p.UserName + "');";
                 MySqlCommand cmd = new MySqlCommand(sql, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -240,7 +240,7 @@ namespace UNOService
         //    }
         //}
 
-        public List<Game.Move> GettMoves(int gameID)
+        public List<Game.Move> GetMoves(int gameID)
         {
             try
             {
@@ -262,7 +262,7 @@ namespace UNOService
                     username = reader[0].ToString();
                     card = GetCard(Convert.ToInt32(reader[1]));
                     type = (Game.Move.Types)reader[2];
-                    moves.Add(new Game.Move(username, gameID,card,type));
+                    moves.Add(new Game.Move(username, gameID, card, type));
                 }
 
                 return moves;
@@ -283,7 +283,7 @@ namespace UNOService
             {
                 connection.Open();
                 MySqlCommand cmd;
-                String sql = "SELECT Type,Color,Number FROM `card` WHERE CardID = " + cardID +")";
+                String sql = "SELECT Type,Color,Number FROM `card` WHERE CardID = " + cardID + ")";
                 cmd = new MySqlCommand(sql, connection);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -312,6 +312,7 @@ namespace UNOService
                 connection.Close();
             }
         }
+
         public bool CheckLogin(string username, string password)
         {
             try
@@ -375,7 +376,7 @@ namespace UNOService
             {
                 connection.Open();
                 MySqlCommand cmd;
-                String sql = "INSERT INTO `deck` (`ID`, `Type`, `Color`, `Number`) VALUES ("+ gameID + ", '" + card.Type + "' ,'" + card.Color + "', " + card.Number + ");";
+                String sql = "INSERT INTO `deck` (`ID`, `Type`, `Color`, `Number`) VALUES (" + gameID + ", '" + card.Type + "' ,'" + card.Color + "', " + card.Number + ");";
                 cmd = new MySqlCommand(sql, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -389,7 +390,7 @@ namespace UNOService
             }
         }
 
-        public void InsertPlayer(List<Player> players)
+        public void InsertPlayers(List<Player> players)
         {
             try
             {
@@ -424,12 +425,12 @@ namespace UNOService
 
                 string username = reader.Read().ToString();
                 List<Player> players = new List<Player>();
-                if(username!=null)
+                if (username != null)
                 {
                     Player p = new Player(username);
                     players.Add(p);
                 }
-                while(reader.Read())
+                while (reader.Read())
                 {
                     username = reader.Read().ToString();
                     if (username != null)
@@ -503,7 +504,7 @@ namespace UNOService
 
                 while (reader.Read())
                 {
-                    id.Add(Convert.ToInt32(reader[0]));           
+                    id.Add(Convert.ToInt32(reader[0]));
                 }
 
                 return id;

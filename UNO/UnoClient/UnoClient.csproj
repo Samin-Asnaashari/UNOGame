@@ -192,6 +192,9 @@
     <None Include="Service References\proxy\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\proxy\UnoClient.proxy.Move.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\proxy\UnoClient.proxy.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

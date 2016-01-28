@@ -388,6 +388,10 @@ namespace UNOService.Game
 
         public void EndTurn()
         {
+            //if (CurrentPlayer.Hand.Count == 0)
+            //{
+            //    //end the game 
+            //}
             PreviousPlayer = CurrentPlayer;
 
             if (Direction == Direction.clockwise)
@@ -449,8 +453,26 @@ namespace UNOService.Game
 
         public void StartGameReplay(Player player)
         {
-            //List<string> playersUserNames = Players.Select(x => x.UserName).ToList();
-            //moves = databaseHandler.GettMoves(player.Game.GameID); //GameID: Chosen Game to play  
+            List<string> playersUserNames = Players.Select(x => x.UserName).ToList();
+            player.IGameCallback.InitializeGame(playersUserNames);
+
+            foreach (Player p in Players)
+            {
+                //giveCardsToPlayer(p, 7, Move.Types.Assigned);
+                List<Card> cards = getCardsFromDeck(7); //refill must be same as saved game 
+                player.Hand.AddRange(cards);
+                //player.IGameCallback.AssignCards(cards);
+                CurrentPlayer.UnoSaid = false;
+            }
+
+            do
+            {
+                PlayedCards.Push(Deck.Pop());
+            }
+            while (PlayedCards.Peek().Type != CardType.normal);
+
+            //player.IGameCallback.CardPlayed(PlayedCards.Peek(), "FirstAtStart");
+            //player.IGameCallback.TurnChanged(CurrentPlayer.UserName);
         }
 
         public Move NextMove(int GameID)
@@ -511,5 +533,7 @@ namespace UNOService.Game
                 player.IGameCallback.TurnChanged(CurrentPlayer.UserName);
             }
         }
+
+       
     }
 }

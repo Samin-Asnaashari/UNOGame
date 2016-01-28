@@ -15,9 +15,9 @@ namespace UNOService
         /// <summary>
         /// Saves the the game played with all moves
         /// </summary>
-        [OperationContract]
-        void SaveReplay();
-        //List<Player> players;
+        //[OperationContract]
+        //void SaveReplay();
+        ////List<Player> players;
 
         /// <summary>
         /// Assigns the taken card to the players deck and returns that card.
@@ -50,6 +50,9 @@ namespace UNOService
         void SubscribeToGameEvents(string UserName);
 
         [OperationContract(IsOneWay = true)]
+        void SubscribeToReplayGameEvents(string UserName);
+
+        [OperationContract(IsOneWay = true)]
         void EndGame();
 
         /// <summary>
@@ -57,5 +60,9 @@ namespace UNOService
         /// </summary>
         [OperationContract(IsOneWay = true)]
         void ChooseNotToPlayCard();
+
+        [OperationContract]
+        List<Move> GetMoves();
+
     }
 }
