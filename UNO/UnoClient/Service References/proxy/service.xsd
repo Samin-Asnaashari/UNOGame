@@ -242,6 +242,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="SaveReplay">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveReplayResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="TakeCards">
     <xs:complexType>
       <xs:sequence />

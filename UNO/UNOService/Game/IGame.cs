@@ -15,9 +15,8 @@ namespace UNOService
         /// <summary>
         /// Saves the the game played with all moves
         /// </summary>
-        //[OperationContract]
-        //void SaveReplay();
-        ////List<Player> players;
+        [OperationContract]
+        void SaveReplay();
 
         /// <summary>
         /// Assigns the taken card to the players deck and returns that card.

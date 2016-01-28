@@ -20,13 +20,15 @@ namespace UnoClient.Game
     /// </summary>
     public partial class AfterGameWindow : Window
     {
+        public GameClient GameProxy;
         //public ReplayClient ReplayProxy;
 
         private string username;
         private string password;
 
-        public AfterGameWindow(string username, string winner, string password)
+        public AfterGameWindow(GameClient GameProxy, string username, string winner, string password)
         {
+            this.GameProxy = GameProxy;
             InitializeComponent();
 
             //ReplayProxy = new ReplayClient();
@@ -50,6 +52,7 @@ namespace UnoClient.Game
         private void save_Click(object sender, RoutedEventArgs e)
         {
             //ReplayProxy.SaveReplay();
+            GameProxy.SaveReplay();
             new LobbyWindow(username, password).Show();
             this.Close();
 

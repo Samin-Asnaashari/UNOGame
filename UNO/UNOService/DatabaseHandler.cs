@@ -11,7 +11,7 @@ namespace UNOService
     {
         private MySqlConnection connection;
         private string serverIP = "localhost";
-        private string databaseName = "uno";
+        private string databaseName = "unogame";
         private string userName = "root";
         private string password = "";
         private int timeOutSeconds = 30;
@@ -97,7 +97,7 @@ namespace UNOService
             try
             {
                 connection.Open();
-                string sql = "INSERT INTO `savedgames` (`Game ID`, `Username`) VALUES (" + p.Game.GameID + ", '" + p.UserName + "');";
+                string sql = "INSERT INTO `savegame` (`GameID`, `Username`) VALUES (" + p.Game.GameID + ", '" + p.UserName + "');";
                 MySqlCommand cmd = new MySqlCommand(sql, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -138,7 +138,7 @@ namespace UNOService
             {
                 connection.Open();
                 MySqlCommand cmd1;
-                String sql1 = "SELECT CardID FROM `card` WHERE Type = '" + c.Type + "' AND Color = '" + c.Color + "' AND Number =" + c.Number + ")";
+                String sql1 = "SELECT CardID FROM `card` WHERE Type = '" + c.Type + "' AND Color = '" + c.Color + "' AND Number =" + c.Number + ";";
                 cmd1 = new MySqlCommand(sql1, connection);
                 MySqlDataReader reader = cmd1.ExecuteReader();
 

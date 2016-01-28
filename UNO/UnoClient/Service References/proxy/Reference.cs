@@ -629,6 +629,12 @@ namespace UnoClient.proxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="proxy.IGame", CallbackContract=typeof(UnoClient.proxy.IGameCallback))]
     public interface IGame {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SaveReplay", ReplyAction="http://tempuri.org/IGame/SaveReplayResponse")]
+        void SaveReplay();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGame/SaveReplay", ReplyAction="http://tempuri.org/IGame/SaveReplayResponse")]
+        System.Threading.Tasks.Task SaveReplayAsync();
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGame/TakeCards")]
         void TakeCards();
         
@@ -729,6 +735,14 @@ namespace UnoClient.proxy {
         
         public GameClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void SaveReplay() {
+            base.Channel.SaveReplay();
+        }
+        
+        public System.Threading.Tasks.Task SaveReplayAsync() {
+            return base.Channel.SaveReplayAsync();
         }
         
         public void TakeCards() {

@@ -45,20 +45,20 @@ namespace UNOService
             game.StartGameReplay(player);
         }
 
-        //public void SaveReplay()  //after game window 
-        //{
-        //    Player p= getPlayerFromGameContext();
-        //    databaseHandler.InsertGamePlayed(p);
+        public void SaveReplay()  //after game window 
+        {
+            Player p = getPlayerFromGameContext();
+            databaseHandler.InsertGamePlayed(p);
 
-        //    databaseHandler.InsertPlayer(p.Game.Players);
+            databaseHandler.InsertPlayers(p.Game.Players);
 
-        //    foreach (var item in p.Game.moves)
-        //    {
-        //        //databaseHandler.InsertMove(p.Game.GameID,p.UserName,item.Type);
-        //        databaseHandler.InsertMove(p.Game.GameID, p.UserName,databaseHandler.FindCard(item.card),item.Type);
-        //    }
-        //    p.Game.InsertDeckIntoDatabase();
-        //}
+            foreach (var item in p.Game.moves)
+            {
+                //databaseHandler.InsertMove(p.Game.GameID,p.UserName,item.Type);
+                databaseHandler.InsertMove(p.Game.GameID, p.UserName, databaseHandler.FindCard(item.card), item.Type);
+            }
+            p.Game.InsertDeckIntoDatabase();
+        }
 
         public void SendMessageGame(string message)
         {
@@ -81,15 +81,24 @@ namespace UNOService
 
         public void EndGame()
         {
-            //who won ?
-            foreach (var player in getPlayerFromGameContext().Game.Players)
+            Game.Game game = getPlayerFromGameContext().Game;
+
+            if (!game.hasGameEnded()) //Otherwise we are sending EndOfTheGame(null) to the winner
             {
-                if (player != getPlayerFromGameContext())
+                foreach (var player in game.Players)
                 {
-                    player.IGameCallback.EndOfTheGame(null); //insert the winner 
+                    player.IGameCallback.EndOfTheGame(null);
                 }
-                databaseHandler.AddGamesPlayed(player.UserName);
             }
+            ////who won ?
+            //foreach (var player in getPlayerFromGameContext().Game.Players)
+            //{
+            //    if (player != getPlayerFromGameContext())
+            //    {
+            //        player.IGameCallback.EndOfTheGame(null); //insert the winner 
+            //    }
+            //    databaseHandler.AddGamesPlayed(player.UserName);
+            //}
             //databaseHandler.AddPlayerWon();
         }
 
@@ -119,5 +128,19 @@ namespace UNOService
             //return databaseHandler.GettMoves(getPlayerFromGameContext().Game.GameID);
             return getPlayerFromGameContext().Game.moves;
         }
+
+        //public void SaveReplay(/*Player p*/)  //after game window 
+        //{
+        //    //Player p = getPlayerFromGameContext();
+
+        //    databaseHandler.InsertGamePlayed(p);
+        //    databaseHandler.InsertPlayers(p.Game.Players);
+        //    foreach (var item in p.Game.moves)
+        //    {
+        //        //databaseHandler.InsertMove(p.Game.GameID,p.UserName,item.Type);
+        //        databaseHandler.InsertMove(p.Game.GameID, p.UserName, databaseHandler.FindCard(item.card), item.Type);
+        //    }
+        //    p.Game.InsertDeckIntoDatabase();
+        //}
     }
 }
