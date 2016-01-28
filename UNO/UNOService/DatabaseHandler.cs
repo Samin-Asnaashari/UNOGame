@@ -11,7 +11,7 @@ namespace UNOService
     {
         private MySqlConnection connection;
         private string serverIP = "localhost";
-        private string databaseName = "uno";
+        private string databaseName = "unogame";
         private string userName = "root";
         private string password = "";
         private int timeOutSeconds = 30;
