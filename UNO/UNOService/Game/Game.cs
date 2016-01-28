@@ -27,6 +27,8 @@ namespace UNOService.Game
         private bool UnoSaidAlready;
         public int cardPickQueue;
 
+        private bool gameHasEnded;
+
         public Game(int gameID, List<Player> players, DatabaseHandler database)
         {
             //rand = new Random(GameID);
@@ -39,6 +41,7 @@ namespace UNOService.Game
             this.databaseHandler = database;
             createDeck();
             cardPickQueue = 0;
+            gameHasEnded = false;
 
             moves = new List<Move>();
             databaseDeck = new List<Card>();
@@ -217,10 +220,11 @@ namespace UNOService.Game
                 // Check end game condition
                 if (playerWhoPerformedAction.Hand.Count() == 0)
                 {
+                    gameHasEnded = true;
                     //game.End();
                     foreach (Player player in Players)
                     {
-                        if (player != playerWhoPerformedAction) //Prevent deadlock
+                        if (player.UserName != playerWhoPerformedAction.UserName) //Prevent deadlock
                             player.IGameCallback.EndOfTheGame(playerWhoPerformedAction.UserName);
                     }
                 }
@@ -510,6 +514,11 @@ namespace UNOService.Game
                 player.IGameCallback.CardPlayed(PlayedCards.Peek(), "FirstAtStart");
                 player.IGameCallback.TurnChanged(CurrentPlayer.UserName);
             }
+        }
+
+        public bool hasGameEnded()
+        {
+            return gameHasEnded;
         }
     }
 }

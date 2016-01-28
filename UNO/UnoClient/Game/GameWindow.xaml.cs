@@ -30,6 +30,8 @@ namespace UnoClient.Game
         private bool clockWiseGameDirection = true;
         bool playedCard; // Needed to prevent skipping a players turn if skip card was played, then we picked a card.
 
+        bool closingConfirmed;
+
         List<CardHand> playerHands;
 
         //Timer timer;
@@ -51,6 +53,7 @@ namespace UnoClient.Game
             player1Hand.Instantiate(username, playCard);
 
             setControlsEnabled(false);
+            closingConfirmed = false;
 
             this.Type = Type;
             if (Type == "RePlay")
@@ -178,6 +181,9 @@ namespace UnoClient.Game
                 playedCard = true;
                 CardPlayed(cardToBePlayed, username);
                 player1Hand.RemoveCard(cardControl);
+
+                if (player1Hand.getNrOfCards() == 0) //End game, we won!
+                    EndOfTheGame(username);
             }
             else
             {
@@ -272,13 +278,18 @@ namespace UnoClient.Game
 
         public void EndOfTheGame(string winner)
         {
-            AfterGameWindow end = new AfterGameWindow(username, winner, password);
+            AfterGameWindow end = new AfterGameWindow(GameProxy, username, winner, password);
             end.Show();
+
+            closingConfirmed = true;
             this.Close();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (closingConfirmed) //If we are manually forcing this window to close
+                return;
+
             GameProxy.EndGame();
         }
 

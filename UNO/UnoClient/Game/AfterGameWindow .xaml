@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnoClient.Game"
         mc:Ignorable="d"
-        Title="AfterGameWindow" Height="300" Width="300">
-    <Grid Background="#FF2C7E1B">
+        Title="End of game" Height="300" Width="300">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="53" Margin="76,58,0,0" VerticalAlignment="Top" Width="60" Source="/UnoClient;component/Images/Winner.jpg"/>
-        <TextBlock x:Name="Winner" HorizontalAlignment="Left" Margin="136,78,0,0" TextWrapping="Wrap" Text="player " VerticalAlignment="Top" Height="19" Width="84" TextAlignment="Center"/>
-        <Button x:Name="save" Content="Save" HorizontalAlignment="Left" Margin="156,15.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="54" Height="19" Background="#FF9A8787" Click="save_Click"/>
-        <Label x:Name="label" Content="Do you want to save the game?" HorizontalAlignment="Left" Margin="10,9.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="189" Height="25" FontSize="9.333"/>
-        <Button x:Name="gotolobby" Content="Lobby" HorizontalAlignment="Left" Margin="223,85.8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="61" Height="32" Background="#FFA8A8A8" FontWeight="Bold" Click="gotolobby_Click"/>
-        <TextBlock x:Name="status" Margin="26,10,22.6,0" TextWrapping="Wrap" Text="win Or Loose " VerticalAlignment="Top" Height="18" TextAlignment="Center"/>
+        <Image Grid.Row="0" HorizontalAlignment="Center" Height="60" Margin="10" VerticalAlignment="Center" Source="../Images/logo.png"/>
 
+        <WrapPanel Grid.Row="1" Background="#FFF3F3F3">
+            <Button x:Name="gotolobby" Content="Back to lobby" VerticalAlignment="Top" Height="32" FontWeight="Bold" Click="gotolobby_Click" Margin="5"/>
+            <Button x:Name="save" Content="Save replay" VerticalAlignment="Top" Height="32" Click="save_Click" Margin="5"/>
+        </WrapPanel>
+        
+        <TextBlock x:Name="status" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" Grid.Row="2" Margin="0,5,0,0" FontSize="16" FontWeight="Bold"/>
+
+        <WrapPanel Grid.Row="3" Margin="20" Background="#FFF3F3F3">
+            <Image x:Name="image" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Source="/UnoClient;component/Images/Winner.jpg"/>
+            <TextBlock x:Name="Winner" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Margin="20,0,0,0" FontSize="18.667"/>
+        </WrapPanel>
     </Grid>
 </Window>

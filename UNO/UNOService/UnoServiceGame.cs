@@ -70,9 +70,14 @@ namespace UNOService
 
         public void EndGame()
         {
-            foreach (var player in getPlayerFromGameContext().Game.Players)
+            Game.Game game = getPlayerFromGameContext().Game;
+
+            if (!game.hasGameEnded()) //Otherwise we are sending EndOfTheGame(null) to the winner
             {
-                player.IGameCallback.EndOfTheGame(null);
+                foreach (var player in game.Players)
+                {
+                    player.IGameCallback.EndOfTheGame(null);
+                }
             }
         }
 

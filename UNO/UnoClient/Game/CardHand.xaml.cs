@@ -100,6 +100,11 @@ namespace UnoClient.Game
             cards.Remove(cardControl);
         }
 
+        public int getNrOfCards()
+        {
+            return cards.Count;
+        }
+
 
         private void cardClicked(object sender, RoutedEventArgs e)
         {

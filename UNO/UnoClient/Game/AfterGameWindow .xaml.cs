@@ -25,23 +25,22 @@ namespace UnoClient.Game
         private string username;
         private string password;
 
-        public AfterGameWindow(string username , string winner,string password)
+        public AfterGameWindow(GameClient GameProxy, string username, string winner, string password)
         {
-            InitializeComponent();
+            this.GameProxy = GameProxy;
 
-            GameProxy = new GameClient(new System.ServiceModel.InstanceContext(null));
+            InitializeComponent();
             
             this.username = username;
             this.password = password;
 
             if(username == winner)
             {
-                status.Text = "Congratulation You Won :) ";
+                status.Text = "Congratulations, you won!";
             }
             else
             {
-                //status.Foreground =  FFC51111;
-                status.Text = "Sorry You Lost :( ";
+                status.Text = "Sorry, you lost.";
             }
 
             Winner.Text = winner;
